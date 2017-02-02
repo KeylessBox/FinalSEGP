@@ -19,6 +19,7 @@ public class Main extends Application {
 //sadadasdasda
         //something something something truly inspiring
         //changed sumtin sumtin etc
+        //sdaf
         //TODO start working as a team
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));
 
