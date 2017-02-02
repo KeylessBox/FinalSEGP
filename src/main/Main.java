@@ -17,6 +17,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         //something something something truly inspiring
+        //changed sumtin sumtin etc
         //TODO start working as a team
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));
 
