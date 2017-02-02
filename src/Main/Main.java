@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-//I added a comment, YAY!!!
+
 public class Main extends Application {
 
     public static void main(String[] args) {
@@ -16,11 +16,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//sadadasdasda
-        //something something something truly inspiring
-        //changed sumtin sumtin etc
-        //sdaf
-        //TODO start working as a team
+
         Parent root = FXMLLoader.load(getClass().getResource("/FXML/Main.fxml"));
 
         primaryStage.setTitle("Sign In");
