@@ -1,4 +1,4 @@
-package main;/**
+package Main;/**
  * Created by AndreiM on 1/28/2017.
  */
 
@@ -21,7 +21,7 @@ public class Main extends Application {
         //changed sumtin sumtin etc
         //sdaf
         //TODO start working as a team
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/FXML/Main.fxml"));
 
         primaryStage.setTitle("Sign In");
         primaryStage.setScene(new Scene(root));

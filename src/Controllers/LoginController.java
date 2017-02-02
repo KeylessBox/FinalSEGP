@@ -1,4 +1,4 @@
-package login;
+package Controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,6 +9,7 @@ import javafx.scene.text.Text;
  * Controller for login
  */
 public class LoginController {
+
     @FXML private Text actionTarget;
     @FXML private TextField username;
     @FXML private TextField pw;

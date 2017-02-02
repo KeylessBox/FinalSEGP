@@ -140,7 +140,7 @@ public class LoginWindow extends Application {
     @Override
     public void start(Stage primaryStage)throws Exception{
         window = primaryStage;
-        window.setTitle("login");
+        window.setTitle("Modules/Login");
 
 
         gridLogin = new GridPane();
@@ -155,7 +155,7 @@ public class LoginWindow extends Application {
 
         //login Label
 
-        loginLabel = new Label("login");
+        loginLabel = new Label("Modules/Login");
         loginLabel.setFont(Font.font("Arial", FontWeight.BOLD, 32));
         GridPane.setConstraints(loginLabel, 1, 0);
 
@@ -192,7 +192,7 @@ public class LoginWindow extends Application {
 
         //login Button
 
-        loginButton = new Button("login");
+        loginButton = new Button("Modules/Login");
         loginButton.setOnAction(e -> {
             if (checkUserDetails(userField, passField)) {
                 System.out.println("Username and password are correct!");

@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.MainController">
+<BorderPane id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainController">
    <top>
       <MenuBar id="menubar" BorderPane.alignment="CENTER">
         <menus>
@@ -55,7 +55,7 @@
                      <children>
                         <ImageView id="userImg" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@/img/defaultProfile.jpg" />
+                              <Image url="@/res/img/defaultProfile.jpg" />
                            </image>
                         </ImageView>
                         <Label id="username" text="Username">
