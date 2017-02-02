@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SEGP">
+    <output-path>$PROJECT_DIR$/out</output-path>
+    <root id="archive" name="SEGP.jar">
+      <element id="module-output" name="SEGP" />
+    </root>
+  </artifact>
+</component>
