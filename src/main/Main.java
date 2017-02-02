@@ -16,6 +16,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+
+        //TODO start working as a team
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));
 
         primaryStage.setTitle("Sign In");
