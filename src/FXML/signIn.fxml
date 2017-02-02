@@ -19,7 +19,7 @@
     <HBox id="logo" alignment="CENTER" >
         <ImageView   fitHeight="226.0" fitWidth="271.0">
             <image>
-                <Image url="@/res/img/WYPlogo.jpg" />
+                <Image url="@/RES/img/WYPlogo.jpg" />
             </image>
         </ImageView>
     </HBox>
