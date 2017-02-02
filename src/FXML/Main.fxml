@@ -55,7 +55,7 @@
                      <children>
                         <ImageView id="userImg" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@/res/img/defaultProfile.jpg" />
+                              <Image url="@/RES/img/defaultProfile.jpg" />
                            </image>
                         </ImageView>
                         <Label id="username" text="Username">
