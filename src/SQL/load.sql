@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Cases, Users, Notes, Calls, People, PhoneNumbers, EmailAddresses, HouseAddresses;
+DROP TABLE IF EXISTS Notes, Calls, PhoneNumbers, EmailAddresses, HouseAddresses, People, Cases, Users;
 
 CREATE TABLE IF NOT EXISTS Cases(Id INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(35),
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS Notes(Id INT PRIMARY KEY AUTO_INCREMENT,
     FOREIGN KEY(CaseId) REFERENCES Cases(Id) ON DELETE CASCADE) ENGINE= InnoDB;
 
 CREATE TABLE IF NOT EXISTS People(Id INT PRIMARY KEY AUTO_INCREMENT,
-    FirstName VARCHAR(35) DEFAULT NULL, LastName VARCHAR(35) DEFAULT NULL, Gender TINYINT(1) DEFAULT NULL, DayOfBirth TINYINT DEFAULT NULL,
+    FirstName VARCHAR(35) DEFAULT NULL, LastName VARCHAR(35) DEFAULT NULL, Gender ENUM ('m','f'), DayOfBirth TINYINT DEFAULT NULL,
     MonthOfBirth TINYINT DEFAULT NULL, YearOfBirth SMALLINT DEFAULT NULL, DateOfBirth DATE DEFAULT NULL) ENGINE= InnoDB;
 
 CREATE TABLE IF NOT EXISTS HouseAddresses(Id INT PRIMARY KEY AUTO_INCREMENT,
@@ -39,43 +39,43 @@ INSERT INTO Cases(Name, Details) VALUES('Little Rabbit', 'A girl found dead with
 INSERT INTO Users(Name) VALUES(' Sherlock Holmes');
 
 INSERT INTO Calls(CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)
-VALUES(1,'078 0680 1334','077 3628 5886','19/03/2016','10:15','Standard', '30:00');
+VALUES(1,'078 0680 1334','077 3628 5886','2016/03/19','10:15','Standard', '30:00');
 INSERT INTO Calls( CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)
-VALUES(1,'078 0680 1334','070 0913 6953','16/05/2016','14:25','Standard', '13:00');
+VALUES(1,'078 0680 1334','070 0913 6953','2016/05/16','14:25','Standard', '13:00');
 INSERT INTO Calls( CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)
-VALUES(1,'078 0680 1334','070 6369 5729','01/06/2016','18:35','Standard', '03:00');
+VALUES(1,'078 0680 1334','070 6369 5729','2016/06/01','18:35','Standard', '03:00');
 INSERT INTO Calls( CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)
-VALUES(1,'077 6052 1169','078 0680 1334','11/06/2016','19:35','Standard', '20:00');
+VALUES(1,'077 6052 1169','078 0680 1334','2016/06/11','19:35','Standard', '20:00');
 INSERT INTO Calls( CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)
-VALUES(1,'077 6109 8258','078 0680 1334','26/07/2016','20:50','Standard', '31:00');
+VALUES(1,'077 6109 8258','078 0680 1334','2016/07/26','20:50','Standard', '31:00');
 
 INSERT INTO People(FirstName, LastName, Gender, DayOfBirth, MonthOfBirth, YearOfBirth, DateOfBirth)
-VALUES('Spencer','Blackburn','M','10','12','1936', '10/12/1936');
+VALUES('Spencer','Blackburn','M','10','12','1936', '1936/12/10');
 INSERT INTO HouseAddresses(PersonId, HouseNumber, StreetName, Town, County, PostCode, Country)
 VALUES(1,'16','Kendell Street','SHEFFORD WOODLANDS','West Berkshire','RG17 1XY', 'England');
 
 INSERT INTO People(FirstName, LastName, Gender, DayOfBirth, MonthOfBirth, YearOfBirth, DateOfBirth)
-VALUES('Jack','Sullivan','M','02','08','1949', '02/08/1949');
+VALUES('Jack','Sullivan','M','02','08','1949', '1949/08/02');
 INSERT INTO HouseAddresses(PersonId, HouseNumber, StreetName, Town, County, PostCode, Country)
 VALUES(2,'36','Broad Street','LOWER GODNEY','Somerset','BA5 0QP', 'England');
 
 INSERT INTO People(FirstName, LastName, Gender, DayOfBirth, MonthOfBirth, YearOfBirth, DateOfBirth)
-VALUES('Cameron','Cole','M','17','01','1973', '17/01/1973');
+VALUES('Cameron','Cole','M','17','01','1973', '1973/01/17');
 INSERT INTO HouseAddresses(PersonId, HouseNumber, StreetName, Town, County, PostCode, Country)
 VALUES(3,'62','Town Lane','SOUGHTON','Clwyd','CH7 5LL', 'Wales');
 
 INSERT INTO People(FirstName, LastName, Gender, DayOfBirth, MonthOfBirth, YearOfBirth, DateOfBirth)
-VALUES('Elizabeth','Powell','F','19','10','1995', '19/10/1995');
+VALUES('Elizabeth','Powell','F','19','10','1995', '1995/10/19');
 INSERT INTO HouseAddresses(PersonId, HouseNumber, StreetName, Town, County, PostCode, Country)
 VALUES(4,'45','Mill Lane','CORNTOWN','South Glamorgan','CF35 0FY', 'Wales');
 
 INSERT INTO People(FirstName, LastName, Gender, DayOfBirth, MonthOfBirth, YearOfBirth, DateOfBirth)
-VALUES('Mason','Berry','M','08','01','1993', '08/01/1993');
+VALUES('Mason','Berry','M','08','01','1993', '1993/01/08');
 INSERT INTO HouseAddresses(PersonId, HouseNumber, StreetName, Town, County, PostCode, Country)
 VALUES(5,'89','Gloucester Road','CLASHBAN','Scotland','CF35 0FY', 'Scotland');
 
 INSERT INTO People(FirstName, LastName, Gender, DayOfBirth, MonthOfBirth, YearOfBirth, DateOfBirth)
-VALUES('Ben','Clark','M','18','01','1983', '18/01/1983');
+VALUES('Ben','Clark','M','18','01','1983', '1983/01/18');
 INSERT INTO HouseAddresses(PersonId, HouseNumber, StreetName, Town, County, PostCode, Country)
 VALUES(6,'38','Fraserburgh Rd','LICKEY END','Worcestershire','B60 3XH', 'England');
 
