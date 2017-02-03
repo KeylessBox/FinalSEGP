@@ -71,7 +71,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </HBox>
-                  <Button id="editDetails" mnemonicParsing="false" onAction="#importCSV" text="Edit details" />
+                  <Button id="editDetails" mnemonicParsing="false" onAction="#load" text="Edit details" />
                   <Button id="logoutButton" mnemonicParsing="false" text="Logout" />
                </children>
                <padding>
@@ -120,14 +120,14 @@
             </VBox>
          </left>
          <center>
-            <TableView id="mainTable" BorderPane.alignment="CENTER">
+            <TableView fx:id="mainTable" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Suspect name" />
-                <TableColumn prefWidth="92.0" text="Phone Number" />
-                  <TableColumn prefWidth="72.0" text="Time/Date" />
-                  <TableColumn prefWidth="75.0" text="Type of call" />
-                  <TableColumn prefWidth="75.0" text="Duration" />
-                  <TableColumn prefWidth="75.0" text="Dialed Digits" />
+                <TableColumn  fx:id= "callerPhoneNumber" prefWidth="92.0" text="callerPhoneNumber" />
+                <TableColumn fx:id= "receiverPhoneNumber" prefWidth="92.0" text="receiverPhoneNumber" />
+                  <TableColumn fx:id= "date" prefWidth="72.0" text="date" />
+                  <TableColumn fx:id= "time" prefWidth="75.0" text="time" />
+                  <TableColumn fx:id= "typeOfCall" prefWidth="75.0" text="typeOfCall" />
+                  <TableColumn fx:id= "duration" prefWidth="75.0" text="duration" />
                   <TableColumn prefWidth="75.0" />
               </columns>
                <columnResizePolicy>
