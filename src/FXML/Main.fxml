@@ -71,7 +71,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </HBox>
-                  <Button id="editDetails" mnemonicParsing="false" onAction="#load" text="Edit details" />
+                  <Button id="editDetails" mnemonicParsing="false" onAction="#importCSV" text="Edit details" />
                   <Button id="logoutButton" mnemonicParsing="false" text="Logout" />
                </children>
                <padding>

@@ -49,7 +49,7 @@ public class MainController {
         }
     }
 
-    @FXML public void load() {
+    @FXML public void initialize() {
         callsData = sql.loadCalls();
 
         doColumn.createCallerPNColumn(callerPhoneNumber);
