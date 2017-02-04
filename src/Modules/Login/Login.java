@@ -1,5 +1,6 @@
 package Modules.Login;
 
+import Controllers.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,9 +13,11 @@ public class Login extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/FXML/signIn.fxml"));
         primaryStage.setMaximized(true);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Sign In");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
+
     }
 
 
