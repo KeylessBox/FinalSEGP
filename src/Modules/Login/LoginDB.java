@@ -12,9 +12,9 @@ public class LoginDB {
         Connection con = null;
       //  PreparedStatement pst = null;
 
-        String url="jdbc:mysql://localhost:3306/wypd_project";
+        String url="jdbc:mysql://localhost:3306/investigationsdb";
         String user = "root";
-        String pw = "pass";
+        String pw = "";
 
         Boolean check = false;
 

@@ -14,12 +14,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="600.0" prefWidth="600.0" styleClass="root" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
+<VBox prefHeight="600.0" prefWidth="600.0" styleClass="root" stylesheets="@../CSS/Login.css" opacity="1.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
 
     <HBox id="logo" alignment="CENTER">
-        <ImageView fitHeight="284.0" fitWidth="233.0" opacity="0.90" preserveRatio="true">
+        <ImageView fitHeight="370.0" fitWidth="304.0" opacity="1.0" preserveRatio="true">
             <image>
-                <Image url="@/RES/img/wypd-logo.png" />
+            <!--   <Image url="@/RES/img/wypd-logo.png"/>   -->
             </image>
         </ImageView>
     </HBox>
