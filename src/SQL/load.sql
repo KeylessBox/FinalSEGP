@@ -39,7 +39,7 @@ INSERT INTO Cases(Name, Details) VALUES('Little Rabbit', 'A girl found dead with
 INSERT INTO Users(Name) VALUES(' Sherlock Holmes');
 
 INSERT INTO Calls(CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)
-VALUES(1,'078 0680 1334','077 3628 5886','2016/03/19','10:15','Standard', '30:00');
+VALUES(1,'078 0680 1334','077 3628 5886','2016/03/19','10:15','Standard', '20:00');
 INSERT INTO Calls( CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)
 VALUES(1,'078 0680 1334','070 0913 6953','2016/05/16','14:25','Standard', '13:00');
 INSERT INTO Calls( CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)
@@ -47,7 +47,7 @@ VALUES(1,'078 0680 1334','070 6369 5729','2016/06/01','18:35','Standard', '03:00
 INSERT INTO Calls( CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)
 VALUES(1,'077 6052 1169','078 0680 1334','2016/06/11','19:35','Standard', '20:00');
 INSERT INTO Calls( CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)
-VALUES(1,'077 6109 8258','078 0680 1334','2016/07/26','20:50','Standard', '31:00');
+VALUES(1,'077 6109 8258','078 0680 1334','2016/07/26','20:50','Standard', '11:00');
 
 INSERT INTO People(FirstName, LastName, Gender, DayOfBirth, MonthOfBirth, YearOfBirth, DateOfBirth)
 VALUES('Spencer','Blackburn','M','10','12','1936', '1936/12/10');
