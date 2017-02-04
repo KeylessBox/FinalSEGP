@@ -1,0 +1,4 @@
+.pane {
+	-fx-background-image: url("../res/images/Casebox.png");
+	-fx-background-size: 180, 180;	
+}

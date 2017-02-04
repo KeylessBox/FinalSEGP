@@ -1,0 +1,13 @@
+.button {
+	-fx-background-color: ebebeb;
+	-fx-font-family:"Segoe Print";
+	-fx-font-size: 14;
+}
+
+.button:hover{
+	-fx-text-fill: blue;
+}
+
+.button:pressed{
+	-fx-font-weight: bold;
+}
