@@ -1,0 +1,4 @@
+.button {
+	-fx-background-image: url("../../res/images/Button.png");
+	-fx-background-size: 35, 35;
+}
