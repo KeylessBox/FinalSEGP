@@ -27,7 +27,8 @@ public class ImportCSV {
             /**
              * The query used to import data
              */
-            String query = "LOAD DATA LOW_PRIORITY INFILE '" + path + "' REPLACE INTO TABLE `investigationsdb`.`people` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\\r\\n' IGNORE 1 LINES(`FirstName`, `LastName`, `Gender`, `DayOfBirth`, `MonthOfBirth`, `YearOfBirth`, `DateOfBirth`);"; //TODO Make it flexible (for different kinds of csv data)
+            /*String query = "LOAD DATA LOW_PRIORITY INFILE '" + path + "' REPLACE INTO TABLE `investigationsdb`.`people` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\\r\\n' IGNORE 1 LINES(`FirstName`, `LastName`, `Gender`, `DayOfBirth`, `MonthOfBirth`, `YearOfBirth`, `DateOfBirth`);"; //TODO Make it flexible (for different kinds of csv data)*/
+            String query = "LOAD DATA LOW_PRIORITY INFILE '" + path + "' REPLACE INTO TABLE `investigationsdb`.`calls` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\\r\\n' IGNORE 1 LINES(`CaseId`, `CallerPhoneNumber`, `ReceiverPhoneNumber`, `Date`, `Time`, `TypeOfCall`, `Duration`);";
             pst = con.prepareStatement(query);
             pst.execute();
         }
