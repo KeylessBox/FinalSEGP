@@ -17,7 +17,7 @@
 <VBox prefHeight="600.0" prefWidth="600.0" styleClass="root" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
 
     <HBox id="logo" alignment="CENTER">
-        <ImageView fitHeight="284.0" fitWidth="233.0" opacity="0.26" preserveRatio="true">
+        <ImageView fitHeight="284.0" fitWidth="233.0" opacity="0.90" preserveRatio="true">
             <image>
                 <Image url="@/RES/img/wypd-logo.png" />
             </image>
