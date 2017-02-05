@@ -1,4 +1,12 @@
-DROP TABLE IF EXISTS Notes, Calls, PhoneNumbers, EmailAddresses, HouseAddresses, People, Cases, Users;
+DROP TABLE IF EXISTS Notes, Calls, PhoneNumbers, EmailAddresses, HouseAddresses, People, Cases, Users, Accounts;
+
+CREATE TABLE `Accounts` (
+  `Name` tinytext,
+  `Surname` tinytext,
+  `Email` tinytext,
+  `Password` tinytext,
+  `Privileges` tinytext
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS Cases(Id INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(35),
@@ -32,6 +40,9 @@ CREATE TABLE IF NOT EXISTS Calls(Id INT PRIMARY KEY AUTO_INCREMENT,
     CaseId INT, CallerPhoneNumber VARCHAR(18), ReceiverPhoneNumber VARCHAR(18), Date DATE, Time TIME, TypeOfCall VARCHAR(10), Duration TIME,
     FOREIGN KEY(CaseId) REFERENCES Cases(Id) ON DELETE CASCADE) ENGINE= InnoDB;
 
+
+INSERT INTO `accounts` (`Name`, `Surname`, `Email`, `Password`, `Privileges`) VALUES
+('Angel', 'Juarez', 'a.juarez@wypd.co.uk', 'password', 'user');
 
 INSERT INTO Cases(Name, Details) VALUES('Cheeky Scar', 'A mass murderer in Essex terrorizes peaceful people');
 INSERT INTO Cases(Name, Details) VALUES('Little Rabbit', 'A girl found dead with her rabbit close by');
