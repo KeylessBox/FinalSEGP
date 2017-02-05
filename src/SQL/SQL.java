@@ -4,7 +4,7 @@ package SQL;
  * Created by AndreiM on 2/3/2017.
  */
 
-import Modules.Table.CallsRecord;
+import Modules.Table.CallRecord;
 import Modules.Table.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,20 +21,22 @@ import java.sql.SQLException;
 public class SQL {
 
     int maxIDCall = 1;
+
+    int ID = 0;
     /**
      * Connection with MYSQL database
      */
-    private DBConnection con = new DBConnection();
+    private DBConnection dbConnection = new DBConnection();
 
     /**
      * Load students records from database
      *
      * @return ObservableList<StudentRecord>
      */
-    public ObservableList<CallsRecord> loadCalls() {
+    public ObservableList<CallRecord> loadCalls() {
 
-        Connection connection = con.connect();
-        ObservableList<CallsRecord> data = FXCollections.observableArrayList();
+        Connection connection = dbConnection.connect();
+        ObservableList<CallRecord> data = FXCollections.observableArrayList();
 
         try {
 
@@ -47,7 +49,7 @@ public class SQL {
                     maxIDCall = Integer.parseInt(callsRS.getString(1));
                 }
 
-                data.add(new CallsRecord(callsRS.getString(3),
+                data.add(new CallRecord(callsRS.getString(3),
                         callsRS.getString(4), callsRS.getString(5), callsRS.getString(6), callsRS.getString(7),
                         callsRS.getString(8)));
             }
@@ -84,35 +86,35 @@ public class SQL {
         return true;
     }
 
-//    /**
-//     * Insert empty student record into database
-//     */
-//    public void addStudentQuery() {
-//
-//        Connection connection = dbConnection.connect();
-//
-//        try {
-//            connection.createStatement().executeUpdate("INSERT INTO `Students` (`studentID`, `studentName`, `studentUB`, `courseID`, `yearOfStudy`, `email`, `tutorID`) VALUES (" + (++maxIDStudent) + ", 'name surname', '00000000', '3', '4', 'example@example.com', '0')");
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
-//
-//    /**
-//     * Remove selected student record from database
-//     *
-//     * @param studentID
-//     */
-//    public void removeStudentQuery(String studentID) {
-//
-//        Connection connection = dbConnection.connect();
-//
-//        try {
-//            connection.createStatement().executeUpdate("DELETE FROM `Students` WHERE studentID = " + studentID);
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+    /**
+     * Insert empty student record into database
+     */
+    public void addCall() {
+
+        Connection connection = dbConnection.connect();
+
+        try {
+            connection.createStatement().executeUpdate("INSERT INTO `Students` (`studentID`, `studentName`, `studentUB`, `courseID`, `yearOfStudy`, `email`, `tutorID`) VALUES (" + (++ID) + ", 'name surname', '00000000', '3', '4', 'example@example.com', '0')");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Remove selected student record from database
+     *
+     * @param studentID
+     */
+    public void removeCall(String studentID) {
+
+        Connection connection = dbConnection.connect();
+
+        try {
+            connection.createStatement().executeUpdate("DELETE FROM `Students` WHERE studentID = " + studentID);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 //
 //
 //    /**
@@ -193,4 +195,12 @@ public class SQL {
 //        }
 //    }
 
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 }

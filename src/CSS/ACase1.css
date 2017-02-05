@@ -10,5 +10,4 @@
 
 .button:selected {
 	-fx-background-image: url("../res/images/Delete.png");
-
 }
