@@ -84,7 +84,7 @@
                     <children>
                         <Pane layoutX="3.0" layoutY="45.0" prefHeight="331.0" prefWidth="183.0" style="-fx-background-color: d1cfa8;">
                             <children>
-                                <ScrollPane layoutX="1.0" prefHeight="302.0" prefViewportHeight="380.0" prefViewportWidth="191.0" prefWidth="182.0" style="-fx-background-color: d1cfa8;">
+                                <ScrollPane layoutX="1.0" prefHeight="301.0" prefViewportHeight="380.0" prefViewportWidth="191.0" prefWidth="182.0" style="-fx-background-color: d1cfa8;">
                                     <content>
                                         <VBox id="caseFilesContainer" alignment="TOP_CENTER" prefHeight="299.0" prefWidth="180.0" spacing="10.0" style="-fx-background-color: d1cfa8;">
                                             <children>
@@ -217,7 +217,6 @@
                         <TextField fx:id="txtField" layoutX="65.0" layoutY="221.0" prefHeight="25.0" prefWidth="851.0" promptText="Search..." />
                         <Button layoutX="1061.0" layoutY="146.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" stylesheets="@../CSS/AddButton2.css" text="Add Suspect" textFill="WHITE" />
                         <Button layoutX="929.0" layoutY="146.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="102.0" stylesheets="@../CSS/AddButton1.css" text="Add Victim" textFill="WHITE" />
-                        <Separator layoutX="926.0" layoutY="112.0" prefHeight="1.0" prefWidth="227.0" />
                     </children>
                 </Pane>
             </children>
