@@ -38,4 +38,8 @@ public class CreateAccount {
         }
     }
 
+    public static void main(String[] args) {
+        createAccount("Mitica", "Bulversatul", "m@i.t","pass", "lel");
+    }
+
 }

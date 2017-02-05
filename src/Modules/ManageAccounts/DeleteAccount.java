@@ -16,7 +16,7 @@ public class DeleteAccount {
 
         String url = "jdbc:mysql://localhost:3306/investigationsdb";
         String user = "root";
-        String pw = "";
+        String pw = "pass";
 
 
         try {
@@ -40,5 +40,6 @@ public class DeleteAccount {
             e.printStackTrace();
         }
     }
+    
 
 }

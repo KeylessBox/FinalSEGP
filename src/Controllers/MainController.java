@@ -48,7 +48,7 @@ public class MainController {
     @FXML
     protected void importCSV() {
         /**
-         * New window, where you choose what file to import BITCH
+         * New window, where you choose what file to import
          */
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");

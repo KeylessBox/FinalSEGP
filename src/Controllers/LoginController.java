@@ -41,6 +41,20 @@ public class LoginController {
      * @param event
      */
     @FXML
+    protected void signUp(ActionEvent event)throws IOException{
+
+        Node node = (Node) event.getSource();
+        Stage stage3 = (Stage) node.getScene().getWindow();
+        Parent root3 = FXMLLoader.load(getClass().getResource("/FXML/signUp.fxml"));/* Exception */
+        Scene scene3 = new Scene(root3);
+
+        stage3.setScene(scene3);
+        stage3.centerOnScreen();
+        stage3.setResizable(true);
+        stage3.show();
+            }
+
+    @FXML
     protected void logIn(ActionEvent event) throws IOException {
 
         if (!LoginDB.checkUserDetails(username.getText(), pw.getText())) {
