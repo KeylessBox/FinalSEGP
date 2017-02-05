@@ -7,10 +7,7 @@ import SQL.SQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -23,7 +20,7 @@ import java.io.File;
 
 public class MainController {
     SQL sql = new SQL();
-    Modules.Table.CallsTable doColumn = new CallsTable();
+    Modules.Table.CallsTable ColumnFactory = new CallsTable();
     private ObservableList<CallRecord> data;
 
     @FXML
@@ -71,14 +68,15 @@ public class MainController {
         date.setMaxWidth(50);
         date.setPrefWidth(50);
         data = sql.loadCalls();
-        doColumn.createCallerPNColumn(callerPhoneNumber);
-        doColumn.createReceiverPNColumn(receiverPhoneNumber);
-        doColumn.createDateColumn(date);
-        doColumn.createTimeColumn(time);
-        doColumn.createTypeOfCallColumn(typeOfCall);
-        doColumn.createDurationColumn(duration);
+        ColumnFactory.createCallerPNColumn(callerPhoneNumber);
+        ColumnFactory.createReceiverPNColumn(receiverPhoneNumber);
+        ColumnFactory.createDateColumn(date);
+        ColumnFactory.createTimeColumn(time);
+        ColumnFactory.createTypeOfCallColumn(typeOfCall);
+        ColumnFactory.createDurationColumn(duration);
         table.setItems(data);
         table.setEditable(true);
+        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         search();
     }
 
@@ -113,7 +111,7 @@ public class MainController {
     @FXML
     public void addCall() {
         if (data != null) {
-            data.add(new CallRecord(String.valueOf(sql.getID() + 1), "test", "test", "test", "test", "test", "test", "test"));
+            data.add(new CallRecord(String.valueOf(sql.getID() + 1), "0", "0", "0", "0", "0", "0", "0"));
             System.out.println("ADD: call");
             //sql.addCall();
         } else {
@@ -126,12 +124,15 @@ public class MainController {
         if (data != null) {
             if (table.getSelectionModel().getSelectedItem() != null) {
                 CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
-                if (!(record.getCallID().isEmpty())) {
-                    //sql.removeCall(record.getCallID());
-                    System.out.println("DELETE: call " + record.getCallID());
+                if (record != null){
+//                    System.out.println();
+//                    if (!(record.getCallID().equals(""))) {
+//                        //sql.removeCall(record.getCallID());
+//                        System.out.println("DELETE: call " + record.getCallID());
+//                    }
+                    data.remove(table.getSelectionModel().getSelectedItem());
                 }
             }
-            data.remove(table.getSelectionModel().getSelectedItem());
         } else {
             System.out.println("HERE");
         }

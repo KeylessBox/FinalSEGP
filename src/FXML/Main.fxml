@@ -164,6 +164,7 @@
                                 <TableColumn fx:id="typeOfCall" prefWidth="50" text="Type of Call"/>
                                 <TableColumn fx:id="duration" prefWidth="50" text="Duration"/>
                             </columns>
+
                         </TableView>
                         <ScrollPane layoutX="47.0" layoutY="31.0" prefHeight="165.0" prefViewportHeight="163.0"
                                     prefViewportWidth="1133.0" prefWidth="851.0" style="-fx-background-color: d7d7ce;">
