@@ -1,9 +1,11 @@
-package Modules.Table;
+package SQL;
 
 /**
  * Created by AndreiM on 2/3/2017.
  */
 
+import Modules.Table.CallsRecord;
+import Modules.Table.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

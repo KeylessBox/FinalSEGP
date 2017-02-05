@@ -4,17 +4,15 @@ package Controllers;
 import Modules.File_Import.ImportCSV;
 import Modules.Table.CallsRecord;
 import Modules.Table.CallsTable;
-import Modules.Table.SQL;
+import SQL.SQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import Modules.*;
 
 import java.io.File;
 
@@ -24,7 +22,7 @@ import java.io.File;
  */
 
 public class MainController {
-    Modules.Table.SQL sql = new SQL();
+    SQL sql = new SQL();
     Modules.Table.CallsTable doColumn = new CallsTable();
     private ObservableList<CallsRecord> callsData;
 
