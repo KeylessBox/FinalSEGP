@@ -7,18 +7,16 @@ import java.sql.SQLException;
 
 /**
  * Created by AndreiM on 2/1/2017.
- */
-/**
  * Import a csv file. Change the query as you see fit.
  */
 public class ImportCSV {
-    public static boolean importcsv(String path) {
+    public static void importcsv(String path) {
 
         Connection con = null;
         PreparedStatement pst = null;
 
         String url="jdbc:mysql://localhost:3306/investigationsdb";
-        String user = "user";
+        String user = "root";
         String pw = "";
 
         try {
@@ -29,7 +27,8 @@ public class ImportCSV {
             /**
              * The query used to import data
              */
-            String query = "LOAD DATA LOW_PRIORITY LOCAL INFILE '" + path + "' REPLACE INTO TABLE `investigationsdb`.`info` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\"' LINES TERMINATED BY '\\r\\n' (`CaseId`, `SuspectName`, `PhoneNumber`, `Date`);"; //TODO Make it flexible (for different kinds of csv data)
+            /*String query = "LOAD DATA LOW_PRIORITY INFILE '" + path + "' REPLACE INTO TABLE `investigationsdb`.`people` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\\r\\n' IGNORE 1 LINES(`FirstName`, `LastName`, `Gender`, `DayOfBirth`, `MonthOfBirth`, `YearOfBirth`, `DateOfBirth`);"; //TODO Make it flexible (for different kinds of csv data)*/
+            String query = "LOAD DATA LOW_PRIORITY INFILE '" + path + "' REPLACE INTO TABLE `investigationsdb`.`calls` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\\r\\n' IGNORE 1 LINES(`CaseId`, `CallerPhoneNumber`, `ReceiverPhoneNumber`, `Date`, `Time`, `TypeOfCall`, `Duration`);";
             pst = con.prepareStatement(query);
             pst.execute();
         }
@@ -48,9 +47,6 @@ public class ImportCSV {
             }
             catch (SQLException e) {
                 e.printStackTrace();
-            }
-            finally {
-                return true;
             }
         }
 

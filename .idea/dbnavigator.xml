@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -27,6 +27,9 @@
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
+  </component>
+  <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/src/SQL/load.sql" connection-id="virtual-oracle-connection" current-schema="ROOT" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
@@ -176,7 +179,7 @@
           <content-type name="HTML" enabled="true" />
           <content-type name="XHTML" enabled="true" />
           <content-type name="Java" enabled="true" />
-          <content-type name="SQL" enabled="true" />
+          <content-type name="SQL" enabled="false" />
           <content-type name="PL/SQL" enabled="true" />
           <content-type name="Groovy" enabled="true" />
           <content-type name="AIDL" enabled="true" />
@@ -201,31 +204,31 @@
     <code-completion-settings>
       <filters>
         <basic-filter>
-          <filter-element type="RESERVED_WORD" id="keyword" selected="true" />
-          <filter-element type="RESERVED_WORD" id="function" selected="true" />
-          <filter-element type="RESERVED_WORD" id="parameter" selected="true" />
-          <filter-element type="RESERVED_WORD" id="datatype" selected="true" />
-          <filter-element type="RESERVED_WORD" id="exception" selected="true" />
-          <filter-element type="OBJECT" id="schema" selected="true" />
-          <filter-element type="OBJECT" id="role" selected="true" />
-          <filter-element type="OBJECT" id="user" selected="true" />
-          <filter-element type="OBJECT" id="privilege" selected="true" />
+          <filter-element type="RESERVED_WORD" id="keyword" selected="false" />
+          <filter-element type="RESERVED_WORD" id="function" selected="false" />
+          <filter-element type="RESERVED_WORD" id="parameter" selected="false" />
+          <filter-element type="RESERVED_WORD" id="datatype" selected="false" />
+          <filter-element type="RESERVED_WORD" id="exception" selected="false" />
+          <filter-element type="OBJECT" id="schema" selected="false" />
+          <filter-element type="OBJECT" id="role" selected="false" />
+          <filter-element type="OBJECT" id="user" selected="false" />
+          <filter-element type="OBJECT" id="privilege" selected="false" />
           <user-schema>
-            <filter-element type="OBJECT" id="table" selected="true" />
-            <filter-element type="OBJECT" id="view" selected="true" />
-            <filter-element type="OBJECT" id="materialized view" selected="true" />
-            <filter-element type="OBJECT" id="index" selected="true" />
-            <filter-element type="OBJECT" id="constraint" selected="true" />
-            <filter-element type="OBJECT" id="trigger" selected="true" />
+            <filter-element type="OBJECT" id="table" selected="false" />
+            <filter-element type="OBJECT" id="view" selected="false" />
+            <filter-element type="OBJECT" id="materialized view" selected="false" />
+            <filter-element type="OBJECT" id="index" selected="false" />
+            <filter-element type="OBJECT" id="constraint" selected="false" />
+            <filter-element type="OBJECT" id="trigger" selected="false" />
             <filter-element type="OBJECT" id="synonym" selected="false" />
-            <filter-element type="OBJECT" id="sequence" selected="true" />
-            <filter-element type="OBJECT" id="procedure" selected="true" />
-            <filter-element type="OBJECT" id="function" selected="true" />
-            <filter-element type="OBJECT" id="package" selected="true" />
-            <filter-element type="OBJECT" id="type" selected="true" />
-            <filter-element type="OBJECT" id="dimension" selected="true" />
-            <filter-element type="OBJECT" id="cluster" selected="true" />
-            <filter-element type="OBJECT" id="dblink" selected="true" />
+            <filter-element type="OBJECT" id="sequence" selected="false" />
+            <filter-element type="OBJECT" id="procedure" selected="false" />
+            <filter-element type="OBJECT" id="function" selected="false" />
+            <filter-element type="OBJECT" id="package" selected="false" />
+            <filter-element type="OBJECT" id="type" selected="false" />
+            <filter-element type="OBJECT" id="dimension" selected="false" />
+            <filter-element type="OBJECT" id="cluster" selected="false" />
+            <filter-element type="OBJECT" id="dblink" selected="false" />
           </user-schema>
           <public-schema>
             <filter-element type="OBJECT" id="table" selected="false" />
@@ -245,83 +248,83 @@
             <filter-element type="OBJECT" id="dblink" selected="false" />
           </public-schema>
           <any-schema>
-            <filter-element type="OBJECT" id="table" selected="true" />
-            <filter-element type="OBJECT" id="view" selected="true" />
-            <filter-element type="OBJECT" id="materialized view" selected="true" />
-            <filter-element type="OBJECT" id="index" selected="true" />
-            <filter-element type="OBJECT" id="constraint" selected="true" />
-            <filter-element type="OBJECT" id="trigger" selected="true" />
-            <filter-element type="OBJECT" id="synonym" selected="true" />
-            <filter-element type="OBJECT" id="sequence" selected="true" />
-            <filter-element type="OBJECT" id="procedure" selected="true" />
-            <filter-element type="OBJECT" id="function" selected="true" />
-            <filter-element type="OBJECT" id="package" selected="true" />
-            <filter-element type="OBJECT" id="type" selected="true" />
-            <filter-element type="OBJECT" id="dimension" selected="true" />
-            <filter-element type="OBJECT" id="cluster" selected="true" />
-            <filter-element type="OBJECT" id="dblink" selected="true" />
+            <filter-element type="OBJECT" id="table" selected="false" />
+            <filter-element type="OBJECT" id="view" selected="false" />
+            <filter-element type="OBJECT" id="materialized view" selected="false" />
+            <filter-element type="OBJECT" id="index" selected="false" />
+            <filter-element type="OBJECT" id="constraint" selected="false" />
+            <filter-element type="OBJECT" id="trigger" selected="false" />
+            <filter-element type="OBJECT" id="synonym" selected="false" />
+            <filter-element type="OBJECT" id="sequence" selected="false" />
+            <filter-element type="OBJECT" id="procedure" selected="false" />
+            <filter-element type="OBJECT" id="function" selected="false" />
+            <filter-element type="OBJECT" id="package" selected="false" />
+            <filter-element type="OBJECT" id="type" selected="false" />
+            <filter-element type="OBJECT" id="dimension" selected="false" />
+            <filter-element type="OBJECT" id="cluster" selected="false" />
+            <filter-element type="OBJECT" id="dblink" selected="false" />
           </any-schema>
         </basic-filter>
         <extended-filter>
-          <filter-element type="RESERVED_WORD" id="keyword" selected="true" />
-          <filter-element type="RESERVED_WORD" id="function" selected="true" />
-          <filter-element type="RESERVED_WORD" id="parameter" selected="true" />
-          <filter-element type="RESERVED_WORD" id="datatype" selected="true" />
-          <filter-element type="RESERVED_WORD" id="exception" selected="true" />
-          <filter-element type="OBJECT" id="schema" selected="true" />
-          <filter-element type="OBJECT" id="user" selected="true" />
-          <filter-element type="OBJECT" id="role" selected="true" />
-          <filter-element type="OBJECT" id="privilege" selected="true" />
+          <filter-element type="RESERVED_WORD" id="keyword" selected="false" />
+          <filter-element type="RESERVED_WORD" id="function" selected="false" />
+          <filter-element type="RESERVED_WORD" id="parameter" selected="false" />
+          <filter-element type="RESERVED_WORD" id="datatype" selected="false" />
+          <filter-element type="RESERVED_WORD" id="exception" selected="false" />
+          <filter-element type="OBJECT" id="schema" selected="false" />
+          <filter-element type="OBJECT" id="user" selected="false" />
+          <filter-element type="OBJECT" id="role" selected="false" />
+          <filter-element type="OBJECT" id="privilege" selected="false" />
           <user-schema>
-            <filter-element type="OBJECT" id="table" selected="true" />
-            <filter-element type="OBJECT" id="view" selected="true" />
-            <filter-element type="OBJECT" id="materialized view" selected="true" />
-            <filter-element type="OBJECT" id="index" selected="true" />
-            <filter-element type="OBJECT" id="constraint" selected="true" />
-            <filter-element type="OBJECT" id="trigger" selected="true" />
-            <filter-element type="OBJECT" id="synonym" selected="true" />
-            <filter-element type="OBJECT" id="sequence" selected="true" />
-            <filter-element type="OBJECT" id="procedure" selected="true" />
-            <filter-element type="OBJECT" id="function" selected="true" />
-            <filter-element type="OBJECT" id="package" selected="true" />
-            <filter-element type="OBJECT" id="type" selected="true" />
-            <filter-element type="OBJECT" id="dimension" selected="true" />
-            <filter-element type="OBJECT" id="cluster" selected="true" />
-            <filter-element type="OBJECT" id="dblink" selected="true" />
+            <filter-element type="OBJECT" id="table" selected="false" />
+            <filter-element type="OBJECT" id="view" selected="false" />
+            <filter-element type="OBJECT" id="materialized view" selected="false" />
+            <filter-element type="OBJECT" id="index" selected="false" />
+            <filter-element type="OBJECT" id="constraint" selected="false" />
+            <filter-element type="OBJECT" id="trigger" selected="false" />
+            <filter-element type="OBJECT" id="synonym" selected="false" />
+            <filter-element type="OBJECT" id="sequence" selected="false" />
+            <filter-element type="OBJECT" id="procedure" selected="false" />
+            <filter-element type="OBJECT" id="function" selected="false" />
+            <filter-element type="OBJECT" id="package" selected="false" />
+            <filter-element type="OBJECT" id="type" selected="false" />
+            <filter-element type="OBJECT" id="dimension" selected="false" />
+            <filter-element type="OBJECT" id="cluster" selected="false" />
+            <filter-element type="OBJECT" id="dblink" selected="false" />
           </user-schema>
           <public-schema>
-            <filter-element type="OBJECT" id="table" selected="true" />
-            <filter-element type="OBJECT" id="view" selected="true" />
-            <filter-element type="OBJECT" id="materialized view" selected="true" />
-            <filter-element type="OBJECT" id="index" selected="true" />
-            <filter-element type="OBJECT" id="constraint" selected="true" />
-            <filter-element type="OBJECT" id="trigger" selected="true" />
-            <filter-element type="OBJECT" id="synonym" selected="true" />
-            <filter-element type="OBJECT" id="sequence" selected="true" />
-            <filter-element type="OBJECT" id="procedure" selected="true" />
-            <filter-element type="OBJECT" id="function" selected="true" />
-            <filter-element type="OBJECT" id="package" selected="true" />
-            <filter-element type="OBJECT" id="type" selected="true" />
-            <filter-element type="OBJECT" id="dimension" selected="true" />
-            <filter-element type="OBJECT" id="cluster" selected="true" />
-            <filter-element type="OBJECT" id="dblink" selected="true" />
+            <filter-element type="OBJECT" id="table" selected="false" />
+            <filter-element type="OBJECT" id="view" selected="false" />
+            <filter-element type="OBJECT" id="materialized view" selected="false" />
+            <filter-element type="OBJECT" id="index" selected="false" />
+            <filter-element type="OBJECT" id="constraint" selected="false" />
+            <filter-element type="OBJECT" id="trigger" selected="false" />
+            <filter-element type="OBJECT" id="synonym" selected="false" />
+            <filter-element type="OBJECT" id="sequence" selected="false" />
+            <filter-element type="OBJECT" id="procedure" selected="false" />
+            <filter-element type="OBJECT" id="function" selected="false" />
+            <filter-element type="OBJECT" id="package" selected="false" />
+            <filter-element type="OBJECT" id="type" selected="false" />
+            <filter-element type="OBJECT" id="dimension" selected="false" />
+            <filter-element type="OBJECT" id="cluster" selected="false" />
+            <filter-element type="OBJECT" id="dblink" selected="false" />
           </public-schema>
           <any-schema>
-            <filter-element type="OBJECT" id="table" selected="true" />
-            <filter-element type="OBJECT" id="view" selected="true" />
-            <filter-element type="OBJECT" id="materialized view" selected="true" />
-            <filter-element type="OBJECT" id="index" selected="true" />
-            <filter-element type="OBJECT" id="constraint" selected="true" />
-            <filter-element type="OBJECT" id="trigger" selected="true" />
-            <filter-element type="OBJECT" id="synonym" selected="true" />
-            <filter-element type="OBJECT" id="sequence" selected="true" />
-            <filter-element type="OBJECT" id="procedure" selected="true" />
-            <filter-element type="OBJECT" id="function" selected="true" />
-            <filter-element type="OBJECT" id="package" selected="true" />
-            <filter-element type="OBJECT" id="type" selected="true" />
-            <filter-element type="OBJECT" id="dimension" selected="true" />
-            <filter-element type="OBJECT" id="cluster" selected="true" />
-            <filter-element type="OBJECT" id="dblink" selected="true" />
+            <filter-element type="OBJECT" id="table" selected="false" />
+            <filter-element type="OBJECT" id="view" selected="false" />
+            <filter-element type="OBJECT" id="materialized view" selected="false" />
+            <filter-element type="OBJECT" id="index" selected="false" />
+            <filter-element type="OBJECT" id="constraint" selected="false" />
+            <filter-element type="OBJECT" id="trigger" selected="false" />
+            <filter-element type="OBJECT" id="synonym" selected="false" />
+            <filter-element type="OBJECT" id="sequence" selected="false" />
+            <filter-element type="OBJECT" id="procedure" selected="false" />
+            <filter-element type="OBJECT" id="function" selected="false" />
+            <filter-element type="OBJECT" id="package" selected="false" />
+            <filter-element type="OBJECT" id="type" selected="false" />
+            <filter-element type="OBJECT" id="dimension" selected="false" />
+            <filter-element type="OBJECT" id="cluster" selected="false" />
+            <filter-element type="OBJECT" id="dblink" selected="false" />
           </any-schema>
         </extended-filter>
       </filters>
@@ -351,7 +354,7 @@
         <sorting-element type="RESERVED_WORD" id="parameter" />
       </sorting>
       <format>
-        <enforce-code-style-case value="true" />
+        <enforce-code-style-case value="false" />
       </format>
     </code-completion-settings>
     <execution-engine-settings>

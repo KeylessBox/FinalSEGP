@@ -1,0 +1,10 @@
+.button {
+	-fx-background-color: darkred;
+	-fx-font-family:"System";
+	-fx-font-size: 12;
+}
+
+
+.button:pressed{
+	-fx-background-color: #f33e54;
+}

@@ -1,0 +1,4 @@
+.pane {
+	-fx-background-image: url("../res/images/Victim.png");
+	-fx-background-size: 200, 200;	
+}

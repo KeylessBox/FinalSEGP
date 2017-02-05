@@ -40,7 +40,7 @@ USE investigationsdb;
 
 Now you have to grant permissions to that specific user:
 
-GRANT ALL ON testdb.* TO 'testuser'@'localhost';
+GRANT ALL ON investigationsdb.* TO 'user'@'localhost';
 
 You can add some default data I made as quick as possible by writing:
 
