@@ -1,4 +1,4 @@
 .button {
-	-fx-background-image: url("../../res/images/Add.png");
+	-fx-background-image: url("../res/images/Add.png");
 	-fx-background-size: 35, 35;	
 }

@@ -3,30 +3,31 @@ package Main;/**
  */
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.stage.Stage;
-//I added a comment, YAY!!!
-public class Main extends Application {
 
+import java.io.File;
+
+public class Main extends Application {
+   
     public static void main(String[] args) {
         launch(args);
     }
-
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
-//sadadasdasda
-        //something something something truly inspiring
-        //changed sumtin sumtin etc
-        //sdaf
-        //TODO start working as a team
-        Parent root = FXMLLoader.load(getClass().getResource("/FXML/Main.fxml"));
-
+        Parent root = FXMLLoader.load(getClass().getResource("/FXML/signIn.fxml"));
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Sign In");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.setMaximized(true);
+        Scene scene = new Scene(root,500, 400);
+        primaryStage.setScene(scene);
         primaryStage.show();
-        //sdfdsfsdfsdf
     }
 }

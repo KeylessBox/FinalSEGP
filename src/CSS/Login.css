@@ -32,10 +32,12 @@
  
 root { 
     display: block;
+
 }
 
 .root {
-     /*-fx-background-image: url("background.jpg");*/
+	-fx-background-image: url("../RES/img/backgroundForLogin.jpg");
+
 }
 .logo {
     -fx-top-margin: 100px;
@@ -72,3 +74,4 @@ root {
 .button:hover {
     -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }
+

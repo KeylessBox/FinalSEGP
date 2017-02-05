@@ -1,0 +1,47 @@
+
+
+.table-column {
+  -fx-alignment: CENTER;
+}
+
+.text-field {
+    -fx-font-size: 15pt;
+    -fx-font-weight: bold
+}
+
+.table-view .column-header{
+    -fx-font-size: 15;
+    -fx-font-weight: bold
+}
+
+.table-cell {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold
+}
+
+.text-field {
+    -fx-background-color:
+            #000000,
+            #FFFFFF;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 0, 0;
+}
+
+.text-field:focused {
+    -fx-background-color:
+            #0093EF,
+            #FFFFFF;
+}
+
+.text-field:hover {
+    -fx-background-color:
+            #909090,
+            #FFFFFF;
+}
+
+.text-field:focused:hover {
+    -fx-background-color:
+            #0093EF,
+            #FFFFFF;
+}
+

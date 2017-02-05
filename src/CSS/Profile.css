@@ -1,4 +1,4 @@
 .pane{
-	-fx-background-image: url("../../res/images/profile.png");
+	-fx-background-image: url("../res/images/profile.png");
 	-fx-background-size: 190, 79;
 }

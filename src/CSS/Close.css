@@ -1,4 +1,4 @@
 .button {
-	-fx-background-image: url("../../res/images/closebutton.png");
+	-fx-background-image: url("../res/images/closebutton.png");
 	-fx-background-size: 25, 25;	
 }

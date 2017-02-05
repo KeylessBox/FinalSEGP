@@ -10,7 +10,7 @@ import javafx.util.Callback;
  * Created by AndreiM on 2/3/2017.
  */
 public class CallsTable {
-    private static int minCellWidth = 200;
+    private static int minCellWidth = 100;
 
     public static void createCallerPNColumn(TableColumn callerPhoneNumber) {
 
@@ -21,12 +21,12 @@ public class CallsTable {
             }
         };
 
-        callerPhoneNumber.setMinWidth(minCellWidth);
-        callerPhoneNumber.setCellValueFactory(new PropertyValueFactory<CallsRecord, String>("callerPhoneNumber"));
+        callerPhoneNumber.setMinWidth(minCellWidth + 100);
+        callerPhoneNumber.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("callerPhoneNumber"));
         callerPhoneNumber.setCellFactory(editableFactory);
-        callerPhoneNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallsRecord, String>>() {
+        callerPhoneNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<CallsRecord, String> t) {
+            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setCallerPhoneNumber(t.getNewValue());
             }
@@ -43,12 +43,12 @@ public class CallsTable {
             }
         };
 
-        receiverPhoneNumber.setMinWidth(minCellWidth);
-        receiverPhoneNumber.setCellValueFactory(new PropertyValueFactory<CallsRecord, String>("receiverPhoneNumber"));
+        receiverPhoneNumber.setMinWidth(minCellWidth + 100);
+        receiverPhoneNumber.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("receiverPhoneNumber"));
         receiverPhoneNumber.setCellFactory(editableFactory);
-        receiverPhoneNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallsRecord, String>>() {
+        receiverPhoneNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<CallsRecord, String> t) {
+            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setReceiverPhoneNumber(t.getNewValue());
             }
@@ -66,11 +66,11 @@ public class CallsTable {
         };
 
         date.setMinWidth(minCellWidth);
-        date.setCellValueFactory(new PropertyValueFactory<CallsRecord, String>("date"));
+        date.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("date"));
         date.setCellFactory(editableFactory);
-        date.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallsRecord, String>>() {
+        date.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<CallsRecord, String> t) {
+            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setDate(t.getNewValue());
             }
@@ -87,11 +87,11 @@ public class CallsTable {
             }
         };
         time.setMinWidth(minCellWidth);
-        time.setCellValueFactory(new PropertyValueFactory<CallsRecord, String>("time"));
+        time.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("time"));
         time.setCellFactory(editableFactory);
-        time.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallsRecord, String>>() {
+        time.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<CallsRecord, String> t) {
+            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setTime(t.getNewValue());
             }
@@ -108,12 +108,12 @@ public class CallsTable {
             }
         };
 
-        typeOfCall.setMinWidth(minCellWidth);
-        typeOfCall.setCellValueFactory(new PropertyValueFactory<CallsRecord, String>("typeOfCall"));
+        typeOfCall.setMinWidth(minCellWidth + 50);
+        typeOfCall.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("typeOfCall"));
         typeOfCall.setCellFactory(editableFactory);
-        typeOfCall.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallsRecord, String>>() {
+        typeOfCall.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<CallsRecord, String> t) {
+            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setTypeOfCall(t.getNewValue());
             }
@@ -130,11 +130,11 @@ public class CallsTable {
             }
         };
         duration.setMinWidth(minCellWidth);
-        duration.setCellValueFactory(new PropertyValueFactory<CallsRecord, String>("duration"));
+        duration.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("duration"));
         duration.setCellFactory(editableFactory);
-        duration.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallsRecord, String>>() {
+        duration.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<CallsRecord, String> t) {
+            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setDuration(t.getNewValue());
             }
