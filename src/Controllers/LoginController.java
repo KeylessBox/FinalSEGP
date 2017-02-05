@@ -55,6 +55,8 @@ public class LoginController{
             Parent root2 = FXMLLoader.load(getClass().getResource("/FXML/Main.fxml"));/* Exception */
             Scene scene = new Scene(root2);
             stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.setResizable(true);
             stage.show();
         }
     }

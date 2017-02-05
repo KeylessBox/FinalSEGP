@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import Modules.*;
@@ -50,8 +51,18 @@ public class MainController {
     }
 
     @FXML public void initialize() {
-        callsData = sql.loadCalls();
 
+        date.setMinWidth(50);
+        date.setMaxWidth(50);
+        date.setPrefWidth(50);
+
+
+
+
+
+
+
+        callsData = sql.loadCalls();
         doColumn.createCallerPNColumn(callerPhoneNumber);
         doColumn.createReceiverPNColumn(receiverPhoneNumber);
         doColumn.createDateColumn(date);
@@ -59,8 +70,6 @@ public class MainController {
         doColumn.createTypeOfCallColumn(typeOfCall);
         doColumn.createDurationColumn(duration);
         mainTable.setItems(callsData);
-
-
         mainTable.setEditable(true);
     }
 }

@@ -10,7 +10,7 @@ import javafx.util.Callback;
  * Created by AndreiM on 2/3/2017.
  */
 public class CallsTable {
-    private static int minCellWidth = 200;
+    private static int minCellWidth = 100;
 
     public static void createCallerPNColumn(TableColumn callerPhoneNumber) {
 
@@ -21,7 +21,7 @@ public class CallsTable {
             }
         };
 
-        callerPhoneNumber.setMinWidth(minCellWidth);
+        callerPhoneNumber.setMinWidth(minCellWidth + 100);
         callerPhoneNumber.setCellValueFactory(new PropertyValueFactory<CallsRecord, String>("callerPhoneNumber"));
         callerPhoneNumber.setCellFactory(editableFactory);
         callerPhoneNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallsRecord, String>>() {
@@ -43,7 +43,7 @@ public class CallsTable {
             }
         };
 
-        receiverPhoneNumber.setMinWidth(minCellWidth);
+        receiverPhoneNumber.setMinWidth(minCellWidth + 100);
         receiverPhoneNumber.setCellValueFactory(new PropertyValueFactory<CallsRecord, String>("receiverPhoneNumber"));
         receiverPhoneNumber.setCellFactory(editableFactory);
         receiverPhoneNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallsRecord, String>>() {
@@ -108,7 +108,7 @@ public class CallsTable {
             }
         };
 
-        typeOfCall.setMinWidth(minCellWidth);
+        typeOfCall.setMinWidth(minCellWidth + 50);
         typeOfCall.setCellValueFactory(new PropertyValueFactory<CallsRecord, String>("typeOfCall"));
         typeOfCall.setCellFactory(editableFactory);
         typeOfCall.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallsRecord, String>>() {

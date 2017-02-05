@@ -1,0 +1,20 @@
+
+
+.table-column {
+  -fx-alignment: CENTER;
+}
+
+.text-field {
+    -fx-font-size: 15pt;
+    -fx-font-weight: bold
+}
+
+.table-view .column-header{
+    -fx-font-size: 15;
+    -fx-font-weight: bold
+}
+
+.table-cell {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold
+}

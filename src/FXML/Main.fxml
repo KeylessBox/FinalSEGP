@@ -27,7 +27,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../CSS/Background.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainController">
+<BorderPane id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../CSS/Background.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainController">
    <top>
       <MenuBar id="menubar" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
         <menus>
@@ -128,18 +128,15 @@
          <children>
             <Pane layoutX="24.0" layoutY="16.0" prefHeight="867.0" prefWidth="1201.0" styleClass="pane" stylesheets="@../CSS/Background2.css">
                <children>
-                  <TableView fx:id="mainTable" layoutX="64.0" layoutY="256.0" prefHeight="531.0" prefWidth="861.0" style="-fx-background-color: white;">
+                  <TableView fx:id="mainTable" layoutX="64.0" layoutY="256.0" prefHeight="550.0" prefWidth="852.0" stylesheets="@../CSS/table_view.css">
                     <columns>
-                      <TableColumn fx:id="callerPhoneNumber" maxWidth="92.0" minWidth="92.0" prefWidth="92.0" text="Caller Phone Number" />
-                      <TableColumn fx:id="receiverPhoneNumber" prefWidth="92.0" text="Receiver Phone Number" />
-                        <TableColumn fx:id="date" prefWidth="72.0" text="Date" />
-                        <TableColumn fx:id="time" prefWidth="75.0" text="Time" />
-                        <TableColumn fx:id="typeOfCall" prefWidth="75.0" text="TypeOfCall" />
-                        <TableColumn fx:id="duration" prefWidth="75.0" text="Duration" />
+                      <TableColumn fx:id="callerPhoneNumber" prefWidth="50" text="Caller Phone Number" />
+                      <TableColumn fx:id="receiverPhoneNumber" prefWidth="50"  text="Receiver Phone Number" />
+                        <TableColumn fx:id="date" prefWidth="50" text="Date" />
+                        <TableColumn fx:id="time" prefWidth="50" text="Time" />
+                        <TableColumn fx:id="typeOfCall" prefWidth="50" text="TypeOfCall" />
+                        <TableColumn fx:id="duration" prefWidth="50" text="Duration" />
                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
                   </TableView>
                   <ScrollPane layoutX="47.0" layoutY="31.0" prefHeight="165.0" prefViewportHeight="163.0" prefViewportWidth="1133.0" prefWidth="851.0" style="-fx-background-color: d7d7ce;">
                      <content>
