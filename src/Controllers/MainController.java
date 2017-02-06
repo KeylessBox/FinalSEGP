@@ -11,7 +11,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -29,7 +28,7 @@ import java.io.IOException;
  */
 
 public class MainController {
-    
+
     SQL sql = new SQL();
     Modules.Table.CallsTable ColumnFactory = new CallsTable();
     private ObservableList<CallRecord> callsData;
@@ -50,7 +49,7 @@ public class MainController {
     @FXML
     protected TableView table;
     @FXML
-    protected TextField txtField;
+    protected TextField textField;
     @FXML
     protected Label userLabel;
     @FXML
@@ -140,37 +139,14 @@ public class MainController {
             e1.printStackTrace();
         }
 
-        Pane temp = (Pane)victimNote.getChildren().get(0);
-        Button delete = (Button)temp.getChildren().get(1);
+        Pane temp = (Pane) victimNote.getChildren().get(0);
+        Button delete = (Button) temp.getChildren().get(1);
         Pane finalVictimNote = victimNote;
         delete.setOnAction(event -> {
             VSBox.getChildren().remove(finalVictimNote);
         });
-        //VSBox.setHgrow(victimNote, Priority.ALWAYS);
-        VSBox.getChildren().addAll(victimNote);
-        
-    }
-
-    public void addSuspect() {
-        System.out.println("Suspect");
-        Pane suspectNote = null;
-        try {
-            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/FXML/Suspect.fxml"));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        Pane temp = (Pane)suspectNote.getChildren().get(0);
-        Button delete = (Button)temp.getChildren().get(0);
-        Pane finalSuspectNote = suspectNote;
-        delete.setOnAction(event -> {
-            VSBox.getChildren().remove(finalSuspectNote);
-        });
-
-        //VSBox.setHgrow(suspectNote, Priority.ALWAYS);
-        VSBox.getChildren().add(suspectNote);
-    }
-
-    public void search() {
+        VBox vbox = (VBox) temp.getChildren().get(0);
+        TextField txtField = (TextField) vbox.getChildren().get(1);
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
             if (txtField.textProperty().get().isEmpty()) {
@@ -187,6 +163,82 @@ public class MainController {
                     String cellValue = col.getCellData(callsData.get(i)).toString();
                     cellValue = cellValue.toLowerCase();
                     if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
+                        tableItems.add(callsData.get(i));
+                        break;
+                    }
+                }
+            }
+            table.setItems(tableItems);
+        });
+
+
+        //VSBox.setHgrow(victimNote, Priority.ALWAYS);
+        VSBox.getChildren().addAll(victimNote);
+
+    }
+
+    public void addSuspect() {
+        System.out.println("Suspect");
+        Pane suspectNote = null;
+        try {
+            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/FXML/Suspect.fxml"));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        Pane temp = (Pane) suspectNote.getChildren().get(0);
+        Button delete = (Button) temp.getChildren().get(0);
+        Pane finalSuspectNote = suspectNote;
+        delete.setOnAction(event -> {
+            VSBox.getChildren().remove(finalSuspectNote);
+        });
+
+        VBox vbox = (VBox) temp.getChildren().get(1);
+        TextField txtField = (TextField) vbox.getChildren().get(1);
+        txtField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if (txtField.textProperty().get().isEmpty()) {
+                table.setItems(callsData);
+                return;
+            }
+
+            ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
+            ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+
+            for (int i = 0; i < callsData.size(); i++) {
+                for (int j = 0; j < cols.size(); j++) {
+                    TableColumn col = cols.get(j);
+                    String cellValue = col.getCellData(callsData.get(i)).toString();
+                    cellValue = cellValue.toLowerCase();
+                    if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
+                        tableItems.add(callsData.get(i));
+                        break;
+                    }
+                }
+            }
+            table.setItems(tableItems);
+        });
+        //VSBox.setHgrow(suspectNote, Priority.ALWAYS);
+        VSBox.getChildren().add(suspectNote);
+
+    }
+
+    public void search() {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if (textField.textProperty().get().isEmpty()) {
+                table.setItems(callsData);
+                return;
+            }
+
+            ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
+            ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+
+            for (int i = 0; i < callsData.size(); i++) {
+                for (int j = 0; j < cols.size(); j++) {
+                    TableColumn col = cols.get(j);
+                    String cellValue = col.getCellData(callsData.get(i)).toString();
+                    cellValue = cellValue.toLowerCase();
+                    if (cellValue.contains(textField.textProperty().get().toLowerCase())) {
                         tableItems.add(callsData.get(i));
                         break;
                     }
@@ -234,17 +286,17 @@ public class MainController {
         casesData = sql.loadCases();
 
         int[] i = new int[2];
-        for (CasesRecords tabPane : casesData){
-            if (tabPane.getStatus().equals(iTab.getText()))  {
-                iCase.getChildren().add(i[0],new Label(tabPane.getCaseName()));
+        for (CasesRecords tabPane : casesData) {
+            if (tabPane.getStatus().equals(iTab.getText())) {
+                iCase.getChildren().add(i[0], new Label(tabPane.getCaseName()));
                 i[0]++;
             }
             if (tabPane.getStatus().equals(sTab.getText())) {
-                sCase.getChildren().add(i[1],new Label(tabPane.getCaseName()));
+                sCase.getChildren().add(i[1], new Label(tabPane.getCaseName()));
                 i[1]++;
             }
             if (tabPane.getStatus() == pTab.getText()) {
-                pCase.getChildren().add(i[2],new Label(tabPane.getCaseName()));
+                pCase.getChildren().add(i[2], new Label(tabPane.getCaseName()));
                 i[2]++;
             }
         }

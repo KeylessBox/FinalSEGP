@@ -219,7 +219,7 @@
                                 <Font size="18.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="txtField" layoutX="65.0" layoutY="221.0" prefHeight="25.0" prefWidth="851.0"
+                        <TextField fx:id="textField" layoutX="65.0" layoutY="221.0" prefHeight="25.0" prefWidth="851.0"
                                    promptText="Search..."/>
                         <Button layoutX="1061.0" layoutY="146.0" mnemonicParsing="false" onAction="#addSuspect"
                                 prefHeight="25.0" prefWidth="103.0" stylesheets="@../CSS/AddButton2.css"
