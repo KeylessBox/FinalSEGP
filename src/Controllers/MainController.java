@@ -31,6 +31,7 @@ public class MainController {
 
     SQL sql = new SQL();
     Modules.Table.CallsTable ColumnFactory = new CallsTable();
+    private ObservableList<CallRecord> searchData;
     private ObservableList<CallRecord> callsData;
     private ObservableList<CasesRecords> casesData;
 
@@ -127,6 +128,7 @@ public class MainController {
         VSBox.setBackground(Background.EMPTY);
         scrollPane.setPannable(true);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        searchData = callsData;
 
     }
 
@@ -144,33 +146,39 @@ public class MainController {
         Pane finalVictimNote = victimNote;
         delete.setOnAction(event -> {
             VSBox.getChildren().remove(finalVictimNote);
+            searchData = callsData;
+            table.setItems(searchData);
         });
         VBox vbox = (VBox) temp.getChildren().get(0);
         TextField txtField = (TextField) vbox.getChildren().get(1);
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
             if (txtField.textProperty().get().isEmpty()) {
-                table.setItems(callsData);
-                return;
-            }
+                searchData = callsData;
+                table.setItems(searchData);
+            } else {
 
-            ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-            ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+                ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
+                ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
 
-            for (int i = 0; i < callsData.size(); i++) {
-                for (int j = 0; j < cols.size(); j++) {
-                    if (j == 1) {
-                        TableColumn col = cols.get(j);
-                        String cellValue = col.getCellData(callsData.get(i)).toString();
-                        cellValue = cellValue.toLowerCase();
-                        if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
-                            tableItems.add(callsData.get(i));
-                            break;
+                for (int i = 0; i < searchData.size(); i++) {
+                    for (int j = 0; j < cols.size(); j++) {
+                        if (j == 1) {
+                            TableColumn col = cols.get(j);
+                            String cellValue = col.getCellData(searchData.get(i)).toString();
+                            cellValue = cellValue.toLowerCase();
+                            if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
+                                tableItems.add(searchData.get(i));
+                                break;
+                            }
                         }
                     }
                 }
+                if (searchData != tableItems) {
+                    searchData = tableItems;
+                    table.setItems(tableItems);
+                }
             }
-            table.setItems(tableItems);
         });
 
         VSBox.getChildren().addAll(victimNote);
@@ -190,6 +198,8 @@ public class MainController {
         Pane finalSuspectNote = suspectNote;
         delete.setOnAction(event -> {
             VSBox.getChildren().remove(finalSuspectNote);
+            searchData = callsData;
+            table.setItems(searchData);
         });
 
         VBox vbox = (VBox) temp.getChildren().get(1);
@@ -197,28 +207,32 @@ public class MainController {
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
             if (txtField.textProperty().get().isEmpty()) {
-                table.setItems(callsData);
-                return;
-            }
+                searchData = callsData;
+                table.setItems(searchData);
+            }else {
 
-            ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-            ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+                ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
+                ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
 
-            for (int i = 0; i < callsData.size(); i++) {
-                for (int j = 0; j < cols.size(); j++) {
-                    if (j == 0) {
-                        TableColumn col = cols.get(j);
-                        String cellValue = col.getCellData(callsData.get(i)).toString();
-                        System.out.println("Column: " + cellValue);
-                        cellValue = cellValue.toLowerCase();
-                        if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
-                            tableItems.add(callsData.get(i));
-                            break;
+                for (int i = 0; i < searchData.size(); i++) {
+                    for (int j = 0; j < cols.size(); j++) {
+                        if (j == 0) {
+                            TableColumn col = cols.get(j);
+                            String cellValue = col.getCellData(searchData.get(i)).toString();
+                            System.out.println("Column: " + cellValue);
+                            cellValue = cellValue.toLowerCase();
+                            if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
+                                tableItems.add(searchData.get(i));
+                                break;
+                            }
                         }
                     }
                 }
+                if (searchData != tableItems) {
+                    searchData = tableItems;
+                    table.setItems(searchData);
+                }
             }
-            table.setItems(tableItems);
         });
 
         VSBox.getChildren().add(suspectNote);
@@ -229,33 +243,38 @@ public class MainController {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
 
             if (textField.textProperty().get().isEmpty()) {
-                table.setItems(callsData);
-                return;
-            }
+                searchData = callsData;
+                table.setItems(searchData);
+            }else {
 
-            ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-            ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+                ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
+                ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
 
-            for (int i = 0; i < callsData.size(); i++) {
-                for (int j = 0; j < cols.size(); j++) {
-                    TableColumn col = cols.get(j);
-                    String cellValue = col.getCellData(callsData.get(i)).toString();
-                    cellValue = cellValue.toLowerCase();
-                    if (cellValue.contains(textField.textProperty().get().toLowerCase())) {
-                        tableItems.add(callsData.get(i));
-                        break;
+                for (int i = 0; i < searchData.size(); i++) {
+                    for (int j = 0; j < cols.size(); j++) {
+                        TableColumn col = cols.get(j);
+                        String cellValue = col.getCellData(searchData.get(i)).toString();
+                        cellValue = cellValue.toLowerCase();
+                        if (cellValue.contains(textField.textProperty().get().toLowerCase())) {
+                            tableItems.add(searchData.get(i));
+                            break;
+                        }
                     }
                 }
+                if (searchData != tableItems) {
+                    searchData = tableItems;
+                    table.setItems(searchData);
+                }
             }
-            table.setItems(tableItems);
+
         });
 
     }
 
     @FXML
     public void addCall() {
-        if (callsData != null) {
-            callsData.add(new CallRecord(String.valueOf(sql.getID() + 1), "0", "0", "0", "0", "0", "0", "0"));
+        if (searchData != null) {
+            searchData.add(new CallRecord(String.valueOf(sql.getID() + 1), "0", "0", "0", "0", "0", "0", "0"));
             System.out.println("ADD: call");
             //sql.addCall();
         } else {
@@ -265,7 +284,7 @@ public class MainController {
 
     @FXML
     public void deleteCall() {
-        if (callsData != null) {
+        if (searchData != null) {
             if (table.getSelectionModel().getSelectedItem() != null) {
                 CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
                 if (record != null) {
@@ -274,7 +293,7 @@ public class MainController {
 //                        //sql.removeCall(record.getCallID());
 //                        System.out.println("DELETE: call " + record.getCallID());
 //                    }
-                    callsData.remove(table.getSelectionModel().getSelectedItem());
+                    searchData.remove(table.getSelectionModel().getSelectedItem());
                 }
             }
         } else {
