@@ -30,6 +30,7 @@ import java.io.IOException;
  */
 
 public class MainController {
+    
     SQL sql = new SQL();
     Modules.Table.CallsTable ColumnFactory = new CallsTable();
     private ObservableList<CallRecord> callsData;
@@ -104,8 +105,6 @@ public class MainController {
 
     }
 
-
-
     @FXML
     public void initialize() {
         initCases();
@@ -127,9 +126,6 @@ public class MainController {
 
     }
 
-
-
-
     public void addVictim() {
         System.out.println("VICTIM");
         Pane victimNote = null;
@@ -150,8 +146,6 @@ public class MainController {
         
     }
 
-
-
     public void addSuspect() {
         System.out.println("Suspect");
         Pane suspectNote = null;
@@ -171,7 +165,6 @@ public class MainController {
         VSBox.setHgrow(suspectNote, Priority.ALWAYS);
         VSBox.getChildren().addAll(suspectNote);
     }
-
 
     public void search() {
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -210,7 +203,6 @@ public class MainController {
             System.out.println("HERE");
         }
     }
-    
 
     @FXML
     public void deleteCall() {
