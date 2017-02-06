@@ -32,19 +32,6 @@ public class CallRecord {
         this.typeOfCall = new SimpleStringProperty(typeOfCall);
         this.duration = new SimpleStringProperty(duration);
     }
-
-    public CallRecord(String callerPhoneNumber, String receiverPhoneNumber, String date, String time,
-                      String typeOfCall, String duration) {
-        this.callID = null;
-        this.caseID = null;
-        this.callerPhoneNumber = new SimpleStringProperty(callerPhoneNumber);
-        this.receiverPhoneNumber = new SimpleStringProperty(receiverPhoneNumber);
-        this.date = new SimpleStringProperty(date);
-        this.time = new SimpleStringProperty(time);
-        this.typeOfCall = new SimpleStringProperty(typeOfCall);
-        this.duration = new SimpleStringProperty(duration);
-    }
-
         //Getters:
 
         public String getCallID() {
