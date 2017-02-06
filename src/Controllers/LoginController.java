@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -34,6 +35,8 @@ public class LoginController {
     private TextField pw;
     @FXML
     private Button editDetails;
+
+    public String user = "";
 
     /**
      * Example how it works.
@@ -74,6 +77,10 @@ public class LoginController {
              * If the account details entered are correct,
              * Program moves to the Main Window
              */
+            user = username.getText();
+            FileWriter writer = new FileWriter(new File("src/RES/tmp.txt"));
+            writer.write(user);
+            writer.close();
 
             Node node = (Node) event.getSource();
             Stage stage = (Stage) node.getScene().getWindow();

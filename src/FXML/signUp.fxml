@@ -32,7 +32,7 @@
             <TextField fx:id="email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button fx:id="back" onAction="#back" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Back" GridPane.rowIndex="5" />
             <Label text="Name" />
-            <Label text="Username" GridPane.rowIndex="1" />
+            <Label text="Surname" GridPane.rowIndex="1" />
             <Label text="Email" GridPane.rowIndex="2" />
             <Label text="Password" GridPane.rowIndex="3" />
 

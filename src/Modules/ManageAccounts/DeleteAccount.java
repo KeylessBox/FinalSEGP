@@ -16,7 +16,7 @@ public class DeleteAccount {
 
         String url = "jdbc:mysql://localhost:3306/investigationsdb";
         String user = "root";
-        String pw = "pass";
+        String pw = "";
 
 
         try {

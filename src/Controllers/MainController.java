@@ -2,19 +2,24 @@ package Controllers;
 
 
 import Modules.File_Import.ImportCSV;
+import Modules.ManageAccounts.User;
 import Modules.Table.CallsRecord;
 import Modules.Table.CallsTable;
 import SQL.SQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -42,6 +47,9 @@ public class MainController {
     protected TableView mainTable;
     @FXML
     protected TextField txtField;
+    @FXML
+    protected Label userLabel;
+
 
     @FXML
     protected void importCSV() {
@@ -60,10 +68,24 @@ public class MainController {
             ImportCSV.importcsv(filePath);
         }
     }
+    @FXML
+    public void setUserLabel(){
+        try{
+            BufferedReader read = new BufferedReader(new FileReader(new File("src/RES/tmp.txt")));
+            String rd = read.readLine();
+            userLabel.setText(User.userGetName(rd));
+            read.close();
 
+        }catch (IOException e){
+
+        }
+        finally {
+            new File("src/RES/tmp.txt").delete();
+        }
+    }
     @FXML
     public void initialize() {
-
+        setUserLabel();
         date.setMinWidth(50);
         date.setMaxWidth(50);
         date.setPrefWidth(50);
