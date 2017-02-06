@@ -68,21 +68,25 @@ public class MainController {
             ImportCSV.importcsv(filePath);
         }
     }
+
     @FXML
-    public void setUserLabel(){
-        try{
+    public void setUserLabel() {
+        try {
             BufferedReader read = new BufferedReader(new FileReader(new File("src/RES/tmp.txt")));
             String rd = read.readLine();
-            userLabel.setText(User.userGetName(rd));
+            rd = User.userGetName(rd);
+            rd = rd.replace(" ", "\n");
+            System.out.println(rd);
+            userLabel.setText(rd);
             read.close();
 
-        }catch (IOException e){
+        } catch (IOException e) {
 
-        }
-        finally {
+        } finally {
             new File("src/RES/tmp.txt").delete();
         }
     }
+
     @FXML
     public void initialize() {
         setUserLabel();
@@ -103,7 +107,7 @@ public class MainController {
     }
 
 
-    public void search(){
+    public void search() {
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
             if (txtField.textProperty().get().isEmpty()) {

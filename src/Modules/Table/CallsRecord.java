@@ -6,7 +6,7 @@ import javafx.beans.property.StringProperty;
 /**
  * Created by AndreiM on 2/3/2017.
  */
-public class CallRecord {
+public class CallsRecord {
 
 
     /**
@@ -21,8 +21,8 @@ public class CallRecord {
         private final StringProperty typeOfCall;
         private final StringProperty duration;
 
-    public CallRecord(String callID, String caseID, String callerPhoneNumber, String receiverPhoneNumber, String date, String time,
-                      String typeOfCall, String duration) {
+    public CallsRecord(String callID, String caseID, String callerPhoneNumber, String receiverPhoneNumber, String date, String time,
+                       String typeOfCall, String duration) {
         this.callID = new SimpleStringProperty(callID);
         this.caseID = new SimpleStringProperty(caseID);
         this.callerPhoneNumber = new SimpleStringProperty(callerPhoneNumber);
@@ -33,8 +33,8 @@ public class CallRecord {
         this.duration = new SimpleStringProperty(duration);
     }
 
-    public CallRecord(String callerPhoneNumber, String receiverPhoneNumber, String date, String time,
-                      String typeOfCall, String duration) {
+    public CallsRecord(String callerPhoneNumber, String receiverPhoneNumber, String date, String time,
+                       String typeOfCall, String duration) {
         this.callID = null;
         this.caseID = null;
         this.callerPhoneNumber = new SimpleStringProperty(callerPhoneNumber);

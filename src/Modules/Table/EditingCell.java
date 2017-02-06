@@ -15,7 +15,7 @@ import javafx.scene.input.KeyEvent;
     /**
      * EditingCell class allows to edit and save TableView cells
      */
-    public class EditingCell extends TableCell<CallRecord, String> {
+    public class EditingCell extends TableCell<CallsRecord, String> {
 
         private TextField textField;
 

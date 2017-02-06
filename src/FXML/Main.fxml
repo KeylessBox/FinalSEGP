@@ -61,7 +61,7 @@
                     <children>
                         <Pane prefHeight="156.0" prefWidth="190.0" styleClass="pane" stylesheets="@../CSS/Profile.css">
                             <children>
-                                <Label fx:id="userLabel" layoutX="86.0" layoutY="21.0" prefHeight="19.0" prefWidth="72.0" style="-fx-font-family: &quot;Segoe Print&quot;; -fx-font-size: 14;" text="Username" textFill="#210cda">
+                                <Label fx:id="userLabel" alignment="TOP_CENTER" layoutX="81.0" layoutY="12.0" prefHeight="47.0" prefWidth="94.0" style="-fx-font-family: &quot;Segoe Print&quot;; -fx-font-size: 14;" text="Username" textFill="#210cda">
                                     <font>
                                         <Font name="Tahoma" size="15.0" />
                                     </font>
