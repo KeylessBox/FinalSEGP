@@ -1,4 +1,5 @@
 .button {
+
     -fx-background-radius: 16.4, 15;
     -fx-background-insets: -1.4, 0;
     -fx-border-radius: 15;
@@ -6,15 +7,16 @@
     -fx-border-color: dimgrey;
     -fx-padding: 0;
     -fx-font-size: 0;
-    -fx-stroke: dimgrey;
-    -fx-stroke-width: 2;
+
 }
 
 .button:focused {
-    -fx-background-color: -fx-focus-color, white;
+    -fx-effect: innershadow(gaussian, blue, 15, 0, 0, 0);
+
 }
 
 
 .button:hover {
-    -fx-effect: innershadow(gaussian, blue, 15, 0, 0, 0);
+    -fx-effect: innershadow(gaussian, red, 15, 0, 0, 0);
+    -fx-background-image: url("../res/images/close.png");
 }

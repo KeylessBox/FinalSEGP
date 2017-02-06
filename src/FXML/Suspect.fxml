@@ -17,12 +17,12 @@
                 <Button fx:id="close" layoutX="169.0" layoutY="5.0"  mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"  stylesheets="@../CSS/Close.css" />
                 <VBox layoutX="2.0" layoutY="28.0" prefHeight="78.0" prefWidth="196.0" spacing="5.0">
                     <children>
-                        <TextField prefHeight="40.0" prefWidth="196.0" style="-fx-background-color: #fed5d2;">
+                        <TextField prefHeight="40.0" prefWidth="196.0" style="-fx-background-color: #fed5d2;" promptText="Name">
                             <font>
                                 <Font size="16.0" />
                             </font>
                         </TextField>
-                        <TextField prefHeight="23.0" prefWidth="196.0" style="-fx-background-color: #fed5d2;">
+                        <TextField prefHeight="23.0" prefWidth="196.0" style="-fx-background-color: #fed5d2;" promptText="Telephone">
                             <font>
                                 <Font size="16.0" />
                             </font>
