@@ -159,12 +159,14 @@ public class MainController {
 
             for (int i = 0; i < callsData.size(); i++) {
                 for (int j = 0; j < cols.size(); j++) {
-                    TableColumn col = cols.get(j);
-                    String cellValue = col.getCellData(callsData.get(i)).toString();
-                    cellValue = cellValue.toLowerCase();
-                    if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
-                        tableItems.add(callsData.get(i));
-                        break;
+                    if (j == 1) {
+                        TableColumn col = cols.get(j);
+                        String cellValue = col.getCellData(callsData.get(i)).toString();
+                        cellValue = cellValue.toLowerCase();
+                        if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
+                            tableItems.add(callsData.get(i));
+                            break;
+                        }
                     }
                 }
             }
@@ -206,12 +208,15 @@ public class MainController {
 
             for (int i = 0; i < callsData.size(); i++) {
                 for (int j = 0; j < cols.size(); j++) {
-                    TableColumn col = cols.get(j);
-                    String cellValue = col.getCellData(callsData.get(i)).toString();
-                    cellValue = cellValue.toLowerCase();
-                    if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
-                        tableItems.add(callsData.get(i));
-                        break;
+                    if (j == 0) {
+                        TableColumn col = cols.get(j);
+                        String cellValue = col.getCellData(callsData.get(i)).toString();
+                        System.out.println("Column: " + cellValue);
+                        cellValue = cellValue.toLowerCase();
+                        if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
+                            tableItems.add(callsData.get(i));
+                            break;
+                        }
                     }
                 }
             }
