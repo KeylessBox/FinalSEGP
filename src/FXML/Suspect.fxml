@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.control.Button?>
 
-<Pane fx:id="Suspect1" style="-fx-background-color: #d7d7ce;" styleClass="root" xmlns="http://javafx.com/javafx/8"
+<Pane fx:id="Suspect1" style="-fx-background-color: #d7d7ce;" xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SuspectController">
     <children>
         <Pane layoutY="16.0" prefHeight="132.0" prefWidth="200.0" styleClass="pane" stylesheets="@../CSS/Suspect.css">
