@@ -97,7 +97,7 @@ public class LoginController {
             });
 
             // Dropping over surface
-            
+
             scene.setOnDragDropped(event2 -> {
                 Dragboard db = event2.getDragboard();
                 boolean success = false;

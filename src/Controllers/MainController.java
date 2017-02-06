@@ -91,7 +91,10 @@ public class MainController {
         } finally {
             new File("src/RES/tmp.txt").delete();
         }
+
     }
+
+
 
     @FXML
     public void initialize() {
@@ -111,6 +114,8 @@ public class MainController {
         search();
 
     }
+
+
 
     @FXML
     public void addVictim() {
