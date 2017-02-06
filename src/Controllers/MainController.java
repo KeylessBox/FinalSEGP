@@ -5,18 +5,17 @@ import Modules.File_Import.ImportCSV;
 import Modules.ManageAccounts.User;
 import Modules.Table.CallRecord;
 import Modules.Table.CallsTable;
+import Modules.Table.CasesRecords;
 import SQL.SQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -33,7 +32,8 @@ import java.io.IOException;
 public class MainController {
     SQL sql = new SQL();
     Modules.Table.CallsTable doColumn = new CallsTable();
-    private ObservableList<CallRecord> data;
+    private ObservableList<CallRecord> callsData;
+    private ObservableList<CasesRecords> casesData;
 
     @FXML
     protected TableColumn callerPhoneNumber;
@@ -53,10 +53,20 @@ public class MainController {
     protected TextField txtField;
     @FXML
     protected Label userLabel;
-
+    @FXML
+    protected Tab iTab;
+    @FXML
+    protected Tab sTab;
+    @FXML
+    protected Tab pTab;
+    @FXML
+    protected VBox iCase;
+    @FXML
+    protected VBox sCase;
+    @FXML
+    protected VBox pCase;
     @FXML
     protected HBox VSBox;
-
 
     @FXML
     protected void importCSV() {
@@ -98,20 +108,22 @@ public class MainController {
 
     @FXML
     public void initialize() {
+        initCases();
         setUserLabel();
         date.setMinWidth(50);
         date.setMaxWidth(50);
         date.setPrefWidth(50);
-        data = sql.loadCalls();
+        callsData = sql.loadCalls();
         doColumn.createCallerPNColumn(callerPhoneNumber);
         doColumn.createReceiverPNColumn(receiverPhoneNumber);
         doColumn.createDateColumn(date);
         doColumn.createTimeColumn(time);
         doColumn.createTypeOfCallColumn(typeOfCall);
         doColumn.createDurationColumn(duration);
-        table.setItems(data);
+        table.setItems(callsData);
         table.setEditable(true);
         search();
+
 
     }
 
@@ -150,20 +162,20 @@ public class MainController {
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
             if (txtField.textProperty().get().isEmpty()) {
-                table.setItems(data);
+                table.setItems(callsData);
                 return;
             }
 
             ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
             ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
 
-            for (int i = 0; i < data.size(); i++) {
+            for (int i = 0; i < callsData.size(); i++) {
                 for (int j = 0; j < cols.size(); j++) {
                     TableColumn col = cols.get(j);
-                    String cellValue = col.getCellData(data.get(i)).toString();
+                    String cellValue = col.getCellData(callsData.get(i)).toString();
                     cellValue = cellValue.toLowerCase();
                     if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
-                        tableItems.add(data.get(i));
+                        tableItems.add(callsData.get(i));
                         break;
                     }
                 }
@@ -175,8 +187,8 @@ public class MainController {
 
     @FXML
     public void addCall() {
-        if (data != null) {
-            data.add(new CallRecord(String.valueOf(sql.getID() + 1), "0", "0", "0", "0", "0", "0", "0"));
+        if (callsData != null) {
+            callsData.add(new CallRecord(String.valueOf(sql.getID() + 1), "0", "0", "0", "0", "0", "0", "0"));
             System.out.println("ADD: call");
             //sql.addCall();
         } else {
@@ -187,7 +199,7 @@ public class MainController {
 
     @FXML
     public void deleteCall() {
-        if (data != null) {
+        if (callsData != null) {
             if (table.getSelectionModel().getSelectedItem() != null) {
                 CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
                 if (record != null) {
@@ -196,13 +208,38 @@ public class MainController {
 //                        //sql.removeCall(record.getCallID());
 //                        System.out.println("DELETE: call " + record.getCallID());
 //                    }
-                    data.remove(table.getSelectionModel().getSelectedItem());
+                    callsData.remove(table.getSelectionModel().getSelectedItem());
                 }
             }
         } else {
             System.out.println("HERE");
         }
     }
+
+    /**
+     * Initialises the cases on the TabPane
+     */
+    private void initCases() {
+        casesData = sql.loadCases();
+
+        int[] i = new int[2];
+        for (CasesRecords tabPane : casesData){
+            if (tabPane.getStatus().equals(iTab.getText()))  {
+                iCase.getChildren().add(i[0],new Label(tabPane.getCaseName()));
+                i[0]++;
+            }
+            if (tabPane.getStatus().equals(sTab.getText())) {
+                sCase.getChildren().add(i[1],new Label(tabPane.getCaseName()));
+                i[1]++;
+            }
+            if (tabPane.getStatus() == pTab.getText()) {
+                pCase.getChildren().add(i[2],new Label(tabPane.getCaseName()));
+                i[2]++;
+            }
+        }
+    }
+
+
 
 
 }

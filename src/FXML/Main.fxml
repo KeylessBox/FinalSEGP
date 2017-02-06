@@ -181,7 +181,7 @@
                     <children>
                         <TabPane id="rightRoot" layoutX="5.0" layoutY="45.0" prefHeight="416.0" prefWidth="240.0" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
                             <tabs>
-                                <Tab id="investigatingTab" text=" Investigating ">
+                                <Tab fx:id="iTab" text="Investigating">
                                     <content>
                                         <AnchorPane prefHeight="794.0" prefWidth="228.0" style="-fx-background-color: white;">
                                             <children>
@@ -191,15 +191,10 @@
                                                             <children>
                                                                 <HBox prefHeight="54.0" prefWidth="240.0" spacing="5.0">
                                                                     <children>
-                                                                        <ImageView fitHeight="55.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
-                                                                        <VBox prefHeight="55.0" prefWidth="84.0" spacing="5.0">
+                                                                        <ImageView fitHeight="55.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="t    rue" />
+                                                                        <VBox fx:id = "iCase" prefHeight="55.0" prefWidth="84.0" spacing="5.0">
                                                                             <children>
-                                                                                <Label prefHeight="29.0" prefWidth="100.0" text="Case ">
-                                                                                    <font>
-                                                                                        <Font size="18.0" />
-                                                                                    </font>
-                                                                                </Label>
-                                                                                <Label prefHeight="27.0" prefWidth="100.0" text="Date" />
+
                                                                             </children>
                                                                         </VBox>
                                                                         <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="87.0" spacing="5.0">
@@ -221,26 +216,34 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                                <Tab id="solvedTab" text=" Solved ">
+                                <Tab fx:id="sTab"  text="Solved">
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                             <children>
                                                 <ScrollPane layoutY="-1.0" prefHeight="388.0" prefWidth="240.0" style="-fx-background: white;">
                                                     <content>
-                                                        <VBox prefHeight="386.0" prefWidth="238.0" spacing="5.0" style="-fx-background-color: white;" />
+                                                        <VBox fx:id = "sCase" prefHeight="55.0" prefWidth="84.0" spacing="5.0">
+                                                            <children>
+                                                                <Label></Label>
+                                                            </children>
+                                                        </VBox>
                                                     </content>
                                                 </ScrollPane>
                                             </children>
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                                <Tab id="preliminaryTab" text=" Preliminary ">
+                                <Tab fx:id="pTab"  text="Preliminary">
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="381.0" prefWidth="228.0">
                                             <children>
                                                 <ScrollPane layoutX="-2.0" layoutY="-1.0" prefHeight="389.0" prefWidth="242.0" style="-fx-background: white;">
                                                     <content>
-                                                        <VBox prefHeight="387.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: white;" />
+                                                        <VBox fx:id = "pCase" prefHeight="387.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: white;">
+                                                            <children>
+                                                                <Label></Label>
+                                                            </children>
+                                                        </VBox>
                                                     </content>
                                                 </ScrollPane>
                                             </children>

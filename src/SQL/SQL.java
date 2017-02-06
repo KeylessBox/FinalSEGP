@@ -5,6 +5,7 @@ package SQL;
  */
 
 import Modules.Table.CallRecord;
+import Modules.Table.CasesRecords;
 import Modules.Table.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,11 +50,33 @@ public class SQL {
                     maxIDCall = Integer.parseInt(callsRS.getString(1));
                 }
 
-                data.add(new CallRecord(callsRS.getString(3),
+                data.add(new CallRecord(callsRS.getString(1),callsRS.getString(2),callsRS.getString(3),
                         callsRS.getString(4), callsRS.getString(5), callsRS.getString(6), callsRS.getString(7),
                         callsRS.getString(8)));
             }
 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return data;
+    }
+
+    public ObservableList<CasesRecords> loadCases() {
+        Connection connection = dbConnection.connect();
+        ObservableList<CasesRecords> data = FXCollections.observableArrayList();
+
+        try {
+            //execute query and store result in a result SET:
+            ResultSet caseRS = connection.createStatement().executeQuery("SELECT * FROM Cases");
+
+            while (caseRS.next()) {
+
+                if (Integer.parseInt(caseRS.getString(1)) > maxIDCall) {
+                    maxIDCall = Integer.parseInt(caseRS.getString(1));
+                }
+                data.add(new CasesRecords(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4)));
+            }
+            maxIDCall = 1;
         } catch (Exception ex) {
             ex.printStackTrace();
         }

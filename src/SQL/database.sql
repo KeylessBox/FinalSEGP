@@ -86,16 +86,15 @@ INSERT INTO `calls` (`Id`, `CaseId`, `CallerPhoneNumber`, `ReceiverPhoneNumber`,
 CREATE TABLE `cases` (
   `Id` int(11) NOT NULL,
   `Name` varchar(35) DEFAULT NULL,
-  `Details` varchar(255) DEFAULT NULL
+  `Details` varchar(255) DEFAULT NULL,
+   `Status` Enum ('Investigating','Solved','Preliminary')
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cases`
 --
-
-INSERT INTO `cases` (`Id`, `Name`, `Details`) VALUES
-(1, 'Cheeky Scar', 'A mass murderer in Essex terrorizes peaceful people'),
-(2, 'Little Rabbit', 'A girl found dead with her rabbit close by');
+INSERT INTO Cases(Name, Details, Status) VALUES('Cheeky Scar', 'A mass murderer in Essex terrorizes peaceful people','Investigating');
+INSERT INTO Cases(Name, Details, Status) VALUES('Little Rabbit', 'A girl found dead with her rabbit close by','Solved');
 
 -- --------------------------------------------------------
 

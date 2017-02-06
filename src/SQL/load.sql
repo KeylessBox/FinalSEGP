@@ -10,7 +10,7 @@ CREATE TABLE `Accounts` (
 
 CREATE TABLE IF NOT EXISTS Cases(Id INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(35),
-    Details VARCHAR(255)) ENGINE= InnoDB;
+    Details VARCHAR(255), Status Enum ('Investigating','Solved','Preliminary')) ENGINE= InnoDB;
 
 CREATE TABLE IF NOT EXISTS Users(Id INT PRIMARY KEY AUTO_INCREMENT,
     Name VARCHAR(25)) ENGINE= InnoDB;
@@ -41,11 +41,11 @@ CREATE TABLE IF NOT EXISTS Calls(Id INT PRIMARY KEY AUTO_INCREMENT,
     FOREIGN KEY(CaseId) REFERENCES Cases(Id) ON DELETE CASCADE) ENGINE= InnoDB;
 
 
-INSERT INTO `accounts` (`Name`, `Surname`, `Email`, `Password`, `Privileges`) VALUES
+INSERT INTO `accounts`(`Name`, `Surname`, `Email`, `Password`, `Privileges`) VALUES
 ('Angel', 'Juarez', 'a.juarez@wypd.co.uk', 'password', 'user');
 
-INSERT INTO Cases(Name, Details) VALUES('Cheeky Scar', 'A mass murderer in Essex terrorizes peaceful people');
-INSERT INTO Cases(Name, Details) VALUES('Little Rabbit', 'A girl found dead with her rabbit close by');
+INSERT INTO Cases(Name, Details, Status) VALUES('Cheeky Scar', 'A mass murderer in Essex terrorizes peaceful people','Investigating');
+INSERT INTO Cases(Name, Details, Status) VALUES('Little Rabbit', 'A girl found dead with her rabbit close by','Solved');
 
 INSERT INTO Users(Name) VALUES(' Sherlock Holmes');
 
