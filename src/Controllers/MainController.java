@@ -85,6 +85,7 @@ public class MainController {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+
         VSBox.setHgrow(suspectNote, Priority.ALWAYS);
         VSBox.getChildren().addAll(suspectNote);
     }

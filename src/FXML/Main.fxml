@@ -134,7 +134,7 @@
                         </TableView>
                         <ScrollPane layoutX="47.0" layoutY="31.0" prefHeight="165.0" prefViewportHeight="163.0" prefViewportWidth="1133.0" prefWidth="851.0" style="-fx-background-color: d7d7ce;">
                             <content>
-                                <HBox fx:id="VSBox" layoutX="47.0" layoutY="31.0" prefHeight="163.0" prefWidth="849.0" spacing="250.0" style="-fx-background-color: d7d7ce;">
+                                <HBox fx:id="VSBox" layoutX="47.0" layoutY="31.0" prefHeight="163.0" prefWidth="849.0" spacing="50.0" style="-fx-background-color: d7d7ce;">
                                 </HBox>
                             </content>
                         </ScrollPane>
