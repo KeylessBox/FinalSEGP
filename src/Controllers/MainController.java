@@ -11,11 +11,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -68,6 +67,8 @@ public class MainController {
     protected VBox pCase;
     @FXML
     protected HBox VSBox;
+    @FXML
+    protected ScrollPane scrollPane;
 
     @FXML
     protected void importCSV() {
@@ -122,7 +123,11 @@ public class MainController {
         table.setItems(callsData);
         table.setEditable(true);
         search();
-
+        VSBox.setAlignment(Pos.TOP_LEFT);
+        VSBox.setSpacing(50);
+        VSBox.setBackground(Background.EMPTY);
+        scrollPane.setPannable(true);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
     }
 
@@ -141,7 +146,7 @@ public class MainController {
         delete.setOnAction(event -> {
             VSBox.getChildren().remove(finalVictimNote);
         });
-        VSBox.setHgrow(victimNote, Priority.ALWAYS);
+        //VSBox.setHgrow(victimNote, Priority.ALWAYS);
         VSBox.getChildren().addAll(victimNote);
         
     }
@@ -161,9 +166,8 @@ public class MainController {
             VSBox.getChildren().remove(finalSuspectNote);
         });
 
-
-        VSBox.setHgrow(suspectNote, Priority.ALWAYS);
-        VSBox.getChildren().addAll(suspectNote);
+        //VSBox.setHgrow(suspectNote, Priority.ALWAYS);
+        VSBox.getChildren().add(suspectNote);
     }
 
     public void search() {

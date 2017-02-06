@@ -27,28 +27,30 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../CSS/Background.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainController">
+<BorderPane id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../CSS/Background.css"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Controllers.MainController">
     <top>
         <MenuBar id="menubar" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Close"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Tools">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem mnemonicParsing="false" text="Delete"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="View">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem mnemonicParsing="false" text="About"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Action 1" />
+                        <MenuItem mnemonicParsing="false" text="Action 1"/>
                     </items>
                 </Menu>
             </menus>
@@ -61,45 +63,74 @@
                     <children>
                         <Pane prefHeight="156.0" prefWidth="190.0" styleClass="pane" stylesheets="@../CSS/Profile.css">
                             <children>
-                                <Label fx:id="userLabel" alignment="TOP_CENTER" layoutX="81.0" layoutY="12.0" prefHeight="47.0" prefWidth="94.0" style="-fx-font-family: &quot;Segoe Print&quot;; -fx-font-size: 14;" text="Username" textFill="#210cda">
+                                <Label fx:id="userLabel" alignment="TOP_CENTER" layoutX="81.0" layoutY="12.0"
+                                       prefHeight="47.0" prefWidth="94.0"
+                                       style="-fx-font-family: &quot;Segoe Print&quot;; -fx-font-size: 14;"
+                                       text="Username" textFill="#210cda">
                                     <font>
-                                        <Font name="Tahoma" size="15.0" />
+                                        <Font name="Tahoma" size="15.0"/>
                                     </font>
                                 </Label>
-                                <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="16.0" layoutY="16.0" pickOnBounds="true" preserveRatio="false">
+                                <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="16.0" layoutY="16.0"
+                                           pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../RES/img/defaultProfile.jpg" />
+                                        <Image url="@../RES/img/defaultProfile.jpg"/>
                                     </image>
                                 </ImageView>
-                                <Button id="editDetails" layoutX="44.0" layoutY="74.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="107.0" stylesheets="@../CSS/ProfileButtons.css" text="Edit details" />
-                                <Button id="logoutButton" layoutX="60.0" layoutY="115.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="68.0" stylesheets="@../CSS/ProfileButtons.css" text="Logout" />
+                                <Button id="editDetails" layoutX="44.0" layoutY="74.0" mnemonicParsing="false"
+                                        prefHeight="35.0" prefWidth="107.0" stylesheets="@../CSS/ProfileButtons.css"
+                                        text="Edit details"/>
+                                <Button id="logoutButton" layoutX="60.0" layoutY="115.0" mnemonicParsing="false"
+                                        prefHeight="29.0" prefWidth="68.0" stylesheets="@../CSS/ProfileButtons.css"
+                                        text="Logout"/>
                             </children>
                         </Pane>
                     </children>
                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </padding>
                 </VBox>
-                <Pane layoutX="17.0" layoutY="232.0" prefHeight="382.0" prefWidth="191.0" styleClass="pane" stylesheets="@../CSS/CaseFile.css">
+                <Pane layoutX="17.0" layoutY="232.0" prefHeight="382.0" prefWidth="191.0" styleClass="pane"
+                      stylesheets="@../CSS/CaseFile.css">
                     <children>
-                        <Pane layoutX="3.0" layoutY="45.0" prefHeight="331.0" prefWidth="183.0" style="-fx-background-color: d1cfa8;">
+                        <Pane layoutX="3.0" layoutY="45.0" prefHeight="331.0" prefWidth="183.0"
+                              style="-fx-background-color: d1cfa8;">
                             <children>
-                                <ScrollPane layoutX="1.0" prefHeight="301.0" prefViewportHeight="380.0" prefViewportWidth="191.0" prefWidth="182.0" style="-fx-background-color: d1cfa8;">
+                                <ScrollPane layoutX="1.0" prefHeight="301.0" prefViewportHeight="380.0"
+                                            prefViewportWidth="191.0" prefWidth="182.0"
+                                            style="-fx-background-color: d1cfa8;">
                                     <content>
-                                        <VBox id="caseFilesContainer" alignment="TOP_CENTER" prefHeight="299.0" prefWidth="180.0" spacing="10.0" style="-fx-background-color: d1cfa8;">
+                                        <VBox id="caseFilesContainer" alignment="TOP_CENTER" prefHeight="299.0"
+                                              prefWidth="180.0" spacing="10.0" style="-fx-background-color: d1cfa8;">
                                             <children>
-                                                <Pane prefHeight="38.0" prefWidth="180.0" styleClass="pane" stylesheets="@../CSS/CaseBox.css">
+                                                <Pane prefHeight="38.0" prefWidth="180.0" styleClass="pane"
+                                                      stylesheets="@../CSS/CaseBox.css">
                                                     <children>
-                                                        <HBox layoutX="8.0" layoutY="-2.0" prefHeight="42.0" prefWidth="77.0">
+                                                        <HBox layoutX="8.0" layoutY="-2.0" prefHeight="42.0"
+                                                              prefWidth="77.0">
                                                             <children>
-                                                                <Label prefHeight="38.0" prefWidth="72.0" text="Case name" />
+                                                                <Label prefHeight="38.0" prefWidth="72.0"
+                                                                       text="Case name"/>
                                                             </children>
                                                         </HBox>
-                                                        <HBox layoutX="86.0" layoutY="7.0" prefHeight="27.0" prefWidth="87.0" spacing="5.0">
+                                                        <HBox layoutX="86.0" layoutY="7.0" prefHeight="27.0"
+                                                              prefWidth="87.0" spacing="5.0">
                                                             <children>
-                                                                <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: white;" styleClass="button" stylesheets="@../CSS/CaseButton1.css" />
-                                                                <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: white;" styleClass="button" stylesheets="@../CSS/CaseButton2.css" />
-                                                                <ToggleButton mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: white;" styleClass="button" stylesheets="@../CSS/CaseButton3.css" />
+                                                                <ToggleButton mnemonicParsing="false" prefHeight="25.0"
+                                                                              prefWidth="26.0"
+                                                                              style="-fx-background-color: white;"
+                                                                              styleClass="button"
+                                                                              stylesheets="@../CSS/CaseButton1.css"/>
+                                                                <ToggleButton mnemonicParsing="false" prefHeight="25.0"
+                                                                              prefWidth="27.0"
+                                                                              style="-fx-background-color: white;"
+                                                                              styleClass="button"
+                                                                              stylesheets="@../CSS/CaseButton2.css"/>
+                                                                <ToggleButton mnemonicParsing="false" prefHeight="25.0"
+                                                                              prefWidth="25.0"
+                                                                              style="-fx-background-color: white;"
+                                                                              styleClass="button"
+                                                                              stylesheets="@../CSS/CaseButton3.css"/>
                                                             </children>
                                                         </HBox>
                                                     </children>
@@ -108,7 +139,9 @@
                                         </VBox>
                                     </content>
                                 </ScrollPane>
-                                <Button layoutX="145.0" layoutY="299.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="35.0" style="-fx-background-color: #d1cfa8;" stylesheets="@../CSS/Add.css" />
+                                <Button layoutX="145.0" layoutY="299.0" mnemonicParsing="false" prefHeight="33.0"
+                                        prefWidth="35.0" style="-fx-background-color: #d1cfa8;"
+                                        stylesheets="@../CSS/Add.css"/>
                             </children>
                         </Pane>
                     </children>
@@ -119,56 +152,81 @@
     <center>
         <Pane prefHeight="823.0" prefWidth="1004.0">
             <children>
-                <Pane layoutX="24.0" layoutY="16.0" prefHeight="867.0" prefWidth="1201.0" styleClass="pane" stylesheets="@../CSS/Background2.css">
+                <Pane layoutX="24.0" layoutY="16.0" prefHeight="867.0" prefWidth="1201.0" styleClass="pane"
+                      stylesheets="@../CSS/Background2.css">
                     <children>
-                        <TableView fx:id="table" layoutX="64.0" layoutY="256.0" prefHeight="550.0" prefWidth="852.0" stylesheets="@../CSS/table_view.css">
+                        <TableView fx:id="table" layoutX="64.0" layoutY="256.0" prefHeight="550.0" prefWidth="852.0"
+                                   stylesheets="@../CSS/table_view.css">
                             <columns>
-                                <TableColumn fx:id="callerPhoneNumber" prefWidth="50" text="Caller Phone Number" />
-                                <TableColumn fx:id="receiverPhoneNumber" prefWidth="50" text="Receiver Phone Number" />
-                                <TableColumn fx:id="date" prefWidth="50" text="Date" />
-                                <TableColumn fx:id="time" prefWidth="50" text="Time" />
-                                <TableColumn fx:id="typeOfCall" prefWidth="50" text="Type of Call" />
-                                <TableColumn fx:id="duration" prefWidth="50" text="Duration" />
+                                <TableColumn fx:id="callerPhoneNumber" prefWidth="50" text="Caller Phone Number"/>
+                                <TableColumn fx:id="receiverPhoneNumber" prefWidth="50" text="Receiver Phone Number"/>
+                                <TableColumn fx:id="date" prefWidth="50" text="Date"/>
+                                <TableColumn fx:id="time" prefWidth="50" text="Time"/>
+                                <TableColumn fx:id="typeOfCall" prefWidth="50" text="Type of Call"/>
+                                <TableColumn fx:id="duration" prefWidth="50" text="Duration"/>
                             </columns>
                         </TableView>
-                        <ScrollPane layoutX="47.0" layoutY="31.0" prefHeight="165.0" prefViewportHeight="163.0" prefViewportWidth="1133.0" prefWidth="851.0" style="-fx-background-color: d7d7ce;">
+                        <ScrollPane fx:id="scrollPane" layoutX="47.0" layoutY="31.0" prefHeight="165.0"
+                                    prefWidth="853.0"  stylesheets="@../CSS/ScrollPane.css">
                             <content>
-                                <HBox fx:id="VSBox" layoutX="47.0" layoutY="31.0" prefHeight="163.0" prefWidth="849.0" spacing="250.0" style="-fx-background-color: d7d7ce;">
+                                <HBox fx:id="VSBox" layoutX="47.0" layoutY="31.0"
+                                      style="-fx-background-color: #d7d7ce;">
                                 </HBox>
                             </content>
                         </ScrollPane>
-                        <Pane layoutX="986.0" layoutY="234.0" prefHeight="122.0" prefWidth="150.0" styleClass="pane" stylesheets="@../CSS/Background3.css">
+                        <Pane layoutX="986.0" layoutY="234.0" prefHeight="122.0" prefWidth="150.0" styleClass="pane"
+                              stylesheets="@../CSS/Background3.css">
                             <children>
-                                <Button fx:id="addCall" defaultButton="true" layoutX="24.0" layoutY="21.0" mnemonicParsing="false" onAction="#addCall" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: BLUE;" text="Add Call" textFill="WHITE" />
-                                <Button fx:id="deleteCall" defaultButton="true" layoutX="24.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteCall" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: BLUE;" text="Delete Call" textFill="WHITE" />
+                                <Button fx:id="addCall" defaultButton="true" layoutX="24.0" layoutY="21.0"
+                                        mnemonicParsing="false" onAction="#addCall" prefHeight="25.0" prefWidth="102.0"
+                                        style="-fx-background-color: BLUE;" text="Add Call" textFill="WHITE"/>
+                                <Button fx:id="deleteCall" defaultButton="true" layoutX="24.0" layoutY="70.0"
+                                        mnemonicParsing="false" onAction="#deleteCall" prefHeight="25.0"
+                                        prefWidth="102.0" style="-fx-background-color: BLUE;" text="Delete Call"
+                                        textFill="WHITE"/>
                             </children>
                         </Pane>
-                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="878.0" layoutY="7.0" prefHeight="86.0" prefWidth="322.0" text="Cheeky Scar" textAlignment="CENTER">
+                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="878.0" layoutY="7.0"
+                               prefHeight="86.0" prefWidth="322.0" text="Cheeky Scar" textAlignment="CENTER">
                             <font>
-                                <Font size="36.0" />
+                                <Font size="36.0"/>
                             </font>
                         </Label>
-                        <Pane layoutX="1039.0" layoutY="735.0" prefHeight="87.0" prefWidth="125.0" style="-fx-background-color: white;" styleClass="pane" stylesheets="@../CSS/SaveAsBackground.css">
+                        <Pane layoutX="1039.0" layoutY="735.0" prefHeight="87.0" prefWidth="125.0"
+                              style="-fx-background-color: white;" styleClass="pane"
+                              stylesheets="@../CSS/SaveAsBackground.css">
                             <children>
-                                <Button blendMode="MULTIPLY" defaultButton="true" layoutX="22.0" layoutY="33.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="34.0" style="-fx-background-color: white;" styleClass="pane" stylesheets="@../CSS/SaveAsButton.css" />
-                                <Button blendMode="MULTIPLY" defaultButton="true" layoutX="71.0" layoutY="33.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="34.0" style="-fx-background-color: white;" stylesheets="@../CSS/SaveAsButton.css" />
-                                <Label layoutX="29.0" layoutY="69.0" style="-fx-font-weight: bold;" text="PDF" />
-                                <Label layoutX="78.0" layoutY="69.0" style="-fx-font-weight: bold;" text="XLS" />
+                                <Button blendMode="MULTIPLY" defaultButton="true" layoutX="22.0" layoutY="33.0"
+                                        mnemonicParsing="false" prefHeight="37.0" prefWidth="34.0"
+                                        style="-fx-background-color: white;" styleClass="pane"
+                                        stylesheets="@../CSS/SaveAsButton.css"/>
+                                <Button blendMode="MULTIPLY" defaultButton="true" layoutX="71.0" layoutY="33.0"
+                                        mnemonicParsing="false" prefHeight="37.0" prefWidth="34.0"
+                                        style="-fx-background-color: white;" stylesheets="@../CSS/SaveAsButton.css"/>
+                                <Label layoutX="29.0" layoutY="69.0" style="-fx-font-weight: bold;" text="PDF"/>
+                                <Label layoutX="78.0" layoutY="69.0" style="-fx-font-weight: bold;" text="XLS"/>
                             </children>
                         </Pane>
-                        <Button defaultButton="true" layoutX="956.0" layoutY="745.0" mnemonicParsing="false" onAction="#importCSV" prefHeight="50.0" prefWidth="48.0" style="-fx-background-color: white;" styleClass="pane" stylesheets="@../CSS/Import.css">
+                        <Button defaultButton="true" layoutX="956.0" layoutY="745.0" mnemonicParsing="false"
+                                onAction="#importCSV" prefHeight="50.0" prefWidth="48.0"
+                                style="-fx-background-color: white;" styleClass="pane" stylesheets="@../CSS/Import.css">
                             <opaqueInsets>
-                                <Insets />
+                                <Insets/>
                             </opaqueInsets>
                         </Button>
                         <Label layoutX="953.0" layoutY="795.0" text="Import">
                             <font>
-                                <Font size="18.0" />
+                                <Font size="18.0"/>
                             </font>
                         </Label>
-                        <TextField fx:id="txtField" layoutX="65.0" layoutY="221.0" prefHeight="25.0" prefWidth="851.0" promptText="Search..." />
-                        <Button layoutX="1061.0" layoutY="146.0" mnemonicParsing="false" onAction="#addSuspect" prefHeight="25.0" prefWidth="103.0" stylesheets="@../CSS/AddButton2.css" text="Add Suspect" textFill="WHITE" />
-                        <Button layoutX="929.0" layoutY="146.0" mnemonicParsing="false" onAction="#addVictim" prefHeight="25.0" prefWidth="102.0" stylesheets="@../CSS/AddButton1.css" text="Add Victim" textFill="WHITE" />
+                        <TextField fx:id="txtField" layoutX="65.0" layoutY="221.0" prefHeight="25.0" prefWidth="851.0"
+                                   promptText="Search..."/>
+                        <Button layoutX="1061.0" layoutY="146.0" mnemonicParsing="false" onAction="#addSuspect"
+                                prefHeight="25.0" prefWidth="103.0" stylesheets="@../CSS/AddButton2.css"
+                                text="Add Suspect" textFill="WHITE"/>
+                        <Button layoutX="929.0" layoutY="146.0" mnemonicParsing="false" onAction="#addVictim"
+                                prefHeight="25.0" prefWidth="102.0" stylesheets="@../CSS/AddButton1.css"
+                                text="Add Victim" textFill="WHITE"/>
                     </children>
                 </Pane>
             </children>
@@ -177,33 +235,53 @@
     <right>
         <Pane prefHeight="899.0" prefWidth="228.0">
             <children>
-                <Pane layoutX="-40.0" layoutY="14.0" prefHeight="498.0" prefWidth="252.0" styleClass="pane" stylesheets="@../CSS/Cases.css">
+                <Pane layoutX="-40.0" layoutY="14.0" prefHeight="498.0" prefWidth="252.0" styleClass="pane"
+                      stylesheets="@../CSS/Cases.css">
                     <children>
-                        <TabPane id="rightRoot" layoutX="5.0" layoutY="45.0" prefHeight="416.0" prefWidth="240.0" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+                        <TabPane id="rightRoot" layoutX="5.0" layoutY="45.0" prefHeight="416.0" prefWidth="240.0"
+                                 style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE"
+                                 BorderPane.alignment="CENTER">
                             <tabs>
                                 <Tab fx:id="iTab" text="Investigating">
                                     <content>
-                                        <AnchorPane prefHeight="794.0" prefWidth="228.0" style="-fx-background-color: white;">
+                                        <AnchorPane prefHeight="794.0" prefWidth="228.0"
+                                                    style="-fx-background-color: white;">
                                             <children>
-                                                <ScrollPane layoutX="-2.0" layoutY="-2.0" prefHeight="392.0" prefWidth="242.0" style="-fx-background: white;">
+                                                <ScrollPane layoutX="-2.0" layoutY="-2.0" prefHeight="392.0"
+                                                            prefWidth="242.0" style="-fx-background: white;">
                                                     <content>
-                                                        <VBox prefHeight="388.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: white;">
+                                                        <VBox prefHeight="388.0" prefWidth="240.0" spacing="5.0"
+                                                              style="-fx-background-color: white;">
                                                             <children>
                                                                 <HBox prefHeight="54.0" prefWidth="240.0" spacing="5.0">
                                                                     <children>
-                                                                        <ImageView fitHeight="55.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="t    rue" />
-                                                                        <VBox fx:id = "iCase" prefHeight="55.0" prefWidth="84.0" spacing="5.0">
+                                                                        <ImageView fitHeight="55.0" fitWidth="60.0"
+                                                                                   pickOnBounds="true"
+                                                                                   preserveRatio="t    rue"/>
+                                                                        <VBox fx:id="iCase" prefHeight="55.0"
+                                                                              prefWidth="84.0" spacing="5.0">
                                                                             <children>
 
                                                                             </children>
                                                                         </VBox>
-                                                                        <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="87.0" spacing="5.0">
+                                                                        <HBox alignment="CENTER_LEFT" prefHeight="42.0"
+                                                                              prefWidth="87.0" spacing="5.0">
                                                                             <children>
-                                                                                <ToggleButton mnemonicParsing="false" prefHeight="33.0" prefWidth="36.0" style="-fx-background-color: white;" styleClass="button" stylesheets="@../CSS/ACase1.css" />
-                                                                                <ToggleButton mnemonicParsing="false" prefHeight="34.0" prefWidth="35.0" style="-fx-background-color: white;" styleClass="button" stylesheets="@../CSS/ACase2.css" />
+                                                                                <ToggleButton mnemonicParsing="false"
+                                                                                              prefHeight="33.0"
+                                                                                              prefWidth="36.0"
+                                                                                              style="-fx-background-color: white;"
+                                                                                              styleClass="button"
+                                                                                              stylesheets="@../CSS/ACase1.css"/>
+                                                                                <ToggleButton mnemonicParsing="false"
+                                                                                              prefHeight="34.0"
+                                                                                              prefWidth="35.0"
+                                                                                              style="-fx-background-color: white;"
+                                                                                              styleClass="button"
+                                                                                              stylesheets="@../CSS/ACase2.css"/>
                                                                             </children>
                                                                             <HBox.margin>
-                                                                                <Insets />
+                                                                                <Insets/>
                                                                             </HBox.margin>
                                                                         </HBox>
                                                                     </children>
@@ -216,13 +294,15 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                                <Tab fx:id="sTab"  text="Solved">
+                                <Tab fx:id="sTab" text="Solved">
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                             <children>
-                                                <ScrollPane layoutY="-1.0" prefHeight="388.0" prefWidth="240.0" style="-fx-background: white;">
+                                                <ScrollPane layoutY="-1.0" prefHeight="388.0" prefWidth="240.0"
+                                                            style="-fx-background: white;">
                                                     <content>
-                                                        <VBox fx:id = "sCase" prefHeight="55.0" prefWidth="84.0" spacing="5.0">
+                                                        <VBox fx:id="sCase" prefHeight="55.0" prefWidth="84.0"
+                                                              spacing="5.0">
                                                             <children>
                                                                 <Label></Label>
                                                             </children>
@@ -233,13 +313,15 @@
                                         </AnchorPane>
                                     </content>
                                 </Tab>
-                                <Tab fx:id="pTab"  text="Preliminary">
+                                <Tab fx:id="pTab" text="Preliminary">
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="381.0" prefWidth="228.0">
                                             <children>
-                                                <ScrollPane layoutX="-2.0" layoutY="-1.0" prefHeight="389.0" prefWidth="242.0" style="-fx-background: white;">
+                                                <ScrollPane layoutX="-2.0" layoutY="-1.0" prefHeight="389.0"
+                                                            prefWidth="242.0" style="-fx-background: white;">
                                                     <content>
-                                                        <VBox fx:id = "pCase" prefHeight="387.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: white;">
+                                                        <VBox fx:id="pCase" prefHeight="387.0" prefWidth="240.0"
+                                                              spacing="5.0" style="-fx-background-color: white;">
                                                             <children>
                                                                 <Label></Label>
                                                             </children>
@@ -252,7 +334,8 @@
                                 </Tab>
                             </tabs>
                         </TabPane>
-                        <Button layoutX="5.0" layoutY="12.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="37.0" style="-fx-background-color: #72d4f4;" stylesheets="@../CSS/Add.css" />
+                        <Button layoutX="5.0" layoutY="12.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="37.0"
+                                style="-fx-background-color: #72d4f4;" stylesheets="@../CSS/Add.css"/>
                     </children>
                 </Pane>
             </children>

@@ -14,7 +14,7 @@
     <children>
         <Pane layoutY="16.0" prefHeight="132.0" prefWidth="200.0" styleClass="pane" stylesheets="@../CSS/Suspect.css">
             <children>
-                <Button fx:id="close" layoutX="172.0" layoutY="4.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="21.0" style="-fx-background-color: #fed5d2;" styleClass="pane" stylesheets="@../CSS/Close.css" text="Button" />
+                <Button fx:id="close" layoutX="169.0" layoutY="5.0"  mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"  stylesheets="@../CSS/Close.css" />
                 <VBox layoutX="2.0" layoutY="28.0" prefHeight="78.0" prefWidth="196.0" spacing="5.0">
                     <children>
                         <TextField prefHeight="40.0" prefWidth="196.0" style="-fx-background-color: #fed5d2;">
