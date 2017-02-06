@@ -1,13 +1,12 @@
-package Modules.Login;
+package Modules.ManageAccounts;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
-public class LoginDB {
-    public static Boolean checkUserDetails(String userID, String password) {
+/**
+ * Created by Florin on 2/6/2017.
+ */
+public class User {
+    public static String userGetName(String userID)  {
 
         Connection con = null;
 
@@ -15,7 +14,7 @@ public class LoginDB {
         String user = "root";
         String pw = "";
 
-        Boolean check = false;
+        String result = "";
 
         try {
             /**
@@ -26,18 +25,15 @@ public class LoginDB {
              * The query used to get data
              * In this case, email acts as a username too
              */
-            String query = "Select Password from accounts where Email = \"" + userID + "\"  ";
+            String query = "Select * from accounts where Email = \"" + userID + "\"  ";
 
 
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(query);
             if(rs.next()) {
-               if(rs.getString("Password").equals(password))
-                   check = true;
+                result = rs.getString("Name") + " " + rs.getString("Surname");
             }
-            else
 
-            con.close();
 
         }
         catch (SQLException e) {
@@ -45,9 +41,8 @@ public class LoginDB {
         }
 
 
-        return check;    }
-    
-    }
+        return result;    }
 
+}
 
 

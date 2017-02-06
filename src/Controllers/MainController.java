@@ -1,20 +1,25 @@
 package Controllers;
 
+
 import Modules.File_Import.ImportCSV;
-import Modules.Table.CallRecord;
+import Modules.ManageAccounts.User;
+import Modules.Table.CallsRecord;
 import Modules.Table.CallsTable;
 import SQL.SQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -24,12 +29,8 @@ import java.io.File;
 public class MainController {
     SQL sql = new SQL();
     Modules.Table.CallsTable doColumn = new CallsTable();
-    private ObservableList<CallRecord> data;
+    private ObservableList<CallsRecord> callsData;
 
-    @FXML
-    protected Button addCall;
-    @FXML
-    protected Button deleteCall;
     @FXML
     protected TableColumn callerPhoneNumber;
     @FXML
@@ -43,14 +44,17 @@ public class MainController {
     @FXML
     protected TableColumn duration;
     @FXML
-    protected TableView table;
+    protected TableView mainTable;
     @FXML
     protected TextField txtField;
+    @FXML
+    protected Label userLabel;
+
 
     @FXML
     protected void importCSV() {
         /**
-         * New window, where you choose what file to import BITCH
+         * New window, where you choose what file to import
          */
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
@@ -64,77 +68,67 @@ public class MainController {
             ImportCSV.importcsv(filePath);
         }
     }
+    @FXML
+    public void setUserLabel(){
+        try{
+            BufferedReader read = new BufferedReader(new FileReader(new File("src/RES/tmp.txt")));
+            String rd = read.readLine();
+            userLabel.setText(User.userGetName(rd));
+            read.close();
 
+        }catch (IOException e){
+
+        }
+        finally {
+            new File("src/RES/tmp.txt").delete();
+        }
+    }
     @FXML
     public void initialize() {
+        setUserLabel();
         date.setMinWidth(50);
         date.setMaxWidth(50);
         date.setPrefWidth(50);
-        data = sql.loadCalls();
+        callsData = sql.loadCalls();
         doColumn.createCallerPNColumn(callerPhoneNumber);
         doColumn.createReceiverPNColumn(receiverPhoneNumber);
         doColumn.createDateColumn(date);
         doColumn.createTimeColumn(time);
         doColumn.createTypeOfCallColumn(typeOfCall);
         doColumn.createDurationColumn(duration);
-        table.setItems(data);
-        table.setEditable(true);
+        mainTable.setItems(callsData);
+        mainTable.setEditable(true);
         search();
+
     }
 
-    public void search() {
 
+    public void search(){
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
             if (txtField.textProperty().get().isEmpty()) {
-                table.setItems(data);
-
+                mainTable.setItems(callsData);
                 return;
             }
 
-            ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-            ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+            ObservableList<CallsRecord> tableItems = FXCollections.observableArrayList();
+            ObservableList<TableColumn<CallsRecord, ?>> cols = mainTable.getColumns();
 
-            for (int i = 0; i < data.size(); i++) {
+            for (int i = 0; i < callsData.size(); i++) {
                 for (int j = 0; j < cols.size(); j++) {
                     TableColumn col = cols.get(j);
-                    String cellValue = col.getCellData(data.get(i)).toString();
+                    String cellValue = col.getCellData(callsData.get(i)).toString();
                     cellValue = cellValue.toLowerCase();
                     if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
-                        tableItems.add(data.get(i));
+                        tableItems.add(callsData.get(i));
                         break;
                     }
                 }
             }
-            table.setItems(tableItems);
+            mainTable.setItems(tableItems);
         });
+
     }
 
-    @FXML
-    public void addCall() {
-        if (data != null) {
-            data.add(new CallRecord(String.valueOf(sql.getID() + 1), "test", "test", "test", "test", "test", "test", "test"));
-            System.out.println("ADD: call");
-            //sql.addCall();
-        } else {
-            System.out.println("HERE");
-        }
-    }
-
-    @FXML
-    public void deleteCall() {
-        if (data != null) {
-            if (table.getSelectionModel().getSelectedItem() != null) {
-                CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
-                if (!(record.getCallID().isEmpty())) {
-                    //sql.removeCall(record.getCallID());
-                    System.out.println("DELETE: call " + record.getCallID());
-                }
-            }
-            data.remove(table.getSelectionModel().getSelectedItem());
-        } else {
-            System.out.println("HERE");
-        }
-    }
 
 }

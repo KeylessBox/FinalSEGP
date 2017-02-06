@@ -23,7 +23,7 @@
 
                 <HBox alignment="bottom_right" prefHeight="23.0" prefWidth="140.0" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <children>
-                        <Button id="loginButton" onAction="#logIn" prefHeight="23.0" prefWidth="68.0" text="Sign Up">
+                        <Button id="sigUpButton" onAction="#signUp" prefHeight="23.0" prefWidth="68.0" text="Sign Up">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin></Button>

@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 
 /**
@@ -35,11 +36,27 @@ public class LoginController {
     @FXML
     private Button editDetails;
 
+    public String user = "";
+
     /**
      * Example how it works.
      *
      * @param event
      */
+    @FXML
+    protected void signUp(ActionEvent event)throws IOException{
+
+        Node node = (Node) event.getSource();
+        Stage stage3 = (Stage) node.getScene().getWindow();
+        Parent root3 = FXMLLoader.load(getClass().getResource("/FXML/signUp.fxml"));/* Exception */
+        Scene scene3 = new Scene(root3);
+
+        stage3.setScene(scene3);
+        stage3.centerOnScreen();
+        stage3.setResizable(true);
+        stage3.show();
+            }
+
     @FXML
     protected void logIn(ActionEvent event) throws IOException {
 
@@ -60,6 +77,10 @@ public class LoginController {
              * If the account details entered are correct,
              * Program moves to the Main Window
              */
+            user = username.getText();
+            FileWriter writer = new FileWriter(new File("src/RES/tmp.txt"));
+            writer.write(user);
+            writer.close();
 
             Node node = (Node) event.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
