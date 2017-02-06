@@ -8,6 +8,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -43,6 +47,14 @@ public class MainController {
     protected TableView table;
     @FXML
     protected TextField txtField;
+    @FXML
+    protected Button addVictim;
+    @FXML
+    protected HBox VSBox;
+    @FXML
+    protected Pane Victim1;
+    @FXML
+    protected Pane Suspect1;
 
     @FXML
     protected void importCSV() {
@@ -61,6 +73,32 @@ public class MainController {
             ImportCSV.importcsv(filePath);
         }
     }
+
+    public void addV() {
+        addVictim.setOnAction(e -> {
+
+            Pane Victim2  = new Pane();
+            Victim2.setPrefSize(207,163);
+            Victim2.setStyle("-fx-background-color: transparent;");
+            Pane a = new Pane();
+            a.setPrefSize(200,127);
+            a.setStyle("-fx-background-image: url(\"../res/images/Victim.png\");");
+            VBox b = new VBox();
+            TextField a1 = new TextField();
+            TextField b1 = new TextField();
+            Button c = new Button();
+            b.setVgrow(a1,Priority.ALWAYS);
+            b.setVgrow(b1,Priority.ALWAYS);
+            a.getChildren().addAll(b,c);
+            Victim2.getChildren().addAll(a);
+
+            VSBox.setHgrow(Victim2,Priority.ALWAYS);
+            VSBox.getChildren().addAll(Victim2);
+        });
+    }
+
+
+
 
     @FXML
     public void initialize() {
