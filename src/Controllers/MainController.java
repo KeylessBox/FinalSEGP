@@ -31,7 +31,7 @@ import java.io.IOException;
 
 public class MainController {
     SQL sql = new SQL();
-    Modules.Table.CallsTable doColumn = new CallsTable();
+    Modules.Table.CallsTable ColumnFactory = new CallsTable();
     private ObservableList<CallRecord> callsData;
     private ObservableList<CasesRecords> casesData;
 
@@ -114,12 +114,12 @@ public class MainController {
         date.setMaxWidth(50);
         date.setPrefWidth(50);
         callsData = sql.loadCalls();
-        doColumn.createCallerPNColumn(callerPhoneNumber);
-        doColumn.createReceiverPNColumn(receiverPhoneNumber);
-        doColumn.createDateColumn(date);
-        doColumn.createTimeColumn(time);
-        doColumn.createTypeOfCallColumn(typeOfCall);
-        doColumn.createDurationColumn(duration);
+        ColumnFactory.createCallerPNColumn(callerPhoneNumber);
+        ColumnFactory.createReceiverPNColumn(receiverPhoneNumber);
+        ColumnFactory.createDateColumn(date);
+        ColumnFactory.createTimeColumn(time);
+        ColumnFactory.createTypeOfCallColumn(typeOfCall);
+        ColumnFactory.createDurationColumn(duration);
         table.setItems(callsData);
         table.setEditable(true);
         search();
@@ -129,32 +129,47 @@ public class MainController {
 
 
 
-    @FXML
+
     public void addVictim() {
         System.out.println("VICTIM");
-        Pane suspectNote = null;
+        Pane victimNote = null;
         try {
-            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/FXML/Victim.fxml"));
+            victimNote = (Pane) FXMLLoader.load(getClass().getResource("/FXML/Victim.fxml"));
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+
+        Pane temp = (Pane)victimNote.getChildren().get(0);
+        Button delete = (Button)temp.getChildren().get(1);
+        Pane finalVictimNote = victimNote;
+        delete.setOnAction(event -> {
+            VSBox.getChildren().remove(finalVictimNote);
+        });
+        VSBox.setHgrow(victimNote, Priority.ALWAYS);
+        VSBox.getChildren().addAll(victimNote);
+        
+    }
+
+
+
+    public void addSuspect() {
+        System.out.println("Suspect");
+        Pane suspectNote = null;
+        try {
+            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/FXML/Suspect.fxml"));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        Pane temp = (Pane)suspectNote.getChildren().get(0);
+        Button delete = (Button)temp.getChildren().get(0);
+        Pane finalSuspectNote = suspectNote;
+        delete.setOnAction(event -> {
+            VSBox.getChildren().remove(finalSuspectNote);
+        });
+
 
         VSBox.setHgrow(suspectNote, Priority.ALWAYS);
         VSBox.getChildren().addAll(suspectNote);
-    }
-
-    @FXML
-    public void addSuspect() {
-        System.out.println("Suspect");
-        Pane victimNote = null;
-        try {
-            victimNote = (Pane) FXMLLoader.load(getClass().getResource("/FXML/Suspect.fxml"));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        VSBox.setHgrow(victimNote, Priority.ALWAYS);
-        VSBox.getChildren().addAll(victimNote);
-
     }
 
 
@@ -238,8 +253,4 @@ public class MainController {
             }
         }
     }
-
-
-
-
 }
