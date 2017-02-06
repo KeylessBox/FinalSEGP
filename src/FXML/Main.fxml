@@ -134,55 +134,7 @@
                         </TableView>
                         <ScrollPane layoutX="47.0" layoutY="31.0" prefHeight="165.0" prefViewportHeight="163.0" prefViewportWidth="1133.0" prefWidth="851.0" style="-fx-background-color: d7d7ce;">
                             <content>
-                                <HBox fx:id="VSBox" layoutX="47.0" layoutY="31.0" prefHeight="163.0" prefWidth="849.0" spacing="50.0" style="-fx-background-color: d7d7ce;">
-                                    <children>
-                                        <Pane fx:id="Victim1">
-                                            <children>
-                                                <Pane layoutX="7.0" layoutY="18.0" prefHeight="127.0" prefWidth="200.0" styleClass="pane" stylesheets="@../CSS/Victim.css">
-                                                    <children>
-                                                        <VBox layoutX="13.0" layoutY="26.0" prefHeight="80.0" prefWidth="173.0" spacing="5.0">
-                                                            <children>
-                                                                <TextField prefHeight="39.0" prefWidth="173.0" style="-fx-background-color: #e1f3df;">
-                                                                    <font>
-                                                                        <Font size="16.0" />
-                                                                    </font>
-                                                                </TextField>
-                                                                <TextField prefHeight="0.0" prefWidth="173.0" style="-fx-background-color: #e1f3df;">
-                                                                    <font>
-                                                                        <Font size="16.0" />
-                                                                    </font>
-                                                                </TextField>
-                                                            </children>
-                                                        </VBox>
-                                                        <Button layoutX="169.0" layoutY="1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="26.0" style="-fx-background-color: #e1f3df;" stylesheets="@../CSS/Close.css" text="Button" />
-                                                    </children>
-                                                </Pane>
-                                            </children>
-                                        </Pane>
-                                        <Pane fx:id="Suspect1">
-                                            <children>
-                                                <Pane layoutY="16.0" prefHeight="132.0" prefWidth="200.0" styleClass="pane" stylesheets="@../CSS/Suspect.css">
-                                                    <children>
-                                                        <VBox layoutX="2.0" layoutY="28.0" prefHeight="78.0" prefWidth="196.0" spacing="5.0">
-                                                            <children>
-                                                                <TextField prefHeight="40.0" prefWidth="196.0" style="-fx-background-color: #fed5d2;">
-                                                                    <font>
-                                                                        <Font size="16.0" />
-                                                                    </font>
-                                                                </TextField>
-                                                                <TextField prefHeight="23.0" prefWidth="196.0" style="-fx-background-color: #fed5d2;">
-                                                                    <font>
-                                                                        <Font size="16.0" />
-                                                                    </font>
-                                                                </TextField>
-                                                            </children>
-                                                        </VBox>
-                                                        <Button layoutX="172.0" layoutY="4.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="21.0" style="-fx-background-color: #fed5d2;" styleClass="pane" stylesheets="@../CSS/Close.css" text="Button" />
-                                                    </children>
-                                                </Pane>
-                                            </children>
-                                        </Pane>
-                                    </children>
+                                <HBox fx:id="VSBox" layoutX="47.0" layoutY="31.0" prefHeight="163.0" prefWidth="849.0" spacing="250.0" style="-fx-background-color: d7d7ce;">
                                 </HBox>
                             </content>
                         </ScrollPane>
@@ -216,8 +168,8 @@
                             </font>
                         </Label>
                         <TextField fx:id="txtField" layoutX="65.0" layoutY="221.0" prefHeight="25.0" prefWidth="851.0" promptText="Search..." />
-                        <Button layoutX="1061.0" layoutY="146.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="103.0" stylesheets="@../CSS/AddButton2.css" text="Add Suspect" textFill="WHITE" />
-                        <Button fx:id="addVictim" layoutX="929.0" layoutY="146.0" mnemonicParsing="false" onAction="#addV" prefHeight="25.0" prefWidth="102.0" stylesheets="@../CSS/AddButton1.css" text="Add Victim" textFill="WHITE" />
+                        <Button layoutX="1061.0" layoutY="146.0" mnemonicParsing="false" onAction="#addSuspect" prefHeight="25.0" prefWidth="103.0" stylesheets="@../CSS/AddButton2.css" text="Add Suspect" textFill="WHITE" />
+                        <Button fx:id="addVictim" layoutX="929.0" layoutY="146.0" mnemonicParsing="false" onAction="#addVictim" prefHeight="25.0" prefWidth="102.0" stylesheets="@../CSS/AddButton1.css" text="Add Victim" textFill="WHITE" />
                     </children>
                 </Pane>
             </children>

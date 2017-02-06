@@ -7,6 +7,7 @@ import SQL.SQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -16,6 +17,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -74,30 +76,32 @@ public class MainController {
         }
     }
 
-    public void addV() {
-        addVictim.setOnAction(e -> {
-
-            Pane Victim2  = new Pane();
-            Victim2.setPrefSize(207,163);
-            Victim2.setStyle("-fx-background-color: transparent;");
-            Pane a = new Pane();
-            a.setPrefSize(200,127);
-            a.setStyle("-fx-background-image: url(\"../res/images/Victim.png\");");
-            VBox b = new VBox();
-            TextField a1 = new TextField();
-            TextField b1 = new TextField();
-            Button c = new Button();
-            b.setVgrow(a1,Priority.ALWAYS);
-            b.setVgrow(b1,Priority.ALWAYS);
-            a.getChildren().addAll(b,c);
-            Victim2.getChildren().addAll(a);
-
-            VSBox.setHgrow(Victim2,Priority.ALWAYS);
-            VSBox.getChildren().addAll(Victim2);
-        });
+    @FXML
+    public void addVictim() {
+        System.out.println("VICTIM");
+        Pane suspectNote = null;
+        try {
+            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/FXML/Victim.fxml"));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        VSBox.setHgrow(suspectNote, Priority.ALWAYS);
+        VSBox.getChildren().addAll(suspectNote);
     }
 
+    @FXML
+    public void addSuspect() {
+        System.out.println("Suspect");
+        Pane victimNote = null;
+        try {
+            victimNote = (Pane) FXMLLoader.load(getClass().getResource("/FXML/Suspect.fxml"));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        VSBox.setHgrow(victimNote, Priority.ALWAYS);
+        VSBox.getChildren().addAll(victimNote);
 
+    }
 
 
     @FXML
@@ -162,7 +166,7 @@ public class MainController {
         if (data != null) {
             if (table.getSelectionModel().getSelectedItem() != null) {
                 CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
-                if (record != null){
+                if (record != null) {
 //                    System.out.println();
 //                    if (!(record.getCallID().equals(""))) {
 //                        //sql.removeCall(record.getCallID());

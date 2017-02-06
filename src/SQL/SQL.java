@@ -49,7 +49,7 @@ public class SQL {
                     maxIDCall = Integer.parseInt(callsRS.getString(1));
                 }
 
-                data.add(new CallRecord(callsRS.getString(3),
+                data.add(new CallRecord(callsRS.getString(1),callsRS.getString(2),callsRS.getString(3),
                         callsRS.getString(4), callsRS.getString(5), callsRS.getString(6), callsRS.getString(7),
                         callsRS.getString(8)));
             }
