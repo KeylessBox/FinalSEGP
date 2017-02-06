@@ -173,8 +173,6 @@ public class MainController {
             table.setItems(tableItems);
         });
 
-
-        //VSBox.setHgrow(victimNote, Priority.ALWAYS);
         VSBox.getChildren().addAll(victimNote);
 
     }
@@ -222,7 +220,7 @@ public class MainController {
             }
             table.setItems(tableItems);
         });
-        //VSBox.setHgrow(suspectNote, Priority.ALWAYS);
+
         VSBox.getChildren().add(suspectNote);
 
     }
