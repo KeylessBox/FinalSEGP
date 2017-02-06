@@ -4,7 +4,7 @@ package SQL;
  * Created by AndreiM on 2/3/2017.
  */
 
-import Modules.Table.CallsRecord;
+import Modules.Table.CallRecord;
 import Modules.Table.DBConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,10 +33,10 @@ public class SQL {
      *
      * @return ObservableList<StudentRecord>
      */
-    public ObservableList<CallsRecord> loadCalls() {
+    public ObservableList<CallRecord> loadCalls() {
 
         Connection connection = dbConnection.connect();
-        ObservableList<CallsRecord> data = FXCollections.observableArrayList();
+        ObservableList<CallRecord> data = FXCollections.observableArrayList();
 
         try {
 
@@ -49,7 +49,7 @@ public class SQL {
                     maxIDCall = Integer.parseInt(callsRS.getString(1));
                 }
 
-                data.add(new CallsRecord(callsRS.getString(3),
+                data.add(new CallRecord(callsRS.getString(3),
                         callsRS.getString(4), callsRS.getString(5), callsRS.getString(6), callsRS.getString(7),
                         callsRS.getString(8)));
             }
