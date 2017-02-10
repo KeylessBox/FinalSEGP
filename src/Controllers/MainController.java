@@ -144,20 +144,7 @@ public class MainController {
         table.setItems(callsData);
         table.setEditable(true);
     }
-
-
-    public void loadTabl(int i) {
-        callsData = sql.loadCalls(i);
-        table.getItems().clear();
-        ColumnFactory.createCallerPNColumn(callerPhoneNumber);
-        ColumnFactory.createReceiverPNColumn(receiverPhoneNumber);
-        ColumnFactory.createDateColumn(date);
-        ColumnFactory.createTimeColumn(time);
-        ColumnFactory.createTypeOfCallColumn(typeOfCall);
-        ColumnFactory.createDurationColumn(duration);
-        /*table.setItems(callsData);*/
-        table.setEditable(true);
-    }
+    
     public void addVictim() {
         System.out.println("VICTIM");
         Pane victimNote = null;
@@ -393,6 +380,18 @@ public class MainController {
                     caseTitle.setText(s);
                         //TODO Add animation (or some sort of feedback) if that specific case is shown
                 });
+                finalCaseObj.setOnMousePressed(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
+                });
+                finalCaseObj.setOnMouseReleased(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+                });
+                finalCaseObj.setOnMouseEntered(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
+                });
+                finalCaseObj.setOnMouseExited(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+                });
                 /**
                  * And loads them to the app
                  */
@@ -422,7 +421,7 @@ public class MainController {
                     loadTable(id);
                     caseTitle.setText(s);
                 });
-                sCase.getChildren().add( CaseObj);
+                sCase.getChildren().add(CaseObj);
             }
             /**
              * The same as above, but that's if the status is "Preliminary"
@@ -448,9 +447,10 @@ public class MainController {
                     loadTable(id);
                     caseTitle.setText(s);
                 });
+
                 pCase.getChildren().add( CaseObj);
             }
+
         }
     }
-
 }
