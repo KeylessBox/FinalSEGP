@@ -5,11 +5,14 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import SQL.SQL;
 
 /**
  * Created by AndreiM on 2/3/2017.
  */
 public class CallsTable {
+    private static SQL sql = new SQL();
+
     private static int minCellWidth = 100;
 
     public static void createCallerPNColumn(TableColumn callerPhoneNumber) {
@@ -29,6 +32,8 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setCallerPhoneNumber(t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "CallerPhoneNumber",t.getNewValue());
+
             }
         });
     }
@@ -51,6 +56,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setReceiverPhoneNumber(t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "ReceiverPhoneNumber",t.getNewValue());
             }
         });
     }
@@ -73,6 +79,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setDate(t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "date",t.getNewValue());
             }
         });
     }
@@ -94,6 +101,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setTime(t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "time",t.getNewValue());
             }
         });
     }
@@ -116,6 +124,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setTypeOfCall(t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "typeOfCall",t.getNewValue());
             }
         });
     }
@@ -137,6 +146,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setDuration(t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "duration",t.getNewValue());
             }
         });
     }

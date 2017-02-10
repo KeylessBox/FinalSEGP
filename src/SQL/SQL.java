@@ -7,6 +7,7 @@ package SQL;
 import Modules.Table.CallRecord;
 import Modules.Table.CasesRecords;
 import Modules.Table.DBConnection;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -100,6 +101,7 @@ public class SQL {
         return caseId;
     }
 
+
     /**
      * Get max value for student id
      *
@@ -127,31 +129,51 @@ public class SQL {
     }
 
     /**
-     * Insert empty student record into database
+     * Inserts default call to database
      */
-    public void addCall() {
+    public void addCall(CallRecord cr) {
 
         Connection connection = dbConnection.connect();
 
         try {
-            connection.createStatement().executeUpdate("INSERT INTO `Students` (`studentID`, `studentName`, `studentUB`, `courseID`, `yearOfStudy`, `email`, `tutorID`) VALUES (" + (++ID) + ", 'name surname', '00000000', '3', '4', 'example@example.com', '0')");
+            connection.createStatement().executeUpdate("INSERT INTO Calls(CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)\n" +
+                    "VALUES("+cr.getCaseID()+",\""+ cr.getCallerPhoneNumber() + "\",\""+ cr.getReceiverPhoneNumber() + "\",\"" +
+                    cr.getDate() + "\",\"" + cr.getTime() + "\",\"" + cr.getTypeOfCall() + "\",\"" + cr.getDuration() + "\");");
+          /*  VALUES(1,'078 0680 1334','077 3628 5886','2016/03/19','10:15','Standard', '20:00');*/
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
     /**
-     * Remove selected student record from database
+     * Removes a specific call from the database
      *
-     * @param studentID
+     * @param id
      */
-    public void removeCall(String studentID) {
+    public void removeCall(int id) {
 
         Connection connection = dbConnection.connect();
 
         try {
-            connection.createStatement().executeUpdate("DELETE FROM `Students` WHERE studentID = " + studentID);
+            connection.createStatement().executeUpdate("DELETE FROM `Calls` WHERE id = " + id);
         } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Edits the database when the user edits a cell in the table
+     * @param id CallID (unique paramater of the calls) so that there aren't any duplicates
+     * @param columnName Where in the specific row the change is made
+     * @param change The new value for the specific attribute
+     */
+    public void editCell(int id, String columnName, String change) {
+        Connection connection = dbConnection.connect();
+
+        try {
+            connection.createStatement().executeUpdate("UPDATE calls SET " + columnName + "= '" + change + "' WHERE id =" + id);
+        }
+        catch(SQLException ex) {
             ex.printStackTrace();
         }
     }

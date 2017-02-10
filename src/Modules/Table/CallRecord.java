@@ -22,8 +22,20 @@ public class CallRecord {
         private final StringProperty duration;
 
     public CallRecord(String callID, String caseID, String callerPhoneNumber, String receiverPhoneNumber, String date, String time,
-                      String typeOfCall, String duration) {
+                       String typeOfCall, String duration) {
         this.callID = new SimpleStringProperty(callID);
+        this.caseID = new SimpleStringProperty(caseID);
+        this.callerPhoneNumber = new SimpleStringProperty(callerPhoneNumber);
+        this.receiverPhoneNumber = new SimpleStringProperty(receiverPhoneNumber);
+        this.date = new SimpleStringProperty(date);
+        this.time = new SimpleStringProperty(time);
+        this.typeOfCall = new SimpleStringProperty(typeOfCall);
+        this.duration = new SimpleStringProperty(duration);
+    }
+
+    public CallRecord(String caseID, String callerPhoneNumber, String receiverPhoneNumber, String date, String time,
+                      String typeOfCall, String duration) {
+        callID = null;
         this.caseID = new SimpleStringProperty(caseID);
         this.callerPhoneNumber = new SimpleStringProperty(callerPhoneNumber);
         this.receiverPhoneNumber = new SimpleStringProperty(receiverPhoneNumber);

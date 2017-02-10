@@ -300,23 +300,31 @@ public class MainController {
         });
     }
 
+    /**
+     * Controller for "Add call" button. No one is supposed to add a call, because you already have it in the database, or any excel, csv file, so a user should
+     * not be able to add a call in my opinion, but let's say he wants to, his choice.
+     * Default values, that if left unattended clearly show that they are fake.
+     * The method changes the table and the database at the same time.
+     */
     public void addCall() {
-
-        callsData.add(new CallRecord(String.valueOf(sql.getID() + 1), "0", "0", "0", "0", "0", "0", "0"));
+        CallRecord cr =new CallRecord(String.valueOf(sql.getMaxCallID()+ 1), "\""+sql.loadCase(caseTitle.getText())+"\"", "0", "0", "1900/01/01", "00:00", "Standard", "00:00");
+        callsData.add(cr);
+        sql.addCall(cr);
         System.out.println("ADD: call");
-        //sql.addCall();
     }
 
+    /**
+     * Controller for "Delete call" button. Same as above, a user should not be able to delete a call because this data is the kind you usually let it be.
+     * Adding this functionality is just for it to be there in the case such action is wanted.
+     * Deletes the call both from the table and the database.
+     */
     public void deleteCall() {
 
         if (table.getSelectionModel().getSelectedItem() != null) {
             CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
             if (record != null) {
-//                    System.out.println();
-//                    if (!(record.getCallID().equals(""))) {
-//                        //sql.removeCall(record.getCallID());
-//                        System.out.println("DELETE: call " + record.getCallID());
-//                    }
+                sql.removeCall(Integer.parseInt(record.getCallID()));
+                System.out.println("DELETE: call " + record.getCallID());
                 callsData.remove(table.getSelectionModel().getSelectedItem());
             }
         }
