@@ -124,7 +124,7 @@
                                 <Button fx:id="deleteCall" defaultButton="true" layoutX="24.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteCall" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: BLUE;" text="Delete Call" textFill="WHITE" />
                             </children>
                         </Pane>
-                        <Label alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="878.0" layoutY="7.0" prefHeight="86.0" prefWidth="322.0" text="Cheeky Scar" textAlignment="CENTER">
+                        <Label fx:id = "caseTitle" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="878.0" layoutY="7.0" prefHeight="86.0" prefWidth="322.0" text="Cheeky Scar" textAlignment="CENTER">
                             <font>
                                 <Font size="36.0" />
                             </font>

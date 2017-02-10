@@ -76,7 +76,7 @@ public class MainController {
     @FXML
     private HBox notesCT;
     @FXML
-    protected Label caseName;
+    protected Label caseTitle;
 
     @FXML
     protected void importCSV() {
@@ -383,11 +383,14 @@ public class MainController {
                  * Pressing a case changes the table with the proper values from the database
                  * How: It gets the name of the case, and finds its id (not suitable for cases that have the same names //TODO make this as general as possible
                  * Loads the table with only the calls at that specific id
+                 * Also changes the big Case name above the table
                  */
                 HBox finalCaseObj = CaseObj;
                 finalCaseObj.setOnMouseClicked(event -> {
-                        int id = sql.loadCase(caseName.getText());
-                        loadTable(id);
+                    String s = caseName.getText();
+                    int id = sql.loadCase(s);
+                    loadTable(id);
+                    caseTitle.setText(s);
                         //TODO Add animation (or some sort of feedback) if that specific case is shown
                 });
                 /**
@@ -414,8 +417,10 @@ public class MainController {
                  */
                 HBox finalCaseObj = CaseObj;
                 finalCaseObj.setOnMouseClicked(event -> {
-                    int id = sql.loadCase(caseName.getText());
+                    String s = caseName.getText();
+                    int id = sql.loadCase(s);
                     loadTable(id);
+                    caseTitle.setText(s);
                 });
                 sCase.getChildren().add( CaseObj);
             }
@@ -438,8 +443,10 @@ public class MainController {
                  */
                 HBox finalCaseObj = CaseObj;
                 finalCaseObj.setOnMouseClicked(event -> {
-                    int id = sql.loadCase(caseName.getText());
+                    String s = caseName.getText();
+                    int id = sql.loadCase(s);
                     loadTable(id);
+                    caseTitle.setText(s);
                 });
                 pCase.getChildren().add( CaseObj);
             }
