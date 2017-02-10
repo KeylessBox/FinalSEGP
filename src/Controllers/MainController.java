@@ -9,6 +9,7 @@ import Modules.Table.CasesRecords;
 import SQL.SQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -35,6 +36,8 @@ public class MainController {
     private ObservableList<CallRecord> callsData;
     private ObservableList<CasesRecords> casesData;
 
+    @FXML
+    private ScrollPane scrollPane2;
     @FXML
     protected TableColumn callerPhoneNumber;
     @FXML
@@ -66,9 +69,11 @@ public class MainController {
     @FXML
     protected VBox pCase;
     @FXML
-    protected HBox VSBox;
-    @FXML
     protected ScrollPane scrollPane;
+    @FXML
+    private VBox caseFilesCT;
+    @FXML
+    private HBox notesCT;
 
     @FXML
     protected void importCSV() {
@@ -123,13 +128,14 @@ public class MainController {
         table.setItems(callsData);
         table.setEditable(true);
         search();
-        VSBox.setAlignment(Pos.TOP_LEFT);
-        VSBox.setSpacing(50);
-        VSBox.setBackground(Background.EMPTY);
+        notesCT.setAlignment(Pos.TOP_LEFT);
+        notesCT.setSpacing(50);
+        notesCT.setBackground(Background.EMPTY);
         scrollPane.setPannable(true);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane2.setPannable(true);
+        scrollPane2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         searchData = callsData;
-
     }
 
     public void addVictim() {
@@ -145,7 +151,7 @@ public class MainController {
         Button delete = (Button) temp.getChildren().get(1);
         Pane finalVictimNote = victimNote;
         delete.setOnAction(event -> {
-            VSBox.getChildren().remove(finalVictimNote);
+            notesCT.getChildren().remove(finalVictimNote);
             searchData = callsData;
             table.setItems(searchData);
         });
@@ -181,7 +187,7 @@ public class MainController {
             }
         });
 
-        VSBox.getChildren().addAll(victimNote);
+        notesCT.getChildren().addAll(victimNote);
 
     }
 
@@ -197,7 +203,7 @@ public class MainController {
         Button delete = (Button) temp.getChildren().get(0);
         Pane finalSuspectNote = suspectNote;
         delete.setOnAction(event -> {
-            VSBox.getChildren().remove(finalSuspectNote);
+            notesCT.getChildren().remove(finalSuspectNote);
             searchData = callsData;
             table.setItems(searchData);
         });
@@ -209,7 +215,7 @@ public class MainController {
             if (txtField.textProperty().get().isEmpty()) {
                 searchData = callsData;
                 table.setItems(searchData);
-            }else {
+            } else {
 
                 ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
                 ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
@@ -235,8 +241,25 @@ public class MainController {
             }
         });
 
-        VSBox.getChildren().add(suspectNote);
+        notesCT.getChildren().add(suspectNote);
 
+    }
+
+    public void addCaseFile(ActionEvent actionEvent) {
+        System.out.println("Suspect");
+        Pane CaseFile = null;
+        try {
+            CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/FXML/CaseFile.fxml"));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        HBox temp = (HBox) CaseFile.getChildren().get(1);
+        Button delete = (Button) temp.getChildren().get(2);
+        Pane finalCaseFile = CaseFile;
+        delete.setOnAction(event -> {
+            caseFilesCT.getChildren().remove(finalCaseFile);
+        });
+        caseFilesCT.getChildren().add(CaseFile);
     }
 
     public void search() {
@@ -245,7 +268,7 @@ public class MainController {
             if (textField.textProperty().get().isEmpty()) {
                 searchData = callsData;
                 table.setItems(searchData);
-            }else {
+            } else {
 
                 ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
                 ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
@@ -270,7 +293,6 @@ public class MainController {
         });
     }
 
-    @FXML
     public void addCall() {
         if (searchData != null) {
             searchData.add(new CallRecord(String.valueOf(sql.getID() + 1), "0", "0", "0", "0", "0", "0", "0"));
@@ -281,7 +303,6 @@ public class MainController {
         }
     }
 
-    @FXML
     public void deleteCall() {
         if (searchData != null) {
             if (table.getSelectionModel().getSelectedItem() != null) {
@@ -322,4 +343,5 @@ public class MainController {
             }
         }
     }
+
 }

@@ -1,14 +1,23 @@
-.button{
-	-fx-background-image: url("../res/images/CaseButton1.png");
-	-fx-background-size: 26, 26;
+
+.button {
+
+	-fx-background-radius: 16.4, 15;
+	-fx-background-insets: -1.4, 0;
+	-fx-border-radius: 15;
+	-fx-border-width: 2;
+	-fx-border-color: red;
+	-fx-padding: 0;
+	-fx-font-size: 0;
 
 }
 
-.button:hover{
-	-fx-background-image: url("../res/images/Delete.png");
+.button:focused {
+	-fx-effect: innershadow(gaussian, red, 15, 0, 0, 0);
+
 }
 
-.button:selected {
-	-fx-background-image: url("../res/images/Delete.png");
 
+.button:hover {
+	-fx-effect: innershadow(gaussian, red, 15, 0, 0, 0);
+	-fx-background-image: url("../res/images/close.png");
 }
