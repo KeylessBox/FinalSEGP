@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -14,18 +15,24 @@
     <children>
         <Pane layoutY="16.0" prefHeight="132.0" prefWidth="200.0" styleClass="pane" stylesheets="@../CSS/Suspect.css">
             <children>
-                <Button fx:id="close" layoutX="169.0" layoutY="5.0"  mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0"  stylesheets="@../CSS/Close.css" />
+                <Button fx:id="close" layoutX="169.0" layoutY="5.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@../CSS/Close.css" />
                 <VBox layoutX="2.0" layoutY="28.0" prefHeight="78.0" prefWidth="196.0" spacing="5.0">
                     <children>
-                        <TextField prefHeight="40.0" prefWidth="196.0" style="-fx-background-color: #fed5d2;" promptText="Name">
+                        <TextField prefHeight="37.0" prefWidth="177.0" promptText="Name" style="-fx-background-color: #fed5d2;">
                             <font>
                                 <Font size="16.0" />
                             </font>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
                         </TextField>
-                        <TextField prefHeight="23.0" prefWidth="196.0" style="-fx-background-color: #fed5d2;" promptText="Telephone">
+                        <TextField prefHeight="23.0" prefWidth="196.0" promptText="Telephone" style="-fx-background-color: #fed5d2;">
                             <font>
                                 <Font size="16.0" />
                             </font>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
                         </TextField>
                     </children>
                 </VBox>
