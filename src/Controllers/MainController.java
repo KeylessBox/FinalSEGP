@@ -301,31 +301,26 @@ public class MainController {
     }
 
     public void addCall() {
-        if (searchData != null) {
-            searchData.add(new CallRecord(String.valueOf(sql.getID() + 1), "0", "0", "0", "0", "0", "0", "0"));
-            System.out.println("ADD: call");
-            //sql.addCall();
-        } else {
-            System.out.println("HERE");
-        }
+
+        callsData.add(new CallRecord(String.valueOf(sql.getID() + 1), "0", "0", "0", "0", "0", "0", "0"));
+        System.out.println("ADD: call");
+        //sql.addCall();
     }
 
     public void deleteCall() {
-        if (searchData != null) {
-            if (table.getSelectionModel().getSelectedItem() != null) {
-                CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
-                if (record != null) {
+
+        if (table.getSelectionModel().getSelectedItem() != null) {
+            CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
+            if (record != null) {
 //                    System.out.println();
 //                    if (!(record.getCallID().equals(""))) {
 //                        //sql.removeCall(record.getCallID());
 //                        System.out.println("DELETE: call " + record.getCallID());
 //                    }
-                    searchData.remove(table.getSelectionModel().getSelectedItem());
-                }
+                callsData.remove(table.getSelectionModel().getSelectedItem());
             }
-        } else {
-            System.out.println("HERE");
         }
+
     }
 
     /**
@@ -537,9 +532,9 @@ public class MainController {
         b.setOnAction(event -> {
             if (pTab.isSelected()) {
                 pCase.getChildren().remove(finalCaseObj);
-            }else if(iTab.isSelected()){
+            } else if (iTab.isSelected()) {
                 iCase.getChildren().remove(finalCaseObj);
-            } else{
+            } else {
                 sCase.getChildren().remove(finalCaseObj);
             }
         });
@@ -547,9 +542,9 @@ public class MainController {
 
         if (pTab.isSelected()) {
             pCase.getChildren().add(finalCaseObj);
-        }else if(iTab.isSelected()){
+        } else if (iTab.isSelected()) {
             iCase.getChildren().add(finalCaseObj);
-        } else{
+        } else {
             sCase.getChildren().add(finalCaseObj);
         }
     }
