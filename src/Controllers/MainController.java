@@ -421,6 +421,18 @@ public class MainController {
                     loadTable(id);
                     caseTitle.setText(s);
                 });
+                finalCaseObj.setOnMousePressed(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
+                });
+                finalCaseObj.setOnMouseReleased(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+                });
+                finalCaseObj.setOnMouseEntered(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
+                });
+                finalCaseObj.setOnMouseExited(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+                });
                 sCase.getChildren().add(CaseObj);
             }
             /**
@@ -446,6 +458,18 @@ public class MainController {
                     int id = sql.loadCase(s);
                     loadTable(id);
                     caseTitle.setText(s);
+                });
+                finalCaseObj.setOnMousePressed(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
+                });
+                finalCaseObj.setOnMouseReleased(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+                });
+                finalCaseObj.setOnMouseEntered(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
+                });
+                finalCaseObj.setOnMouseExited(event -> {
+                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
                 });
 
                 pCase.getChildren().add( CaseObj);
