@@ -124,7 +124,7 @@
                                 <Button fx:id="deleteCall" defaultButton="true" layoutX="24.0" layoutY="70.0" mnemonicParsing="false" onAction="#deleteCall" prefHeight="25.0" prefWidth="102.0" style="-fx-background-color: BLUE;" text="Delete Call" textFill="WHITE" />
                             </children>
                         </Pane>
-                        <Label fx:id = "caseTitle" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="878.0" layoutY="7.0" prefHeight="86.0" prefWidth="322.0" text="Cheeky Scar" textAlignment="CENTER">
+                        <Label fx:id="caseTitle" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="878.0" layoutY="7.0" prefHeight="86.0" prefWidth="322.0" text="Cheeky Scar" textAlignment="CENTER">
                             <font>
                                 <Font size="36.0" />
                             </font>
@@ -164,11 +164,11 @@
                             <tabs>
                                 <Tab fx:id="iTab" text="Investigating">
                                     <content>
-                                        <AnchorPane prefHeight="794.0" prefWidth="228.0" style="-fx-background-color: white;">
+                                        <AnchorPane prefHeight="400.0" prefWidth="241.0" style="-fx-background-color: white;">
                                             <children>
-                                                <ScrollPane layoutX="-1.0" prefHeight="392.0" prefWidth="242.0" style="-fx-background: white;">
+                                                <ScrollPane hbarPolicy="NEVER" layoutX="-1.0" prefHeight="388.0" prefWidth="242.0" style="-fx-background: white;" vbarPolicy="NEVER">
                                                     <content>
-                                                        <VBox fx:id="iCase" prefHeight="388.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: white;">
+                                                        <VBox fx:id="iCase" prefHeight="387.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: white;">
 
                                                         </VBox>
                                                     </content>
@@ -181,7 +181,7 @@
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                             <children>
-                                                <ScrollPane layoutY="-1.0" prefHeight="392.0" prefWidth="242.0" style="-fx-background: white;">
+                                                <ScrollPane hbarPolicy="NEVER" layoutY="-1.0" prefHeight="392.0" prefWidth="242.0" style="-fx-background: white;" vbarPolicy="NEVER">
                                                     <content>
                                                         <VBox fx:id="sCase" prefHeight="388.0" prefWidth="240.0" spacing="5.0">
 
@@ -196,7 +196,7 @@
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="381.0" prefWidth="228.0">
                                             <children>
-                                                <ScrollPane layoutX="-2.0" layoutY="-1.0" prefHeight="389.0" prefWidth="242.0" style="-fx-background: white;">
+                                                <ScrollPane hbarPolicy="NEVER" layoutX="-2.0" layoutY="-1.0" prefHeight="389.0" prefWidth="242.0" style="-fx-background: white;" vbarPolicy="NEVER">
                                                     <content>
                                                         <VBox fx:id="pCase" prefHeight="387.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: white;">
 
@@ -209,7 +209,7 @@
                                 </Tab>
                             </tabs>
                         </TabPane>
-                        <Button layoutX="217.0" layoutY="468.0" mnemonicParsing="false" prefHeight="14.0" prefWidth="20.0" style="-fx-background-color: #72d4f4;" stylesheets="@../CSS/Add.css" />
+                        <Button layoutX="217.0" layoutY="468.0" mnemonicParsing="false" onAction="#addCase" prefHeight="14.0" prefWidth="20.0" style="-fx-background-color: #72d4f4;" stylesheets="@../CSS/Add.css" />
                     </children>
                 </Pane>
             </children>

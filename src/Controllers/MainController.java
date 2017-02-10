@@ -144,7 +144,7 @@ public class MainController {
         table.setItems(callsData);
         table.setEditable(true);
     }
-    
+
     public void addVictim() {
         System.out.println("VICTIM");
         Pane victimNote = null;
@@ -361,10 +361,13 @@ public class MainController {
                 /**
                  * It adds the case values in the tab
                  */
+                HBox hb = (HBox) CaseObj.getChildren().get(3);
+                Button b = (Button) hb.getChildren().get(1);
+
                 VBox temp = (VBox) CaseObj.getChildren().get(1);
-                Label caseName =(Label) temp.getChildren().get(0);
+                Label caseName = (Label) temp.getChildren().get(0);
                 caseName.setText(tabPane.getCaseName());
-                Label caseDate =(Label) temp.getChildren().get(1);
+                Label caseDate = (Label) temp.getChildren().get(1);
                 caseDate.setText("date");
                 /**
                  * Pressing a case changes the table with the proper values from the database
@@ -378,7 +381,7 @@ public class MainController {
                     int id = sql.loadCase(s);
                     loadTable(id);
                     caseTitle.setText(s);
-                        //TODO Add animation (or some sort of feedback) if that specific case is shown
+                    //TODO Add animation (or some sort of feedback) if that specific case is shown
                 });
                 finalCaseObj.setOnMousePressed(event -> {
                     finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
@@ -391,6 +394,10 @@ public class MainController {
                 });
                 finalCaseObj.setOnMouseExited(event -> {
                     finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+                });
+
+                b.setOnAction(event -> {
+                    iCase.getChildren().remove(finalCaseObj);
                 });
                 /**
                  * And loads them to the app
@@ -406,10 +413,14 @@ public class MainController {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+
+                HBox hb = (HBox) CaseObj.getChildren().get(3);
+                Button b = (Button) hb.getChildren().get(1);
+
                 VBox temp = (VBox) CaseObj.getChildren().get(1);
-                Label caseName =(Label) temp.getChildren().get(0);
+                Label caseName = (Label) temp.getChildren().get(0);
                 caseName.setText(tabPane.getCaseName());
-                Label caseDate =(Label) temp.getChildren().get(1);
+                Label caseDate = (Label) temp.getChildren().get(1);
                 caseDate.setText("date");
                 /**
                  * Same as above
@@ -432,6 +443,10 @@ public class MainController {
                 });
                 finalCaseObj.setOnMouseExited(event -> {
                     finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+                });
+
+                b.setOnAction(event -> {
+                    sCase.getChildren().remove(finalCaseObj);
                 });
                 sCase.getChildren().add(CaseObj);
             }
@@ -444,10 +459,14 @@ public class MainController {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+                HBox hb = (HBox) CaseObj.getChildren().get(3);
+                Button b = (Button) hb.getChildren().get(1);
+
+
                 VBox temp = (VBox) CaseObj.getChildren().get(1);
-                Label caseName =(Label) temp.getChildren().get(0);
+                Label caseName = (Label) temp.getChildren().get(0);
                 caseName.setText(tabPane.getCaseName());
-                Label caseDate =(Label) temp.getChildren().get(1);
+                Label caseDate = (Label) temp.getChildren().get(1);
                 caseDate.setText("date");
                 /**
                  * Same as above
@@ -472,9 +491,66 @@ public class MainController {
                     finalCaseObj.setStyle("-fx-background-color: #ffffff;");
                 });
 
-                pCase.getChildren().add( CaseObj);
+                b.setOnAction(event -> {
+                    pCase.getChildren().remove(finalCaseObj);
+                });
+
+                pCase.getChildren().add(CaseObj);
             }
 
+        }
+    }
+
+    public void addCase(ActionEvent actionEvent) {
+        HBox CaseObj = null;
+        try {
+            CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/FXML/CaseObj.fxml"));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        HBox finalCaseObj = CaseObj;
+        finalCaseObj.setOnMouseClicked(event -> {
+            String s = "test";
+            int id = sql.loadCase(s);
+            loadTable(id);
+            caseTitle.setText(s);
+        });
+
+        HBox hb = (HBox) CaseObj.getChildren().get(3);
+        Button b = (Button) hb.getChildren().get(1);
+
+        finalCaseObj.setOnMousePressed(event -> {
+            finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
+        });
+        finalCaseObj.setOnMouseReleased(event -> {
+            finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+        });
+        finalCaseObj.setOnMouseEntered(event -> {
+            finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
+        });
+        finalCaseObj.setOnMouseExited(event -> {
+            finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+        });
+
+        System.out.println("HERE");
+
+        b.setOnAction(event -> {
+            if (pTab.isSelected()) {
+                pCase.getChildren().remove(finalCaseObj);
+            }else if(iTab.isSelected()){
+                iCase.getChildren().remove(finalCaseObj);
+            } else{
+                sCase.getChildren().remove(finalCaseObj);
+            }
+        });
+
+
+        if (pTab.isSelected()) {
+            pCase.getChildren().add(finalCaseObj);
+        }else if(iTab.isSelected()){
+            iCase.getChildren().add(finalCaseObj);
+        } else{
+            sCase.getChildren().add(finalCaseObj);
         }
     }
 }

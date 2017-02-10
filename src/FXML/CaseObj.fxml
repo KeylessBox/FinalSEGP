@@ -37,7 +37,7 @@
                </padding></Label>
                </children>
             </VBox>
-      <Region HBox.hgrow="ALWAYS" />
+           <Region HBox.hgrow="ALWAYS" />
             <HBox prefHeight="22.0" prefWidth="48.0">
                <children>
                   <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="button" stylesheets="@../CSS/CaseButton3.css">
