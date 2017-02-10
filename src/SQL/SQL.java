@@ -34,7 +34,7 @@ public class SQL {
      *
      * @return ObservableList<StudentRecord>
      */
-    public ObservableList<CallRecord> loadCalls() {
+    public ObservableList<CallRecord> loadCalls(int i) {
 
         Connection connection = dbConnection.connect();
         ObservableList<CallRecord> data = FXCollections.observableArrayList();
@@ -42,7 +42,7 @@ public class SQL {
         try {
 
             //execute query and store result in a result SET:
-            ResultSet callsRS = connection.createStatement().executeQuery("SELECT * FROM Calls");
+            ResultSet callsRS = connection.createStatement().executeQuery("SELECT * FROM Calls WHERE CaseId = " + i);
 
             while (callsRS.next()) {
 
@@ -60,6 +60,7 @@ public class SQL {
         }
         return data;
     }
+
 
     public ObservableList<CasesRecords> loadCases() {
         Connection connection = dbConnection.connect();
@@ -81,6 +82,22 @@ public class SQL {
             ex.printStackTrace();
         }
         return data;
+    }
+
+    public int loadCase(String s) {
+        Connection connection = dbConnection.connect();
+        int caseId = -1;
+
+        try {
+            //execute query and store result in a result SET:
+            ResultSet caseRS = connection.createStatement().executeQuery("SELECT id FROM Cases Where Name =\"" + s + "\"");
+            if (caseRS.next()) {
+                caseId = (caseRS.getInt(1));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return caseId;
     }
 
     /**

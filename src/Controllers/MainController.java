@@ -75,6 +75,8 @@ public class MainController {
     private VBox caseFilesCT;
     @FXML
     private HBox notesCT;
+    @FXML
+    protected Label caseName;
 
     @FXML
     protected void importCSV() {
@@ -119,15 +121,7 @@ public class MainController {
         date.setMinWidth(50);
         date.setMaxWidth(50);
         date.setPrefWidth(50);
-        callsData = sql.loadCalls();
-        ColumnFactory.createCallerPNColumn(callerPhoneNumber);
-        ColumnFactory.createReceiverPNColumn(receiverPhoneNumber);
-        ColumnFactory.createDateColumn(date);
-        ColumnFactory.createTimeColumn(time);
-        ColumnFactory.createTypeOfCallColumn(typeOfCall);
-        ColumnFactory.createDurationColumn(duration);
-        table.setItems(callsData);
-        table.setEditable(true);
+        loadTable(1);
         search();
         notesCT.setAlignment(Pos.TOP_LEFT);
         notesCT.setSpacing(50);
@@ -139,6 +133,31 @@ public class MainController {
         searchData = callsData;
     }
 
+    public void loadTable(int i) {
+        callsData = sql.loadCalls(i);
+        ColumnFactory.createCallerPNColumn(callerPhoneNumber);
+        ColumnFactory.createReceiverPNColumn(receiverPhoneNumber);
+        ColumnFactory.createDateColumn(date);
+        ColumnFactory.createTimeColumn(time);
+        ColumnFactory.createTypeOfCallColumn(typeOfCall);
+        ColumnFactory.createDurationColumn(duration);
+        table.setItems(callsData);
+        table.setEditable(true);
+    }
+
+
+    public void loadTabl(int i) {
+        callsData = sql.loadCalls(i);
+        table.getItems().clear();
+        ColumnFactory.createCallerPNColumn(callerPhoneNumber);
+        ColumnFactory.createReceiverPNColumn(receiverPhoneNumber);
+        ColumnFactory.createDateColumn(date);
+        ColumnFactory.createTimeColumn(time);
+        ColumnFactory.createTypeOfCallColumn(typeOfCall);
+        ColumnFactory.createDurationColumn(duration);
+        /*table.setItems(callsData);*/
+        table.setEditable(true);
+    }
     public void addVictim() {
         System.out.println("VICTIM");
         Pane victimNote = null;
@@ -361,6 +380,17 @@ public class MainController {
                 Label caseDate =(Label) temp.getChildren().get(1);
                 caseDate.setText("date");
                 /**
+                 * Pressing a case changes the table with the proper values from the database
+                 * How: It gets the name of the case, and finds its id (not suitable for cases that have the same names //TODO make this as general as possible
+                 * Loads the table with only the calls at that specific id
+                 */
+                HBox finalCaseObj = CaseObj;
+                finalCaseObj.setOnMouseClicked(event -> {
+                        int id = sql.loadCase(caseName.getText());
+                        loadTable(id);
+                        //TODO Add animation (or some sort of feedback) if that specific case is shown
+                });
+                /**
                  * And loads them to the app
                  */
                 iCase.getChildren().add(CaseObj);
@@ -379,6 +409,14 @@ public class MainController {
                 caseName.setText(tabPane.getCaseName());
                 Label caseDate =(Label) temp.getChildren().get(1);
                 caseDate.setText("date");
+                /**
+                 * Same as above
+                 */
+                HBox finalCaseObj = CaseObj;
+                finalCaseObj.setOnMouseClicked(event -> {
+                    int id = sql.loadCase(caseName.getText());
+                    loadTable(id);
+                });
                 sCase.getChildren().add( CaseObj);
             }
             /**
@@ -395,6 +433,14 @@ public class MainController {
                 caseName.setText(tabPane.getCaseName());
                 Label caseDate =(Label) temp.getChildren().get(1);
                 caseDate.setText("date");
+                /**
+                 * Same as above
+                 */
+                HBox finalCaseObj = CaseObj;
+                finalCaseObj.setOnMouseClicked(event -> {
+                    int id = sql.loadCase(caseName.getText());
+                    loadTable(id);
+                });
                 pCase.getChildren().add( CaseObj);
             }
         }
