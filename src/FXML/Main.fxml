@@ -166,30 +166,10 @@
                                     <content>
                                         <AnchorPane prefHeight="794.0" prefWidth="228.0" style="-fx-background-color: white;">
                                             <children>
-                                                <ScrollPane layoutX="-2.0" layoutY="-2.0" prefHeight="392.0" prefWidth="242.0" style="-fx-background: white;">
+                                                <ScrollPane layoutX="-1.0" prefHeight="392.0" prefWidth="242.0" style="-fx-background: white;">
                                                     <content>
-                                                        <VBox prefHeight="388.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: white;">
-                                                            <children>
-                                                                <HBox prefHeight="54.0" prefWidth="240.0" spacing="5.0">
-                                                                    <children>
-                                                                        <ImageView fitHeight="55.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="t    rue" />
-                                                                        <VBox fx:id="iCase" prefHeight="55.0" prefWidth="84.0" spacing="5.0">
-                                                                            <children>
+                                                        <VBox fx:id="iCase" prefHeight="388.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: white;">
 
-                                                                            </children>
-                                                                        </VBox>
-                                                                        <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="87.0" spacing="5.0">
-                                                                            <children>
-                                                                                <ToggleButton mnemonicParsing="false" prefHeight="33.0" prefWidth="36.0" style="-fx-background-color: white;" styleClass="button" stylesheets="@../CSS/ACase1.css" />
-                                                                                <ToggleButton mnemonicParsing="false" prefHeight="34.0" prefWidth="35.0" style="-fx-background-color: white;" styleClass="button" stylesheets="@../CSS/ACase2.css" />
-                                                                            </children>
-                                                                            <HBox.margin>
-                                                                                <Insets />
-                                                                            </HBox.margin>
-                                                                        </HBox>
-                                                                    </children>
-                                                                </HBox>
-                                                            </children>
                                                         </VBox>
                                                     </content>
                                                 </ScrollPane>
@@ -201,12 +181,10 @@
                                     <content>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                             <children>
-                                                <ScrollPane layoutY="-1.0" prefHeight="388.0" prefWidth="240.0" style="-fx-background: white;">
+                                                <ScrollPane layoutY="-1.0" prefHeight="392.0" prefWidth="242.0" style="-fx-background: white;">
                                                     <content>
-                                                        <VBox fx:id="sCase" prefHeight="55.0" prefWidth="84.0" spacing="5.0">
-                                                            <children>
-                                                                <Label />
-                                                            </children>
+                                                        <VBox fx:id="sCase" prefHeight="388.0" prefWidth="240.0" spacing="5.0">
+
                                                         </VBox>
                                                     </content>
                                                 </ScrollPane>
@@ -221,9 +199,7 @@
                                                 <ScrollPane layoutX="-2.0" layoutY="-1.0" prefHeight="389.0" prefWidth="242.0" style="-fx-background: white;">
                                                     <content>
                                                         <VBox fx:id="pCase" prefHeight="387.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: white;">
-                                                            <children>
-                                                                <Label />
-                                                            </children>
+
                                                         </VBox>
                                                     </content>
                                                 </ScrollPane>

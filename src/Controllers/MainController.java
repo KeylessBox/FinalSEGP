@@ -1,6 +1,7 @@
 package Controllers;
 
 
+import Modules.File_Import.Case;
 import Modules.File_Import.ImportCSV;
 import Modules.ManageAccounts.User;
 import Modules.Table.CallRecord;
@@ -322,24 +323,79 @@ public class MainController {
     }
 
     /**
-     * Initialises the cases on the TabPane
+     * Initialises the cases on the TabPane. CaseObj is considered as one of the case entries on the pane (with its image,labels and buttons)
      */
     private void initCases() {
+        /**
+         * Takes Cases table from database
+         */
         casesData = sql.loadCases();
-
-        int[] i = new int[2];
+        /**
+         * Initialisation of Case Obj
+         */
+        HBox CaseObj = null;
+        /**
+         * Every row of the Case Table (thus, every case that exists in the database) has a status attribute (Investigating, Solved or Preliminary)
+         * The for loop takes each case and checks what status it has, and then assigns the CaseObj position in the tab
+         */
         for (CasesRecords tabPane : casesData) {
+            /**
+             * If the status of the case is the same as the text of the Investigating Tab (maybe should propose another solution)
+             * then the case entry will be on that specific tab
+             */
             if (tabPane.getStatus().equals(iTab.getText())) {
-                iCase.getChildren().add(i[0], new Label(tabPane.getCaseName()));
-                i[0]++;
+                /**
+                 * CaseObj loads the fxml, with its nodes
+                 */
+                try {
+                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/FXML/CaseObj.fxml"));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                /**
+                 * It adds the case values in the tab
+                 */
+                VBox temp = (VBox) CaseObj.getChildren().get(1);
+                Label caseName =(Label) temp.getChildren().get(0);
+                caseName.setText(tabPane.getCaseName());
+                Label caseDate =(Label) temp.getChildren().get(1);
+                caseDate.setText("date");
+                /**
+                 * And loads them to the app
+                 */
+                iCase.getChildren().add(CaseObj);
             }
+            /**
+             * The same as above, but that's if the status is "Solved"
+             */
             if (tabPane.getStatus().equals(sTab.getText())) {
-                sCase.getChildren().add(i[1], new Label(tabPane.getCaseName()));
-                i[1]++;
+                try {
+                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/FXML/CaseObj.fxml"));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                VBox temp = (VBox) CaseObj.getChildren().get(1);
+                Label caseName =(Label) temp.getChildren().get(0);
+                caseName.setText(tabPane.getCaseName());
+                Label caseDate =(Label) temp.getChildren().get(1);
+                caseDate.setText("date");
+                sCase.getChildren().add( CaseObj);
             }
+            /**
+             * The same as above, but that's if the status is "Preliminary"
+             */
             if (tabPane.getStatus() == pTab.getText()) {
-                pCase.getChildren().add(i[2], new Label(tabPane.getCaseName()));
-                i[2]++;
+                try {
+                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/FXML/CaseObj.fxml"));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                VBox temp = (VBox) CaseObj.getChildren().get(1);
+                Label caseName =(Label) temp.getChildren().get(0);
+                caseName.setText(tabPane.getCaseName());
+                Label caseDate =(Label) temp.getChildren().get(1);
+                caseDate.setText("date");
+                pCase.getChildren().add( CaseObj);
             }
         }
     }
