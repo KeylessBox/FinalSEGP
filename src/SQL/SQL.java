@@ -136,6 +136,11 @@ public class SQL {
         }
     }
 
+    /**
+     * Loads the note records from the database
+     * @param i
+     * @return
+     */
     public ObservableList<NoteRecord> loadSQLNotes(int i) {
         Connection connection = dbConnection.connect();
         ObservableList<NoteRecord> data = FXCollections.observableArrayList();
@@ -145,7 +150,6 @@ public class SQL {
             ResultSet caseRS = connection.createStatement().executeQuery("SELECT * FROM notes WHERE caseID=" + i +";");
 
             while (caseRS.next()) {
-
                 if (Integer.parseInt(caseRS.getString(1)) > maxIDNote) {
                     maxIDNote = Integer.parseInt(caseRS.getString(1));
                 }
@@ -158,6 +162,19 @@ public class SQL {
         return data;
     }
 
+    /**
+     * Removes a note from the database with the given ID
+     * @param idNote
+     */
+    public void removeNote(int idNote) {
+        Connection connection = dbConnection.connect();
+
+        try {
+            connection.createStatement().executeUpdate("DELETE FROM `notes` WHERE id = " + idNote + ";");
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     /**
      * Get max value for call id

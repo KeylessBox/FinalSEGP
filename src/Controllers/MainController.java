@@ -519,12 +519,16 @@ public class MainController {
         }
     }
 
-    private void loadNotes(int i) {
-        notesData = sql.loadSQLNotes(i);
+    /**
+     * Loads the Case Files (notes) into the app
+     * @param caseID
+     */
+    private void loadNotes(int caseID) {
+        notesData = sql.loadSQLNotes(caseID);
         Pane CaseFile = null;
         caseFilesCT.getChildren().clear();
         for (NoteRecord element : notesData) {
-            if (Integer.parseInt(element.getCaseID()) == sql.loadCase(caseTitle.getText())) {
+            if (Integer.parseInt(element.getCaseID()) == caseID) {
                 try {
                     CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/FXML/CaseFile.fxml"));
                 } catch (IOException e1) {
@@ -538,6 +542,7 @@ public class MainController {
                 Pane finalCaseFile = CaseFile;
                 delete.setOnAction(event -> {
                     caseFilesCT.getChildren().remove(finalCaseFile);
+                    sql.removeNote(Integer.parseInt(element.getNoteID()));
                 });
                 caseFilesCT.getChildren().add(CaseFile);
             }

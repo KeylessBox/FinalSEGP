@@ -71,7 +71,7 @@
                                         <Image url="@../RES/img/defaultProfile.jpg" />
                                     </image>
                                 </ImageView>
-                                <Button id="editDetails" layoutX="44.0" layoutY="74.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="107.0" stylesheets="@../CSS/ProfileButtons.css" text="Edit date" />
+                                <Button id="editDetails" layoutX="44.0" layoutY="74.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="107.0" stylesheets="@../CSS/ProfileButtons.css" text="Edit details" />
                                 <Button id="logoutButton" layoutX="60.0" layoutY="115.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="68.0" stylesheets="@../CSS/ProfileButtons.css" text="Logout" />
                             </children>
                         </Pane>
