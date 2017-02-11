@@ -1,12 +1,12 @@
 package Controllers;
 
 
-import Modules.File_Import.Case;
 import Modules.File_Import.ImportCSV;
 import Modules.ManageAccounts.User;
 import Modules.Table.CallRecord;
 import Modules.Table.CallsTable;
 import Modules.Table.CasesRecords;
+import Modules.Table.NoteRecord;
 import SQL.SQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +23,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -36,6 +38,7 @@ public class MainController {
     private ObservableList<CallRecord> searchData;
     private ObservableList<CallRecord> callsData;
     private ObservableList<CasesRecords> casesData;
+    private ObservableList<NoteRecord> notesData;
 
     @FXML
     private ScrollPane scrollPane2;
@@ -117,6 +120,7 @@ public class MainController {
     @FXML
     public void initialize() {
         initCases();
+        loadNotes(1);
         setUserLabel();
         date.setMinWidth(50);
         date.setMaxWidth(50);
@@ -260,6 +264,14 @@ public class MainController {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+
+        HBox temp2 = (HBox) CaseFile.getChildren().get(0);
+        Label noteName = (Label) temp2.getChildren().get(0);
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        NoteRecord nr = new NoteRecord("\""+ (sql.getMaxIDNote() + 1) +"\"","" + 1 + "", "" + sql.loadCase(caseTitle.getText()) + "",
+                "\"" + noteName.getText() +"\"", "\"" + LocalDate.now() + "\"", "\" \"");
+
+        sql.insertNote(nr);
         HBox temp = (HBox) CaseFile.getChildren().get(1);
         Button delete = (Button) temp.getChildren().get(2);
         Pane finalCaseFile = CaseFile;
@@ -383,6 +395,7 @@ public class MainController {
                     String s = caseName.getText();
                     int id = sql.loadCase(s);
                     loadTable(id);
+                    loadNotes(id);
                     caseTitle.setText(s);
                     //TODO Add animation (or some sort of feedback) if that specific case is shown
                 });
@@ -433,6 +446,7 @@ public class MainController {
                     String s = caseName.getText();
                     int id = sql.loadCase(s);
                     loadTable(id);
+                    loadNotes(id);
                     caseTitle.setText(s);
                 });
                 finalCaseObj.setOnMousePressed(event -> {
@@ -479,6 +493,7 @@ public class MainController {
                     String s = caseName.getText();
                     int id = sql.loadCase(s);
                     loadTable(id);
+                    loadNotes(id);
                     caseTitle.setText(s);
                 });
                 finalCaseObj.setOnMousePressed(event -> {
@@ -503,6 +518,33 @@ public class MainController {
 
         }
     }
+
+    private void loadNotes(int i) {
+        notesData = sql.loadSQLNotes(i);
+        Pane CaseFile = null;
+        caseFilesCT.getChildren().clear();
+        for (NoteRecord element : notesData) {
+            if (Integer.parseInt(element.getCaseID()) == sql.loadCase(caseTitle.getText())) {
+                try {
+                    CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/FXML/CaseFile.fxml"));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                HBox temp = (HBox) CaseFile.getChildren().get(1);
+                HBox temp2 = (HBox) CaseFile.getChildren().get(0);
+                Label noteName = (Label) temp2.getChildren().get(0);
+                noteName.setText(element.getNoteName());
+                Button delete = (Button) temp.getChildren().get(2);
+                Pane finalCaseFile = CaseFile;
+                delete.setOnAction(event -> {
+                    caseFilesCT.getChildren().remove(finalCaseFile);
+                });
+                caseFilesCT.getChildren().add(CaseFile);
+            }
+        }
+
+    }
+
 
     public void addCase(ActionEvent actionEvent) {
         HBox CaseObj = null;
@@ -556,4 +598,5 @@ public class MainController {
             sCase.getChildren().add(finalCaseObj);
         }
     }
+
 }

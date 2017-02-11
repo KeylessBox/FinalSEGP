@@ -7,6 +7,7 @@ package SQL;
 import Modules.Table.CallRecord;
 import Modules.Table.CasesRecords;
 import Modules.Table.DBConnection;
+import Modules.Table.NoteRecord;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +24,7 @@ import java.sql.SQLException;
 public class SQL {
 
     int maxIDCall = 1;
+    int maxIDNote = 1;
 
     int ID = 0;
     /**
@@ -101,15 +103,75 @@ public class SQL {
         return caseId;
     }
 
+    public int getUserID(String s) {
+        Connection connection = dbConnection.connect();
+        int userId = -1;
+
+        try {
+            //execute query and store result in a result SET:
+            ResultSet caseRS = connection.createStatement().executeQuery("SELECT id FROM Users Where Name ='" + s + "'");
+            System.out.println("SELECT id FROM Users Where Name ='" + s + "'");
+            if (caseRS.next()) {
+                userId = (caseRS.getInt(0));
+                System.out.println("UserID inside getUserID sql" + userId);
+            }
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        return userId;
+    }
+
+    public void insertNote(NoteRecord nr) {
+        Connection connection = dbConnection.connect();
+
+        try {
+            String query = "INSERT INTO notes(userID, caseID, title, date, data) VALUES(" +
+                    nr.getUserID() + "," + nr.getCaseID() + ","+ nr.getNoteName() + "," +
+                    nr.getDate() + "," + nr.getData() + ");";
+            System.out.println(query);
+            connection.createStatement().executeUpdate(query);
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public ObservableList<NoteRecord> loadSQLNotes(int i) {
+        Connection connection = dbConnection.connect();
+        ObservableList<NoteRecord> data = FXCollections.observableArrayList();
+
+        try {
+            //execute query and store result in a result SET:
+            ResultSet caseRS = connection.createStatement().executeQuery("SELECT * FROM notes WHERE caseID=" + i +";");
+
+            while (caseRS.next()) {
+
+                if (Integer.parseInt(caseRS.getString(1)) > maxIDNote) {
+                    maxIDNote = Integer.parseInt(caseRS.getString(1));
+                }
+                data.add(new NoteRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4), caseRS.getString(5), caseRS.getString(6)));
+            }
+            maxIDNote = 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return data;
+    }
+
 
     /**
-     * Get max value for student id
+     * Get max value for call id
      *
      * @return
      */
     public int getMaxCallID() {
         return maxIDCall;
     }
+
+    /**
+     * Get max value for note id
+     */
+    public int getMaxIDNote() { return maxIDNote;}
 
     /**
      * Check if String is an integer
@@ -139,7 +201,6 @@ public class SQL {
             connection.createStatement().executeUpdate("INSERT INTO Calls(CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)\n" +
                     "VALUES("+cr.getCaseID()+",\""+ cr.getCallerPhoneNumber() + "\",\""+ cr.getReceiverPhoneNumber() + "\",\"" +
                     cr.getDate() + "\",\"" + cr.getTime() + "\",\"" + cr.getTypeOfCall() + "\",\"" + cr.getDuration() + "\");");
-          /*  VALUES(1,'078 0680 1334','077 3628 5886','2016/03/19','10:15','Standard', '20:00');*/
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
