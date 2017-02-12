@@ -20,7 +20,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    // comment
+    //
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/FXML/signIn.fxml"));
