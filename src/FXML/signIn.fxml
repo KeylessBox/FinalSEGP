@@ -11,7 +11,7 @@
     <children>
         <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="156.0" layoutY="47.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="80.0">
             <image>
-                <Image url="@../RES/img/defaultProfile.jpg" />
+                <Image url="@../res/img/defaultProfile.jpg" />
             </image>
         </ImageView>
         <GridPane alignment="CENTER" hgap="10" vgap="10" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="225.0">

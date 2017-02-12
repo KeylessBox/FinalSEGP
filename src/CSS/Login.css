@@ -36,7 +36,7 @@ root {
 }
 
 .root {
-	-fx-background-image: url("../RES/img/backgroundForLogin.jpg");
+	-fx-background-image: url("../res/img/backgroundForLogin.jpg");
 
 }
 .logo {

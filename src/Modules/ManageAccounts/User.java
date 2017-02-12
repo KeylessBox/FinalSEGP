@@ -1,5 +1,7 @@
 package Modules.ManageAccounts;
 
+import Modules.Table.DBConnection;
+
 import java.sql.*;
 
 /**
@@ -7,20 +9,13 @@ import java.sql.*;
  */
 public class User {
     public static String userGetName(String userID)  {
+        DBConnection dbConnection = new DBConnection();
 
-        Connection con = null;
-
-        String url="jdbc:mysql://localhost:3306/investigationsdb";
-        String user = "root";
-        String pw = "";
+        Connection connection = dbConnection.connect();
 
         String result = "";
 
         try {
-            /**
-             * Establishes the connection with the database
-             */
-            con = DriverManager.getConnection(url, user, pw);
             /**
              * The query used to get data
              * In this case, email acts as a username too
@@ -28,7 +23,7 @@ public class User {
             String query = "Select * from accounts where Email = \"" + userID + "\"  ";
 
 
-            Statement st = con.createStatement();
+            Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             if(rs.next()) {
                 result = rs.getString("Name") + " " + rs.getString("Surname");

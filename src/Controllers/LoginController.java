@@ -78,7 +78,7 @@ public class LoginController {
              * Program moves to the Main Window
              */
             user = username.getText();
-            FileWriter writer = new FileWriter(new File("src/RES/tmp.txt"));
+            FileWriter writer = new FileWriter(new File("src/res/tmp.txt"));
             writer.write(user);
             writer.close();
 

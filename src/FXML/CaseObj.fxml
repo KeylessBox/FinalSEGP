@@ -18,7 +18,7 @@
          <children>
             <ImageView fitHeight="21.0" fitWidth="138.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@../RES/images/greeny.png" />
+                    <Image url="@../res/images/greeny.png" />
                 </image>
          <HBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />

@@ -68,7 +68,7 @@
                                 </Label>
                                 <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="16.0" layoutY="16.0" pickOnBounds="true" preserveRatio="false">
                                     <image>
-                                        <Image url="@../RES/img/defaultProfile.jpg" />
+                                        <Image url="@../res/img/defaultProfile.jpg" />
                                     </image>
                                 </ImageView>
                                 <Button id="editDetails" layoutX="44.0" layoutY="74.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="107.0" stylesheets="@../CSS/ProfileButtons.css" text="Edit details" />

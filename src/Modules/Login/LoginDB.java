@@ -5,23 +5,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import Modules.Table.DBConnection;
 
 public class LoginDB {
+
     public static Boolean checkUserDetails(String userID, String password) {
+        DBConnection dbConnection = new DBConnection();
 
-        Connection con = null;
+        Connection connection = dbConnection.connect();
 
-        String url="jdbc:mysql://localhost:3306/investigationsdb";
-        String user = "root";
-        String pw = "";
 
         Boolean check = false;
 
         try {
-            /**
-             * Establishes the connection with the database
-             */
-            con = DriverManager.getConnection(url, user, pw);
+
             /**
              * The query used to get data
              * In this case, email acts as a username too
@@ -29,7 +26,7 @@ public class LoginDB {
             String query = "Select Password from accounts where Email = \"" + userID + "\"  ";
 
 
-            Statement st = con.createStatement();
+            Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             if(rs.next()) {
                if(rs.getString("Password").equals(password))
@@ -37,7 +34,7 @@ public class LoginDB {
             }
             else
 
-            con.close();
+            connection.close();
 
         }
         catch (SQLException e) {

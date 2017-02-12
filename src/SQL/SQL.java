@@ -45,7 +45,7 @@ public class SQL {
         try {
 
             //execute query and store result in a result SET:
-            ResultSet callsRS = connection.createStatement().executeQuery("SELECT * FROM Calls WHERE CaseId = " + i);
+            ResultSet callsRS = connection.createStatement().executeQuery("SELECT * FROM calls WHERE caseId = " + i);
 
             while (callsRS.next()) {
 
@@ -71,7 +71,7 @@ public class SQL {
 
         try {
             //execute query and store result in a result SET:
-            ResultSet caseRS = connection.createStatement().executeQuery("SELECT * FROM Cases");
+            ResultSet caseRS = connection.createStatement().executeQuery("SELECT * FROM cases");
 
             while (caseRS.next()) {
 
@@ -93,7 +93,7 @@ public class SQL {
 
         try {
             //execute query and store result in a result SET:
-            ResultSet caseRS = connection.createStatement().executeQuery("SELECT id FROM Cases Where Name =\"" + s + "\"");
+            ResultSet caseRS = connection.createStatement().executeQuery("SELECT id FROM cases Where name =\"" + s + "\"");
             if (caseRS.next()) {
                 caseId = (caseRS.getInt(1));
             }
@@ -109,7 +109,7 @@ public class SQL {
 
         try {
             //execute query and store result in a result SET:
-            ResultSet caseRS = connection.createStatement().executeQuery("SELECT id FROM Users Where Name ='" + s + "'");
+            ResultSet caseRS = connection.createStatement().executeQuery("SELECT id FROM accounts WHERE name ='" + s + "'");
             System.out.println("SELECT id FROM Users Where Name ='" + s + "'");
             if (caseRS.next()) {
                 userId = (caseRS.getInt(0));
@@ -125,7 +125,7 @@ public class SQL {
         Connection connection = dbConnection.connect();
 
         try {
-            String query = "INSERT INTO notes(userID, caseID, title, date, data) VALUES(" +
+            String query = "INSERT INTO notes(accountID, caseID, title, date, data) VALUES(" +
                     nr.getUserID() + "," + nr.getCaseID() + ","+ nr.getNoteName() + "," +
                     nr.getDate() + "," + nr.getData() + ");";
             System.out.println(query);
@@ -215,7 +215,7 @@ public class SQL {
         Connection connection = dbConnection.connect();
 
         try {
-            connection.createStatement().executeUpdate("INSERT INTO Calls(CaseId, CallerPhoneNumber, ReceiverPhoneNumber, Date, Time, TypeOfCall, Duration)\n" +
+            connection.createStatement().executeUpdate("INSERT INTO calls(caseId, callerPhoneNumber, receiverPhoneNumber, date, time, typeOfCall, duration)\n" +
                     "VALUES("+cr.getCaseID()+",\""+ cr.getCallerPhoneNumber() + "\",\""+ cr.getReceiverPhoneNumber() + "\",\"" +
                     cr.getDate() + "\",\"" + cr.getTime() + "\",\"" + cr.getTypeOfCall() + "\",\"" + cr.getDuration() + "\");");
         } catch (SQLException ex) {
@@ -233,7 +233,7 @@ public class SQL {
         Connection connection = dbConnection.connect();
 
         try {
-            connection.createStatement().executeUpdate("DELETE FROM `Calls` WHERE id = " + id);
+            connection.createStatement().executeUpdate("DELETE FROM `calls` WHERE id = " + id);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

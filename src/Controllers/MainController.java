@@ -102,7 +102,7 @@ public class MainController {
     @FXML
     public void setUserLabel() {
         try {
-            BufferedReader read = new BufferedReader(new FileReader(new File("src/RES/tmp.txt")));
+            BufferedReader read = new BufferedReader(new FileReader(new File("src/res/tmp.txt")));
             String rd = read.readLine();
             rd = User.userGetName(rd);
             rd = rd.replace(" ", "\n");
@@ -112,7 +112,7 @@ public class MainController {
         } catch (IOException e) {
 
         } finally {
-            new File("src/RES/tmp.txt").delete();
+            new File("src/res/tmp.txt").delete();
         }
 
     }
