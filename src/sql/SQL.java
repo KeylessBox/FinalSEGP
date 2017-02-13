@@ -136,7 +136,7 @@ public class SQL {
         return userId;
     }
 
-    public void insertNote(NoteRecord nr) {
+    public void insertFile(NoteRecord nr) {
         Connection connection = dbConnection.connect();
 
         try {

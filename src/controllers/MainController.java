@@ -45,6 +45,7 @@ public class MainController {
     private ObservableList<CallRecord> callsData;
     private ObservableList<CasesRecords> casesData;
     private ObservableList<NoteRecord> notesData;
+    private int caseID = 1;
 
     @FXML
     private ScrollPane scrollPane2;
@@ -317,76 +318,6 @@ public class MainController {
 
     }
 
-    /**
-     * Add a case file
-     *
-     * @param actionEvent
-     */
-    public void addCaseFile(ActionEvent actionEvent) {
-        System.out.println("Suspect");
-        /**
-         * Preparing the template
-         */
-        Pane CaseFile = null;
-        try {
-            CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/caseFile.fxml"));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        /**
-         * Adding the new case file to the database under a specific case. The noteId is not that important, as it is not used for anything, but if I keep it there, it works
-         */
-        HBox temp2 = (HBox) CaseFile.getChildren().get(0);
-        TextField noteName = (TextField) temp2.getChildren().get(0);
-
-
-
-
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        /**
-         * Almost a sql query. The data that is forwarded to the database
-         */
-        NoteRecord nr = new NoteRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + sql.getCaseId(caseTitle.getText()) + "",
-                "\"" + noteName.getText() + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
-        /**
-         * Sql insertion
-         */
-        sql.insertNote(nr);
-        /**
-         * Delete case file part
-         */
-        HBox temp = (HBox) CaseFile.getChildren().get(1);
-        Button delete = (Button) temp.getChildren().get(2);
-        Pane finalCaseFile = CaseFile;
-        TextField fileName = (TextField) temp2.getChildren().get(0);
-
-
-
-        delete.setOnAction(event -> {
-            caseFilesCT.getChildren().remove(finalCaseFile);
-        });
-
-
-        noteName.setOnAction(event -> {
-            String change = fileName.getText();
-            int id = Integer.valueOf(sql.getMaxIDNote());
-            System.out.println("Change case file " + id+ " name to : " + change);
-            sql.updateCaseFile(id, change);
-            fileName.setEditable(false);
-        });
-        noteName.setOnMouseClicked(event -> {
-            fileName.setEditable(true);
-        });
-
-
-
-
-        /**
-         * After everything is set up, the user can see the new case file on the left tab
-         */
-        caseFilesCT.getChildren().add(CaseFile);
-    }
-
     //TODO Get back at it later
     public void search() {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -482,6 +413,9 @@ public class MainController {
          * Takes Cases table from database
          */
         casesData = sql.loadCases();
+        iCase.getChildren().clear();
+        pCase.getChildren().clear();
+        sCase.getChildren().clear();
         /**
          * Initialisation of Case Obj
          */
@@ -772,74 +706,52 @@ public class MainController {
      */
     public void addCase(ActionEvent actionEvent) {
 
+        String status = "";
+        if (pTab.isSelected()) {
+            status = "Preliminary";
+        } else if (iTab.isSelected()) {
+            status = "Investigating";
+        } else {
+            status = "Solved";
+        }
+        CasesRecords cr = new CasesRecords(String.valueOf(sql.getMaxCallID() + 1), "case" + caseID++, "Description",  status );
+        sql.addCase(cr);
+        loadCases();
+    }
+
+    /**
+     * Add a case file
+     *
+     * @param actionEvent
+     */
+    public void addCaseFile(ActionEvent actionEvent) {
+        System.out.println("Suspect");
         /**
-         * The template for the case
+         * Preparing the template
          */
-        HBox CaseObj = null;
+        Pane CaseFile = null;
         try {
-            CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
+            CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/caseFile.fxml"));
         } catch (IOException e1) {
             e1.printStackTrace();
         }
         /**
-         * If a case is chosen (clicking on it), it loads the notes, table, everything that has a relation with that case. (The same as above)
-         * //TODO Maybe make it more compact. These lines of code are in 4 different places, a bit of object-oriented approach might work.
+         * Adding the new case file to the database under a specific case. The noteId is not that important, as it is not used for anything, but if I keep it there, it works
          */
-        HBox finalCaseObj = CaseObj;
-        finalCaseObj.setOnMouseClicked(event -> {
-            String s = "empty";
-            int id = sql.getCaseId(s);
-            loadTable(id);
-            loadFiles(id);
-            caseTitle.setText(s);
-        });
+        HBox temp2 = (HBox) CaseFile.getChildren().get(0);
+        TextField noteName = (TextField) temp2.getChildren().get(0);
 
-        HBox hb = (HBox) CaseObj.getChildren().get(3);
-        Button b = (Button) hb.getChildren().get(1);
-
-        finalCaseObj.setOnMousePressed(event -> {
-            finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
-        });
-        finalCaseObj.setOnMouseReleased(event -> {
-            finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-        });
-        finalCaseObj.setOnMouseEntered(event -> {
-            finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
-        });
-        finalCaseObj.setOnMouseExited(event -> {
-            finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-        });
-
-        System.out.println("HERE");
-
-        b.setOnAction(event -> {
-            if (pTab.isSelected()) {
-                pCase.getChildren().remove(finalCaseObj);
-            } else if (iTab.isSelected()) {
-                iCase.getChildren().remove(finalCaseObj);
-            } else {
-                sCase.getChildren().remove(finalCaseObj);
-            }
-        });
-        String status = "";
-        if (pTab.isSelected()) {
-            status = "Preliminary";
-            pCase.getChildren().add(finalCaseObj);
-        } else if (iTab.isSelected()) {
-            status = "Investigating";
-            iCase.getChildren().add(finalCaseObj);
-        } else {
-            status = "Solved";
-            sCase.getChildren().add(finalCaseObj);
-        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         /**
-         *
+         * Almost a sql query. The data that is forwarded to the database
          */
-        VBox temp = (VBox) CaseObj.getChildren().get(1);
-        TextField caseName = (TextField) temp.getChildren().get(0);
-        CasesRecords cr = new CasesRecords(String.valueOf(sql.getMaxCallID() + 1), caseName.getText(), "Description",  status );
-        sql.addCase(cr);
-
+        NoteRecord nr = new NoteRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + sql.getCaseId(caseTitle.getText()) + "",
+                "\"" + noteName.getText() + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
+        /**
+         * Sql insertion
+         */
+        sql.insertFile(nr);
+        loadFiles(sql.getCaseId(caseTitle.getText()));
     }
 
 }
