@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<Pane id="caseBox" prefHeight="38.0" prefWidth="180.0" stylesheets="@../css/style.css"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <HBox layoutX="8.0" layoutY="-2.0" prefHeight="42.0" prefWidth="77.0">
+            <children>
+                <Label fx:id = "noteName" prefHeight="38.0" prefWidth="72.0" text="Case file" />
+            </children>
+        </HBox>
+        <HBox layoutX="100.0" layoutY="9.0" prefHeight="22.0" prefWidth="72.0" spacing="5.0">
+            <children>
+                <Button styleClass="caseButton3" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" />
+                <Button styleClass="caseButton2" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" />
+                <Button styleClass="caseButton1" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" />
+            </children>
+        </HBox>
+    </children>
+</Pane>
