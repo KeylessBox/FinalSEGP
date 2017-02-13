@@ -7,6 +7,10 @@ import javafx.scene.layout.VBox;
 /**
  * Created by AndreiM on 2/5/2017.
  */
+
+/**
+ * Not used on anything now. I'll keep it just in case someone would anything that is here
+ */
 public class CaseTab {
     public static VBox createCaseTab(ObservableList<CasesRecords> data) {
         VBox cases = new VBox();

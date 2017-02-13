@@ -31,6 +31,11 @@ public class SignUpController {
     @FXML
     private Button back;
 
+    /**
+     * Sign up
+     * @param event
+     * @throws IOException
+     */
     @FXML
     protected void signUp(ActionEvent event)throws IOException {
         CreateAccount.createAccount(name.getText(), surname.getText(), email.getText(), pass.getText(), "user");

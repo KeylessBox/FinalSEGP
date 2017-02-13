@@ -1,5 +1,5 @@
 .pane {
-	-fx-background-image: url("../res/images/Suspect.png");
+	-fx-background-image: url("../res/images/suspect.png");
 	-fx-background-repeat: no-repeat;
 	-fx-background-size: 200, 200;	
 }

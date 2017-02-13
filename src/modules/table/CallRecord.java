@@ -10,7 +10,7 @@ public class CallRecord {
 
 
     /**
-     * DataStructure for accessing and modifying Student records from DataBase and TableView
+     * DataStructure for accessing and modifying Call records from DataBase and TableView
      */
         private final StringProperty callID;
         private final StringProperty caseID;

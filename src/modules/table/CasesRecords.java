@@ -8,7 +8,7 @@ import javafx.beans.property.StringProperty;
  */
 public class CasesRecords {
     /**
-     * DataStructure for accessing and modifying Student records from DataBase and TableView
+     * DataStructure for accessing and modifying Case records from DataBase and TableView
      */
         private final StringProperty caseID;
         private final StringProperty name;
