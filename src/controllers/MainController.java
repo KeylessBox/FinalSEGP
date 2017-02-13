@@ -476,7 +476,7 @@ public class MainController {
                 caseName.setOnAction(event -> {
                     String change = caseName.getText();
                     int id = Integer.valueOf(finalCaseObj.getId());
-                    System.out.println("Change case " + id+ " name to : " + change);
+                    System.out.println("Change case " + id + " name to : " + change);
                     sql.updateCaseName(id, change);
                     caseName.setEditable(false);
                 });
@@ -497,7 +497,7 @@ public class MainController {
                 b.setOnAction(event -> {
                     sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                     iCase.getChildren().remove(finalCaseObj);
-                   // loadCases();
+                    // loadCases();
                 });
                 /**
                  * And loads them to the app
@@ -541,7 +541,7 @@ public class MainController {
                 caseName.setOnAction(event -> {
                     String change = caseName.getText();
                     int id = Integer.valueOf(finalCaseObj.getId());
-                    System.out.println("Change case " + id+ " name to : " + change);
+                    System.out.println("Change case " + id + " name to : " + change);
                     sql.updateCaseName(id, change);
                     caseName.setEditable(false);
 
@@ -563,7 +563,7 @@ public class MainController {
                 b.setOnAction(event -> {
                     sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                     sCase.getChildren().remove(finalCaseObj);
-                  //  loadCases();
+                    //  loadCases();
                 });
 
                 String t = caseName.getText();
@@ -578,7 +578,7 @@ public class MainController {
             /**
              * The same as above, but that's if the status is "Preliminary"
              */
-            if (tabPane.getStatus() == pTab.getText()) {
+            if (tabPane.getStatus().equals(pTab.getText())) {
                 try {
                     CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
                 } catch (IOException e1) {
@@ -610,7 +610,7 @@ public class MainController {
                 caseName.setOnAction(event -> {
                     String change = caseName.getText();
                     int id = Integer.valueOf(finalCaseObj.getId());
-                    System.out.println("Change case " + id+ " name to : " + change);
+                    System.out.println("Change case " + id + " name to : " + change);
                     sql.updateCaseName(id, change);
                     caseName.setEditable(false);
                 });
@@ -685,7 +685,7 @@ public class MainController {
                 fileName.setOnAction(event -> {
                     String change = fileName.getText();
                     int id = Integer.valueOf(element.getFileID());
-                    System.out.println("Change case file " + id+ " name to : " + change);
+                    System.out.println("Change case file " + id + " name to : " + change);
                     sql.updateCaseFile(id, change);
                     fileName.setEditable(false);
                 });
@@ -720,8 +720,8 @@ public class MainController {
         } else {
             status = "Solved";
         }
-        CasesRecords cr = new CasesRecords(String.valueOf(sql.getMaxCallID() + 1), "case" + caseID++, "Description",  status );
-        sql.addCase(cr);
+        CasesRecords callRecord = new CasesRecords(String.valueOf(sql.getMaxCallID() + 1), "case" + caseID++, "Description", status);
+        sql.addCase(callRecord);
         loadCases();
     }
 
