@@ -667,11 +667,9 @@ public class MainController {
                     pCase.getChildren().remove(finalCaseObj);
                 });
 
-
                 String t = caseName.getText();
                 int it = sql.getCaseId(t);
                 finalCaseObj.setId(String.valueOf(it));
-
                 pCase.getChildren().add(CaseObj);
             }
 
