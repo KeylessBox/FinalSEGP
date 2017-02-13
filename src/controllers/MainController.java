@@ -657,7 +657,7 @@ public class MainController {
                     j++;
                     if (j == length -1) {
                         j=0;
-                        data.add(new CallRecord(String.valueOf(9),s[0],s[1],s[2],s[3],s[4],s[5]));
+                        data.add(new CallRecord(String.valueOf(sql.getCaseId(caseTitle.getText())),s[0],s[1],s[2],s[3],s[4],s[5]));
                     }
                 }
             sql.insertCalls(data);
