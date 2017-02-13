@@ -86,7 +86,7 @@ public class LoginController {
              */
             Node node = (Node) event.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));/* Exception */
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));/* Exception */
             Scene scene = new Scene(root);
 
             //TODO Is this the drag/drop functionality? Let's find another place for it

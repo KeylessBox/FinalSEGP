@@ -32,9 +32,16 @@ import java.time.format.DateTimeFormatter;
  */
 
 public class MainController {
-
+    /**
+     *  sql - sql functionality
+     *  columnFactory - building the columns of the table
+     *  searchData -
+     *  callsData - the calls from the database
+     *  casesData - the cases from the database
+     *  notesData - the case files from the database
+     */
     SQL sql = new SQL();
-    modules.table.CallsTable ColumnFactory = new CallsTable();
+    modules.table.CallsTable columnFactory = new CallsTable();
     private ObservableList<CallRecord> searchData;
     private ObservableList<CallRecord> callsData;
     private ObservableList<CasesRecords> casesData;
@@ -81,6 +88,9 @@ public class MainController {
     @FXML
     protected Label caseTitle;
 
+    /**
+     * Import functionality. It supports only certain csv files (that have the same number and order of columns as the database)
+     */
     @FXML
     protected void importCSV() {
         /**
@@ -90,7 +100,7 @@ public class MainController {
         fileChooser.setTitle("Open Resource File");
         File file = fileChooser.showOpenDialog(new Stage());
         /**
-         * If there is a file selected then the information is transmitted to the database
+         * If there is a file selected then the data from that file is transmitted to the database
          */
         if (file != null) {
             String filePath = file.getPath();
@@ -99,6 +109,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Reads user details from the file created after log in
+     */
     @FXML
     public void setUserLabel() {
         try {
@@ -108,25 +121,47 @@ public class MainController {
             rd = rd.replace(" ", "\n");
             userLabel.setText(rd);
             read.close();
-
         } catch (IOException e) {
-
         } finally {
             new File("src/res/tmp.txt").delete();
         }
-
     }
 
+    /**
+     * Initialises the main app
+     */
     @FXML
     public void initialize() {
+        /**
+         * Initialisation of the cases first
+         * //TODO Default case? App should remember (debatable) the last case for a specific user
+         */
         initCases();
+        /**
+         * Loading the notes
+         */
         loadNotes(1);
+        /**
+         * Loading user label
+         */
         setUserLabel();
+        /**
+         * not sure what these do, some layout properties
+         */
         date.setMinWidth(50);
         date.setMaxWidth(50);
         date.setPrefWidth(50);
+        /**
+         * Loading the table
+         */
         loadTable(1);
+        /**
+         * Implementing search?
+         */
         search();
+        /**
+         * Take these somewhere else :D
+         */
         notesCT.setAlignment(Pos.TOP_LEFT);
         notesCT.setSpacing(50);
         notesCT.setBackground(Background.EMPTY);
@@ -134,30 +169,54 @@ public class MainController {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane2.setPannable(true);
         scrollPane2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        /**
+         *
+         */
         searchData = callsData;
     }
 
+    /**
+     * Loads the table with data from database
+     * @param i the case id whose data is to be shown
+     */
     public void loadTable(int i) {
+        /**
+         * takes the data from the database and puts it into an observable list
+         */
         callsData = sql.loadCalls(i);
-        ColumnFactory.createCallerPNColumn(callerPhoneNumber);
-        ColumnFactory.createReceiverPNColumn(receiverPhoneNumber);
-        ColumnFactory.createDateColumn(date);
-        ColumnFactory.createTimeColumn(time);
-        ColumnFactory.createTypeOfCallColumn(typeOfCall);
-        ColumnFactory.createDurationColumn(duration);
+        /**
+         * builds the columns, without data
+         */
+        columnFactory.createCallerPNColumn(callerPhoneNumber);
+        columnFactory.createReceiverPNColumn(receiverPhoneNumber);
+        columnFactory.createDateColumn(date);
+        columnFactory.createTimeColumn(time);
+        columnFactory.createTypeOfCallColumn(typeOfCall);
+        columnFactory.createDurationColumn(duration);
+        /**
+         * adds the data into the table
+         */
         table.setItems(callsData);
         table.setEditable(true);
     }
 
+    /**
+     * Add a victim functionality
+     */
     public void addVictim() {
         System.out.println("VICTIM");
+        /**
+         * Prepares the template
+         */
         Pane victimNote = null;
         try {
-            victimNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/Victim.fxml"));
+            victimNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/victim.fxml"));
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-
+        /**
+         * Makes different modifications on the template. This one is to delete the container
+         */
         Pane temp = (Pane) victimNote.getChildren().get(0);
         Button delete = (Button) temp.getChildren().get(1);
         Pane finalVictimNote = victimNote;
@@ -166,6 +225,7 @@ public class MainController {
             searchData = callsData;
             table.setItems(searchData);
         });
+        //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
         VBox vbox = (VBox) temp.getChildren().get(0);
         TextField txtField = (TextField) vbox.getChildren().get(1);
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -201,12 +261,12 @@ public class MainController {
         notesCT.getChildren().addAll(victimNote);
 
     }
-
+    //TODO Here as well
     public void addSuspect() {
         System.out.println("Suspect");
         Pane suspectNote = null;
         try {
-            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/Suspect.fxml"));
+            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/suspect.fxml"));
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -256,31 +316,52 @@ public class MainController {
 
     }
 
+    /**
+     * Add a case file
+     * @param actionEvent
+     */
     public void addCaseFile(ActionEvent actionEvent) {
         System.out.println("Suspect");
+        /**
+         * Preparing the template
+         */
         Pane CaseFile = null;
         try {
-            CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/CaseFile.fxml"));
+            CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/caseFile.fxml"));
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-
+        /**
+         * Adding the new case file to the database under a specific case. The noteId is not that important, as it is not used for anything, but if I keep it there, it works
+         */
         HBox temp2 = (HBox) CaseFile.getChildren().get(0);
         Label noteName = (Label) temp2.getChildren().get(0);
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        /**
+         * Almost a sql query. The data that is forwarded to the database
+         */
         NoteRecord nr = new NoteRecord("\""+ (sql.getMaxIDNote() + 1) +"\"","" + 1 + "", "" + sql.loadCase(caseTitle.getText()) + "",
                 "\"" + noteName.getText() +"\"", "\"" + LocalDate.now() + "\"", "\" \"");
-
+        /**
+         * Sql insertion
+         */
         sql.insertNote(nr);
+        /**
+         * Delete case file part
+         */
         HBox temp = (HBox) CaseFile.getChildren().get(1);
         Button delete = (Button) temp.getChildren().get(2);
         Pane finalCaseFile = CaseFile;
         delete.setOnAction(event -> {
             caseFilesCT.getChildren().remove(finalCaseFile);
         });
+        /**
+         * After everything is set up, the user can see the new case file on the left tab
+         */
         caseFilesCT.getChildren().add(CaseFile);
     }
 
+    //TODO Get back at it later
     public void search() {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -319,8 +400,18 @@ public class MainController {
      * The method changes the table and the database at the same time.
      */
     public void addCall() {
-        CallRecord cr =new CallRecord(String.valueOf(sql.getMaxCallID()+ 1), "\""+sql.loadCase(caseTitle.getText())+"\"", "0", "0", "1900/01/01", "00:00", "Standard", "00:00");
+        /**
+         * Data manipulation part (the default data is ready to be used)
+         */
+        CallRecord cr =new CallRecord(String.valueOf(sql.getMaxCallID()+ 1), "\""+sql.loadCase(caseTitle.getText())+"\"",
+                "0", "0", "1900/01/01", "00:00", "Standard", "00:00");
+        /**
+         * Add to table (visually) part
+         */
         callsData.add(cr);
+        /**
+         * Add to database part
+         */
         sql.addCall(cr);
         System.out.println("ADD: call");
     }
@@ -331,13 +422,27 @@ public class MainController {
      * Deletes the call both from the table and the database.
      */
     public void deleteCall() {
-
+        /**
+         * A row must be selected for it to work
+         */
         if (table.getSelectionModel().getSelectedItem() != null) {
+            /**
+             * Getting the data
+             */
             CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
+            /**
+             * Checking if it's something there
+             */
             if (record != null) {
+                /**
+                 * Delete from database part
+                 */
                 sql.removeCall(Integer.parseInt(record.getCallID()));
-                System.out.println("DELETE: call " + record.getCallID());
+                /**
+                 * Remove from table part
+                 */
                 callsData.remove(table.getSelectionModel().getSelectedItem());
+                System.out.println("DELETE: call " + record.getCallID());
             }
         }
 
@@ -369,7 +474,7 @@ public class MainController {
                  * CaseObj loads the fxml, with its nodes
                  */
                 try {
-                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/CaseObj.fxml"));
+                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -385,10 +490,11 @@ public class MainController {
                 Label caseDate = (Label) temp.getChildren().get(1);
                 caseDate.setText("date");
                 /**
-                 * Pressing a case changes the table with the proper values from the database
+                 * Pressing a case, changes the table with the proper values from the database
                  * How: It gets the name of the case, and finds its id (not suitable for cases that have the same names //TODO make this as general as possible
                  * Loads the table with only the calls at that specific id
-                 * Also changes the big Case name above the table
+                 * Also changes the big Case Title above the table
+                 * + Some cool feedback animations
                  */
                 HBox finalCaseObj = CaseObj;
                 finalCaseObj.setOnMouseClicked(event -> {
@@ -425,7 +531,7 @@ public class MainController {
              */
             if (tabPane.getStatus().equals(sTab.getText())) {
                 try {
-                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/CaseObj.fxml"));
+                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -472,7 +578,7 @@ public class MainController {
              */
             if (tabPane.getStatus() == pTab.getText()) {
                 try {
-                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/CaseObj.fxml"));
+                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -520,20 +626,36 @@ public class MainController {
     }
 
     /**
-     * Loads the Case Files (notes) into the app
+     * Loads the Case Files (notes) of a specific case into the app
      * @param caseID
      */
     private void loadNotes(int caseID) {
+        /**
+         * Getting the data from the database part
+         */
         notesData = sql.loadSQLNotes(caseID);
+        /**
+         * Clearing the cases already shown
+         */
         Pane CaseFile = null;
         caseFilesCT.getChildren().clear();
+        /**
+         * For every case file from the database, checks which one is on the given case, and loads them all into the app
+         */
         for (NoteRecord element : notesData) {
             if (Integer.parseInt(element.getCaseID()) == caseID) {
+                /**
+                 * Case file template
+                 */
                 try {
-                    CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/CaseFile.fxml"));
+                    CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/caseFile.fxml"));
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+                /**
+                 * Putting the data into the templates
+                 */
+                //TODO Still needs working on these. Make them a bit unique.
                 HBox temp = (HBox) CaseFile.getChildren().get(1);
                 HBox temp2 = (HBox) CaseFile.getChildren().get(0);
                 Label noteName = (Label) temp2.getChildren().get(0);
@@ -544,25 +666,38 @@ public class MainController {
                     caseFilesCT.getChildren().remove(finalCaseFile);
                     sql.removeNote(Integer.parseInt(element.getNoteID()));
                 });
+                /**
+                 * the case files get loaded to the app
+                 */
                 caseFilesCT.getChildren().add(CaseFile);
             }
         }
-
     }
 
-
+    /**
+     * Add case button functionality
+     * @param actionEvent
+     */
     public void addCase(ActionEvent actionEvent) {
+        /**
+         * The template for the case
+         */
         HBox CaseObj = null;
         try {
-            CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/CaseObj.fxml"));
+            CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+        /**
+         * If a case is chosen (clicking on it), it loads the notes, table, everything that has a relation with that case. (The same as above)
+         * //TODO Maybe make it more compact. These lines of code are in 4 different places, a bit of object-oriented approach might work.
+         */
         HBox finalCaseObj = CaseObj;
         finalCaseObj.setOnMouseClicked(event -> {
             String s = "test";
             int id = sql.loadCase(s);
             loadTable(id);
+            loadNotes(id);
             caseTitle.setText(s);
         });
 
@@ -593,7 +728,6 @@ public class MainController {
                 sCase.getChildren().remove(finalCaseObj);
             }
         });
-
 
         if (pTab.isSelected()) {
             pCase.getChildren().add(finalCaseObj);
