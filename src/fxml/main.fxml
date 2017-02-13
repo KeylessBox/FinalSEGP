@@ -78,14 +78,15 @@
                     </children>
                 </Pane>
             </children>
-        </Pane>
+        </Pane>                    
     </left>
     <center>
         <Pane prefHeight="823.0" prefWidth="1004.0">
             <children>
                 <Pane id="centerPane" layoutX="24.0" layoutY="16.0" prefHeight="867.0" prefWidth="1201.0" >
                     <children>
-                        <TableView fx:id="table" layoutX="64.0" layoutY="256.0" prefHeight="550.0" prefWidth="852.0" stylesheets="@../css/table_view.css">
+                        <TableView fx:id="table" layoutX="64.0" layoutY="256.0" prefHeight="550.0" prefWidth="866.0" stylesheets="@../css/table_view.css">
+                            <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
                             <columns>
                                 <TableColumn fx:id="callerPhoneNumber" prefWidth="50" text="Caller Phone Number" />
                                 <TableColumn fx:id="receiverPhoneNumber" prefWidth="50" text="Receiver Phone Number" />
@@ -130,7 +131,7 @@
                                 <Font size="18.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="textField" layoutX="65.0" layoutY="221.0" prefHeight="25.0" prefWidth="851.0" promptText="Search..." />
+                        <TextField fx:id="textField" layoutX="65.0" layoutY="221.0" prefHeight="25.0" prefWidth="866.0" promptText="Search..." />
                         <Button id="addSuspect" layoutX="1061.0" layoutY="146.0" mnemonicParsing="false" onAction="#addSuspect" prefHeight="25.0" prefWidth="103.0" text="Add Suspect" textFill="WHITE" />
                         <Button id="addVictim" layoutX="929.0" layoutY="146.0" mnemonicParsing="false" onAction="#addVictim" prefHeight="25.0" prefWidth="102.0" text="Add Victim" textFill="WHITE" />
                     </children>

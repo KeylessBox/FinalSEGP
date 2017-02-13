@@ -32,7 +32,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/signIn.fxml"));
         primaryStage.setResizable(false);
         primaryStage.setTitle("Sign In");
-        Scene scene = new Scene(root,1600, 1200);
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

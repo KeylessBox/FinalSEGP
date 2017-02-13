@@ -1,6 +1,5 @@
 package controllers;
 
-
 import modules.file_import.ImportCSV;
 import modules.manageAccounts.User;
 import modules.table.CallRecord;
@@ -41,7 +40,7 @@ public class MainController {
      *  notesData - the case files from the database
      */
     SQL sql = new SQL();
-    modules.table.CallsTable columnFactory = new CallsTable();
+    CallsTable columnFactory = new CallsTable();
     private ObservableList<CallRecord> searchData;
     private ObservableList<CallRecord> callsData;
     private ObservableList<CasesRecords> casesData;
