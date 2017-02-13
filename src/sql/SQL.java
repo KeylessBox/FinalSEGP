@@ -86,6 +86,22 @@ public class SQL {
         return data;
     }
 
+    public void addCase(CasesRecords cr) {
+
+        Connection connection = dbConnection.connect();
+
+        try {
+
+            String s = "INSERT INTO cases(name, details, status)" +
+                    " VALUES( '"+ cr.getCaseName() + "','"+ cr.getDetails() + "','" +
+                    cr.getStatus() + "');";
+            System.out.println(s);
+            connection.createStatement().executeUpdate(s);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public int getCaseId(String s) {
         Connection connection = dbConnection.connect();
         int caseId = -1;

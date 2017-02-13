@@ -25,7 +25,7 @@ public class DBConnection {
 
         String url = "jdbc:mysql://localhost:3306/investigationsdb?autoReconnect=true&useSSL=false";
         String username = "root";
-        String password = "";
+        String password = "Radarada";
 
         /**
          * Check if JDBC driver is loaded

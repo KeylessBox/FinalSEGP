@@ -771,6 +771,7 @@ public class MainController {
      * @param actionEvent
      */
     public void addCase(ActionEvent actionEvent) {
+
         /**
          * The template for the case
          */
@@ -820,14 +821,25 @@ public class MainController {
                 sCase.getChildren().remove(finalCaseObj);
             }
         });
-
+        String status = "";
         if (pTab.isSelected()) {
+            status = "Preliminary";
             pCase.getChildren().add(finalCaseObj);
         } else if (iTab.isSelected()) {
+            status = "Investigating";
             iCase.getChildren().add(finalCaseObj);
         } else {
+            status = "Solved";
             sCase.getChildren().add(finalCaseObj);
         }
+        /**
+         *
+         */
+        VBox temp = (VBox) CaseObj.getChildren().get(1);
+        TextField caseName = (TextField) temp.getChildren().get(0);
+        CasesRecords cr = new CasesRecords(String.valueOf(sql.getMaxCallID() + 1), caseName.getText(), "Description",  status );
+        sql.addCase(cr);
+
     }
 
 }
