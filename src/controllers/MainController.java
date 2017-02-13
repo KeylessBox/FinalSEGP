@@ -611,31 +611,9 @@ public class MainController {
      * @param actionEvent
      */
     public void addCaseFile(ActionEvent actionEvent) {
-        System.out.println("Suspect");
-        /**
-         * Preparing the template
-         */
-        Pane CaseFile = null;
-        try {
-            CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/caseFile.fxml"));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        /**
-         * Adding the new case file to the database under a specific case. The noteId is not that important, as it is not used for anything, but if I keep it there, it works
-         */
-        HBox temp2 = (HBox) CaseFile.getChildren().get(0);
-        TextField noteName = (TextField) temp2.getChildren().get(0);
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        /**
-         * Almost a sql query. The data that is forwarded to the database
-         */
         NoteRecord nr = new NoteRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + sql.getCaseId(caseTitle.getText()) + "",
-                "\"" + noteName.getText() + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
-        /**
-         * Sql insertion
-         */
+                "\"" + "Case file" + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
         sql.insertFile(nr);
         loadFiles(sql.getCaseId(caseTitle.getText()));
     }
