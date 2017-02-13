@@ -47,6 +47,12 @@ saveAsPane {
 	-fx-font-family:"System";
 	-fx-font-size: 12;
 }
+#pane.text-field {
+	-fx-background-color: transparent;
+	-fx-background-insets: 0;
+	-fx-background-radius: 0;
+	-fx-padding: 0;
+}
 
 #addSuspect:pressed{
 	-fx-background-color: #f33e54;

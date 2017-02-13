@@ -86,7 +86,7 @@ public class SQL {
         return data;
     }
 
-    public int loadCase(String s) {
+    public int getCaseId(String s) {
         Connection connection = dbConnection.connect();
         int caseId = -1;
 
@@ -254,86 +254,18 @@ public class SQL {
             ex.printStackTrace();
         }
     }
-//
-//
-//    /**
-//     * Delete current table "Students" and fill it with new values
-//     *
-//     * @param studentList
-//     */
-//    public void saveStudentsQuery(ObservableList<StudentRecord> studentList) {
-//
-//        if (studentList != null) {
-//
-//            Connection connection = dbConnection.connect();
-//
-//            //delete all values from table:
-//            try {
-//                connection.createStatement().executeUpdate("DELETE FROM `Students`");
-//            } catch (SQLException ex) {
-//                ex.printStackTrace();
-//            }
-//
-//            maxIDStudent = 0;
-//
-//            System.out.println("\nSTUDENTS TABLE: \n");
-//
-//            for (StudentRecord studentRecord : studentList) {
-//
-//                try {
-//
-//                    String tutorID = studentRecord.getTutorID();
-//
-//                    if (!(isInteger(tutorID))) {
-//                        ResultSet temp;
-//                        temp = connection.createStatement().executeQuery("SELECT * FROM Tutors WHERE tutorName = '" + tutorID + "'");
-//                        if (temp.next()) {
-//                            tutorID = temp.getString(1);
-//                        }
-//
-//                        if (tutorID.equals("-")){
-//                            tutorID ="0";
-//                        }
-//                    }
-//
-//                    connection = dbConnection.connect();
-//                    String statement = "INSERT INTO `Students` (`studentID`, `studentName`, `studentUB`, `courseID`, `yearOfStudy`, `email`, `tutorID`) VALUES (" + (++maxIDStudent) + ", '" + studentRecord.getStudentName() + "', '" + studentRecord.getStudentUB() + "', '" + studentRecord.getCourseID() + "', '" + studentRecord.getYearOfStudy() + "', '" + studentRecord.getEmail() + "', '" + tutorID + "' )";
-//                    connection.createStatement().executeUpdate(statement);
-//
-//                    System.out.println("[ " + studentRecord.getStudentName() + " , " + studentRecord.getStudentUB() + " , " + studentRecord.getCourseID() + " , " + studentRecord.getYearOfStudy() + " , " + studentRecord.getEmail() + " , " + tutorID + " ]");
-//
-//                } catch (Exception ex) {
-//                    ex.printStackTrace();
-//                }
-//            }
-//
-//        }
-//    }
-//
-//    /**
-//     * Delete all tables values for new administrator
-//     */
-//    public void reset(){
-//
-//        Connection connection = dbConnection.connect();
-//
-//        //delete all values from table:
-//        try {
-//            connection.createStatement().executeUpdate("DELETE FROM `calls`");
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//
-//        connection = dbConnection.connect();
-//
-//        //delete all values from table:
-//        try {
-//            connection.createStatement().executeUpdate("DELETE FROM `calls`");
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
 
+    public void updateCaseName(int id,String change){
+
+        Connection connection = dbConnection.connect();
+
+        try {
+            connection.createStatement().executeUpdate("UPDATE cases SET name" + "= '" + change + "' WHERE id =" + id);
+        }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public int getID() {
         return ID;

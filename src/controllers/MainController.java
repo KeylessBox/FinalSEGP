@@ -32,12 +32,12 @@ import java.time.format.DateTimeFormatter;
 
 public class MainController {
     /**
-     *  sql - sql functionality
-     *  columnFactory - building the columns of the table
-     *  searchData -
-     *  callsData - the calls from the database
-     *  casesData - the cases from the database
-     *  notesData - the case files from the database
+     * sql - sql functionality
+     * columnFactory - building the columns of the table
+     * searchData -
+     * callsData - the calls from the database
+     * casesData - the cases from the database
+     * notesData - the case files from the database
      */
     SQL sql = new SQL();
     CallsTable columnFactory = new CallsTable();
@@ -176,6 +176,7 @@ public class MainController {
 
     /**
      * Loads the table with data from database
+     *
      * @param i the case id whose data is to be shown
      */
     public void loadTable(int i) {
@@ -260,6 +261,7 @@ public class MainController {
         notesCT.getChildren().addAll(victimNote);
 
     }
+
     //TODO Here as well
     public void addSuspect() {
         System.out.println("Suspect");
@@ -317,6 +319,7 @@ public class MainController {
 
     /**
      * Add a case file
+     *
      * @param actionEvent
      */
     public void addCaseFile(ActionEvent actionEvent) {
@@ -339,8 +342,8 @@ public class MainController {
         /**
          * Almost a sql query. The data that is forwarded to the database
          */
-        NoteRecord nr = new NoteRecord("\""+ (sql.getMaxIDNote() + 1) +"\"","" + 1 + "", "" + sql.loadCase(caseTitle.getText()) + "",
-                "\"" + noteName.getText() +"\"", "\"" + LocalDate.now() + "\"", "\" \"");
+        NoteRecord nr = new NoteRecord("\"" + (sql.getMaxIDNote() + 1) + "\"", "" + 1 + "", "" + sql.getCaseId(caseTitle.getText()) + "",
+                "\"" + noteName.getText() + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
         /**
          * Sql insertion
          */
@@ -402,7 +405,7 @@ public class MainController {
         /**
          * Data manipulation part (the default data is ready to be used)
          */
-        CallRecord cr =new CallRecord(String.valueOf(sql.getMaxCallID()+ 1), "\""+sql.loadCase(caseTitle.getText())+"\"",
+        CallRecord cr = new CallRecord(String.valueOf(sql.getMaxCallID() + 1), "\"" + sql.getCaseId(caseTitle.getText()) + "\"",
                 "0", "0", "1900/01/01", "00:00", "Standard", "00:00");
         /**
          * Add to table (visually) part
@@ -484,7 +487,7 @@ public class MainController {
                 Button b = (Button) hb.getChildren().get(1);
 
                 VBox temp = (VBox) CaseObj.getChildren().get(1);
-                Label caseName = (Label) temp.getChildren().get(0);
+                TextField caseName = (TextField) temp.getChildren().get(0);
                 caseName.setText(tabPane.getCaseName());
                 Label caseDate = (Label) temp.getChildren().get(1);
                 caseDate.setText("date");
@@ -496,14 +499,27 @@ public class MainController {
                  * + Some cool feedback animations
                  */
                 HBox finalCaseObj = CaseObj;
+
+                String t = caseName.getText();
+                int it = sql.getCaseId(t);
+                finalCaseObj.setId(String.valueOf(it));
+
                 finalCaseObj.setOnMouseClicked(event -> {
                     String s = caseName.getText();
-                    int id = sql.loadCase(s);
+                    int id = sql.getCaseId(s);
                     loadTable(id);
                     loadNotes(id);
                     caseTitle.setText(s);
-                    //TODO Add animation (or some sort of feedback) if that specific case is shown
+                    caseName.setEditable(true);
                 });
+                caseName.setOnAction(event -> {
+                    String change = caseName.getText();
+                    int id = Integer.valueOf(finalCaseObj.getId());
+                    System.out.println("Change case " + id+ " name to : " + change);
+                    sql.updateCaseName(id, change);
+                    caseName.setEditable(false);
+                });
+
                 finalCaseObj.setOnMousePressed(event -> {
                     finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
                 });
@@ -539,21 +555,35 @@ public class MainController {
                 Button b = (Button) hb.getChildren().get(1);
 
                 VBox temp = (VBox) CaseObj.getChildren().get(1);
-                Label caseName = (Label) temp.getChildren().get(0);
+                TextField caseName = (TextField) temp.getChildren().get(0);
                 caseName.setText(tabPane.getCaseName());
                 Label caseDate = (Label) temp.getChildren().get(1);
                 caseDate.setText("date");
                 /**
                  * Same as above
                  */
+
+
                 HBox finalCaseObj = CaseObj;
                 finalCaseObj.setOnMouseClicked(event -> {
                     String s = caseName.getText();
-                    int id = sql.loadCase(s);
+                    int id = sql.getCaseId(s);
                     loadTable(id);
                     loadNotes(id);
                     caseTitle.setText(s);
+                    caseName.setEditable(true);
                 });
+
+
+                caseName.setOnAction(event -> {
+                    String change = caseName.getText();
+                    int id = Integer.valueOf(finalCaseObj.getId());
+                    System.out.println("Change case " + id+ " name to : " + change);
+                    sql.updateCaseName(id, change);
+                    caseName.setEditable(false);
+
+                });
+
                 finalCaseObj.setOnMousePressed(event -> {
                     finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
                 });
@@ -570,7 +600,15 @@ public class MainController {
                 b.setOnAction(event -> {
                     sCase.getChildren().remove(finalCaseObj);
                 });
+
+                String t = caseName.getText();
+                int it = sql.getCaseId(t);
+                finalCaseObj.setId(String.valueOf(it));
+
+
                 sCase.getChildren().add(CaseObj);
+
+
             }
             /**
              * The same as above, but that's if the status is "Preliminary"
@@ -586,21 +624,32 @@ public class MainController {
 
 
                 VBox temp = (VBox) CaseObj.getChildren().get(1);
-                Label caseName = (Label) temp.getChildren().get(0);
+                TextField caseName = (TextField) temp.getChildren().get(0);
                 caseName.setText(tabPane.getCaseName());
                 Label caseDate = (Label) temp.getChildren().get(1);
                 caseDate.setText("date");
                 /**
                  * Same as above
                  */
+
                 HBox finalCaseObj = CaseObj;
                 finalCaseObj.setOnMouseClicked(event -> {
                     String s = caseName.getText();
-                    int id = sql.loadCase(s);
+                    int id = sql.getCaseId(s);
                     loadTable(id);
                     loadNotes(id);
                     caseTitle.setText(s);
+                    caseName.setEditable(true);
                 });
+
+                caseName.setOnAction(event -> {
+                    String change = caseName.getText();
+                    int id = Integer.valueOf(finalCaseObj.getId());
+                    System.out.println("Change case " + id+ " name to : " + change);
+                    sql.updateCaseName(id, change);
+                    caseName.setEditable(false);
+                });
+
                 finalCaseObj.setOnMousePressed(event -> {
                     finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
                 });
@@ -618,6 +667,11 @@ public class MainController {
                     pCase.getChildren().remove(finalCaseObj);
                 });
 
+
+                String t = caseName.getText();
+                int it = sql.getCaseId(t);
+                finalCaseObj.setId(String.valueOf(it));
+
                 pCase.getChildren().add(CaseObj);
             }
 
@@ -626,6 +680,7 @@ public class MainController {
 
     /**
      * Loads the Case Files (notes) of a specific case into the app
+     *
      * @param caseID
      */
     private void loadNotes(int caseID) {
@@ -675,6 +730,7 @@ public class MainController {
 
     /**
      * Add case button functionality
+     *
      * @param actionEvent
      */
     public void addCase(ActionEvent actionEvent) {
@@ -693,8 +749,8 @@ public class MainController {
          */
         HBox finalCaseObj = CaseObj;
         finalCaseObj.setOnMouseClicked(event -> {
-            String s = "test";
-            int id = sql.loadCase(s);
+            String s = "empty";
+            int id = sql.getCaseId(s);
             loadTable(id);
             loadNotes(id);
             caseTitle.setText(s);
