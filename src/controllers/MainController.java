@@ -409,237 +409,117 @@ public class MainController {
      * Initialises the cases on the TabPane. CaseObj is considered as one of the case entries on the pane (with its image,labels and buttons)
      */
     private void loadCases() {
+
         /**
-         * Takes Cases table from database
+         * Load Cases List from database:
          */
         casesData = sql.loadCases();
+
+        /**
+         * Clear current tabs:
+         */
         iCase.getChildren().clear();
         pCase.getChildren().clear();
         sCase.getChildren().clear();
-        /**
-         * Initialisation of Case Obj
-         */
-        HBox CaseObj = null;
+        HBox CaseObject = null;
+
         /**
          * Every row of the Case table (thus, every case that exists in the database) has a status attribute (Investigating, Solved or Preliminary)
          * The for loop takes each case and checks what status it has, and then assigns the CaseObj position in the tab
          */
         for (CasesRecords tabPane : casesData) {
+
             /**
-             * If the status of the case is the same as the text of the Investigating Tab (maybe should propose another solution)
-             * then the case entry will be on that specific tab
+             * Case object loads the fxml, with its nodes
+             */
+            try {
+                CaseObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+            /**
+             * Initialise elements from Case object:
+             */
+            HBox hb = (HBox) CaseObject.getChildren().get(3);
+            Button deleteBtn = (Button) hb.getChildren().get(1);
+            HBox finalCaseObj = CaseObject;
+            VBox temp = (VBox) CaseObject.getChildren().get(1);
+            TextField caseName = (TextField) temp.getChildren().get(0);
+            caseName.setText(tabPane.getCaseName());
+            Label caseDate = (Label) temp.getChildren().get(1);
+            caseDate.setText("date");
+
+            String t = caseName.getText();
+            int it = sql.getCaseId(t);
+            finalCaseObj.setId(String.valueOf(it));
+
+            /**
+             * Update the main working area and load case files:
+             */
+            finalCaseObj.setOnMouseClicked(event -> {
+                String s = caseName.getText();
+                int id = sql.getCaseId(s);
+                loadTable(id);
+                loadFiles(id);
+                caseTitle.setText(s);
+            });
+
+            /**
+             * Update case name:
+             */
+            caseName.setOnMouseClicked(event -> {
+                caseName.setEditable(true);
+            });
+
+            caseName.setOnAction(event -> {
+                String change = caseName.getText();
+                int id = Integer.valueOf(finalCaseObj.getId());
+                System.out.println("Change case " + id + " name to : " + change);
+                sql.updateCaseName(id, change);
+                loadCases();
+                caseName.setEditable(false);
+            });
+
+            /**
+             * Animations:
+             */
+            finalCaseObj.setOnMousePressed(event -> {
+                finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
+            });
+            finalCaseObj.setOnMouseReleased(event -> {
+                finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+            });
+            finalCaseObj.setOnMouseEntered(event -> {
+                finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
+            });
+            finalCaseObj.setOnMouseExited(event -> {
+                finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+            });
+
+            /**
+             * Add Case object to specific tab:
              */
             if (tabPane.getStatus().equals(iTab.getText())) {
-                /**
-                 * CaseObj loads the fxml, with its nodes
-                 */
-                try {
-                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-                /**
-                 * It adds the case values in the tab
-                 */
-                HBox hb = (HBox) CaseObj.getChildren().get(3);
-                Button b = (Button) hb.getChildren().get(1);
-
-                VBox temp = (VBox) CaseObj.getChildren().get(1);
-                TextField caseName = (TextField) temp.getChildren().get(0);
-                caseName.setText(tabPane.getCaseName());
-                Label caseDate = (Label) temp.getChildren().get(1);
-                caseDate.setText("date");
-                /**
-                 * Pressing a case, changes the table with the proper values from the database
-                 * How: It gets the name of the case, and finds its id (not suitable for cases that have the same names //TODO make this as general as possible
-                 * Loads the table with only the calls at that specific id
-                 * Also changes the big Case Title above the table
-                 * + Some cool feedback animations
-                 */
-                HBox finalCaseObj = CaseObj;
-
-                String t = caseName.getText();
-                int it = sql.getCaseId(t);
-                finalCaseObj.setId(String.valueOf(it));
-
-                finalCaseObj.setOnMouseClicked(event -> {
-                    String s = caseName.getText();
-                    int id = sql.getCaseId(s);
-                    loadTable(id);
-                    loadFiles(id);
-                    caseTitle.setText(s);
-                });
-
-                caseName.setOnMouseClicked(event -> {
-                    caseName.setEditable(true);
-                });
-                caseName.setOnAction(event -> {
-                    String change = caseName.getText();
-                    int id = Integer.valueOf(finalCaseObj.getId());
-                    System.out.println("Change case " + id + " name to : " + change);
-                    sql.updateCaseName(id, change);
-                    caseName.setEditable(false);
-                });
-
-                finalCaseObj.setOnMousePressed(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
-                });
-                finalCaseObj.setOnMouseReleased(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-                });
-                finalCaseObj.setOnMouseEntered(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
-                });
-                finalCaseObj.setOnMouseExited(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-                });
-
-                b.setOnAction(event -> {
+                iCase.getChildren().add(finalCaseObj);
+                deleteBtn.setOnAction(event -> {
                     sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                     iCase.getChildren().remove(finalCaseObj);
-                    // loadCases();
-                });
-                /**
-                 * And loads them to the app
-                 */
-                iCase.getChildren().add(CaseObj);
-            }
-            /**
-             * The same as above, but that's if the status is "Solved"
-             */
-            if (tabPane.getStatus().equals(sTab.getText())) {
-                try {
-                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-
-                HBox hb = (HBox) CaseObj.getChildren().get(3);
-                Button b = (Button) hb.getChildren().get(1);
-
-                VBox temp = (VBox) CaseObj.getChildren().get(1);
-                TextField caseName = (TextField) temp.getChildren().get(0);
-                caseName.setText(tabPane.getCaseName());
-                Label caseDate = (Label) temp.getChildren().get(1);
-                caseDate.setText("date");
-                /**
-                 * Same as above
-                 */
-
-
-                HBox finalCaseObj = CaseObj;
-                finalCaseObj.setOnMouseClicked(event -> {
-                    String s = caseName.getText();
-                    int id = sql.getCaseId(s);
-                    loadTable(id);
-                    loadFiles(id);
-                    caseTitle.setText(s);
-                    caseName.setEditable(true);
                 });
 
-
-                caseName.setOnAction(event -> {
-                    String change = caseName.getText();
-                    int id = Integer.valueOf(finalCaseObj.getId());
-                    System.out.println("Change case " + id + " name to : " + change);
-                    sql.updateCaseName(id, change);
-                    caseName.setEditable(false);
-
-                });
-
-                finalCaseObj.setOnMousePressed(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
-                });
-                finalCaseObj.setOnMouseReleased(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-                });
-                finalCaseObj.setOnMouseEntered(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
-                });
-                finalCaseObj.setOnMouseExited(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-                });
-
-                b.setOnAction(event -> {
+            } else if (tabPane.getStatus().equals(sTab.getText())) {
+                sCase.getChildren().add(finalCaseObj);
+                deleteBtn.setOnAction(event -> {
                     sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                     sCase.getChildren().remove(finalCaseObj);
-                    //  loadCases();
                 });
-
-                String t = caseName.getText();
-                int it = sql.getCaseId(t);
-                finalCaseObj.setId(String.valueOf(it));
-
-
-                sCase.getChildren().add(CaseObj);
-
-
-            }
-            /**
-             * The same as above, but that's if the status is "Preliminary"
-             */
-            if (tabPane.getStatus().equals(pTab.getText())) {
-                try {
-                    CaseObj = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-                HBox hb = (HBox) CaseObj.getChildren().get(3);
-                Button b = (Button) hb.getChildren().get(1);
-
-
-                VBox temp = (VBox) CaseObj.getChildren().get(1);
-                TextField caseName = (TextField) temp.getChildren().get(0);
-                caseName.setText(tabPane.getCaseName());
-                Label caseDate = (Label) temp.getChildren().get(1);
-                caseDate.setText("date");
-                /**
-                 * Same as above
-                 */
-
-                HBox finalCaseObj = CaseObj;
-                finalCaseObj.setOnMouseClicked(event -> {
-                    String s = caseName.getText();
-                    int id = sql.getCaseId(s);
-                    loadTable(id);
-                    loadFiles(id);
-                    caseTitle.setText(s);
-                    caseName.setEditable(true);
-                });
-
-                caseName.setOnAction(event -> {
-                    String change = caseName.getText();
-                    int id = Integer.valueOf(finalCaseObj.getId());
-                    System.out.println("Change case " + id + " name to : " + change);
-                    sql.updateCaseName(id, change);
-                    caseName.setEditable(false);
-                });
-
-                finalCaseObj.setOnMousePressed(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
-                });
-                finalCaseObj.setOnMouseReleased(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-                });
-                finalCaseObj.setOnMouseEntered(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
-                });
-                finalCaseObj.setOnMouseExited(event -> {
-                    finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-                });
-
-                b.setOnAction(event -> {
+            } else if (tabPane.getStatus().equals(pTab.getText())) {
+                pCase.getChildren().add(finalCaseObj);
+                deleteBtn.setOnAction(event -> {
                     sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                     pCase.getChildren().remove(finalCaseObj);
-                    //loadCases();
                 });
-
-                String t = caseName.getText();
-                int it = sql.getCaseId(t);
-                finalCaseObj.setId(String.valueOf(it));
-                pCase.getChildren().add(CaseObj);
             }
-
         }
     }
 
@@ -759,5 +639,4 @@ public class MainController {
         sql.insertFile(nr);
         loadFiles(sql.getCaseId(caseTitle.getText()));
     }
-
 }

@@ -1,4 +1,5 @@
-package main;/**
+package main;
+/**
  * Created by AndreiM on 1/28/2017.
  */
 
