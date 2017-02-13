@@ -1,11 +1,9 @@
 package controllers;
 
+import com.Ostermiller.util.CSVParser;
 import modules.file_import.ImportCSV;
 import modules.manageAccounts.User;
-import modules.table.CallRecord;
-import modules.table.CallsTable;
-import modules.table.CasesRecords;
-import modules.table.NoteRecord;
+import modules.table.*;
 import sql.SQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,10 +16,8 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -105,7 +101,7 @@ public class MainController {
         if (file != null) {
             String filePath = file.getPath();
             filePath = filePath.replace("\\", "\\\\");
-            ImportCSV.importcsv(filePath);
+            importTest(filePath);
         }
     }
 
@@ -616,5 +612,59 @@ public class MainController {
                 "\"" + "Case file" + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
         sql.insertFile(nr);
         loadFiles(sql.getCaseId(caseTitle.getText()));
+    }
+
+    public void importTest(String path) {
+
+        InputStream is;
+        try {
+            /**
+             * Takes the csv file and parsers it
+             */
+            is = new FileInputStream(path);
+            CSVParser shredder = new CSVParser(is);
+            shredder.setCommentStart("#;!");
+            shredder.setEscapes("nrtf", "\n\r\t\f");
+            /**
+             * t is going to hold every single value from file, one at a time
+             */
+            String t;
+            /**
+             * tableHeader contains table columns that are in the file
+             */
+            int[] tableHeader = new int[10];
+            int j = 0;
+            CallRecord cr = new CallRecord();
+            /**
+             * Takes only the headers of the file and puts them into tableHeader
+             */
+            //TODO add comments on how it's done. Works only for a specific number of columns of data. Add more aliases. Test with different types of faulty csvs
+            while ((t = shredder.nextValue()) != null && shredder.lastLineNumber() == 1){
+                System.out.println(t);
+                tableHeader[j] = cr.alias(t);
+                j++;
+            }
+            ObservableList<CallRecord> data = FXCollections.observableArrayList();
+            int length = j + 1;
+            j=0;
+            System.out.println("" + shredder.lastLineNumber() + " " + t);
+            String[] s = new String[length];
+            s[tableHeader[j]] = t;
+            j++;
+                while ((t = shredder.nextValue()) != null) {
+                    System.out.println("" + shredder.lastLineNumber() + " " + t);
+                    s[tableHeader[j]] = t;
+                    j++;
+                    if (j == length -1) {
+                        j=0;
+                        data.add(new CallRecord(String.valueOf(9),s[0],s[1],s[2],s[3],s[4],s[5]));
+                    }
+                }
+            sql.insertCalls(data);
+        }
+        catch( Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

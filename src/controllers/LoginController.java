@@ -31,7 +31,7 @@ public class LoginController {
     private TextField pw;
 
     public String user = "";
-
+    public MainController main = new MainController();
     /**
      * The sign up process
      *
@@ -112,7 +112,7 @@ public class LoginController {
                         System.out.println(filePath);
                         if (!filePath.equals("")) {
                             filePath = filePath.replace("\\", "\\\\");
-                            ImportCSV.importcsv(filePath);
+                            main.importTest(filePath);
                         }
                     }
                 }

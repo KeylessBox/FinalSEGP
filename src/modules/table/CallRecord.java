@@ -21,6 +21,17 @@ public class CallRecord {
         private final StringProperty typeOfCall;
         private final StringProperty duration;
 
+    public CallRecord () {
+        this.callID = null;
+        this.caseID = null;
+        this.callerPhoneNumber = null;
+        this.receiverPhoneNumber = null;
+        this.date = null;
+        this.time = null;
+        this.typeOfCall = null;
+        this.duration = null;
+    }
+
     public CallRecord(String callID, String caseID, String callerPhoneNumber, String receiverPhoneNumber, String date, String time,
                        String typeOfCall, String duration) {
         this.callID = new SimpleStringProperty(callID);
@@ -44,6 +55,27 @@ public class CallRecord {
         this.typeOfCall = new SimpleStringProperty(typeOfCall);
         this.duration = new SimpleStringProperty(duration);
     }
+
+    public int alias(String header) {
+        String[][] aliases = new String[][] {
+                {"CallerPhoneNumber","CPN"},
+                {"ReceiverPhoneNumber","RPN"},
+                {"date", "Date","DATE" },
+                {"time", "TIME", "Time"},
+                {"typeOfCall", "TYPEOFCALL", "TypeOfCall"},
+                {"Duration", "duration", "estimated time"}
+        };
+
+        for (int i=0; i<aliases.length; i++) {
+            for (int j=0; j<aliases[i].length; j++ ) {
+                if (header.equals(aliases[i][j])) {
+                    return i;
+                }
+            }
+         }
+        return -1;
+    }
+
         //Getters:
 
         public String getCallID() {

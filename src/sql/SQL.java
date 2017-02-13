@@ -225,6 +225,15 @@ public class SQL {
     }
 
     /**
+     * Insert lots of calls from file probably
+     * @param data
+     */
+    public void insertCalls(ObservableList<CallRecord> data) {
+        for (CallRecord cr : data) {
+            addCall(cr);
+        }
+    }
+    /**
      * Inserts default call to database
      */
     public void addCall(CallRecord cr) {

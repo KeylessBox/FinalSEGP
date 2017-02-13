@@ -1,6 +1,14 @@
 package modules.file_import;
 
+import com.Ostermiller.util.CSVParser;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import modules.table.CallRecord;
 import modules.table.DBConnection;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -23,7 +31,7 @@ public class ImportCSV {
              * The query used to import data to database, its preparation and execution
              */
             //TODO Make it flexible (for different kinds of csv data)
-            String query = "LOAD DATA LOW_PRIORITY INFILE '" + path + "' REPLACE INTO TABLE `investigationsdb`.`calls` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\\r\\n' IGNORE 1 LINES(`CaseId`, `CallerPhoneNumber`, `ReceiverPhoneNumber`, `Date`, `Time`, `TypeOfCall`, `Duration`);";
+            String query = "LOAD DATA LOCAL LOW_PRIORITY INFILE '" + path + "' REPLACE INTO TABLE `investigationsdb`.`calls` FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\\r\\n' IGNORE 1 LINES(`CaseId`, `CallerPhoneNumber`, `ReceiverPhoneNumber`, `Date`, `Time`, `TypeOfCall`, `Duration`);";
             pst = connection.prepareStatement(query);
             pst.execute();
         }
