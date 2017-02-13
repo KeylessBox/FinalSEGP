@@ -495,7 +495,9 @@ public class MainController {
                 });
 
                 b.setOnAction(event -> {
+                    sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                     iCase.getChildren().remove(finalCaseObj);
+                   // loadCases();
                 });
                 /**
                  * And loads them to the app
@@ -559,7 +561,9 @@ public class MainController {
                 });
 
                 b.setOnAction(event -> {
+                    sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                     sCase.getChildren().remove(finalCaseObj);
+                  //  loadCases();
                 });
 
                 String t = caseName.getText();
@@ -625,7 +629,9 @@ public class MainController {
                 });
 
                 b.setOnAction(event -> {
+                    sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                     pCase.getChildren().remove(finalCaseObj);
+                    //loadCases();
                 });
 
                 String t = caseName.getText();

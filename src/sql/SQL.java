@@ -257,6 +257,20 @@ public class SQL {
     }
 
     /**
+     * remove the Case selected
+     * @param id
+     */
+    public void removeCase(int id){
+        Connection connection = dbConnection.connect();
+
+        try {
+            connection.createStatement().executeUpdate("DELETE FROM `cases` WHERE id = " + id);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
      * Edits the database when the user edits a cell in the table
      * @param id CallID (unique paramater of the calls) so that there aren't any duplicates
      * @param columnName Where in the specific row the change is made
@@ -303,6 +317,8 @@ public class SQL {
     public void setID(int ID) {
         this.ID = ID;
     }
+
+
 
 
 }
