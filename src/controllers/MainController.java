@@ -135,11 +135,11 @@ public class MainController {
          * Initialisation of the cases first
          * //TODO Default case? App should remember (debatable) the last case for a specific user
          */
-        initCases();
+        loadCases();
         /**
          * Loading the notes
          */
-        loadNotes(1);
+        loadFiles(1);
         /**
          * Loading user label
          */
@@ -337,12 +337,16 @@ public class MainController {
          * Adding the new case file to the database under a specific case. The noteId is not that important, as it is not used for anything, but if I keep it there, it works
          */
         HBox temp2 = (HBox) CaseFile.getChildren().get(0);
-        Label noteName = (Label) temp2.getChildren().get(0);
+        TextField noteName = (TextField) temp2.getChildren().get(0);
+
+
+
+
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         /**
          * Almost a sql query. The data that is forwarded to the database
          */
-        NoteRecord nr = new NoteRecord("\"" + (sql.getMaxIDNote() + 1) + "\"", "" + 1 + "", "" + sql.getCaseId(caseTitle.getText()) + "",
+        NoteRecord nr = new NoteRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + sql.getCaseId(caseTitle.getText()) + "",
                 "\"" + noteName.getText() + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
         /**
          * Sql insertion
@@ -354,9 +358,29 @@ public class MainController {
         HBox temp = (HBox) CaseFile.getChildren().get(1);
         Button delete = (Button) temp.getChildren().get(2);
         Pane finalCaseFile = CaseFile;
+        TextField fileName = (TextField) temp2.getChildren().get(0);
+
+
+
         delete.setOnAction(event -> {
             caseFilesCT.getChildren().remove(finalCaseFile);
         });
+
+
+        noteName.setOnAction(event -> {
+            String change = fileName.getText();
+            int id = Integer.valueOf(sql.getMaxIDNote());
+            System.out.println("Change case file " + id+ " name to : " + change);
+            sql.updateCaseFile(id, change);
+            fileName.setEditable(false);
+        });
+        noteName.setOnMouseClicked(event -> {
+            fileName.setEditable(true);
+        });
+
+
+
+
         /**
          * After everything is set up, the user can see the new case file on the left tab
          */
@@ -453,7 +477,7 @@ public class MainController {
     /**
      * Initialises the cases on the TabPane. CaseObj is considered as one of the case entries on the pane (with its image,labels and buttons)
      */
-    private void initCases() {
+    private void loadCases() {
         /**
          * Takes Cases table from database
          */
@@ -508,8 +532,11 @@ public class MainController {
                     String s = caseName.getText();
                     int id = sql.getCaseId(s);
                     loadTable(id);
-                    loadNotes(id);
+                    loadFiles(id);
                     caseTitle.setText(s);
+                });
+
+                caseName.setOnMouseClicked(event -> {
                     caseName.setEditable(true);
                 });
                 caseName.setOnAction(event -> {
@@ -569,7 +596,7 @@ public class MainController {
                     String s = caseName.getText();
                     int id = sql.getCaseId(s);
                     loadTable(id);
-                    loadNotes(id);
+                    loadFiles(id);
                     caseTitle.setText(s);
                     caseName.setEditable(true);
                 });
@@ -637,7 +664,7 @@ public class MainController {
                     String s = caseName.getText();
                     int id = sql.getCaseId(s);
                     loadTable(id);
-                    loadNotes(id);
+                    loadFiles(id);
                     caseTitle.setText(s);
                     caseName.setEditable(true);
                 });
@@ -681,7 +708,7 @@ public class MainController {
      *
      * @param caseID
      */
-    private void loadNotes(int caseID) {
+    private void loadFiles(int caseID) {
         /**
          * Getting the data from the database part
          */
@@ -710,13 +737,25 @@ public class MainController {
                 //TODO Still needs working on these. Make them a bit unique.
                 HBox temp = (HBox) CaseFile.getChildren().get(1);
                 HBox temp2 = (HBox) CaseFile.getChildren().get(0);
-                Label noteName = (Label) temp2.getChildren().get(0);
-                noteName.setText(element.getNoteName());
+                TextField fileName = (TextField) temp2.getChildren().get(0);
+                fileName.setText(element.getNoteName());
                 Button delete = (Button) temp.getChildren().get(2);
                 Pane finalCaseFile = CaseFile;
+
+                fileName.setOnAction(event -> {
+                    String change = fileName.getText();
+                    int id = Integer.valueOf(element.getFileID());
+                    System.out.println("Change case file " + id+ " name to : " + change);
+                    sql.updateCaseFile(id, change);
+                    fileName.setEditable(false);
+                });
+                fileName.setOnMouseClicked(event -> {
+                    fileName.setEditable(true);
+                });
+
                 delete.setOnAction(event -> {
                     caseFilesCT.getChildren().remove(finalCaseFile);
-                    sql.removeNote(Integer.parseInt(element.getNoteID()));
+                    sql.removeNote(Integer.parseInt(element.getFileID()));
                 });
                 /**
                  * the case files get loaded to the app
@@ -750,7 +789,7 @@ public class MainController {
             String s = "empty";
             int id = sql.getCaseId(s);
             loadTable(id);
-            loadNotes(id);
+            loadFiles(id);
             caseTitle.setText(s);
         });
 

@@ -187,7 +187,9 @@ public class SQL {
     /**
      * Get max value for note id
      */
-    public int getMaxIDNote() { return maxIDNote;}
+    public int getMaxIDNote() {
+        maxIDNote++;
+        return maxIDNote;}
 
     /**
      * Check if String is an integer
@@ -267,6 +269,17 @@ public class SQL {
         }
     }
 
+    public void updateCaseFile(int id, String change) {
+        Connection connection = dbConnection.connect();
+
+        try {
+            connection.createStatement().executeUpdate("UPDATE notes SET title" + "= '" + change + "' WHERE id =" + id);
+        }
+        catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public int getID() {
         return ID;
     }
@@ -274,4 +287,6 @@ public class SQL {
     public void setID(int ID) {
         this.ID = ID;
     }
+
+
 }

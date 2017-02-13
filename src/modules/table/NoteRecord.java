@@ -31,7 +31,7 @@ public class NoteRecord {
         this.data = new SimpleStringProperty(data);
     }
     //Getters:
-    public String getNoteID() {
+    public String getFileID() {
         return noteID.get();
     }
 
