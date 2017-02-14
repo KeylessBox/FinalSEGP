@@ -12,7 +12,6 @@ CREATE TABLE IF NOT EXISTS cases(id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(35),
     details VARCHAR(255), status ENUM ('Investigating','Solved','Preliminary')) ENGINE= InnoDB;
 
-
 CREATE TABLE IF NOT EXISTS notes(id INT PRIMARY KEY AUTO_INCREMENT,
     accountID INT, caseID INT, title VARCHAR(100), date DATE, data VARCHAR(255),
     FOREIGN KEY(accountID) REFERENCES accounts(id) ON DELETE CASCADE,
