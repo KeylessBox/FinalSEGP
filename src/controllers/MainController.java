@@ -45,6 +45,7 @@ public class MainController {
     private ObservableList<CasesRecords> casesData;
     private ObservableList<NoteRecord> notesData;
     private int caseID = 1;
+    private int id = 1;
 
     @FXML
     private ScrollPane scrollPane2;
@@ -638,7 +639,7 @@ public class MainController {
         } else {
             status = "Solved";
         }
-        CasesRecords callRecord = new CasesRecords(String.valueOf(sql.getMaxCallID() + 1), "case" + caseID++, "Description", status);
+        CasesRecords callRecord = new CasesRecords(String.valueOf(sql.getMaxCallID() + 1), "case" + id++, "Description", status);
         sql.addCase(callRecord);
         loadCases();
     }
