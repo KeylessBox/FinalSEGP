@@ -257,7 +257,6 @@ public class MainController {
 
             String t = caseName.getText();
             int it = Integer.valueOf(caseRecord.getCaseID());
-            System.out.println("INSIDE: " + it);
             finalCaseObj.setId(String.valueOf(it));
 
             /**
@@ -659,9 +658,11 @@ public class MainController {
             int[] tableHeader = new int[10];
             int j = 0;
             CallRecord cr = new CallRecord();
+
             /**
              * Takes only the headers of the file and puts them into tableHeader
              */
+
             //TODO add comments on how it's done. Works only for a specific number of columns of data. Add more aliases. Test with different types of faulty csvs
             while ((t = shredder.nextValue()) != null && shredder.lastLineNumber() == 1) {
                 System.out.println(t);

@@ -76,7 +76,6 @@ public class SQL {
                 if (Integer.parseInt(caseRS.getString(1)) > maxIDCall) {
                     maxIDCase = Integer.parseInt(caseRS.getString(1));
                 }
-                System.out.println(caseRS.getString(1));
                 data.add(new CaseRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4),caseRS.getString(5)));
             }
         } catch (Exception ex) {
