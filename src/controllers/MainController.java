@@ -134,7 +134,6 @@ public class MainController {
      */
     @FXML
     public void initialize() {
-        loadCases();
         notesCT.setAlignment(Pos.TOP_LEFT);
         notesCT.setSpacing(50);
         notesCT.setBackground(Background.EMPTY);
@@ -142,8 +141,6 @@ public class MainController {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane2.setPannable(true);
         scrollPane2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        searchData = callsData;
-
         //TODO Is this the drag/drop functionality? Let's find another place for it
         root.setOnDragOver(event1 -> {
             Dragboard db = event1.getDragboard();
@@ -176,6 +173,8 @@ public class MainController {
             loadTable(caseID);
             loadFiles(caseID);
         });
+        setUserLabel();
+        loadCases();
     }
 
     /**
@@ -263,14 +262,15 @@ public class MainController {
              * Update the main working area and load case files:
              */
             finalCaseObj.setOnMouseClicked(event -> {
-                String date = caseRecord.getDate();
+
+                String date = currentTime();
                 int id = Integer.valueOf(finalCaseObj.getId());
                 caseTitle.setText(caseRecord.getName());
-                loadTable(id);
-                loadFiles(id);
                 caseID = id;
-                date = currentTime();
-                sql.updateDate(id, date);
+                loadTable(caseID);
+                loadFiles(caseID);
+                search();
+                sql.updateDate(caseID, date);
                 caseRecord.setDate(date);
                 try {
                     caseDate.setText(new SimpleDateFormat("yy-MM-dd  [HH:mm]").format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date)));
@@ -401,6 +401,10 @@ public class MainController {
 
     //TODO Get back at it later
     public void search() {
+
+        searchData = callsData;
+        textField.clear();
+
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
 
             if (textField.textProperty().get().isEmpty()) {
@@ -410,25 +414,27 @@ public class MainController {
 
                 ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
                 ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
-
-                for (int i = 0; i < searchData.size(); i++) {
-                    for (int j = 0; j < cols.size(); j++) {
-                        TableColumn col = cols.get(j);
-                        String cellValue = col.getCellData(searchData.get(i)).toString();
-                        cellValue = cellValue.toLowerCase();
-                        if (cellValue.contains(textField.textProperty().get().toLowerCase())) {
-                            tableItems.add(searchData.get(i));
-                            break;
+                
+                if (searchData != null) {
+                    for (int i = 0; i < searchData.size(); i++) {
+                        for (int j = 0; j < cols.size(); j++) {
+                            TableColumn col = cols.get(j);
+                            String cellValue = col.getCellData(searchData.get(i)).toString();
+                            cellValue = cellValue.toLowerCase();
+                            if (cellValue.contains(textField.textProperty().get().toLowerCase())) {
+                                tableItems.add(searchData.get(i));
+                                break;
+                            }
                         }
                     }
-                }
-                if (searchData != tableItems) {
-                    searchData = tableItems;
-                    table.setItems(searchData);
+                    if (searchData != tableItems) {
+                        searchData = tableItems;
+                        table.setItems(searchData);
+                    }
                 }
             }
-
         });
+        textField.setOnAction(event -> {});
     }
 
     /**
