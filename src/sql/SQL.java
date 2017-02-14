@@ -23,8 +23,8 @@ public class SQL {
 
     int maxIDCall = 1;
     int maxIDNote = 1;
+    int maxIDCase = 1;
 
-    int ID = 0;
     /**
      * Connection with MYSQL database
      */
@@ -62,8 +62,8 @@ public class SQL {
         return data;
     }
 
-
     public ObservableList<CaseRecord> loadCases() {
+        maxIDCase = 1;
         Connection connection = dbConnection.connect();
         ObservableList<CaseRecord> data = FXCollections.observableArrayList();
 
@@ -74,11 +74,11 @@ public class SQL {
             while (caseRS.next()) {
 
                 if (Integer.parseInt(caseRS.getString(1)) > maxIDCall) {
-                    maxIDCall = Integer.parseInt(caseRS.getString(1));
+                    maxIDCase = Integer.parseInt(caseRS.getString(1));
                 }
+                System.out.println(caseRS.getString(1));
                 data.add(new CaseRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4),caseRS.getString(5)));
             }
-            maxIDCall = 1;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -101,7 +101,7 @@ public class SQL {
         }
     }
 
-    public int getCaseId(String s) {
+    public int getMaxCaseId(String s) {
         Connection connection = dbConnection.connect();
         int caseId = -1;
 
@@ -332,4 +332,7 @@ public class SQL {
         }
     }
 
+    public int getMaxCaseId() {
+        return ++maxIDCase;
+    }
 }

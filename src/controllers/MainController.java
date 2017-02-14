@@ -256,7 +256,7 @@ public class MainController {
             }
 
             String t = caseName.getText();
-            int it = sql.getCaseId(t);
+            int it = Integer.valueOf(caseRecord.getCaseID());
             finalCaseObj.setId(String.valueOf(it));
 
             /**
@@ -264,7 +264,7 @@ public class MainController {
              */
             finalCaseObj.setOnMouseClicked(event -> {
                 String date = caseRecord.getDate();
-                int id = sql.getCaseId(date);
+                int id = Integer.valueOf(finalCaseObj.getId());
                 caseTitle.setText(caseRecord.getName());
                 loadTable(id);
                 loadFiles(id);
@@ -618,7 +618,7 @@ public class MainController {
         } else {
             status = "Solved";
         }
-        CaseRecord callRecord = new CaseRecord(String.valueOf(sql.getMaxCallID() + 1), "case" + id++, "Description", status, currentTime());
+        CaseRecord callRecord = new CaseRecord(String.valueOf(0), "case" + id++, "Description", status, currentTime());
         sql.addCase(callRecord);
         loadCases();
     }
