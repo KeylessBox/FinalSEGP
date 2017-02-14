@@ -499,6 +499,7 @@ public class MainController {
                 int id = sql.getCaseId(s);
                 loadTable(id);
                 loadFiles(id);
+                caseID = id;
                 caseTitle.setText(s);
             });
 
