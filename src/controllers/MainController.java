@@ -257,6 +257,7 @@ public class MainController {
 
             String t = caseName.getText();
             int it = Integer.valueOf(caseRecord.getCaseID());
+            System.out.println("INSIDE: " + it);
             finalCaseObj.setId(String.valueOf(it));
 
             /**
