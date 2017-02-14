@@ -16,7 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-
 /**
  * Created by Aleksandr on 24-Oct-16.
  */
@@ -52,9 +51,11 @@ public class SQL {
                     maxIDCall = Integer.parseInt(callsRS.getString(1));
                 }
 
-                data.add(new CallRecord(callsRS.getString(1),callsRS.getString(2),callsRS.getString(3),
+                data.add(new CallRecord(callsRS.getString(1), callsRS.getString(2), callsRS.getString(3),
                         callsRS.getString(4), callsRS.getString(5), callsRS.getString(6), callsRS.getString(7),
                         callsRS.getString(8)));
+                System.out.println(callsRS.getString(1) +"  " + callsRS.getString(2) + "  " + callsRS.getString(3) +"  " +
+                        callsRS.getString(4) +"  " + callsRS.getString(5));
             }
 
         } catch (Exception ex) {
@@ -93,7 +94,7 @@ public class SQL {
         try {
 
             String s = "INSERT INTO cases(name, details, status)" +
-                    " VALUES( '"+ cr.getCaseName() + "','"+ cr.getDetails() + "','" +
+                    " VALUES( '" + cr.getCaseName() + "','" + cr.getDetails() + "','" +
                     cr.getStatus() + "');";
             System.out.println(s);
             connection.createStatement().executeUpdate(s);
@@ -130,7 +131,7 @@ public class SQL {
                 userId = (caseRS.getInt(0));
                 System.out.println("UserID inside getUserID sql" + userId);
             }
-        } catch(SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return userId;
@@ -141,7 +142,7 @@ public class SQL {
 
         try {
             String query = "INSERT INTO notes(accountID, caseID, title, date, data) VALUES(" +
-                    nr.getUserID() + "," + nr.getCaseID() + ","+ nr.getNoteName() + "," +
+                    nr.getUserID() + "," + nr.getCaseID() + "," + nr.getNoteName() + "," +
                     nr.getDate() + "," + nr.getData() + ");";
             System.out.println(query);
             connection.createStatement().executeUpdate(query);
@@ -153,6 +154,7 @@ public class SQL {
 
     /**
      * Loads the note records from the database
+     *
      * @param i
      * @return
      */
@@ -162,7 +164,7 @@ public class SQL {
 
         try {
             //execute query and store result in a result SET:
-            ResultSet caseRS = connection.createStatement().executeQuery("SELECT * FROM notes WHERE caseID=" + i +";");
+            ResultSet caseRS = connection.createStatement().executeQuery("SELECT * FROM notes WHERE caseID=" + i + ";");
 
             while (caseRS.next()) {
                 if (Integer.parseInt(caseRS.getString(1)) > maxIDNote) {
@@ -179,6 +181,7 @@ public class SQL {
 
     /**
      * Removes a note from the database with the given ID
+     *
      * @param idNote
      */
     public void removeNote(int idNote) {
@@ -205,7 +208,8 @@ public class SQL {
      */
     public int getMaxIDNote() {
         maxIDNote++;
-        return maxIDNote;}
+        return maxIDNote;
+    }
 
     /**
      * Check if String is an integer
@@ -226,6 +230,7 @@ public class SQL {
 
     /**
      * Insert lots of calls from file probably
+     *
      * @param data
      */
     public void insertCalls(ObservableList<CallRecord> data) {
@@ -233,6 +238,7 @@ public class SQL {
             addCall(cr);
         }
     }
+
     /**
      * Inserts default call to database
      */
@@ -242,7 +248,7 @@ public class SQL {
 
         try {
             connection.createStatement().executeUpdate("INSERT INTO calls(caseId, callerPhoneNumber, receiverPhoneNumber, date, time, typeOfCall, duration)\n" +
-                    "VALUES("+cr.getCaseID()+",\""+ cr.getCallerPhoneNumber() + "\",\""+ cr.getReceiverPhoneNumber() + "\",\"" +
+                    "VALUES(" + cr.getCaseID() + ",\"" + cr.getCallerPhoneNumber() + "\",\"" + cr.getReceiverPhoneNumber() + "\",\"" +
                     cr.getDate() + "\",\"" + cr.getTime() + "\",\"" + cr.getTypeOfCall() + "\",\"" + cr.getDuration() + "\");");
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -267,9 +273,10 @@ public class SQL {
 
     /**
      * remove the Case selected
+     *
      * @param id
      */
-    public void removeCase(int id){
+    public void removeCase(int id) {
         Connection connection = dbConnection.connect();
 
         try {
@@ -281,29 +288,28 @@ public class SQL {
 
     /**
      * Edits the database when the user edits a cell in the table
-     * @param id CallID (unique paramater of the calls) so that there aren't any duplicates
+     *
+     * @param id         CallID (unique paramater of the calls) so that there aren't any duplicates
      * @param columnName Where in the specific row the change is made
-     * @param change The new value for the specific attribute
+     * @param change     The new value for the specific attribute
      */
     public void editCell(int id, String columnName, String change) {
         Connection connection = dbConnection.connect();
 
         try {
             connection.createStatement().executeUpdate("UPDATE calls SET " + columnName + "= '" + change + "' WHERE id =" + id);
-        }
-        catch(SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void updateCaseName(int id,String change){
+    public void updateCaseName(int id, String change) {
 
         Connection connection = dbConnection.connect();
 
         try {
             connection.createStatement().executeUpdate("UPDATE cases SET name" + "= '" + change + "' WHERE id =" + id);
-        }
-        catch(SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -313,8 +319,7 @@ public class SQL {
 
         try {
             connection.createStatement().executeUpdate("UPDATE notes SET title" + "= '" + change + "' WHERE id =" + id);
-        }
-        catch(SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -326,8 +331,5 @@ public class SQL {
     public void setID(int ID) {
         this.ID = ID;
     }
-
-
-
 
 }

@@ -1,6 +1,9 @@
 package controllers;
 
 import com.Ostermiller.util.CSVParser;
+import com.sun.javafx.scene.control.skin.TableViewSkinBase;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import modules.file_import.ImportCSV;
 import modules.manageAccounts.User;
 import modules.table.*;
@@ -83,6 +86,9 @@ public class MainController {
     private HBox notesCT;
     @FXML
     protected Label caseTitle;
+
+    @FXML
+    protected BorderPane root;
 
     /**
      * Import functionality. It supports only certain csv files (that have the same number and order of columns as the database)
@@ -169,18 +175,53 @@ public class MainController {
          *
          */
         searchData = callsData;
+
+        //TODO Is this the drag/drop functionality? Let's find another place for it
+        root.setOnDragOver(event1 -> {
+            Dragboard db = event1.getDragboard();
+            if (db.hasFiles()) {
+                event1.acceptTransferModes(TransferMode.COPY);
+            } else {
+                event1.consume();
+            }
+        });
+
+        // Dropping over surface
+
+        root.setOnDragDropped(event2 -> {
+            Dragboard db = event2.getDragboard();
+            boolean success = false;
+            if (db.hasFiles()) {
+                success = true;
+                String filePath = null;
+                for (File file : db.getFiles()) {
+                    filePath = file.getAbsolutePath();
+                    System.out.println(filePath);
+                    if (!filePath.equals("")) {
+                        filePath = filePath.replace("\\", "\\\\");
+                        importTest(filePath);
+                    }
+                }
+            }
+            event2.setDropCompleted(success);
+            event2.consume();
+            loadTable(caseID);
+            loadFiles(caseID);
+        });
     }
 
     /**
      * Loads the table with data from database
      *
-     * @param i the case id whose data is to be shown
+     * @param caseID the case id whose data is to be shown
      */
-    public void loadTable(int i) {
+    public void loadTable(int caseID) {
         /**
+         * 
          * takes the data from the database and puts it into an observable list
          */
-        callsData = sql.loadCalls(i);
+
+        callsData = sql.loadCalls(caseID);
         /**
          * builds the columns, without data
          */
@@ -617,6 +658,7 @@ public class MainController {
     public void importTest(String path) {
 
         InputStream is;
+
         try {
             /**
              * Takes the csv file and parsers it
@@ -639,32 +681,31 @@ public class MainController {
              * Takes only the headers of the file and puts them into tableHeader
              */
             //TODO add comments on how it's done. Works only for a specific number of columns of data. Add more aliases. Test with different types of faulty csvs
-            while ((t = shredder.nextValue()) != null && shredder.lastLineNumber() == 1){
+            while ((t = shredder.nextValue()) != null && shredder.lastLineNumber() == 1) {
                 System.out.println(t);
                 tableHeader[j] = cr.alias(t);
                 j++;
             }
             ObservableList<CallRecord> data = FXCollections.observableArrayList();
             int length = j + 1;
-            j=0;
+            j = 0;
             System.out.println("" + shredder.lastLineNumber() + " " + t);
             String[] s = new String[length];
             s[tableHeader[j]] = t;
             j++;
-                while ((t = shredder.nextValue()) != null) {
-                    System.out.println("" + shredder.lastLineNumber() + " " + t);
-                    s[tableHeader[j]] = t;
-                    j++;
-                    if (j == length -1) {
-                        j=0;
-                        data.add(new CallRecord(String.valueOf(sql.getCaseId(caseTitle.getText())),s[0],s[1],s[2],s[3],s[4],s[5]));
-                    }
+            while ((t = shredder.nextValue()) != null) {
+                System.out.println("" + shredder.lastLineNumber() + " " + t);
+                s[tableHeader[j]] = t;
+                j++;
+                if (j == length - 1) {
+                    j = 0;
+                    data.add(new CallRecord(String.valueOf(caseID), s[0], s[1], s[2], s[3], s[4], s[5]));
                 }
+            }
             sql.insertCalls(data);
-        }
-        catch( Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
+
 }

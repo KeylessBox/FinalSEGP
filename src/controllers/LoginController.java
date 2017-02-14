@@ -89,37 +89,6 @@ public class LoginController {
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));/* Exception */
             Scene scene = new Scene(root);
 
-            //TODO Is this the drag/drop functionality? Let's find another place for it
-            scene.setOnDragOver(event1 -> {
-                Dragboard db = event1.getDragboard();
-                if (db.hasFiles()) {
-                    event1.acceptTransferModes(TransferMode.COPY);
-                } else {
-                    event1.consume();
-                }
-            });
-
-            // Dropping over surface
-
-            scene.setOnDragDropped(event2 -> {
-                Dragboard db = event2.getDragboard();
-                boolean success = false;
-                if (db.hasFiles()) {
-                    success = true;
-                    String filePath = null;
-                    for (File file : db.getFiles()) {
-                        filePath = file.getAbsolutePath();
-                        System.out.println(filePath);
-                        if (!filePath.equals("")) {
-                            filePath = filePath.replace("\\", "\\\\");
-                            main.importTest(filePath);
-                        }
-                    }
-                }
-                event2.setDropCompleted(success);
-                event2.consume();
-            });
-
             stage.setScene(scene);
             stage.centerOnScreen();
             stage.setResizable(true);
