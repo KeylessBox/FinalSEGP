@@ -1,10 +1,8 @@
 package controllers;
 
 import com.Ostermiller.util.CSVParser;
-import com.sun.javafx.scene.control.skin.TableViewSkinBase;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
-import modules.file_import.ImportCSV;
 import modules.manageAccounts.User;
 import modules.table.*;
 import sql.SQL;
@@ -20,9 +18,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.sql.Connection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -42,7 +41,7 @@ public class MainController {
     CallsTable columnFactory = new CallsTable();
     private ObservableList<CallRecord> searchData;
     private ObservableList<CallRecord> callsData;
-    private ObservableList<CasesRecords> casesData;
+    private ObservableList<CaseRecord> casesData;
     private ObservableList<NoteRecord> notesData;
     private int caseID = 1;
     private int id = 1;
@@ -135,36 +134,7 @@ public class MainController {
      */
     @FXML
     public void initialize() {
-        /**
-         * Initialisation of the cases first
-         * //TODO Default case? App should remember (debatable) the last case for a specific user
-         */
         loadCases();
-        /**
-         * Loading the notes
-         */
-        loadFiles(1);
-        /**
-         * Loading user label
-         */
-        setUserLabel();
-        /**
-         * not sure what these do, some layout properties
-         */
-        date.setMinWidth(50);
-        date.setMaxWidth(50);
-        date.setPrefWidth(50);
-        /**
-         * Loading the table
-         */
-        loadTable(1);
-        /**
-         * Implementing search?
-         */
-        search();
-        /**
-         * Take these somewhere else :D
-         */
         notesCT.setAlignment(Pos.TOP_LEFT);
         notesCT.setSpacing(50);
         notesCT.setBackground(Background.EMPTY);
@@ -172,9 +142,6 @@ public class MainController {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane2.setPannable(true);
         scrollPane2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        /**
-         *
-         */
         searchData = callsData;
 
         //TODO Is this the drag/drop functionality? Let's find another place for it
@@ -218,7 +185,7 @@ public class MainController {
      */
     public void loadTable(int caseID) {
         /**
-         * 
+         *
          * takes the data from the database and puts it into an observable list
          */
 
@@ -237,6 +204,263 @@ public class MainController {
          */
         table.setItems(callsData);
         table.setEditable(true);
+    }
+
+    /**
+     * Initialises the cases on the TabPane. CaseObj is considered as one of the case entries on the pane (with its image,labels and buttons)
+     */
+    private void loadCases() {
+
+        /**
+         * Load Cases List from database:
+         */
+        casesData = sql.loadCases();
+
+        /**
+         * Clear current tabs:
+         */
+        iCase.getChildren().clear();
+        pCase.getChildren().clear();
+        sCase.getChildren().clear();
+        HBox CaseObject = null;
+
+        /**
+         * Every row of the Case table (thus, every case that exists in the database) has a status attribute (Investigating, Solved or Preliminary)
+         * The for loop takes each case and checks what status it has, and then assigns the CaseObj position in the tab
+         */
+        for (CaseRecord caseRecord : casesData) {
+
+            /**
+             * Case object loads the fxml, with its nodes
+             */
+            try {
+                CaseObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+            /**
+             * Initialise elements from Case object:
+             */
+            HBox hb = (HBox) CaseObject.getChildren().get(3);
+            Button deleteBtn = (Button) hb.getChildren().get(1);
+            HBox finalCaseObj = CaseObject;
+            VBox temp = (VBox) CaseObject.getChildren().get(1);
+            TextField caseName = (TextField) temp.getChildren().get(0);
+            caseName.setText(caseRecord.getName());
+            Label caseDate = (Label) temp.getChildren().get(1);
+            try {
+                caseDate.setText(new SimpleDateFormat("yy-MM-dd  [HH:mm]").format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(caseRecord.getDate())));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            String t = caseName.getText();
+            int it = sql.getCaseId(t);
+            finalCaseObj.setId(String.valueOf(it));
+
+            /**
+             * Update the main working area and load case files:
+             */
+            finalCaseObj.setOnMouseClicked(event -> {
+                String date = caseRecord.getDate();
+                int id = sql.getCaseId(date);
+                caseTitle.setText(caseRecord.getName());
+                loadTable(id);
+                loadFiles(id);
+                caseID = id;
+                date = currentTime();
+                sql.updateDate(id, date);
+                caseRecord.setDate(date);
+                try {
+                    caseDate.setText(new SimpleDateFormat("yy-MM-dd  [HH:mm]").format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            /**
+             * Update case name:
+             */
+            caseName.setOnMouseClicked(event -> {
+                caseName.setEditable(true);
+            });
+
+            caseName.setOnAction(event -> {
+                String change = caseName.getText();
+                int id = Integer.valueOf(finalCaseObj.getId());
+                System.out.println("Change case " + id + " name to : " + change);
+                sql.updateCaseName(id, change);
+                loadCases();
+                caseName.setEditable(false);
+            });
+
+            /**
+             * Animations:
+             */
+            finalCaseObj.setOnMousePressed(event -> {
+                finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
+            });
+            finalCaseObj.setOnMouseReleased(event -> {
+                finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+            });
+            finalCaseObj.setOnMouseEntered(event -> {
+                finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
+            });
+            finalCaseObj.setOnMouseExited(event -> {
+                finalCaseObj.setStyle("-fx-background-color: #ffffff;");
+            });
+
+            /**
+             * Add Case object to specific tab:
+             */
+            if (caseRecord.getStatus().equals(iTab.getText())) {
+                iCase.getChildren().add(finalCaseObj);
+                deleteBtn.setOnAction(event -> {
+                    sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
+                    iCase.getChildren().remove(finalCaseObj);
+                });
+
+            } else if (caseRecord.getStatus().equals(sTab.getText())) {
+                sCase.getChildren().add(finalCaseObj);
+                deleteBtn.setOnAction(event -> {
+                    sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
+                    sCase.getChildren().remove(finalCaseObj);
+                });
+            } else if (caseRecord.getStatus().equals(pTab.getText())) {
+                pCase.getChildren().add(finalCaseObj);
+                deleteBtn.setOnAction(event -> {
+                    sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
+                    pCase.getChildren().remove(finalCaseObj);
+                });
+            }
+        }
+    }
+
+    /**
+     * Loads the Case Files (notes) of a specific case into the app
+     *
+     * @param caseID
+     */
+    private void loadFiles(int caseID) {
+        /**
+         * Getting the data from the database part
+         */
+        notesData = sql.loadSQLNotes(caseID);
+        /**
+         * Clearing the cases already shown
+         */
+        Pane CaseFile = null;
+        caseFilesCT.getChildren().clear();
+        /**
+         * For every case file from the database, checks which one is on the given case, and loads them all into the app
+         */
+        for (NoteRecord element : notesData) {
+            if (Integer.parseInt(element.getCaseID()) == caseID) {
+                /**
+                 * Case file template
+                 */
+                try {
+                    CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/caseFile.fxml"));
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                /**
+                 * Putting the data into the templates
+                 */
+                //TODO Still needs working on these. Make them a bit unique.
+                HBox temp = (HBox) CaseFile.getChildren().get(1);
+                HBox temp2 = (HBox) CaseFile.getChildren().get(0);
+                TextField fileName = (TextField) temp2.getChildren().get(0);
+                fileName.setText(element.getNoteName());
+                Button delete = (Button) temp.getChildren().get(2);
+                Pane finalCaseFile = CaseFile;
+
+                fileName.setOnAction(event -> {
+                    String change = fileName.getText();
+                    int id = Integer.valueOf(element.getFileID());
+                    System.out.println("Change case file " + id + " name to : " + change);
+                    sql.updateCaseFile(id, change);
+                    fileName.setEditable(false);
+                });
+                fileName.setOnMouseClicked(event -> {
+                    fileName.setEditable(true);
+                });
+
+                delete.setOnAction(event -> {
+                    caseFilesCT.getChildren().remove(finalCaseFile);
+                    sql.removeNote(Integer.parseInt(element.getFileID()));
+                });
+                /**
+                 * the case files get loaded to the app
+                 */
+                caseFilesCT.getChildren().add(CaseFile);
+            }
+        }
+    }
+
+    //TODO Get back at it later
+    public void search() {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+
+            if (textField.textProperty().get().isEmpty()) {
+                searchData = callsData;
+                table.setItems(searchData);
+            } else {
+
+                ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
+                ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+
+                for (int i = 0; i < searchData.size(); i++) {
+                    for (int j = 0; j < cols.size(); j++) {
+                        TableColumn col = cols.get(j);
+                        String cellValue = col.getCellData(searchData.get(i)).toString();
+                        cellValue = cellValue.toLowerCase();
+                        if (cellValue.contains(textField.textProperty().get().toLowerCase())) {
+                            tableItems.add(searchData.get(i));
+                            break;
+                        }
+                    }
+                }
+                if (searchData != tableItems) {
+                    searchData = tableItems;
+                    table.setItems(searchData);
+                }
+            }
+
+        });
+    }
+
+    /**
+     * Controller for "Delete call" button. Same as above, a user should not be able to delete a call because this data is the kind you usually let it be.
+     * Adding this functionality is just for it to be there in the case such action is wanted.
+     * Deletes the call both from the table and the database.
+     */
+    public void deleteCall() {
+        /**
+         * A row must be selected for it to work
+         */
+        if (table.getSelectionModel().getSelectedItem() != null) {
+            /**
+             * Getting the data
+             */
+            CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
+            /**
+             * Checking if it's something there
+             */
+            if (record != null) {
+                /**
+                 * Delete from database part
+                 */
+                sql.removeCall(Integer.parseInt(record.getCallID()));
+                /**
+                 * Remove from table part
+                 */
+                callsData.remove(table.getSelectionModel().getSelectedItem());
+                System.out.println("DELETE: call " + record.getCallID());
+            }
+        }
+
     }
 
     /**
@@ -356,38 +580,6 @@ public class MainController {
 
     }
 
-    //TODO Get back at it later
-    public void search() {
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-            if (textField.textProperty().get().isEmpty()) {
-                searchData = callsData;
-                table.setItems(searchData);
-            } else {
-
-                ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-                ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
-
-                for (int i = 0; i < searchData.size(); i++) {
-                    for (int j = 0; j < cols.size(); j++) {
-                        TableColumn col = cols.get(j);
-                        String cellValue = col.getCellData(searchData.get(i)).toString();
-                        cellValue = cellValue.toLowerCase();
-                        if (cellValue.contains(textField.textProperty().get().toLowerCase())) {
-                            tableItems.add(searchData.get(i));
-                            break;
-                        }
-                    }
-                }
-                if (searchData != tableItems) {
-                    searchData = tableItems;
-                    table.setItems(searchData);
-                }
-            }
-
-        });
-    }
-
     /**
      * Controller for "Add call" button. No one is supposed to add a call, because you already have it in the database, or any excel, csv file, so a user should
      * not be able to add a call in my opinion, but let's say he wants to, his choice.
@@ -398,7 +590,7 @@ public class MainController {
         /**
          * Data manipulation part (the default data is ready to be used)
          */
-        CallRecord cr = new CallRecord(String.valueOf(sql.getMaxCallID() + 1), "\"" + sql.getCaseId(caseTitle.getText()) + "\"",
+        CallRecord cr = new CallRecord(String.valueOf(sql.getMaxCallID() + 1), "\"" + caseID + "\"",
                 "0", "0", "1900/01/01", "00:00", "Standard", "00:00");
         /**
          * Add to table (visually) part
@@ -409,219 +601,6 @@ public class MainController {
          */
         sql.addCall(cr);
         System.out.println("ADD: call");
-    }
-
-    /**
-     * Controller for "Delete call" button. Same as above, a user should not be able to delete a call because this data is the kind you usually let it be.
-     * Adding this functionality is just for it to be there in the case such action is wanted.
-     * Deletes the call both from the table and the database.
-     */
-    public void deleteCall() {
-        /**
-         * A row must be selected for it to work
-         */
-        if (table.getSelectionModel().getSelectedItem() != null) {
-            /**
-             * Getting the data
-             */
-            CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
-            /**
-             * Checking if it's something there
-             */
-            if (record != null) {
-                /**
-                 * Delete from database part
-                 */
-                sql.removeCall(Integer.parseInt(record.getCallID()));
-                /**
-                 * Remove from table part
-                 */
-                callsData.remove(table.getSelectionModel().getSelectedItem());
-                System.out.println("DELETE: call " + record.getCallID());
-            }
-        }
-
-    }
-
-    /**
-     * Initialises the cases on the TabPane. CaseObj is considered as one of the case entries on the pane (with its image,labels and buttons)
-     */
-    private void loadCases() {
-
-        /**
-         * Load Cases List from database:
-         */
-        casesData = sql.loadCases();
-
-        /**
-         * Clear current tabs:
-         */
-        iCase.getChildren().clear();
-        pCase.getChildren().clear();
-        sCase.getChildren().clear();
-        HBox CaseObject = null;
-
-        /**
-         * Every row of the Case table (thus, every case that exists in the database) has a status attribute (Investigating, Solved or Preliminary)
-         * The for loop takes each case and checks what status it has, and then assigns the CaseObj position in the tab
-         */
-        for (CasesRecords tabPane : casesData) {
-
-            /**
-             * Case object loads the fxml, with its nodes
-             */
-            try {
-                CaseObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-
-            /**
-             * Initialise elements from Case object:
-             */
-            HBox hb = (HBox) CaseObject.getChildren().get(3);
-            Button deleteBtn = (Button) hb.getChildren().get(1);
-            HBox finalCaseObj = CaseObject;
-            VBox temp = (VBox) CaseObject.getChildren().get(1);
-            TextField caseName = (TextField) temp.getChildren().get(0);
-            caseName.setText(tabPane.getCaseName());
-            Label caseDate = (Label) temp.getChildren().get(1);
-            caseDate.setText("date");
-
-            String t = caseName.getText();
-            int it = sql.getCaseId(t);
-            finalCaseObj.setId(String.valueOf(it));
-
-            /**
-             * Update the main working area and load case files:
-             */
-            finalCaseObj.setOnMouseClicked(event -> {
-                String s = caseName.getText();
-                int id = sql.getCaseId(s);
-                loadTable(id);
-                loadFiles(id);
-                caseID = id;
-                caseTitle.setText(s);
-            });
-
-            /**
-             * Update case name:
-             */
-            caseName.setOnMouseClicked(event -> {
-                caseName.setEditable(true);
-            });
-
-            caseName.setOnAction(event -> {
-                String change = caseName.getText();
-                int id = Integer.valueOf(finalCaseObj.getId());
-                System.out.println("Change case " + id + " name to : " + change);
-                sql.updateCaseName(id, change);
-                loadCases();
-                caseName.setEditable(false);
-            });
-
-            /**
-             * Animations:
-             */
-            finalCaseObj.setOnMousePressed(event -> {
-                finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
-            });
-            finalCaseObj.setOnMouseReleased(event -> {
-                finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-            });
-            finalCaseObj.setOnMouseEntered(event -> {
-                finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
-            });
-            finalCaseObj.setOnMouseExited(event -> {
-                finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-            });
-
-            /**
-             * Add Case object to specific tab:
-             */
-            if (tabPane.getStatus().equals(iTab.getText())) {
-                iCase.getChildren().add(finalCaseObj);
-                deleteBtn.setOnAction(event -> {
-                    sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
-                    iCase.getChildren().remove(finalCaseObj);
-                });
-
-            } else if (tabPane.getStatus().equals(sTab.getText())) {
-                sCase.getChildren().add(finalCaseObj);
-                deleteBtn.setOnAction(event -> {
-                    sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
-                    sCase.getChildren().remove(finalCaseObj);
-                });
-            } else if (tabPane.getStatus().equals(pTab.getText())) {
-                pCase.getChildren().add(finalCaseObj);
-                deleteBtn.setOnAction(event -> {
-                    sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
-                    pCase.getChildren().remove(finalCaseObj);
-                });
-            }
-        }
-    }
-
-    /**
-     * Loads the Case Files (notes) of a specific case into the app
-     *
-     * @param caseID
-     */
-    private void loadFiles(int caseID) {
-        /**
-         * Getting the data from the database part
-         */
-        notesData = sql.loadSQLNotes(caseID);
-        /**
-         * Clearing the cases already shown
-         */
-        Pane CaseFile = null;
-        caseFilesCT.getChildren().clear();
-        /**
-         * For every case file from the database, checks which one is on the given case, and loads them all into the app
-         */
-        for (NoteRecord element : notesData) {
-            if (Integer.parseInt(element.getCaseID()) == caseID) {
-                /**
-                 * Case file template
-                 */
-                try {
-                    CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/caseFile.fxml"));
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-                /**
-                 * Putting the data into the templates
-                 */
-                //TODO Still needs working on these. Make them a bit unique.
-                HBox temp = (HBox) CaseFile.getChildren().get(1);
-                HBox temp2 = (HBox) CaseFile.getChildren().get(0);
-                TextField fileName = (TextField) temp2.getChildren().get(0);
-                fileName.setText(element.getNoteName());
-                Button delete = (Button) temp.getChildren().get(2);
-                Pane finalCaseFile = CaseFile;
-
-                fileName.setOnAction(event -> {
-                    String change = fileName.getText();
-                    int id = Integer.valueOf(element.getFileID());
-                    System.out.println("Change case file " + id + " name to : " + change);
-                    sql.updateCaseFile(id, change);
-                    fileName.setEditable(false);
-                });
-                fileName.setOnMouseClicked(event -> {
-                    fileName.setEditable(true);
-                });
-
-                delete.setOnAction(event -> {
-                    caseFilesCT.getChildren().remove(finalCaseFile);
-                    sql.removeNote(Integer.parseInt(element.getFileID()));
-                });
-                /**
-                 * the case files get loaded to the app
-                 */
-                caseFilesCT.getChildren().add(CaseFile);
-            }
-        }
     }
 
     /**
@@ -639,7 +618,7 @@ public class MainController {
         } else {
             status = "Solved";
         }
-        CasesRecords callRecord = new CasesRecords(String.valueOf(sql.getMaxCallID() + 1), "case" + id++, "Description", status);
+        CaseRecord callRecord = new CaseRecord(String.valueOf(sql.getMaxCallID() + 1), "case" + id++, "Description", status, currentTime());
         sql.addCase(callRecord);
         loadCases();
     }
@@ -651,10 +630,10 @@ public class MainController {
      */
     public void addCaseFile(ActionEvent actionEvent) {
 
-        NoteRecord nr = new NoteRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + sql.getCaseId(caseTitle.getText()) + "",
+        NoteRecord nr = new NoteRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + caseID + "",
                 "\"" + "Case file" + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
         sql.insertFile(nr);
-        loadFiles(sql.getCaseId(caseTitle.getText()));
+        loadFiles(caseID);
     }
 
     public void importTest(String path) {
@@ -708,6 +687,11 @@ public class MainController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public String currentTime() {
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        return timeStamp;
     }
 
 }

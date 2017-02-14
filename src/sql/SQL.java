@@ -5,7 +5,7 @@ package sql;
  */
 
 import modules.table.CallRecord;
-import modules.table.CasesRecords;
+import modules.table.CaseRecord;
 import modules.table.DBConnection;
 import modules.table.NoteRecord;
 import javafx.collections.FXCollections;
@@ -63,9 +63,9 @@ public class SQL {
     }
 
 
-    public ObservableList<CasesRecords> loadCases() {
+    public ObservableList<CaseRecord> loadCases() {
         Connection connection = dbConnection.connect();
-        ObservableList<CasesRecords> data = FXCollections.observableArrayList();
+        ObservableList<CaseRecord> data = FXCollections.observableArrayList();
 
         try {
             //execute query and store result in a result SET:
@@ -76,7 +76,7 @@ public class SQL {
                 if (Integer.parseInt(caseRS.getString(1)) > maxIDCall) {
                     maxIDCall = Integer.parseInt(caseRS.getString(1));
                 }
-                data.add(new CasesRecords(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4)));
+                data.add(new CaseRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4),caseRS.getString(5)));
             }
             maxIDCall = 1;
         } catch (Exception ex) {
@@ -85,15 +85,15 @@ public class SQL {
         return data;
     }
 
-    public void addCase(CasesRecords cr) {
+    public void addCase(CaseRecord cr) {
 
         Connection connection = dbConnection.connect();
 
         try {
 
-            String s = "INSERT INTO cases(name, details, status)" +
-                    " VALUES( '" + cr.getCaseName() + "','" + cr.getDetails() + "','" +
-                    cr.getStatus() + "');";
+            String s = "INSERT INTO cases(name, details, status, date)" +
+                    " VALUES( '" + cr.getName() + "','" + cr.getDetails() + "','" +
+                    cr.getStatus() + "','" + cr.getDate() + "');";
             System.out.println(s);
             connection.createStatement().executeUpdate(s);
         } catch (SQLException ex) {
@@ -107,7 +107,7 @@ public class SQL {
 
         try {
             //execute query and store result in a result SET:
-            ResultSet caseRS = connection.createStatement().executeQuery("SELECT id FROM cases Where name =\"" + s + "\"");
+            ResultSet caseRS = connection.createStatement().executeQuery("SELECT id FROM cases WHERE date =\"" + s + "\"");
             if (caseRS.next()) {
                 caseId = (caseRS.getInt(1));
             }
@@ -322,12 +322,14 @@ public class SQL {
         }
     }
 
-    public int getID() {
-        return ID;
-    }
+    public void updateDate(int id, String change){
+        Connection connection = dbConnection.connect();
 
-    public void setID(int ID) {
-        this.ID = ID;
+        try {
+            connection.createStatement().executeUpdate("UPDATE cases SET date" + "= '" + change + "' WHERE id =" + id);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }

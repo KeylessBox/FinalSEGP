@@ -30,6 +30,7 @@ public class NoteRecord {
         this.date = new SimpleStringProperty(date);
         this.data = new SimpleStringProperty(data);
     }
+
     //Getters:
     public String getFileID() {
         return noteID.get();
@@ -38,6 +39,7 @@ public class NoteRecord {
     public String getUserID() {
         return userID.get();
     }
+
     public String getCaseID() {
         return caseID.get();
     }
