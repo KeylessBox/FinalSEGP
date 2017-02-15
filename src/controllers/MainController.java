@@ -734,6 +734,11 @@ public class MainController {
         ObservableList<CaseRecord> temp2 = sql.loadCases();
         boolean requireUpdate = false;
         int i = 0;
+
+        if (temp2.size() != casesData.size()){
+            return true;
+        }
+
         for (CaseRecord caseRecord : temp2) {
 
             if (i <= (casesData.size() - 1)) {
@@ -762,6 +767,11 @@ public class MainController {
         ObservableList<FileRecord> temp2 = sql.loadFiles(caseID);
         boolean requireUpdate = false;
         int i = 0;
+
+        if (temp2.size() != filesData.size()){
+            return true;
+        }
+
         for (FileRecord fileRecord : temp2) {
 
             if (i <= (filesData.size() - 1)) {
@@ -793,6 +803,12 @@ public class MainController {
         ObservableList<CallRecord> temp2 = sql.loadCalls(caseID);
         boolean requireUpdate = false;
         int i = 0;
+
+        if (temp2.size() != callsData.size()){
+            return true;
+        }
+
+
         for (CallRecord caseRecord : temp2) {
 
             if (i <= (callsData.size() - 1)) {
