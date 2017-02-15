@@ -779,6 +779,7 @@ public class MainController {
             }
         }
         return requireUpdate;
+        
     }
 
     public boolean filesUpdate() {
