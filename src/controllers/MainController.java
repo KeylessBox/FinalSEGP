@@ -181,7 +181,7 @@ public class MainController {
         setUserLabel();
         loadCases();
 
-        Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+        Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 if (!editing) {
