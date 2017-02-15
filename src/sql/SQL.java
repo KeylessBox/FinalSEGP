@@ -59,6 +59,11 @@ public class SQL {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+
+        }
         return data;
     }
 
@@ -81,6 +86,11 @@ public class SQL {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        try {
+            connection.close();
+        }catch (SQLException e ){
+
+        }
         return data;
     }
 
@@ -95,6 +105,7 @@ public class SQL {
                     cr.getStatus() + "','" + cr.getDate() + "');";
             System.out.println(s);
             connection.createStatement().executeUpdate(s);
+            connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -112,6 +123,11 @@ public class SQL {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+
         }
         return caseId;
     }
@@ -131,6 +147,11 @@ public class SQL {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+
+        }
         return userId;
     }
 
@@ -143,7 +164,7 @@ public class SQL {
                     nr.getDate() + "," + nr.getData() + ");";
             System.out.println(query);
             connection.createStatement().executeUpdate(query);
-
+            connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -173,6 +194,11 @@ public class SQL {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+
+        }
         return data;
     }
 
@@ -186,6 +212,7 @@ public class SQL {
 
         try {
             connection.createStatement().executeUpdate("DELETE FROM `notes` WHERE id = " + idNote + ";");
+            connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -247,6 +274,7 @@ public class SQL {
             connection.createStatement().executeUpdate("INSERT INTO calls(caseId, callerPhoneNumber, receiverPhoneNumber, date, time, typeOfCall, duration)\n" +
                     "VALUES(" + cr.getCaseID() + ",\"" + cr.getCallerPhoneNumber() + "\",\"" + cr.getReceiverPhoneNumber() + "\",\"" +
                     cr.getDate() + "\",\"" + cr.getTime() + "\",\"" + cr.getTypeOfCall() + "\",\"" + cr.getDuration() + "\");");
+            connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -263,6 +291,7 @@ public class SQL {
 
         try {
             connection.createStatement().executeUpdate("DELETE FROM `calls` WHERE id = " + id);
+            connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -278,6 +307,7 @@ public class SQL {
 
         try {
             connection.createStatement().executeUpdate("DELETE FROM `cases` WHERE id = " + id);
+            connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -295,6 +325,7 @@ public class SQL {
 
         try {
             connection.createStatement().executeUpdate("UPDATE calls SET " + columnName + "= '" + change + "' WHERE id =" + id);
+            connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -306,6 +337,7 @@ public class SQL {
 
         try {
             connection.createStatement().executeUpdate("UPDATE cases SET name" + "= '" + change + "' WHERE id =" + id);
+            connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -316,6 +348,7 @@ public class SQL {
 
         try {
             connection.createStatement().executeUpdate("UPDATE notes SET title" + "= '" + change + "' WHERE id =" + id);
+            connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -326,6 +359,7 @@ public class SQL {
 
         try {
             connection.createStatement().executeUpdate("UPDATE cases SET date" + "= '" + change + "' WHERE id =" + id);
+            connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

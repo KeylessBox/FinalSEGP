@@ -23,10 +23,13 @@ public class DBConnection {
      */
     public Connection connect() {
 
-        String url = "jdbc:mysql://localhost:3306/investigationsdb?autoReconnect=true&useSSL=false";
+        String url = "jdbc:mysql://localhost:3306/investigationsdb?useSSL=false";
         String username = "root";
         String password = "";
-
+        /*String url = "jdbc:mysql://sql8.freemysqlhosting.net:3306/sql8159073?autoReconnect=true&useSSL=false";
+        String username = "sql8159073";
+        String password = "IqMbUSHD3p";
+*/
         /**
          * Check if JDBC driver is loaded
          */

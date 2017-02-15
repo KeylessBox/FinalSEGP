@@ -208,7 +208,6 @@ public class MainController {
         }));
         Updater.setCycleCount(Timeline.INDEFINITE);
         Updater.play();
-
     }
 
     /**

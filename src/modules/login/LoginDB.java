@@ -31,16 +31,16 @@ public class LoginDB {
                if(rs.getString("Password").equals(password))
                    check = true;
             }
-            else
-
-            connection.close();
 
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
+        try {
+            connection.close();
+        } catch (SQLException e) {
 
-
+        }
         return check;    }
     
     }

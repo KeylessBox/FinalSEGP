@@ -49,7 +49,7 @@ public class LoginController {
         stage3.centerOnScreen();
         stage3.setResizable(true);
         stage3.show();
-            }
+    }
 
     /**
      * Log in method. The user must provide existing user details in the database, else there is no access to the main app

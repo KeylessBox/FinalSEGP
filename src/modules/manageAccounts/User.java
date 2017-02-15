@@ -35,7 +35,11 @@ public class User {
             e.printStackTrace();
         }
 
+        try {
+            connection.close();
+        } catch (SQLException e) {
 
+        }
         return result;    }
 
 }
