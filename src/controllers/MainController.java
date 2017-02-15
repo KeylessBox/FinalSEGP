@@ -184,21 +184,27 @@ public class MainController {
         Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                
-                System.out.println("UPDATE");
-                if (casesUpdate()){
-                    System.out.println("EXTERNAL CHANGE IN CASES");
-                    loadCases();
+                if (!editing) {
+                    System.out.println("UPDATE");
+                    if (casesUpdate()) {
+                        System.out.println("EXTERNAL CHANGE IN CASES");
+                        loadCases();
+                        for (CaseRecord temp : casesData) {
+                            if (Integer.valueOf(temp.getCaseID()) == caseID) {
+                                caseTitle.setText(temp.getName());
+                            }
+                        }
+                    }
+                    if (filesUpdate()) {
+                        System.out.println("EXTERNAL CHANGE IN FILES");
+                        loadFiles(caseID);
+                    }
+                    if (callsUpdate()) {
+                        System.out.println("EXTERNAL CHANGE IN TABLE");
+                        loadTable(caseID);
+                    }
                 }
-                if (filesUpdate()){
-                    System.out.println("EXTERNAL CHANGE IN FILES");
-                    loadFiles(caseID);
-                }
-                if (callsUpdate()){
-                    System.out.println("EXTERNAL CHANGE IN TABLE");
-                    loadTable(caseID);
-                }
-            }                       
+            }
         }));
         Updater.setCycleCount(Timeline.INDEFINITE);
         Updater.play();
@@ -276,6 +282,7 @@ public class MainController {
             TextField caseName = (TextField) temp.getChildren().get(0);
             caseName.setText(caseRecord.getName());
             Label caseDate = (Label) temp.getChildren().get(1);
+
             try {
                 caseDate.setText(new SimpleDateFormat("yy-MM-dd  [HH:mm]").format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(caseRecord.getDate())));
             } catch (ParseException e) {
@@ -311,15 +318,25 @@ public class MainController {
              */
             caseName.setOnMouseClicked(event -> {
                 caseName.setEditable(true);
+                editing = true;
+                int id = Integer.valueOf(finalCaseObj.getId());
+                caseID = id;
+                caseTitle.setText(caseRecord.getName());
+                loadTable(caseID);
+                loadFiles(caseID);
+                search();
             });
 
             caseName.setOnAction(event -> {
+
                 String change = caseName.getText();
                 int id = Integer.valueOf(finalCaseObj.getId());
                 System.out.println("Change case " + id + " name to : " + change);
                 sql.updateCaseName(id, change);
                 loadCases();
                 caseName.setEditable(false);
+                caseTitle.setText(change);
+                editing = false;
             });
 
             /**
@@ -735,28 +752,31 @@ public class MainController {
         boolean requireUpdate = false;
         int i = 0;
 
-        if (temp2.size() != casesData.size()){
-            return true;
-        }
+        if (casesData != null) {
 
-        for (CaseRecord caseRecord : temp2) {
+            if (temp2.size() != casesData.size()) {
+                return true;
+            }
 
-            if (i <= (casesData.size() - 1)) {
+            for (CaseRecord caseRecord : temp2) {
 
-                if (!caseRecord.getCaseID().equals(casesData.get(i).getCaseID())) {
-                    requireUpdate = true;
-                }
-                if (!caseRecord.getDate().equals(casesData.get(i).getDate())) {
-                    requireUpdate = true;
-                }
-                if (!caseRecord.getName().equals(casesData.get(i).getName())) {
-                    requireUpdate = true;
-                }
-                if (!caseRecord.getStatus().equals(casesData.get(i).getStatus())) {
-                    requireUpdate = true;
-                }
-                if (!caseRecord.getDetails().equals(casesData.get(i++).getDetails())) {
-                    requireUpdate = true;
+                if (i <= (casesData.size() - 1)) {
+
+                    if (!caseRecord.getCaseID().equals(casesData.get(i).getCaseID())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getDate().equals(casesData.get(i).getDate())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getName().equals(casesData.get(i).getName())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getStatus().equals(casesData.get(i).getStatus())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getDetails().equals(casesData.get(i++).getDetails())) {
+                        requireUpdate = true;
+                    }
                 }
             }
         }
@@ -767,32 +787,34 @@ public class MainController {
         ObservableList<FileRecord> temp2 = sql.loadFiles(caseID);
         boolean requireUpdate = false;
         int i = 0;
+        if (filesData != null) {
 
-        if (temp2.size() != filesData.size()){
-            return true;
-        }
+            if (temp2.size() != filesData.size()) {
+                return true;
+            }
 
-        for (FileRecord fileRecord : temp2) {
+            for (FileRecord fileRecord : temp2) {
 
-            if (i <= (filesData.size() - 1)) {
+                if (i <= (filesData.size() - 1)) {
 
-                if (!fileRecord.getCaseID().equals(filesData.get(i).getCaseID())) {
-                    requireUpdate = true;
-                }
-                if (!fileRecord.getDate().equals(filesData.get(i).getDate())) {
-                    requireUpdate = true;
-                }
-                if (!fileRecord.getFileID().equals(filesData.get(i).getFileID())) {
-                    requireUpdate = true;
-                }
-                if (!fileRecord.getName().equals(filesData.get(i).getName())) {
-                    requireUpdate = true;
-                }
-                if (!fileRecord.getData().equals(filesData.get(i).getData())) {
-                    requireUpdate = true;
-                }
-                if (!fileRecord.getUserID().equals(filesData.get(i++).getUserID())) {
-                    requireUpdate = true;
+                    if (!fileRecord.getCaseID().equals(filesData.get(i).getCaseID())) {
+                        requireUpdate = true;
+                    }
+                    if (!fileRecord.getDate().equals(filesData.get(i).getDate())) {
+                        requireUpdate = true;
+                    }
+                    if (!fileRecord.getFileID().equals(filesData.get(i).getFileID())) {
+                        requireUpdate = true;
+                    }
+                    if (!fileRecord.getName().equals(filesData.get(i).getName())) {
+                        requireUpdate = true;
+                    }
+                    if (!fileRecord.getData().equals(filesData.get(i).getData())) {
+                        requireUpdate = true;
+                    }
+                    if (!fileRecord.getUserID().equals(filesData.get(i++).getUserID())) {
+                        requireUpdate = true;
+                    }
                 }
             }
         }
@@ -804,38 +826,41 @@ public class MainController {
         boolean requireUpdate = false;
         int i = 0;
 
-        if (temp2.size() != callsData.size()){
-            return true;
-        }
+
+        if (callsData != null) {
+            if (temp2.size() != callsData.size()) {
+                return true;
+            }
 
 
-        for (CallRecord caseRecord : temp2) {
+            for (CallRecord caseRecord : temp2) {
 
-            if (i <= (callsData.size() - 1)) {
+                if (i <= (callsData.size() - 1)) {
 
-                if (!caseRecord.getCallID().equals(callsData.get(i).getCallID())) {
-                    requireUpdate = true;
-                }
-                if (!caseRecord.getCaseID().equals(callsData.get(i).getCaseID())) {
-                    requireUpdate = true;
-                }
-                if (!caseRecord.getCallerPhoneNumber().equals(callsData.get(i).getCallerPhoneNumber())) {
-                    requireUpdate = true;
-                }
-                if (!caseRecord.getReceiverPhoneNumber().equals(callsData.get(i).getReceiverPhoneNumber())) {
-                    requireUpdate = true;
-                }
-                if (!caseRecord.getDate().equals(callsData.get(i).getDate())) {
-                    requireUpdate = true;
-                }
-                if (!caseRecord.getTime().equals(callsData.get(i).getTime())) {
-                    requireUpdate = true;
-                }
-                if (!caseRecord.getTypeOfCall().equals(callsData.get(i).getTypeOfCall())) {
-                    requireUpdate = true;
-                }
-                if (!caseRecord.getDuration().equals(callsData.get(i++).getDuration())) {
-                    requireUpdate = true;
+                    if (!caseRecord.getCallID().equals(callsData.get(i).getCallID())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getCaseID().equals(callsData.get(i).getCaseID())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getCallerPhoneNumber().equals(callsData.get(i).getCallerPhoneNumber())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getReceiverPhoneNumber().equals(callsData.get(i).getReceiverPhoneNumber())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getDate().equals(callsData.get(i).getDate())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getTime().equals(callsData.get(i).getTime())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getTypeOfCall().equals(callsData.get(i).getTypeOfCall())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getDuration().equals(callsData.get(i++).getDuration())) {
+                        requireUpdate = true;
+                    }
                 }
             }
         }
