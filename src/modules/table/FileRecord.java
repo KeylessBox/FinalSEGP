@@ -11,7 +11,7 @@ import javafx.beans.property.StringProperty;
 /**
  * Created by AndreiM on 2/3/2017.
  */
-public class NoteRecord {
+public class FileRecord {
     /**
      * DataStructure for accessing and modifying Note(Case files) records from DataBase and TableView
      */
@@ -22,8 +22,8 @@ public class NoteRecord {
     private final StringProperty date;
     private final StringProperty data;
 
-    public NoteRecord(String noteID, String userID, String caseID, String title, String date, String data) {
-        this.noteID = new SimpleStringProperty(noteID);
+    public FileRecord(String fileID, String userID, String caseID, String title, String date, String data) {
+        this.noteID = new SimpleStringProperty(fileID);
         this.userID = new SimpleStringProperty(userID);
         this.caseID = new SimpleStringProperty(caseID);
         this.title = new SimpleStringProperty(title);
@@ -44,7 +44,7 @@ public class NoteRecord {
         return caseID.get();
     }
 
-    public String getNoteName() {
+    public String getName() {
         return title.get();
     }
 

@@ -1,8 +1,12 @@
 package controllers;
 
 import com.Ostermiller.util.CSVParser;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.util.Duration;
 import modules.manageAccounts.User;
 import modules.table.*;
 import sql.SQL;
@@ -35,16 +39,17 @@ public class MainController {
      * searchData -
      * callsData - the calls from the database
      * casesData - the cases from the database
-     * notesData - the case files from the database
+     * filesData - the case files from the database
      */
     SQL sql = new SQL();
     CallsTable columnFactory = new CallsTable();
     private ObservableList<CallRecord> searchData;
     private ObservableList<CallRecord> callsData;
     private ObservableList<CaseRecord> casesData;
-    private ObservableList<NoteRecord> notesData;
+    private ObservableList<FileRecord> filesData;
     private int caseID = 1;
     private int id = 1;
+    private boolean editing = false;
 
     @FXML
     private ScrollPane scrollPane2;
@@ -175,6 +180,29 @@ public class MainController {
         });
         setUserLabel();
         loadCases();
+
+        Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                
+                System.out.println("UPDATE");
+                if (casesUpdate()){
+                    System.out.println("EXTERNAL CHANGE IN CASES");
+                    loadCases();
+                }
+                if (filesUpdate()){
+                    System.out.println("EXTERNAL CHANGE IN FILES");
+                    loadFiles(caseID);
+                }
+                if (callsUpdate()){
+                    System.out.println("EXTERNAL CHANGE IN TABLE");
+                    loadTable(caseID);
+                }
+            }                       
+        }));
+        Updater.setCycleCount(Timeline.INDEFINITE);
+        Updater.play();
+
     }
 
     /**
@@ -262,7 +290,6 @@ public class MainController {
              * Update the main working area and load case files:
              */
             finalCaseObj.setOnMouseClicked(event -> {
-
                 String date = currentTime();
                 int id = Integer.valueOf(finalCaseObj.getId());
                 caseTitle.setText(caseRecord.getName());
@@ -346,7 +373,7 @@ public class MainController {
         /**
          * Getting the data from the database part
          */
-        notesData = sql.loadSQLNotes(caseID);
+        filesData = sql.loadFiles(caseID);
         /**
          * Clearing the cases already shown
          */
@@ -355,7 +382,7 @@ public class MainController {
         /**
          * For every case file from the database, checks which one is on the given case, and loads them all into the app
          */
-        for (NoteRecord element : notesData) {
+        for (FileRecord element : filesData) {
             if (Integer.parseInt(element.getCaseID()) == caseID) {
                 /**
                  * Case file template
@@ -372,7 +399,7 @@ public class MainController {
                 HBox temp = (HBox) CaseFile.getChildren().get(1);
                 HBox temp2 = (HBox) CaseFile.getChildren().get(0);
                 TextField fileName = (TextField) temp2.getChildren().get(0);
-                fileName.setText(element.getNoteName());
+                fileName.setText(element.getName());
                 Button delete = (Button) temp.getChildren().get(2);
                 Pane finalCaseFile = CaseFile;
 
@@ -414,7 +441,7 @@ public class MainController {
 
                 ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
                 ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
-                
+
                 if (searchData != null) {
                     for (int i = 0; i < searchData.size(); i++) {
                         for (int j = 0; j < cols.size(); j++) {
@@ -434,7 +461,8 @@ public class MainController {
                 }
             }
         });
-        textField.setOnAction(event -> {});
+        textField.setOnAction(event -> {
+        });
     }
 
     /**
@@ -636,7 +664,7 @@ public class MainController {
      */
     public void addCaseFile(ActionEvent actionEvent) {
 
-        NoteRecord nr = new NoteRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + caseID + "",
+        FileRecord nr = new FileRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + caseID + "",
                 "\"" + "Case file" + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
         sql.insertFile(nr);
         loadFiles(caseID);
@@ -700,6 +728,102 @@ public class MainController {
     public String currentTime() {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         return timeStamp;
+    }
+
+    public boolean casesUpdate() {
+        ObservableList<CaseRecord> temp2 = sql.loadCases();
+        boolean requireUpdate = false;
+        int i = 0;
+        for (CaseRecord caseRecord : temp2) {
+
+            if (i <= (casesData.size() - 1)) {
+
+                if (!caseRecord.getCaseID().equals(casesData.get(i).getCaseID())) {
+                    requireUpdate = true;
+                }
+                if (!caseRecord.getDate().equals(casesData.get(i).getDate())) {
+                    requireUpdate = true;
+                }
+                if (!caseRecord.getName().equals(casesData.get(i).getName())) {
+                    requireUpdate = true;
+                }
+                if (!caseRecord.getStatus().equals(casesData.get(i).getStatus())) {
+                    requireUpdate = true;
+                }
+                if (!caseRecord.getDetails().equals(casesData.get(i++).getDetails())) {
+                    requireUpdate = true;
+                }
+            }
+        }
+        return requireUpdate;
+    }
+
+    public boolean filesUpdate() {
+        ObservableList<FileRecord> temp2 = sql.loadFiles(caseID);
+        boolean requireUpdate = false;
+        int i = 0;
+        for (FileRecord fileRecord : temp2) {
+
+            if (i <= (filesData.size() - 1)) {
+
+                if (!fileRecord.getCaseID().equals(filesData.get(i).getCaseID())) {
+                    requireUpdate = true;
+                }
+                if (!fileRecord.getDate().equals(filesData.get(i).getDate())) {
+                    requireUpdate = true;
+                }
+                if (!fileRecord.getFileID().equals(filesData.get(i).getFileID())) {
+                    requireUpdate = true;
+                }
+                if (!fileRecord.getName().equals(filesData.get(i).getName())) {
+                    requireUpdate = true;
+                }
+                if (!fileRecord.getData().equals(filesData.get(i).getData())) {
+                    requireUpdate = true;
+                }
+                if (!fileRecord.getUserID().equals(filesData.get(i++).getUserID())) {
+                    requireUpdate = true;
+                }
+            }
+        }
+        return requireUpdate;
+    }
+
+    public boolean callsUpdate() {
+        ObservableList<CallRecord> temp2 = sql.loadCalls(caseID);
+        boolean requireUpdate = false;
+        int i = 0;
+        for (CallRecord caseRecord : temp2) {
+
+            if (i <= (callsData.size() - 1)) {
+
+                if (!caseRecord.getCallID().equals(callsData.get(i).getCallID())) {
+                    requireUpdate = true;
+                }
+                if (!caseRecord.getCaseID().equals(callsData.get(i).getCaseID())) {
+                    requireUpdate = true;
+                }
+                if (!caseRecord.getCallerPhoneNumber().equals(callsData.get(i).getCallerPhoneNumber())) {
+                    requireUpdate = true;
+                }
+                if (!caseRecord.getReceiverPhoneNumber().equals(callsData.get(i).getReceiverPhoneNumber())) {
+                    requireUpdate = true;
+                }
+                if (!caseRecord.getDate().equals(callsData.get(i).getDate())) {
+                    requireUpdate = true;
+                }
+                if (!caseRecord.getTime().equals(callsData.get(i).getTime())) {
+                    requireUpdate = true;
+                }
+                if (!caseRecord.getTypeOfCall().equals(callsData.get(i).getTypeOfCall())) {
+                    requireUpdate = true;
+                }
+                if (!caseRecord.getDuration().equals(callsData.get(i++).getDuration())) {
+                    requireUpdate = true;
+                }
+            }
+        }
+        return requireUpdate;
     }
 
 }

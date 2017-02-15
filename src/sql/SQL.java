@@ -7,7 +7,7 @@ package sql;
 import modules.table.CallRecord;
 import modules.table.CaseRecord;
 import modules.table.DBConnection;
-import modules.table.NoteRecord;
+import modules.table.FileRecord;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -134,12 +134,12 @@ public class SQL {
         return userId;
     }
 
-    public void insertFile(NoteRecord nr) {
+    public void insertFile(FileRecord nr) {
         Connection connection = dbConnection.connect();
 
         try {
             String query = "INSERT INTO notes(accountID, caseID, title, date, data) VALUES(" +
-                    nr.getUserID() + "," + nr.getCaseID() + "," + nr.getNoteName() + "," +
+                    nr.getUserID() + "," + nr.getCaseID() + "," + nr.getName() + "," +
                     nr.getDate() + "," + nr.getData() + ");";
             System.out.println(query);
             connection.createStatement().executeUpdate(query);
@@ -155,9 +155,9 @@ public class SQL {
      * @param i
      * @return
      */
-    public ObservableList<NoteRecord> loadSQLNotes(int i) {
+    public ObservableList<FileRecord> loadFiles(int i) {
         Connection connection = dbConnection.connect();
-        ObservableList<NoteRecord> data = FXCollections.observableArrayList();
+        ObservableList<FileRecord> data = FXCollections.observableArrayList();
 
         try {
             //execute query and store result in a result SET:
@@ -167,7 +167,7 @@ public class SQL {
                 if (Integer.parseInt(caseRS.getString(1)) > maxIDNote) {
                     maxIDNote = Integer.parseInt(caseRS.getString(1));
                 }
-                data.add(new NoteRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4), caseRS.getString(5), caseRS.getString(6)));
+                data.add(new FileRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4), caseRS.getString(5), caseRS.getString(6)));
             }
             maxIDNote = 1;
         } catch (Exception ex) {
@@ -331,7 +331,4 @@ public class SQL {
         }
     }
 
-    public int getMaxCaseId() {
-        return ++maxIDCase;
-    }
 }
