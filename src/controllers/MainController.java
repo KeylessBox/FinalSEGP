@@ -3,7 +3,9 @@ package controllers;
 import com.Ostermiller.util.CSVParser;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
+import javafx.fxml.Initializable;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.util.Duration;
@@ -22,17 +24,19 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 /**
  * Created by AndreiM on 2/1/2017.
  * Controller for main window
  */
 
-public class MainController {
+public class MainController implements Initializable {
     /**
      * sql - sql functionality
      * columnFactory - building the columns of the table
@@ -94,6 +98,8 @@ public class MainController {
 
     @FXML
     protected BorderPane root;
+    private MyTask myTask;
+    private Thread myTaskThread;
 
     /**
      * Import functionality. It supports only certain csv files (that have the same number and order of columns as the database)
@@ -132,82 +138,6 @@ public class MainController {
         } finally {
             new File("src/res/tmp.txt").delete();
         }
-    }
-
-    /**
-     * Initialises the main app
-     */
-    @FXML
-    public void initialize() {
-        notesCT.setAlignment(Pos.TOP_LEFT);
-        notesCT.setSpacing(50);
-        notesCT.setBackground(Background.EMPTY);
-        scrollPane.setPannable(true);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane2.setPannable(true);
-        scrollPane2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        //TODO Is this the drag/drop functionality? Let's find another place for it
-        root.setOnDragOver(event1 -> {
-            Dragboard db = event1.getDragboard();
-            if (db.hasFiles()) {
-                event1.acceptTransferModes(TransferMode.COPY);
-            } else {
-                event1.consume();
-            }
-        });
-
-        // Dropping over surface
-
-        root.setOnDragDropped(event2 -> {
-            Dragboard db = event2.getDragboard();
-            boolean success = false;
-            if (db.hasFiles()) {
-                success = true;
-                String filePath = null;
-                for (File file : db.getFiles()) {
-                    filePath = file.getAbsolutePath();
-                    System.out.println(filePath);
-                    if (!filePath.equals("")) {
-                        filePath = filePath.replace("\\", "\\\\");
-                        importTest(filePath);
-                    }
-                }
-            }
-            event2.setDropCompleted(success);
-            event2.consume();
-            loadTable(caseID);
-            loadFiles(caseID);
-        });
-        setUserLabel();
-        loadCases();
-
-        Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (!editing) {
-                    System.out.println("UPDATE");
-                    if (casesUpdate()) {
-                        System.out.println("EXTERNAL CHANGE IN CASES");
-                        loadCases();
-                        for (CaseRecord temp : casesData) {
-                            if (Integer.valueOf(temp.getCaseID()) == caseID) {
-                                caseTitle.setText(temp.getName());
-                            }
-                        }
-                    }
-                    if (filesUpdate()) {
-                        System.out.println("EXTERNAL CHANGE IN FILES");
-                        loadFiles(caseID);
-                    }
-                    if (callsUpdate()) {
-                        System.out.println("EXTERNAL CHANGE IN TABLE");
-                        loadTable(caseID);
-                    }
-                }
-            }
-        }));
-        Updater.setCycleCount(Timeline.INDEFINITE);
-        Updater.play();
     }
 
     /**
@@ -779,7 +709,7 @@ public class MainController {
                 }
             }
             return requireUpdate;
-        }catch (Exception e){
+        } catch (Exception e) {
             return requireUpdate;
         }
     }
@@ -821,7 +751,7 @@ public class MainController {
             }
             return requireUpdate;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return requireUpdate;
         }
     }
@@ -870,5 +800,92 @@ public class MainController {
         } catch (Exception e) {
             return requireUpdate;
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        notesCT.setAlignment(Pos.TOP_LEFT);
+        notesCT.setSpacing(50);
+        notesCT.setBackground(Background.EMPTY);
+        scrollPane.setPannable(true);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane2.setPannable(true);
+        scrollPane2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        //TODO Is this the drag/drop functionality? Let's find another place for it
+        root.setOnDragOver(event1 -> {
+            Dragboard db = event1.getDragboard();
+            if (db.hasFiles()) {
+                event1.acceptTransferModes(TransferMode.COPY);
+            } else {
+                event1.consume();
+            }
+        });
+
+        // Dropping over surface
+
+        root.setOnDragDropped(event2 -> {
+            Dragboard db = event2.getDragboard();
+            boolean success = false;
+            if (db.hasFiles()) {
+                success = true;
+                String filePath = null;
+                for (File file : db.getFiles()) {
+                    filePath = file.getAbsolutePath();
+                    System.out.println(filePath);
+                    if (!filePath.equals("")) {
+                        filePath = filePath.replace("\\", "\\\\");
+                        importTest(filePath);
+                    }
+                }
+            }
+            event2.setDropCompleted(success);
+            event2.consume();
+            loadTable(caseID);
+            loadFiles(caseID);
+        });
+        setUserLabel();
+        loadCases();
+
+
+        myTask = new MyTask();
+        myTaskThread = new Thread(myTask);
+        myTaskThread.start();
+    }
+
+    class MyTask extends Task<Void> {
+
+        @Override
+        protected Void call() throws Exception {
+            Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    if (!editing) {
+                        System.out.println("UPDATE");
+                        if (casesUpdate()) {
+                            System.out.println("EXTERNAL CHANGE IN CASES");
+                            loadCases();
+                            for (CaseRecord temp : casesData) {
+                                if (Integer.valueOf(temp.getCaseID()) == caseID) {
+                                    caseTitle.setText(temp.getName());
+                                }
+                            }
+                        }
+                        if (filesUpdate()) {
+                            System.out.println("EXTERNAL CHANGE IN FILES");
+                            loadFiles(caseID);
+                        }
+                        if (callsUpdate()) {
+                            System.out.println("EXTERNAL CHANGE IN TABLE");
+                            loadTable(caseID);
+                        }
+                    }
+                }
+            }));
+            Updater.setCycleCount(Timeline.INDEFINITE);
+            Updater.play();
+            return null;
+        }
+
     }
 }
