@@ -24,7 +24,7 @@ public class Main extends Application {
      * Loads the fxml file from the brackets into the root parent. This parent needs to be assigned to a scene ( = part of the window without the top bar) with some predefined limits
      * The stage takes the scene and shows it to the user (stage is the window itself).
      * So, it loads all the front and back-end of the app(at this specific point in app's session life), and prepares it in root. After everything is ready to go, it shows itself to the user.
-     * Imagine, like a woman before her date.
+     * Imagine, like a woman before her date. -> excuse me, what?
      * @param primaryStage
      * @throws Exception
      */
