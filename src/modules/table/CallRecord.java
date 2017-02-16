@@ -14,8 +14,8 @@ public class CallRecord {
      */
         private final StringProperty callID;
         private final StringProperty caseID;
-        private final StringProperty callerPhoneNumber;
-        private final StringProperty receiverPhoneNumber;
+        private final StringProperty origin;
+        private final StringProperty destination;
         private final StringProperty date;
         private final StringProperty time;
         private final StringProperty typeOfCall;
@@ -24,56 +24,65 @@ public class CallRecord {
     public CallRecord () {
         this.callID = null;
         this.caseID = null;
-        this.callerPhoneNumber = null;
-        this.receiverPhoneNumber = null;
+        this.origin = null;
+        this.destination = null;
         this.date = null;
         this.time = null;
         this.typeOfCall = null;
         this.duration = null;
     }
 
-    public CallRecord(String callID, String caseID, String callerPhoneNumber, String receiverPhoneNumber, String date, String time,
-                       String typeOfCall, String duration) {
+    public CallRecord(String callID, String caseID, String origin, String destination, String date, String time,
+                      String typeOfCall, String duration) {
         this.callID = new SimpleStringProperty(callID);
         this.caseID = new SimpleStringProperty(caseID);
-        this.callerPhoneNumber = new SimpleStringProperty(callerPhoneNumber);
-        this.receiverPhoneNumber = new SimpleStringProperty(receiverPhoneNumber);
+        this.origin = new SimpleStringProperty(origin);
+        this.destination = new SimpleStringProperty(destination);
         this.date = new SimpleStringProperty(date);
         this.time = new SimpleStringProperty(time);
         this.typeOfCall = new SimpleStringProperty(typeOfCall);
         this.duration = new SimpleStringProperty(duration);
     }
 
-    public CallRecord(String caseID, String callerPhoneNumber, String receiverPhoneNumber, String date, String time,
+    public CallRecord(String caseID, String origin, String destination, String date, String time,
                       String typeOfCall, String duration) {
         callID = null;
         this.caseID = new SimpleStringProperty(caseID);
-        this.callerPhoneNumber = new SimpleStringProperty(callerPhoneNumber);
-        this.receiverPhoneNumber = new SimpleStringProperty(receiverPhoneNumber);
+        this.origin = new SimpleStringProperty(origin);
+        this.destination = new SimpleStringProperty(destination);
         this.date = new SimpleStringProperty(date);
         this.time = new SimpleStringProperty(time);
         this.typeOfCall = new SimpleStringProperty(typeOfCall);
         this.duration = new SimpleStringProperty(duration);
     }
-
+    private String[][] aliases = new String[][] {
+            {"CPN","Caller\\s*Phone\\s*Number"},
+            {"ReceiverPhoneNumber","RPN"},
+            {"date" },
+            {"time"},
+            {"typeOfCall"},
+            {"Duration", "estimated time", "ETA"}
+    };
     public int alias(String header) {
-        String[][] aliases = new String[][] {
-                {"CallerPhoneNumber","CPN"},
-                {"ReceiverPhoneNumber","RPN"},
-                {"date", "Date","DATE" },
-                {"time", "TIME", "Time"},
-                {"typeOfCall", "TYPEOFCALL", "TypeOfCall"},
-                {"Duration", "duration", "estimated time"}
-        };
 
         for (int i=0; i<aliases.length; i++) {
             for (int j=0; j<aliases[i].length; j++ ) {
-                if (header.equals(aliases[i][j])) {
+                if (header.equalsIgnoreCase(aliases[i][j])) {
                     return i;
                 }
             }
         }
         return -1;
+    }
+    public String[][] getAliases() {
+        return aliases;
+    }
+
+    public static void main(String[] args) {
+        CallRecord cr = new CallRecord();
+        System.out.println(cr.getAliases()[0][1]);
+        System.out.println(cr.alias("cALLer PhoneNumber"));
+        System.out.println(cr.alias("destination"));
     }
 
         //Getters:
@@ -86,12 +95,12 @@ public class CallRecord {
             return caseID.get();
         }
 
-        public String getCallerPhoneNumber() {
-            return callerPhoneNumber.get();
+        public String getOrigin() {
+            return origin.get();
         }
 
-        public String getReceiverPhoneNumber() {
-            return receiverPhoneNumber.get();
+        public String getDestination() {
+            return destination.get();
         }
 
         public String getDate() {
@@ -120,12 +129,12 @@ public class CallRecord {
             caseID.set(CaseID);
         }
 
-        public void setCallerPhoneNumber(String CallerPhoneNumber) {
-            this.callerPhoneNumber.set(CallerPhoneNumber);
+        public void setOrigin(String origin) {
+            this.origin.set(origin);
         }
 
-        public void setReceiverPhoneNumber(String ReceiverPhoneNumber) {
-            this.receiverPhoneNumber.set(ReceiverPhoneNumber);
+        public void setDestination(String destination) {
+            this.destination.set(destination);
         }
 
         public void setDate(String date) {
@@ -146,7 +155,7 @@ public class CallRecord {
 
         //Properties:
 
-        public StringProperty studentIDProperty() {
+        public StringProperty callIDProperty() {
             return callID;
         }
 
@@ -154,12 +163,12 @@ public class CallRecord {
             return caseID;
         }
 
-        public StringProperty callerPhoneNumberProperty() {
-            return callerPhoneNumber;
+        public StringProperty originProperty() {
+            return origin;
         }
 
-        public StringProperty receiverPhoneNumberProperty() {
-            return receiverPhoneNumber;
+        public StringProperty destinationProperty() {
+            return destination;
         }
 
         public StringProperty dateProperty() {

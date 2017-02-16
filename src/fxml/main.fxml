@@ -87,8 +87,8 @@
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                             <columns>
-                                <TableColumn fx:id="callerPhoneNumber" prefWidth="50" text="Caller Phone Number" />
-                                <TableColumn fx:id="receiverPhoneNumber" prefWidth="50" text="Receiver Phone Number" />
+                                <TableColumn fx:id="origin" prefWidth="50" text="Caller Phone Number" />
+                                <TableColumn fx:id="destination" prefWidth="50" text="Receiver Phone Number" />
                                 <TableColumn fx:id="date" prefWidth="50" text="Date" />
                                 <TableColumn fx:id="time" prefWidth="50" text="Time" />
                                 <TableColumn fx:id="typeOfCall" prefWidth="50" text="Type of Call" />

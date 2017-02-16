@@ -271,8 +271,8 @@ public class SQL {
         Connection connection = dbConnection.connect();
 
         try {
-            connection.createStatement().executeUpdate("INSERT INTO calls(caseId, callerPhoneNumber, receiverPhoneNumber, date, time, typeOfCall, duration)\n" +
-                    "VALUES(" + cr.getCaseID() + ",\"" + cr.getCallerPhoneNumber() + "\",\"" + cr.getReceiverPhoneNumber() + "\",\"" +
+            connection.createStatement().executeUpdate("INSERT INTO calls(caseId, origin, destination, date, time, typeOfCall, duration)\n" +
+                    "VALUES(" + cr.getCaseID() + ",\"" + cr.getOrigin() + "\",\"" + cr.getDestination() + "\",\"" +
                     cr.getDate() + "\",\"" + cr.getTime() + "\",\"" + cr.getTypeOfCall() + "\",\"" + cr.getDuration() + "\");");
             connection.close();
         } catch (SQLException ex) {

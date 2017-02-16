@@ -15,7 +15,7 @@ public class CallsTable {
 
     private static int minCellWidth = 100;
 
-    public static void createCallerPNColumn(TableColumn callerPhoneNumber) {
+    public static void createOriginColumn(TableColumn origin) {
 
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
@@ -24,21 +24,21 @@ public class CallsTable {
             }
         };
 
-        callerPhoneNumber.setMinWidth(minCellWidth + 100);
-        callerPhoneNumber.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("callerPhoneNumber"));
-        callerPhoneNumber.setCellFactory(editableFactory);
-        callerPhoneNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        origin.setMinWidth(minCellWidth + 100);
+        origin.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("origin"));
+        origin.setCellFactory(editableFactory);
+        origin.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setCallerPhoneNumber(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "CallerPhoneNumber",t.getNewValue());
+                t.getRowValue().setOrigin(t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "origin",t.getNewValue());
 
             }
         });
     }
 
-    public static void createReceiverPNColumn(TableColumn receiverPhoneNumber) {
+    public static void createDestinationColumn(TableColumn destination) {
 
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
@@ -48,14 +48,14 @@ public class CallsTable {
             }
         };
 
-        receiverPhoneNumber.setMinWidth(minCellWidth + 100);
-        receiverPhoneNumber.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("receiverPhoneNumber"));
-        receiverPhoneNumber.setCellFactory(editableFactory);
-        receiverPhoneNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        destination.setMinWidth(minCellWidth + 100);
+        destination.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destination"));
+        destination.setCellFactory(editableFactory);
+        destination.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setReceiverPhoneNumber(t.getNewValue());
+                t.getRowValue().setDestination(t.getNewValue());
                 sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "ReceiverPhoneNumber",t.getNewValue());
             }
         });

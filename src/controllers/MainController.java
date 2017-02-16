@@ -58,9 +58,9 @@ public class MainController implements Initializable {
     @FXML
     private ScrollPane scrollPane2;
     @FXML
-    protected TableColumn callerPhoneNumber;
+    protected TableColumn origin;
     @FXML
-    protected TableColumn receiverPhoneNumber;
+    protected TableColumn destination;
     @FXML
     protected TableColumn date;
     @FXML
@@ -154,8 +154,8 @@ public class MainController implements Initializable {
         /**
          * builds the columns, without data
          */
-        columnFactory.createCallerPNColumn(callerPhoneNumber);
-        columnFactory.createReceiverPNColumn(receiverPhoneNumber);
+        columnFactory.createOriginColumn(origin);
+        columnFactory.createDestinationColumn(destination);
         columnFactory.createDateColumn(date);
         columnFactory.createTimeColumn(time);
         columnFactory.createTypeOfCallColumn(typeOfCall);
@@ -775,10 +775,10 @@ public class MainController implements Initializable {
                     if (!caseRecord.getCaseID().equals(callsData.get(i).getCaseID())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getCallerPhoneNumber().equals(callsData.get(i).getCallerPhoneNumber())) {
+                    if (!caseRecord.getOrigin().equals(callsData.get(i).getOrigin())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getReceiverPhoneNumber().equals(callsData.get(i).getReceiverPhoneNumber())) {
+                    if (!caseRecord.getDestination().equals(callsData.get(i).getDestination())) {
                         requireUpdate = true;
                     }
                     if (!caseRecord.getDate().equals(callsData.get(i).getDate())) {
