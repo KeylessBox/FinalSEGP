@@ -641,11 +641,17 @@ public class MainController implements Initializable {
             /**
              * Takes only the headers of the file and puts them into tableHeader
              */
-
+            int isOnDatabase;
             //TODO add comments on how it's done. Works only for a specific number of columns of data. Add more aliases. Test with different types of faulty csvs
             while ((t = shredder.nextValue()) != null && shredder.lastLineNumber() == 1) {
                 System.out.println(t);
-                tableHeader[j] = cr.alias(t);
+                if ((isOnDatabase = cr.alias(t)) != -1) {
+                    tableHeader[j] = cr.alias(t);
+                }
+                else {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+
+                }
                 j++;
             }
             ObservableList<CallRecord> data = FXCollections.observableArrayList();

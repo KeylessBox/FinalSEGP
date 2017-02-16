@@ -56,18 +56,18 @@ public class CallRecord {
         this.duration = new SimpleStringProperty(duration);
     }
     private String[][] aliases = new String[][] {
-            {"CPN","Caller\\s*Phone\\s*Number"},
-            {"ReceiverPhoneNumber","RPN"},
-            {"date" },
-            {"time"},
-            {"typeOfCall"},
-            {"Duration", "estimated time", "ETA"}
+            {"[Cc][Pp][Nn]","[Oo][Rr][Ii][Gg][Ii][Nn]", "[Cc][Aa][Ll][Ll][Ee][Rr]\\s*[Pp][Hh][Oo][Nn][Ee]\\s*[Nn][Uu][Mm][Bb][Ee][Rr]"},
+            {"[Rr][Ee][Cc][Ee][Ii][Vv][Ee][Rr]\\s*[Pp][Hh][Oo][Nn][Ee]\\s*[Nn][Uu][Mm][Bb][Ee][Rr]","[Rr][Pp][Nn]", "[Dd][Ee][Ss][Tt][Ii][Nn][Aa][Tt][Ii][Oo][Nn]"},
+            {"[Dd][Aa][Tt][Ee]"},
+            {"[Tt][Ii][Mm][Ee]"},
+            {"[Tt][Yy][Pp][Ee]\\s*[Oo][Ff]\\s*[Cc][Aa][Ll][Ll]"},
+            {"[Dd][Uu][Rr][Aa][Tt][Ii][Oo][Nn]", "[Ee][Ss][Tt][Ii][Mm][Aa][Tt][Ee][Dd]\\s*[Tt][Ii][Mm][Ee]", "[Ee][Tt][Aa]"}
     };
     public int alias(String header) {
 
         for (int i=0; i<aliases.length; i++) {
             for (int j=0; j<aliases[i].length; j++ ) {
-                if (header.equalsIgnoreCase(aliases[i][j])) {
+                if (header.matches(aliases[i][j])) {
                     return i;
                 }
             }

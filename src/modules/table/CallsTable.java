@@ -56,7 +56,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setDestination(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "ReceiverPhoneNumber",t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "destination",t.getNewValue());
             }
         });
     }
