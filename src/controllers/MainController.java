@@ -99,7 +99,6 @@ public class MainController implements Initializable {
     @FXML
     protected BorderPane root;
     private MyTask myTask;
-    private Thread myTaskThread;
 
     /**
      * Import functionality. It supports only certain csv files (that have the same number and order of columns as the database)
@@ -846,11 +845,8 @@ public class MainController implements Initializable {
         });
         setUserLabel();
         loadCases();
-
-
         myTask = new MyTask();
-        myTaskThread = new Thread(myTask);
-        myTaskThread.start();
+        new Thread(myTask).start();
     }
 
     class MyTask extends Task<Void> {
