@@ -28,8 +28,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -621,55 +620,134 @@ public class MainController implements Initializable {
 
         try {
             /**
-             * Takes the csv file and parsers it
+             * Takes the csv file and deconstructs it
              */
             is = new FileInputStream(path);
             CSVParser shredder = new CSVParser(is);
             shredder.setCommentStart("#;!");
             shredder.setEscapes("nrtf", "\n\r\t\f");
             /**
-             * t is going to hold every single value from file, one at a time
+             * fileString is going to hold every single value from file, one at a time
              */
-            String t;
+            String fileString;
             /**
-             * tableHeader contains table columns that are in the file
+             * tableHeader contains table columns that are in the csv file
              */
             int[] tableHeader = new int[10];
-            int j = 0;
+            int tableHeaderIndex = 0;
             CallRecord cr = new CallRecord();
 
             /**
-             * Takes only the headers of the file and puts them into tableHeader
+             * Takes only the headers of the file and puts them into tableHeader. If there is an unidentified column, an alert pops out and asks the user about
+             * its importance, and have him, maybe, select an existing column to put the information in. (Mismatched column names)
              */
             int isOnDatabase;
-            //TODO add comments on how it's done. Works only for a specific number of columns of data. Add more aliases. Test with different types of faulty csvs
-            while ((t = shredder.nextValue()) != null && shredder.lastLineNumber() == 1) {
-                System.out.println(t);
-                if ((isOnDatabase = cr.alias(t)) != -1) {
-                    tableHeader[j] = cr.alias(t);
-                }
-                else {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            //TODO Add more aliases. Test with different types of faulty csvs
+            while ((fileString = shredder.nextValue()) != null && shredder.lastLineNumber() == 1) {
+                /**
+                 * If there is a match with a column in the database, input the new index
+                 */
+                if ((isOnDatabase = cr.alias(fileString)) != -1) {
+                    tableHeader[tableHeaderIndex] = isOnDatabase;
 
                 }
-                j++;
+                /**
+                 * else Alert pops out.
+                 */
+                else {
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Unidentified Column");
+                    alert.setHeaderText("Column \"" + fileString + "\" is an unidentified column!");
+                    alert.setContentText("Do you need this column?");
+
+                    ButtonType buttonTypeYes = new ButtonType("Yes");
+                    ButtonType buttonTypeCancel = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeCancel);
+
+                    /**
+                     * If user selects any button, a new pop-up asks him the correct column that should be used (if any)
+                     */
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == buttonTypeYes){
+                        List<String> choices = new ArrayList<>();
+                        choices.addAll(getColumnNames());
+
+                        ChoiceDialog<String> dialog = new ChoiceDialog<>(origin.getText(), choices);
+                        dialog.setTitle("Choose Column");
+                        dialog.setHeaderText("Choose fr0m the following columns.");
+                        dialog.setHeaderText("If the column is not there, contact University of Bradford");
+                        dialog.setContentText("Choose the appropriate column:");
+                        /**
+                         * Choose and select.
+                         */
+                        Optional<String> result2 = dialog.showAndWait();
+                        result2.ifPresent(column -> {
+                            dialog.setSelectedItem(column);
+                        });
+                        if (cr.alias(dialog.getSelectedItem()) != -1) {
+                            tableHeader[tableHeaderIndex] = cr.alias(dialog.getSelectedItem());
+                        }
+                        else {
+                            tableHeader[tableHeaderIndex] = -1;
+                        }
+                    }
+                    else {
+                        tableHeader[tableHeaderIndex] = -1;
+                    }
+                }
+                tableHeaderIndex++;
             }
+            /**
+             * At this moment the columns are set in place.
+             * How? Check if a file column resembles a database column(using regex). The ones that are unrecognized are sent to the user for future actions
+             * To implement something that spares the user these questions is a bit more difficult.
+             * During this checking, all file columns are put in the correct order (database order, or the order on which this method is made)
+             * The discarded columns, get -1 value.
+             * Next step is getting the data from the file
+             * length = the number of file columns
+             * dataElement = data from file, put in the correct spot
+             * The principle: Iterate thorough the rows of the file, take only the data under the approved columns, and put it in the database
+             */
             ObservableList<CallRecord> data = FXCollections.observableArrayList();
-            int length = j + 1;
-            j = 0;
-            System.out.println("" + shredder.lastLineNumber() + " " + t);
-            String[] s = new String[length];
-            s[tableHeader[j]] = t;
-            j++;
-            while ((t = shredder.nextValue()) != null) {
-                System.out.println("" + shredder.lastLineNumber() + " " + t);
-                s[tableHeader[j]] = t;
-                j++;
-                if (j == length - 1) {
-                    j = 0;
-                    data.add(new CallRecord(String.valueOf(caseID), s[0], s[1], s[2], s[3], s[4], s[5]));
+            int length = tableHeaderIndex + 1;
+            tableHeaderIndex = 0;
+/*            System.out.println("" + shredder.lastLineNumber() + " " + fileString);*/
+            String[] dataElement = new String[length];
+            /**
+             * The 1st dataElement has to be taken individually. (See manual when it's available)
+             */
+            while (tableHeader[tableHeaderIndex] == -1) {
+                tableHeaderIndex++;
+                fileString = shredder.nextValue();
+            }
+            dataElement[tableHeader[tableHeaderIndex]] = fileString;
+            tableHeaderIndex++;
+            /**
+             * As long as there is data left in the file
+             */
+            while ((fileString = shredder.nextValue()) != null) {
+                /**
+                 * If the current column is approved then the data goes into the correct place
+                 */
+                if (tableHeader[tableHeaderIndex] != -1) {
+                    /*System.out.println("" + shredder.lastLineNumber() + " " + fileString);*/
+                    dataElement[tableHeader[tableHeaderIndex]] = fileString;
+                }
+                /**
+                 * Go to the next column
+                 */
+                tableHeaderIndex++;
+                /**
+                 * If it was reached the end of the columns, start next row and put the previously filtered row into the data
+                 */
+                if (tableHeaderIndex == length - 1) {
+                    tableHeaderIndex = 0;
+                    data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1], dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
                 }
             }
+            /**
+             * After getting all data from the file, send it to database
+             */
             sql.insertCalls(data);
         } catch (Exception e) {
             e.printStackTrace();
@@ -889,5 +967,21 @@ public class MainController implements Initializable {
             return null;
         }
 
+    }
+
+    /**
+     * Need for getting the column names
+     * @return
+     */
+    public List<String> getColumnNames() {
+        List nameOfColumns = new ArrayList(6);
+        nameOfColumns.add(origin.getText());
+        nameOfColumns.add(destination.getText());
+        nameOfColumns.add(date.getText());
+        nameOfColumns.add(time.getText());
+        nameOfColumns.add(typeOfCall.getText());
+        nameOfColumns.add(duration.getText());
+
+        return nameOfColumns;
     }
 }

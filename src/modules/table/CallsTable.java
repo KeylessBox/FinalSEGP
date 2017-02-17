@@ -7,6 +7,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import sql.SQL;
 
+import java.util.List;
+
 /**
  * Created by AndreiM on 2/3/2017.
  */
@@ -33,7 +35,6 @@ public class CallsTable {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setOrigin(t.getNewValue());
                 sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "origin",t.getNewValue());
-
             }
         });
     }
