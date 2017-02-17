@@ -88,7 +88,7 @@ public class CallRecord {
 
 
 
-    //Getters:
+    //Getter:
     /**
      * Get existing regex for comparing
      * @return
