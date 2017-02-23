@@ -2,6 +2,10 @@
   <library name="mysql-connector-java-5.1.40-bin">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/src/libs/mysql-connector-java-5.1.40-bin.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/libs/poi-3.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/libs/poi-ooxml-3.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/libs/poi-ooxml-schemas-3.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/libs/xmlbeans-2.6.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

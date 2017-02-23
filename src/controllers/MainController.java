@@ -11,6 +11,9 @@ import javafx.scene.input.TransferMode;
 import javafx.util.Duration;
 import modules.manageAccounts.User;
 import modules.table.*;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
 import sql.SQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,6 +25,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Iterator;
+
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
 import java.net.URL;
@@ -116,7 +126,7 @@ public class MainController implements Initializable {
         if (file != null) {
             String filePath = file.getPath();
             filePath = filePath.replace("\\", "\\\\");
-            importTest(filePath);
+            importCSV(filePath);
         }
     }
 
@@ -614,15 +624,38 @@ public class MainController implements Initializable {
         loadFiles(caseID);
     }
 
-    public void importTest(String path) {
+    private Workbook getWorkbook(FileInputStream inputStream, String filePath)
+            throws IOException {
+        Workbook workbook = null;
+
+        if (filePath.endsWith("xlsx")) {
+            workbook = new XSSFWorkbook(inputStream);
+        } else if (filePath.endsWith("xls")) {
+            workbook = new HSSFWorkbook(inputStream);
+        } else {
+            throw new IllegalArgumentException("The specified file is not Excel file");
+        }
+
+        return workbook;
+    }
+
+    public void importFile(String filePath) {
+            if (filePath.endsWith("csv")) {
+                importCSV(filePath);
+            }
+            else {
+                importExcel(filePath);
+            }
+    }
+
+    public void importCSV(String filePath) {
 
         InputStream is;
-
         try {
             /**
              * Takes the csv file and deconstructs it
              */
-            is = new FileInputStream(path);
+            is = new FileInputStream(filePath);
             CSVParser shredder = new CSVParser(is);
             shredder.setCommentStart("#;!");
             shredder.setEscapes("nrtf", "\n\r\t\f");
@@ -641,6 +674,7 @@ public class MainController implements Initializable {
              * Takes only the headers of the file and puts them into tableHeader. If there is an unidentified column, an alert pops out and asks the user about
              * its importance, and have him, maybe, select an existing column to put the information in. (Mismatched column names)
              */
+
             int isOnDatabase;
             //TODO Add more aliases. Test with different types of faulty csvs
             while ((fileString = shredder.nextValue()) != null && shredder.lastLineNumber() == 1) {
@@ -649,51 +683,12 @@ public class MainController implements Initializable {
                  */
                 if ((isOnDatabase = cr.alias(fileString)) != -1) {
                     tableHeader[tableHeaderIndex] = isOnDatabase;
-
                 }
                 /**
                  * else Alert pops out.
                  */
                 else {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Unidentified Column");
-                    alert.setHeaderText("Column \"" + fileString + "\" is an unidentified column!");
-                    alert.setContentText("Do you need this column?");
-
-                    ButtonType buttonTypeYes = new ButtonType("Yes");
-                    ButtonType buttonTypeCancel = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-                    alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeCancel);
-
-                    /**
-                     * If user selects any button, a new pop-up asks him the correct column that should be used (if any)
-                     */
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == buttonTypeYes){
-                        List<String> choices = new ArrayList<>();
-                        choices.addAll(getColumnNames());
-
-                        ChoiceDialog<String> dialog = new ChoiceDialog<>(origin.getText(), choices);
-                        dialog.setTitle("Choose Column");
-                        dialog.setHeaderText("Choose fr0m the following columns.");
-                        dialog.setHeaderText("If the column is not there, contact University of Bradford");
-                        dialog.setContentText("Choose the appropriate column:");
-                        /**
-                         * Choose and select.
-                         */
-                        Optional<String> result2 = dialog.showAndWait();
-                        result2.ifPresent(column -> {
-                            dialog.setSelectedItem(column);
-                        });
-                        if (cr.alias(dialog.getSelectedItem()) != -1) {
-                            tableHeader[tableHeaderIndex] = cr.alias(dialog.getSelectedItem());
-                        }
-                        else {
-                            tableHeader[tableHeaderIndex] = -1;
-                        }
-                    }
-                    else {
-                        tableHeader[tableHeaderIndex] = -1;
-                    }
+                    tableHeader[tableHeaderIndex] = alert(fileString);
                 }
                 tableHeaderIndex++;
             }
@@ -711,10 +706,9 @@ public class MainController implements Initializable {
             ObservableList<CallRecord> data = FXCollections.observableArrayList();
             int length = tableHeaderIndex + 1;
             tableHeaderIndex = 0;
-/*            System.out.println("" + shredder.lastLineNumber() + " " + fileString);*/
             String[] dataElement = new String[length];
             /**
-             * The 1st dataElement has to be taken individually. (See manual when it's available)
+             * The 1st dataElement has to be taken individually.
              */
             while (tableHeader[tableHeaderIndex] == -1) {
                 tableHeaderIndex++;
@@ -730,7 +724,6 @@ public class MainController implements Initializable {
                  * If the current column is approved then the data goes into the correct place
                  */
                 if (tableHeader[tableHeaderIndex] != -1) {
-                    /*System.out.println("" + shredder.lastLineNumber() + " " + fileString);*/
                     dataElement[tableHeader[tableHeaderIndex]] = fileString;
                 }
                 /**
@@ -753,6 +746,114 @@ public class MainController implements Initializable {
             e.printStackTrace();
         }
     }
+    public void importExcel(String filePath) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(new File(filePath));
+            Workbook workbook = getWorkbook(fileInputStream, filePath);
+            Sheet datatypeSheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = datatypeSheet.iterator();
+
+            int isOnDatabase;
+            Cell currentCell;
+            int[] tableHeader = new int[10];
+            int tableHeaderIndex = 0;
+            CallRecord cr = new CallRecord();
+            if (iterator.hasNext()) {
+                Row currentRow = iterator.next();
+                Iterator<Cell> cellIterator = currentRow.cellIterator();
+                while (cellIterator.hasNext()) {
+                    currentCell = cellIterator.next();
+                    if ((isOnDatabase = cr.alias(String.valueOf(getCellValue(currentCell)))) != -1) {
+                        tableHeader[tableHeaderIndex] = isOnDatabase;
+                    }
+                    /**
+                     * else Alert pops out.
+                     */
+                    else {
+                        tableHeader[tableHeaderIndex] = alert(String.valueOf(getCellValue(currentCell)));
+                    }
+                    tableHeaderIndex++;
+                }
+            }
+            ObservableList<CallRecord> data = FXCollections.observableArrayList();
+            int length = tableHeaderIndex + 1;
+            tableHeaderIndex = 0;
+            String[] dataElement = new String[length];
+
+            while (iterator.hasNext()) {
+                Row currentRow = iterator.next();
+                Iterator<Cell> cellIterator = currentRow.cellIterator();
+                while (cellIterator.hasNext()) {
+                    currentCell = cellIterator.next();
+                    if (tableHeader[tableHeaderIndex] != -1) {
+                        dataElement[tableHeader[tableHeaderIndex]] = String.valueOf(getCellValue(currentCell));
+                    }
+                    tableHeaderIndex++;
+                }
+                tableHeaderIndex = 0;
+                data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1], dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
+            }
+            sql.insertCalls(data);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Object getCellValue(Cell cell) {
+        if (cell.getCellTypeEnum() == CellType.STRING) {
+            return cell.getStringCellValue();
+        } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
+            return cell.getNumericCellValue();
+        }
+
+        return null;
+    }
+
+    public int alert(String fileString) {
+        CallRecord cr = new CallRecord();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Unidentified Column");
+        alert.setHeaderText("Column \"" + fileString + "\" is an unidentified column!");
+        alert.setContentText("Do you need this column?");
+
+        ButtonType buttonTypeYes = new ButtonType("Yes");
+        ButtonType buttonTypeCancel = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeCancel);
+
+        /**
+         * If user selects any button, a new pop-up asks him the correct column that should be used (if any)
+         */
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeYes){
+            List<String> choices = new ArrayList<>();
+            choices.addAll(getColumnNames());
+
+            ChoiceDialog<String> dialog = new ChoiceDialog<>(origin.getText(), choices);
+            dialog.setTitle("Choose Column");
+            dialog.setHeaderText("Choose fr0m the following columns.");
+            dialog.setHeaderText("If the column is not there, contact University of Bradford");
+            dialog.setContentText("Choose the appropriate column:");
+            /**
+             * Choose and select.
+             */
+            Optional<String> result2 = dialog.showAndWait();
+            result2.ifPresent(column -> {
+                dialog.setSelectedItem(column);
+            });
+            if (cr.alias(dialog.getSelectedItem()) != -1) {
+                return cr.alias(dialog.getSelectedItem());
+            }
+            else {
+                return -1;
+            }
+        }
+        else {
+            return -1;
+        }
+    }
 
     public String currentTime() {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -765,11 +866,9 @@ public class MainController implements Initializable {
         int i = 0;
 
         try {
-
             if (temp2.size() != casesData.size()) {
                 return true;
             }
-
             for (CaseRecord caseRecord : temp2) {
 
                 if (i <= (casesData.size() - 1)) {
@@ -918,7 +1017,7 @@ public class MainController implements Initializable {
                     System.out.println(filePath);
                     if (!filePath.equals("")) {
                         filePath = filePath.replace("\\", "\\\\");
-                        importTest(filePath);
+                        importFile(filePath);
                     }
                 }
             }
