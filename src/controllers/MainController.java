@@ -46,20 +46,12 @@ import java.util.*;
  */
 
 public class MainController implements Initializable {
-    /**
-     * sql - sql functionality
-     * columnFactory - building the columns of the table
-     * searchData -
-     * callsData - the calls from the database
-     * casesData - the cases from the database
-     * filesData - the case files from the database
-     */
-    SQL sql = new SQL();
-    CallsTable columnFactory = new CallsTable();
+    SQL sql = new SQL();    //  sql functionality
+    CallsTable columnFactory = new CallsTable();    // building the columns of the table
     private ObservableList<CallRecord> searchData;
-    private ObservableList<CallRecord> callsData;
-    private ObservableList<CaseRecord> casesData;
-    private ObservableList<FileRecord> filesData;
+    private ObservableList<CallRecord> callsData;   //the calls from the database
+    private ObservableList<CaseRecord> casesData;   // the cases from the database
+    private ObservableList<FileRecord> filesData;   // the case files from the database
     private int caseID = 1;
     private int id = 1;
     private boolean editing = false;
@@ -110,23 +102,17 @@ public class MainController implements Initializable {
     private MyTask myTask;
 
     /**
-     * Import functionality. It supports only certain csv files (that have the same number and order of columns as the database)
+     * Import functionality.
      */
     @FXML
-    protected void importCSV() {
-        /**
-         * New window, where you choose what file to import
-         */
-        FileChooser fileChooser = new FileChooser();
+    protected void importFile() {
+        FileChooser fileChooser = new FileChooser();    // New window, where you choose what file to import
         fileChooser.setTitle("Open Resource File");
         File file = fileChooser.showOpenDialog(new Stage());
-        /**
-         * If there is a file selected then the data from that file is transmitted to the database
-         */
-        if (file != null) {
+        if (file != null) { // If there is a file selected then the data from that file is transmitted to the database
             String filePath = file.getPath();
             filePath = filePath.replace("\\", "\\\\");
-            importCSV(filePath);
+            importFile(filePath);
         }
     }
 
@@ -150,68 +136,44 @@ public class MainController implements Initializable {
 
     /**
      * Loads the table with data from database
-     *
      * @param caseID the case id whose data is to be shown
      */
     public void loadTable(int caseID) {
-        /**
-         *
-         * takes the data from the database and puts it into an observable list
-         */
-
-        callsData = sql.loadCalls(caseID);
-        /**
-         * builds the columns, without data
-         */
+        callsData = sql.loadCalls(caseID);  // takes the data from the database and puts it into an observable list
+        // builds the columns, without data
         columnFactory.createOriginColumn(origin);
         columnFactory.createDestinationColumn(destination);
         columnFactory.createDateColumn(date);
         columnFactory.createTimeColumn(time);
         columnFactory.createTypeOfCallColumn(typeOfCall);
         columnFactory.createDurationColumn(duration);
-        /**
-         * adds the data into the table
-         */
-        table.setItems(callsData);
+
+        table.setItems(callsData);  // adds the data into the table
         table.setEditable(true);
     }
 
     /**
-     * Initialises the cases on the TabPane. CaseObj is considered as one of the case entries on the pane (with its image,labels and buttons)
+     * Initialises the cases on the TabPane.
      */
     private void loadCases() {
-
-        /**
-         * Load Cases List from database:
-         */
-        casesData = sql.loadCases();
-
-        /**
-         * Clear current tabs:
-         */
+        //  CaseObj is considered as one of the case entries on the pane (with its image,labels and buttons)
+        casesData = sql.loadCases();    //  Load Cases List from database:
+        // Clear current tabs:
         iCase.getChildren().clear();
         pCase.getChildren().clear();
         sCase.getChildren().clear();
         HBox CaseObject = null;
 
-        /**
-         * Every row of the Case table (thus, every case that exists in the database) has a status attribute (Investigating, Solved or Preliminary)
-         * The for loop takes each case and checks what status it has, and then assigns the CaseObj position in the tab
-         */
+        //Every row of the Case table (thus, every case that exists in the database) has a status attribute (Investigating, Solved or Preliminary)
+        //The for loop takes each case and checks what status it has, and then assigns the CaseObj position in the tab
         for (CaseRecord caseRecord : casesData) {
-
-            /**
-             * Case object loads the fxml, with its nodes
-             */
             try {
-                CaseObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml"));
+                CaseObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml")); // Case object loads the fxml, with its nodes
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
 
-            /**
-             * Initialise elements from Case object:
-             */
+            // Initialise elements from Case object:
             HBox hb = (HBox) CaseObject.getChildren().get(3);
             Button deleteBtn = (Button) hb.getChildren().get(1);
             HBox finalCaseObj = CaseObject;
@@ -226,13 +188,10 @@ public class MainController implements Initializable {
                 e.printStackTrace();
             }
 
-            String t = caseName.getText();
             int it = Integer.valueOf(caseRecord.getCaseID());
             finalCaseObj.setId(String.valueOf(it));
 
-            /**
-             * Update the main working area and load case files:
-             */
+            // Update the main working area and load case files:
             finalCaseObj.setOnMouseClicked(event -> {
                 String date = currentTime();
                 int id = Integer.valueOf(finalCaseObj.getId());
@@ -250,9 +209,7 @@ public class MainController implements Initializable {
                 }
             });
 
-            /**
-             * Update case name:
-             */
+            //Update case name:
             caseName.setOnMouseClicked(event -> {
                 caseName.setEditable(true);
                 editing = true;
@@ -265,7 +222,6 @@ public class MainController implements Initializable {
             });
 
             caseName.setOnAction(event -> {
-
                 String change = caseName.getText();
                 int id = Integer.valueOf(finalCaseObj.getId());
                 System.out.println("Change case " + id + " name to : " + change);
@@ -276,9 +232,7 @@ public class MainController implements Initializable {
                 editing = false;
             });
 
-            /**
-             * Animations:
-             */
+            // Animations:
             finalCaseObj.setOnMousePressed(event -> {
                 finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
             });
@@ -292,10 +246,7 @@ public class MainController implements Initializable {
                 finalCaseObj.setStyle("-fx-background-color: #ffffff;");
             });
 
-            /**
-             * Add Case object to specific tab:
-             */
-            if (caseRecord.getStatus().equals(iTab.getText())) {
+            if (caseRecord.getStatus().equals(iTab.getText())) {            //  Add Case object to specific tab:
                 iCase.getChildren().add(finalCaseObj);
                 deleteBtn.setOnAction(event -> {
                     sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
@@ -320,35 +271,20 @@ public class MainController implements Initializable {
 
     /**
      * Loads the Case Files (notes) of a specific case into the app
-     *
      * @param caseID
      */
     private void loadFiles(int caseID) {
-        /**
-         * Getting the data from the database part
-         */
-        filesData = sql.loadFiles(caseID);
-        /**
-         * Clearing the cases already shown
-         */
-        Pane CaseFile = null;
+        filesData = sql.loadFiles(caseID);  // Getting the data from the database part
+        Pane CaseFile = null;   //  Clearing the cases already shown
         caseFilesCT.getChildren().clear();
-        /**
-         * For every case file from the database, checks which one is on the given case, and loads them all into the app
-         */
-        for (FileRecord element : filesData) {
+        for (FileRecord element : filesData) {  // For every case file from the database, checks which one is on the given case, and loads them all into the app
             if (Integer.parseInt(element.getCaseID()) == caseID) {
-                /**
-                 * Case file template
-                 */
                 try {
-                    CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/caseFile.fxml"));
+                    CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/caseFile.fxml")); // Case file template
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                /**
-                 * Putting the data into the templates
-                 */
+                // Putting the data into the templates
                 //TODO Still needs working on these. Make them a bit unique.
                 HBox temp = (HBox) CaseFile.getChildren().get(1);
                 HBox temp2 = (HBox) CaseFile.getChildren().get(0);
@@ -372,15 +308,12 @@ public class MainController implements Initializable {
                     caseFilesCT.getChildren().remove(finalCaseFile);
                     sql.removeNote(Integer.parseInt(element.getFileID()));
                 });
-                /**
-                 * the case files get loaded to the app
-                 */
-                caseFilesCT.getChildren().add(CaseFile);
+                caseFilesCT.getChildren().add(CaseFile);     // the case files get loaded to the app
             }
         }
     }
 
-    //TODO Get back at it later
+    //TODO Add comments
     public void search() {
 
         searchData = callsData;
@@ -425,30 +358,14 @@ public class MainController implements Initializable {
      * Deletes the call both from the table and the database.
      */
     public void deleteCall() {
-        /**
-         * A row must be selected for it to work
-         */
-        if (table.getSelectionModel().getSelectedItem() != null) {
-            /**
-             * Getting the data
-             */
-            CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();
-            /**
-             * Checking if it's something there
-             */
-            if (record != null) {
-                /**
-                 * Delete from database part
-                 */
-                sql.removeCall(Integer.parseInt(record.getCallID()));
-                /**
-                 * Remove from table part
-                 */
-                callsData.remove(table.getSelectionModel().getSelectedItem());
+        if (table.getSelectionModel().getSelectedItem() != null) {   // A row must be selected for it to work
+            CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();   //   Getting the data
+            if (record != null) {   // Checking if it's something there
+                sql.removeCall(Integer.parseInt(record.getCallID()));   // Delete from database part
+                callsData.remove(table.getSelectionModel().getSelectedItem());  // Remove from table part
                 System.out.println("DELETE: call " + record.getCallID());
             }
         }
-
     }
 
     /**
@@ -456,22 +373,16 @@ public class MainController implements Initializable {
      */
     public void addVictim() {
         System.out.println("VICTIM");
-        /**
-         * Prepares the template
-         */
         Pane victimNote = null;
         try {
-            victimNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/victim.fxml"));
+            victimNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/victim.fxml"));   // Prepares the template
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        /**
-         * Makes different modifications on the template. This one is to delete the container
-         */
         Pane temp = (Pane) victimNote.getChildren().get(0);
         Button delete = (Button) temp.getChildren().get(1);
         Pane finalVictimNote = victimNote;
-        delete.setOnAction(event -> {
+        delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
             notesCT.getChildren().remove(finalVictimNote);
             searchData = callsData;
             table.setItems(searchData);
@@ -508,12 +419,10 @@ public class MainController implements Initializable {
                 }
             }
         });
-
         notesCT.getChildren().addAll(victimNote);
-
     }
 
-    //TODO Here as well
+    //TODO Comments to add
     public void addSuspect() {
         System.out.println("Suspect");
         Pane suspectNote = null;
@@ -563,9 +472,7 @@ public class MainController implements Initializable {
                 }
             }
         });
-
         notesCT.getChildren().add(suspectNote);
-
     }
 
     /**
@@ -575,25 +482,16 @@ public class MainController implements Initializable {
      * The method changes the table and the database at the same time.
      */
     public void addCall() {
-        /**
-         * Data manipulation part (the default data is ready to be used)
-         */
+        // Data manipulation part (the default data is ready to be used)
         CallRecord cr = new CallRecord(String.valueOf(sql.getMaxCallID() + 1), "\"" + caseID + "\"",
                 "0", "0", "1900/01/01", "00:00", "Standard", "00:00");
-        /**
-         * Add to table (visually) part
-         */
-        callsData.add(cr);
-        /**
-         * Add to database part
-         */
-        sql.addCall(cr);
+        callsData.add(cr);  // Add to table (visually) part
+        sql.addCall(cr);        // Add to database part
         System.out.println("ADD: call");
     }
 
     /**
      * Add case button functionality
-     *
      * @param actionEvent
      */
     public void addCase(ActionEvent actionEvent) {
@@ -613,8 +511,6 @@ public class MainController implements Initializable {
 
     /**
      * Add a case file
-     *
-     * @param actionEvent
      */
     public void addCaseFile(ActionEvent actionEvent) {
 
@@ -624,12 +520,12 @@ public class MainController implements Initializable {
         loadFiles(caseID);
     }
 
-
+    //TODO Add Comments
     public String currentTime() {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         return timeStamp;
     }
-
+    //TODO Add Comments
     public boolean casesUpdate() {
         ObservableList<CaseRecord> temp2 = sql.loadCases();
         boolean requireUpdate = false;
@@ -665,7 +561,7 @@ public class MainController implements Initializable {
             return requireUpdate;
         }
     }
-
+    //TODO Add Comments
     public boolean filesUpdate() {
         ObservableList<FileRecord> temp2 = sql.loadFiles(caseID);
         boolean requireUpdate = false;
@@ -707,7 +603,7 @@ public class MainController implements Initializable {
             return requireUpdate;
         }
     }
-
+    //TODO Add Comments
     public boolean callsUpdate() {
         ObservableList<CallRecord> temp2 = sql.loadCalls(caseID);
         boolean requireUpdate = false;
@@ -802,6 +698,7 @@ public class MainController implements Initializable {
         new Thread(myTask).start();
     }
 
+    //TODO Add Comments
     class MyTask extends Task<Void> {
 
         @Override
@@ -866,7 +763,11 @@ public class MainController implements Initializable {
         } else if (filePath.endsWith("xls")) {
             workbook = new HSSFWorkbook(inputStream);
         } else {
-            throw new IllegalArgumentException("The specified file is not Excel file");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("File not recognized");
+            alert.setHeaderText("Unsupported file format");
+            alert.setContentText("The file you want to import is not supported by the application");
+            alert.showAndWait();
         }
         return workbook;
     }
@@ -878,9 +779,11 @@ public class MainController implements Initializable {
     public void importFile(String filePath) {
         if (filePath.endsWith("csv")) {
             importCSV(filePath);
+            System.out.println("IMPORT FROM CSV");
         }
         else {
             importExcel(filePath);
+            System.out.println("IMPORT FROM EXCEL");
         }
     }
 
@@ -942,7 +845,7 @@ public class MainController implements Initializable {
                     dataElement[tableHeader[tableHeaderIndex]] = fileString;
                 }
                 tableHeaderIndex++;         // Go to the next column
-                if (tableHeaderIndex == length - 1) {       // If the end of the column was reached, start next row and put the previously filtered row into the data
+                if (tableHeaderIndex == length - 1) {       // If the end of the row was reached, start next row and put the previously filtered row into the data
                     tableHeaderIndex = 0;
                     data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1], dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
                 }

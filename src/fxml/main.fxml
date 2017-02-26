@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -120,7 +119,7 @@
                                 <Label layoutX="78.0" layoutY="69.0" style="-fx-font-weight: bold;" text="XLS" />
                             </children>
                         </Pane>
-                        <Button id="importButton" defaultButton="true" layoutX="956.0" layoutY="745.0" mnemonicParsing="false" onAction="#importCSV" prefHeight="50.0" prefWidth="48.0" style="-fx-background-color: white;">
+                        <Button id="importButton" defaultButton="true" layoutX="956.0" layoutY="745.0" mnemonicParsing="false" onAction="#importFile" prefHeight="50.0" prefWidth="48.0" style="-fx-background-color: white;">
                             <opaqueInsets>
                                 <Insets />
                             </opaqueInsets>

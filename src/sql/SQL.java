@@ -272,8 +272,8 @@ public class SQL {
 
         try {
             connection.createStatement().executeUpdate("INSERT INTO calls(caseId, origin, destination, date, time, typeOfCall, duration)\n" +
-                    "VALUES(" + cr.getCaseID() + ",\"" + cr.getOrigin() + "\",\"" + cr.getDestination() + "\",\"" +
-                    cr.getDate() + "\",\"" + cr.getTime() + "\",\"" + cr.getTypeOfCall() + "\",\"" + cr.getDuration() + "\");");
+                    "VALUES(" + cr.getCaseID() + ",'" + cr.getOrigin() + "','" + cr.getDestination() + "','" +
+                    cr.getDate() + "','" + cr.getTime() + "','" + cr.getTypeOfCall() + "','" + cr.getDuration() + "');");
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
