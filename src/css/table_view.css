@@ -11,7 +11,9 @@
 
 .table-view .column-header{
     -fx-font-size: 15;
-    -fx-font-weight: bold
+    -fx-font-weight: bold;
+    -fx-background-color: transparent
+
 }
 
 .table-cell {
@@ -29,7 +31,7 @@
 
 .text-field:focused {
     -fx-background-color:
-            #0093EF,
+            #74c1f2,
             #FFFFFF;
 }
 
@@ -44,5 +46,7 @@
             #0093EF,
             #FFFFFF;
 }
-
+.table-view  .virtual-flow  .scroll-bar:vertical .track {
+  visibility: hidden;
+}
 

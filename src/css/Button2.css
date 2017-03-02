@@ -1,0 +1,17 @@
+.button{
+-fx-background-radius: 5em; 
+-fx-min-width: 30px; 
+-fx-min-height: 30px; 
+-fx-max-width: 30px; 
+-fx-max-height: 30px; 
+-fx-background-color: -fx-body-color;
+-fx-background-insets: 0px; 
+-fx-padding: 0px;
+-fx-background-color: transparent;
+-fx-border-radius: 5em;
+-fx-border-color: F87373;
+-fx-border-width: 1px;
+}
+.button:hover{
+-fx-background-color:F87373;
+}

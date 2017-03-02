@@ -91,7 +91,7 @@ public class LoginController {
 
             stage.setScene(scene);
             stage.centerOnScreen();
-            stage.setResizable(true);
+            stage.setResizable(false);
             stage.show();
         }
     }

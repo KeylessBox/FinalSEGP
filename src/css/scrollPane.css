@@ -9,7 +9,6 @@
 }
 
 
-
 .scroll-pane:focused {
 	-fx-background-insets: 0;
 }
@@ -18,22 +17,17 @@
 	-fx-background-insets: 0;
 }
 
-/* The increment and decrement button CSS class of scrollbar */
-.increment-button ,.mylistview .decrement-button {
+.increment-button {
 	-fx-background-color:transparent;
 	-fx-background-radius: 2em;
 
 }
-
-/* The main scrollbar **track** CSS class  */
-.scroll-bar:horizontal .track,
-.scroll-bar:vertical .track{
-	-fx-background-color: transparent;
-	-fx-border-color:derive(gray,80%);
-
+.decrement-button {
+	-fx-background-color:transparent;
 	-fx-background-radius: 2em;
-	-fx-border-radius:2em;
 }
+
+
 
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
@@ -41,4 +35,21 @@
 	-fx-background-insets: 2, 0, 0;
 	-fx-background-radius: 2em;
 
+}
+
+
+.scroll-bar:horizontal {
+  -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal .track-background {
+  visibility: hidden;
+}
+
+.scroll-bar:horizontal .track {
+  visibility: hidden;
+}
+
+.hide-thumb .scroll-bar:horizontal .thumb {
+  -fx-background-color: transparent;
 }

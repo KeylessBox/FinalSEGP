@@ -91,9 +91,13 @@ public class MainController implements Initializable {
     @FXML
     protected ScrollPane scrollPane;
     @FXML
+    protected ScrollPane scrollPane1;
+    @FXML
     private VBox caseFilesCT;
     @FXML
     private HBox notesCT;
+    @FXML
+    private HBox notesCT1;
     @FXML
     protected Label caseTitle;
 
@@ -232,20 +236,6 @@ public class MainController implements Initializable {
                 editing = false;
             });
 
-            // Animations:
-            finalCaseObj.setOnMousePressed(event -> {
-                finalCaseObj.setStyle("-fx-background-color: #18b5ff;");
-            });
-            finalCaseObj.setOnMouseReleased(event -> {
-                finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-            });
-            finalCaseObj.setOnMouseEntered(event -> {
-                finalCaseObj.setStyle("-fx-background-color: #51c5ff;");
-            });
-            finalCaseObj.setOnMouseExited(event -> {
-                finalCaseObj.setStyle("-fx-background-color: #ffffff;");
-            });
-
             if (caseRecord.getStatus().equals(iTab.getText())) {            //  Add Case object to specific tab:
                 iCase.getChildren().add(finalCaseObj);
                 deleteBtn.setOnAction(event -> {
@@ -290,7 +280,7 @@ public class MainController implements Initializable {
                 HBox temp2 = (HBox) CaseFile.getChildren().get(0);
                 TextField fileName = (TextField) temp2.getChildren().get(0);
                 fileName.setText(element.getName());
-                Button delete = (Button) temp.getChildren().get(2);
+                Button delete = (Button) temp.getChildren().get(1);
                 Pane finalCaseFile = CaseFile;
 
                 fileName.setOnAction(event -> {
@@ -379,8 +369,8 @@ public class MainController implements Initializable {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        Pane temp = (Pane) victimNote.getChildren().get(0);
-        Button delete = (Button) temp.getChildren().get(1);
+        victimNote.getChildren().get(0);
+        Button delete = (Button) victimNote.getChildren().get(1);
         Pane finalVictimNote = victimNote;
         delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
             notesCT.getChildren().remove(finalVictimNote);
@@ -388,7 +378,7 @@ public class MainController implements Initializable {
             table.setItems(searchData);
         });
         //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
-        VBox vbox = (VBox) temp.getChildren().get(0);
+        VBox vbox = (VBox) victimNote.getChildren().get(0);
         TextField txtField = (TextField) vbox.getChildren().get(1);
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -420,6 +410,8 @@ public class MainController implements Initializable {
             }
         });
         notesCT.getChildren().addAll(victimNote);
+        scrollPane.setHvalue(1.0);
+
     }
 
     //TODO Comments to add
@@ -431,16 +423,16 @@ public class MainController implements Initializable {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        Pane temp = (Pane) suspectNote.getChildren().get(0);
-        Button delete = (Button) temp.getChildren().get(0);
+        suspectNote.getChildren().get(0);
+        Button delete = (Button) suspectNote.getChildren().get(0);
         Pane finalSuspectNote = suspectNote;
         delete.setOnAction(event -> {
-            notesCT.getChildren().remove(finalSuspectNote);
+            notesCT1.getChildren().remove(finalSuspectNote);
             searchData = callsData;
             table.setItems(searchData);
         });
 
-        VBox vbox = (VBox) temp.getChildren().get(1);
+        VBox vbox = (VBox) suspectNote.getChildren().get(1);
         TextField txtField = (TextField) vbox.getChildren().get(1);
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -472,7 +464,8 @@ public class MainController implements Initializable {
                 }
             }
         });
-        notesCT.getChildren().add(suspectNote);
+        notesCT1.getChildren().add(suspectNote);
+        scrollPane1.setHvalue(1.0);
     }
 
     /**
@@ -515,7 +508,7 @@ public class MainController implements Initializable {
     public void addCaseFile(ActionEvent actionEvent) {
 
         FileRecord nr = new FileRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + caseID + "",
-                "\"" + "Case file" + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
+                "\"" + "Note" + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
         sql.insertFile(nr);
         loadFiles(caseID);
     }
@@ -656,8 +649,13 @@ public class MainController implements Initializable {
         notesCT.setAlignment(Pos.TOP_LEFT);
         notesCT.setSpacing(50);
         notesCT.setBackground(Background.EMPTY);
+        notesCT1.setAlignment(Pos.TOP_LEFT);
+        notesCT1.setSpacing(50);
+        notesCT1.setBackground(Background.EMPTY);
         scrollPane.setPannable(true);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane1.setPannable(true);
+        scrollPane1.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane2.setPannable(true);
         scrollPane2.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         //TODO Is this the drag/drop functionality? Let's find another place for it
