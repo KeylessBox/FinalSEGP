@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import java.net.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane id="caseBox" prefHeight="38.0" prefWidth="180.0" stylesheets="@../css/editable-text.css"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane id="caseBox" prefHeight="38.0" prefWidth="180.0" style="-fx-background-color: transparent;" stylesheets="@../css/editable-text.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <HBox layoutX="8.0" layoutY="-2.0" prefHeight="42.0" prefWidth="77.0">
+        <HBox alignment="CENTER" layoutX="2.0" layoutY="-2.0" prefHeight="42.0" prefWidth="105.0" styleClass="pane" stylesheets="@../css/editable-text.css">
             <children>
-                <TextField fx:id = "noteName" prefHeight="38.0" prefWidth="72.0" text="Case file" />
+                <TextField fx:id="noteName" prefHeight="38.0" prefWidth="97.0" text="Note">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
             </children>
         </HBox>
-        <HBox layoutX="100.0" layoutY="9.0" prefHeight="22.0" prefWidth="72.0" spacing="5.0">
+        <HBox layoutX="109.0" layoutY="4.0" prefHeight="25.0" prefWidth="49.0" spacing="5.0">
             <children>
-                <Button styleClass="caseButton3" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" />
-                <Button styleClass="caseButton2" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" />
-                <Button styleClass="caseButton1" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" />
+                <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@../css/Button1.css" />
+                <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@../css/Button2.css" />
             </children>
         </HBox>
     </children>

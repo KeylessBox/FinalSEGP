@@ -3,4 +3,11 @@
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-padding: 0;
+    -fx-text-fill: grey;
+}
+.hbox:hover .text-field{
+    -fx-text-fill: blue;
+}
+.pane:hover . text-field{
+    -fx-text-fill: blue;
 }
