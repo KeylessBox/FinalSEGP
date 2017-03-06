@@ -3,7 +3,7 @@
     -fx-background-size: 1920, 1080;
 }
 
-#upline {
+#upline.menu-bar {
     -fx-background-image: url("../res/new_images/upline_background.jpg");
 }
 
