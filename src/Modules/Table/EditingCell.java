@@ -1,4 +1,4 @@
-package Modules.Table;
+package modules.table;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

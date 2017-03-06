@@ -1,39 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 
-<AnchorPane minHeight="400" minWidth="500" opacity="1.0" styleClass="root" stylesheets="@../CSS/Login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginController">
+<!-- Sign In scene, the design for the sign in functionality -->
+<!-- Anchor Pane-->
+<!-- -->
+
+<AnchorPane minHeight="400" minWidth="500" opacity="1.0" styleClass="root" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
     <children>
-        <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="156.0" layoutY="47.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="80.0">
+        <!-- Default image for now -->
+        <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="200.0" layoutY="106.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="106.0">
             <image>
-                <Image url="@../RES/img/defaultProfile.jpg" />
+                <Image url="@../res/img/defaultProfile.jpg" />
             </image>
         </ImageView>
-        <GridPane alignment="CENTER" hgap="10" vgap="10" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="225.0">
+        <!-- Where user inputs information and presses the buttons to sign in -->
+        <GridPane alignment="CENTER" hgap="10" layoutX="152.0" layoutY="219.0" vgap="10" AnchorPane.leftAnchor="152.0" AnchorPane.topAnchor="219.0">
             <children>
-                <Label text="User Name" GridPane.columnIndex="0" />
-                <TextField fx:id="username" GridPane.columnIndex="1" />
-                <Label text="Password" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <PasswordField fx:id="pw" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="username" prefHeight="0.0" prefWidth="112.0" promptText="Enter your username" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      
+                            <Label prefHeight="17.0" prefWidth="67.0" text="Password" textAlignment="CENTER" GridPane.rowIndex="2" />
 
-                <HBox alignment="bottom_right" prefHeight="23.0" prefWidth="140.0" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                    <children>
-                        <Button id="loginButton" onAction="#logIn" prefHeight="23.0" prefWidth="68.0" text="Sign Up">
-                     <HBox.margin>
-                        <Insets right="20.0" />
-                     </HBox.margin></Button>
-                  <Button id="loginButton" onAction="#logIn" prefHeight="23.0" prefWidth="68.0" text="Log in" />
-                    </children>
-               <opaqueInsets>
+                <HBox alignment="bottom_right" prefHeight="23.0" prefWidth="140.0" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                 <opaqueInsets>
                   <Insets />
-               </opaqueInsets>
+                 </opaqueInsets>
+               <children>
+                      <PasswordField fx:id="pw" prefHeight="25.0" prefWidth="140.0" promptText="Enter your password" />
+               </children>
                 </HBox>
-                <Text fx:id="actionTarget" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+      
+                                        <Label text="Username" textAlignment="CENTER" GridPane.rowIndex="1" />
+
             </children>
          <columnConstraints>
             <ColumnConstraints />
@@ -41,12 +58,24 @@
          </columnConstraints>
          <rowConstraints>
             <RowConstraints />
+            <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" />
             <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
+            <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" />
          </rowConstraints>
         </GridPane>
+
+            <Button id="createAnAccountButton" layoutX="373.0" layoutY="14.0" onAction="#signUp" prefHeight="14.0" prefWidth="113.0" text="Create an account" textAlignment="CENTER" underline="true">
+         <tooltip>
+            <Tooltip text="Create a new account" />
+         </tooltip></Button>
+
+                                                <Button id="loginButton" layoutX="200.0" layoutY="310.0" onAction="#logIn" prefHeight="14.0" prefWidth="100.0" text="Log in" />
+      <Button fx:id="signInButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" mouseTransparent="true" prefHeight="17.0" prefWidth="59.0" text="Sign In" textAlignment="CENTER">
+         <tooltip>
+            <Tooltip text="Current menu" />
+         </tooltip></Button>
+      <Line endX="100.0" layoutX="260.0" layoutY="299.0" startX="-100.0" />
+      <Separator layoutY="47.0" prefHeight="1.0" prefWidth="500.0" />
+
     </children>
 </AnchorPane>

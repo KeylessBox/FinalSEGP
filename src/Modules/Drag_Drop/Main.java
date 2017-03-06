@@ -21,7 +21,7 @@
 //import javafx.scene.shape.RectangleBuilder;
 //import javafx.stage.Stage;
 //
-//public class Main extends Application {
+//public class main extends Application {
 //    public static void main(String[] args) {
 //        Application.launch(args);
 //    }

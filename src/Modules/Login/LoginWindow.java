@@ -1,8 +1,11 @@
-package sample;
+/*
+package login;
 
+*/
 /**
  * Created by Flow on 10/22/2016.
- */
+ *//*
+
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.geometry.Insets;
@@ -20,10 +23,12 @@ import javafx.stage.Stage;
 
 import java.io.*;
 
+*/
 /**
  *
  * @author Flow
- */
+ *//*
+
 public class LoginWindow extends Application {
 
     GridPane gridLogin;
@@ -140,7 +145,7 @@ public class LoginWindow extends Application {
     @Override
     public void start(Stage primaryStage)throws Exception{
         window = primaryStage;
-        window.setTitle("Modules/Login");
+        window.setTitle("modules/login");
 
 
         gridLogin = new GridPane();
@@ -155,7 +160,7 @@ public class LoginWindow extends Application {
 
         //login Label
 
-        loginLabel = new Label("Modules/Login");
+        loginLabel = new Label("modules/login");
         loginLabel.setFont(Font.font("Arial", FontWeight.BOLD, 32));
         GridPane.setConstraints(loginLabel, 1, 0);
 
@@ -192,7 +197,7 @@ public class LoginWindow extends Application {
 
         //login Button
 
-        loginButton = new Button("Modules/Login");
+        loginButton = new Button("modules/login");
         loginButton.setOnAction(e -> {
             if (checkUserDetails(userField, passField)) {
                 System.out.println("Username and password are correct!");
@@ -311,3 +316,4 @@ public class LoginWindow extends Application {
     }
 
 }
+*/

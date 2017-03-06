@@ -36,7 +36,7 @@ root {
 }
 
 .root {
-	-fx-background-image: url("../RES/img/backgroundForLogin.jpg");
+	-fx-background-image: url("../res/img/backgroundForLogin.jpg");
 
 }
 .logo {
@@ -44,8 +44,9 @@ root {
 
 }
 .label {
+    -fx-font-family: "Calibri";
     -fx-font-size: 12px;
-    -fx-font-weight: bold;
+    -fx-font-weight: normal;
     -fx-text-fill: #333333;
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
 }
@@ -65,8 +66,8 @@ root {
 
 .button {
     -fx-text-fill: white;
-    -fx-font-family: "Arial Narrow";
-    -fx-font-weight: bold;
+    -fx-font-family: "Calibri Light";
+    -fx-font-weight: normal;
     -fx-background-color: linear-gradient(#61a2b1, #2A5058);
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }

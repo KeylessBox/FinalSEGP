@@ -3,7 +3,6 @@
 	-fx-background-size: 35, 35;
 
 }
-
 .button:hover{
 	-fx-background-image: url("../res/images/Delete.png");
 }

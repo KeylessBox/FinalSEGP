@@ -1,4 +1,4 @@
-package Modules.Table;
+package modules.table;
 
 /**
  * Created by AndreiM on 2/3/2017.
@@ -9,6 +9,7 @@ package Modules.Table;
  * and open the template in the editor.
  */
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -16,16 +17,17 @@ import java.sql.SQLException;
 public class DBConnection {
 
     /**
-     * Connect to database
-     *
+     * Connect to database. For now, only 1 user
+     *  //TODO Build it so it can support multiple users
      * @return Connection
      */
     public Connection connect() {
-
-        String url = "jdbc:mysql://localhost:3306/investigationsdb";
+        String url = "jdbc:mysql://localhost:3306/investigationsdb?useSSL=false";
         String username = "root";
         String password = "";
-
+//        String url = "jdbc:mysql://sql8.freemysqlhosting.net:3306/sql8159073?autoReconnect=true&useSSL=false";
+//        String username = "sql8159073";
+//        String password = "IqMbUSHD3p";
         /**
          * Check if JDBC driver is loaded
          */
@@ -34,17 +36,14 @@ public class DBConnection {
         } catch (ClassNotFoundException e) {
             throw new IllegalStateException("Cannot find the driver in the classpath!", e);
         }
-
         /**
          * Establish connection with database
          */
         try {
             Connection connection = DriverManager.getConnection(url, username, password);
             return connection;
-
         } catch (SQLException e) {
             System.out.println("e : " + e);
-
         }
         return null;
     }

@@ -4,7 +4,7 @@ Tried to clean a bit how the files are arranged. After a lot of hours of work/re
 But. There is a weird bug. It puts the data into the database, but the id (the primary key of the info TABLE) is incrementally jumping (let's say, you want to add n entries to the database, through the app. You got them nice there, everything perfect. Let's say you want to add other entries. The index jumps from the last index by n positions. Urgh, I'll look into it)
 
 How it works? 
-You press "Edit details" button (for now) and it gives you a new window, where you find your file. By opening it, you send the file pathname to the app, and from there it imports the information. 
+You press "Edit date" button (for now) and it gives you a new window, where you find your file. By opening it, you send the file pathname to the app, and from there it imports the information.
 The problem is. The query has to be tailored to the csv file. The csv file has to be tailored to the database. Yee, it sucks, but I'll find a way around this. 
 
 Use HeidiSQL = UI for MySQL, cool stuff. Helped me a lot!

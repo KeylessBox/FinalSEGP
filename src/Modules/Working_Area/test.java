@@ -1,4 +1,4 @@
-package Modules.Working_Area;
+package modules.working_area;
 
 /**
  * Created by Aleksandr on 02-Feb-17.
