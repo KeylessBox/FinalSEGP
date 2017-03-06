@@ -42,7 +42,7 @@ public class SignUpController {
 
         Node node = (Node) event.getSource();
         Stage stage3 = (Stage) node.getScene().getWindow();
-        Parent root3 = FXMLLoader.load(getClass().getResource("/fxml/signIn.fxml"));/* Exception */
+        Parent root3 = FXMLLoader.load(getClass().getResource("/fxml/signin.fxml"));/* Exception */
         Scene scene3 = new Scene(root3);
 
         stage3.setScene(scene3);
@@ -55,7 +55,7 @@ public class SignUpController {
     protected void back(ActionEvent event) throws IOException{
         Node node = (Node) event.getSource();
         Stage stage3 = (Stage) node.getScene().getWindow();
-        Parent root3 = FXMLLoader.load(getClass().getResource("/fxml/signIn.fxml"));/* Exception */
+        Parent root3 = FXMLLoader.load(getClass().getResource("/fxml/signin.fxml"));/* Exception */
         Scene scene3 = new Scene(root3);
 
         stage3.setScene(scene3);

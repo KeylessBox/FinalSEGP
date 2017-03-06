@@ -1,6 +1,5 @@
 package controllers;
 
-import modules.file_import.ImportCSV;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,8 +8,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import modules.login.LoginDB;
 import javafx.stage.Stage;
 
@@ -42,7 +39,7 @@ public class LoginController {
 
         Node node = (Node) event.getSource();
         Stage stage3 = (Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/signUp.fxml"));/* Exception */
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/signup.fxml"));/* Exception */
         Scene scene3 = new Scene(root);
 
         stage3.setScene(scene3);

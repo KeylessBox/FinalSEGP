@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<Pane fx:id="Suspect1" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane layoutY="16.0" prefHeight="132.0" prefWidth="200.0" styleClass="pane" stylesheets="@../css/suspect.css">
+            <children>
+                <Button fx:id="close" layoutX="169.0" layoutY="5.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@../css/close.css" />
+                <VBox layoutX="2.0" layoutY="28.0" prefHeight="78.0" prefWidth="196.0" spacing="5.0">
+                    <children>
+                        <TextField prefHeight="37.0" prefWidth="177.0" promptText="Name" style="-fx-background-color: #fed5d2;">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                        </TextField>
+                        <TextField prefHeight="23.0" prefWidth="196.0" promptText="Telephone" style="-fx-background-color: #fed5d2;">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                        </TextField>
+                    </children>
+                </VBox>
+            </children>
+        </Pane>
+    </children>
+</Pane>

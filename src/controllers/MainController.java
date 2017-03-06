@@ -168,7 +168,7 @@ public class MainController implements Initializable {
         //The for loop takes each case and checks what status it has, and then assigns the CaseObj position in the tab
         for (CaseRecord caseRecord : casesData) {
             try {
-                CaseObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/caseObj.fxml")); // Case object loads the fxml, with its nodes
+                CaseObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/case.fxml")); // Case object loads the fxml, with its nodes
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
@@ -280,7 +280,7 @@ public class MainController implements Initializable {
         for (FileRecord element : filesData) {  // For every case file from the database, checks which one is on the given case, and loads them all into the app
             if (Integer.parseInt(element.getCaseID()) == caseID) {
                 try {
-                    CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/caseFile.fxml")); // Case file template
+                    CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note.fxml")); // Case file template
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -427,7 +427,7 @@ public class MainController implements Initializable {
         System.out.println("Suspect");
         Pane suspectNote = null;
         try {
-            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/suspect.fxml"));
+            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/filter.fxml"));
         } catch (IOException e1) {
             e1.printStackTrace();
         }

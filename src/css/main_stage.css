@@ -1,0 +1,94 @@
+#root {
+    -fx-background-image: url("../res/new_images/grey-solid-color-background.png");
+    -fx-background-size: 1920, 1080;
+}
+
+#upline {
+    -fx-background-image: url("../res/new_images/upline_background.jpg");
+}
+
+
+/*#casesPane {*/
+    /*-fx-background-image: url("../res/images/cases.png");*/
+    /*-fx-background-size: 250, 700;*/
+/*}*/
+
+/*#profile-pane {*/
+    /*-fx-background-image: url("../res/images/profile.png");*/
+    /*-fx-background-size: 190, 79;*/
+/*}*/
+
+/*saveAsPane {*/
+    /*-fx-background-image: url("../res/images/saveAs.png");*/
+    /*-fx-background-size: 125, 125;*/
+/*}*/
+
+/*#caseBox{*/
+    /*-fx-background-image: url("../res/images/casebox.png");*/
+    /*-fx-background-size: 180, 180;*/
+/*}*/
+
+/*#callActionPane {*/
+    /*-fx-background-image: url("../res/images/background3.png");*/
+    /*-fx-background-size: 150, 150;*/
+/*}*/
+
+/*.addButton {*/
+    /*-fx-background-image: url("../res/images/add.png");*/
+    /*-fx-background-size: 20, 20;*/
+    /*-fx-background-repeat: no-repeat;*/
+/*}*/
+
+/*#addSuspect {*/
+    /*-fx-background-color: darkred;*/
+    /*-fx-font-family:"System";*/
+    /*-fx-font-size: 12;*/
+/*}*/
+/*#pane.text-field {*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-background-insets: 0;*/
+    /*-fx-background-radius: 0;*/
+    /*-fx-padding: 0;*/
+/*}*/
+
+/*#addSuspect:pressed{*/
+    /*-fx-background-color: #f33e54;*/
+/*}*/
+
+/*#addVictim {*/
+    /*-fx-background-color: green;*/
+    /*-fx-font-family:"System";*/
+    /*-fx-font-size: 12;*/
+/*}*/
+
+/*#addVictim:pressed{*/
+    /*-fx-background-color: #12e05f;*/
+/*}*/
+
+/*#importButton {*/
+    /*-fx-background-image: url("../res/images/import.png");*/
+    /*-fx-background-size: 50, 50;*/
+/*}*/
+
+/*.saveAsB {*/
+    /*-fx-background-image: url("../res/images/button.png");*/
+    /*-fx-background-size: 35, 35;*/
+    /*-fx-background-color: white;*/
+/*}*/
+/*.saveAsB:pressed{*/
+    /*-fx-background-insets: 10%;*/
+/*}*/
+
+/*.profile-button {*/
+    /*-fx-background-color: ebebeb;*/
+    /*-fx-font-family:"Segoe Print";*/
+    /*-fx-font-size: 14;*/
+/*}*/
+
+/*.profile-button:hover{*/
+    /*-fx-text-fill: blue;*/
+/*}*/
+
+/*.profile-button:pressed{*/
+    /*-fx-font-weight: bold;*/
+/*}*/
