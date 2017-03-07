@@ -98,6 +98,7 @@
                                 <graphic>
                                     <VBox id="profile-pane" layoutX="100" layoutY="100" prefHeight="200.0" prefWidth="100.0">
                                         <children>
+                                            <VBox spacing="0">
                                             <ImageView>
                                                 <image>
                                                     <Image url="@../res/icons/settins_sub_menu.png" />
@@ -113,6 +114,7 @@
                                                     <Image url="@../res/icons/logoff_sub_menu.png" />
                                                 </image>
                                             </ImageView>
+                                            </VBox>
                                         </children>
                                     </VBox>
                                 </graphic>

@@ -70,24 +70,30 @@
     /*-fx-background-radius: 2;*/
 }
 
+
 .context-menu {
     -fx-background-color: transparent;
 }
 
-.context-menu .label {
+/*.context-menu {*/
+    /*-fx-background-color: transparent;*/
+/*}*/
+
+/*.context-menu .label {*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-opacity: 10;*/
+    /*-fx-text-fill: black*/
+/*}*/
+
+.menu-item{
+    -fx-padding: 0;
     -fx-background-color: transparent;
-    -fx-opacity: 10;
-    -fx-text-fill: black
 }
 
-.menu-items:hover {
-    -fx-background-color: transparent;
-}
+/*.menu-item:focused {*/
+    /*-fx-background-color: transparent;*/
+/*}*/
 
-.menu-item:focused {
-    -fx-background-color: transparent;
-}
-
-.menu-item:focused .label {
-    -fx-text-fill: blue
-}
+/*.menu-item:focused .label {*/
+    /*-fx-text-fill: blue*/
+/*}*/
