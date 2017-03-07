@@ -18,7 +18,7 @@
                 <menus>
                     <Menu mnemonicParsing="false">
                         <graphic>
-                            <ImageView fitHeight="15.0" fitWidth="15.0" styleClass="cross">
+                            <ImageView fitHeight="15.0" fitWidth="15.0" styleClass="cross ">
                                 <image>
                                     <Image url="@../res/icons/add_icon.png"/>
                                 </image>

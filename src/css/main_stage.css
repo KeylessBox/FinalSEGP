@@ -21,6 +21,10 @@
     /*-fx-accent: white;*/
     /*-fx-focus-color: white;*/
 }
+.img:hover{
+    -fx-effect: null;
+    -fx-background-color: transparent;
+}
 
 .menu:showing{
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
