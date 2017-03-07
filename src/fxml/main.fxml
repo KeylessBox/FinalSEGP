@@ -14,7 +14,7 @@
               BorderPane.alignment="CENTER">
             <MenuBar layoutX="1602.0" prefHeight="42.0" prefWidth="153.0">
                 <menus>
-                    <Menu mnemonicParsing="false" id="add_btn">
+                    <Menu id="add_btn" mnemonicParsing="false">
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
@@ -25,29 +25,35 @@
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <Pane id="profile-pane" prefHeight="156.0" prefWidth="190.0">
+
+
+                                    <VBox id="profile-pane" layoutX="100" layoutY="100" prefHeight="200.0"
+                                          prefWidth="100.0">
                                         <children>
-                                            <Label fx:id="userLabel" alignment="TOP_CENTER" layoutX="81.0"
-                                                   layoutY="12.0" prefHeight="47.0" prefWidth="94.0"
-                                                   style="-fx-font-family: &quot;Segoe Print&quot;; -fx-font-size: 14;"
-                                                   text="Angel" textFill="#210cda">
-                                                <font>
-                                                    <Font name="Tahoma" size="15.0"/>
-                                                </font>
-                                            </Label>
-                                            <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="16.0" layoutY="16.0"
-                                                       pickOnBounds="true" preserveRatio="false">
+                                            <ImageView>
                                                 <image>
-                                                    <Image url="@../res/img/defaultProfile.jpg"/>
+                                                    <Image url="@../res/icons/settins_sub_menu.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView>
+                                                <image>
+                                                    <Image url="@../res/icons/messages_sub_menu.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView>
+                                                <image>
+                                                    <Image url="@../res/icons/logoff_sub_menu.png"/>
                                                 </image>
                                             </ImageView>
                                         </children>
-                                    </Pane>
+                                    </VBox>
+
+
                                 </graphic>
                             </MenuItem>
                         </items>
                     </Menu>
-                    <Menu mnemonicParsing="false" id="user_btn">
+                    <Menu id="user_btn" mnemonicParsing="false">
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
@@ -58,31 +64,33 @@
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <Pane id="profile-pane" prefHeight="156.0" prefWidth="190.0">
+                                    <VBox id="profile-pane" layoutX="100" layoutY="100" prefHeight="200.0"
+                                          prefWidth="100.0">
                                         <children>
-                                            <Label fx:id="userLabel2" alignment="TOP_CENTER" layoutX="81.0"
-                                                   layoutY="12.0" prefHeight="47.0" prefWidth="94.0"
-                                                   style="-fx-font-family: &quot;Segoe Print&quot;; -fx-font-size: 14;"
-                                                   text="Angel" textFill="#210cda">
-                                                <font>
-                                                    <Font name="Tahoma" size="15.0"/>
-                                                </font>
-                                            </Label>
-                                            <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="16.0" layoutY="16.0"
-                                                       pickOnBounds="true" preserveRatio="false">
+                                            <ImageView>
                                                 <image>
-                                                    <Image url="@../res/img/defaultProfile.jpg"/>
+                                                    <Image url="@../res/icons/settins_sub_menu.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView>
+                                                <image>
+                                                    <Image url="@../res/icons/messages_sub_menu.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView>
+                                                <image>
+                                                    <Image url="@../res/icons/logoff_sub_menu.png"/>
                                                 </image>
                                             </ImageView>
                                         </children>
-                                    </Pane>
+                                    </VBox>
                                 </graphic>
                             </MenuItem>
                         </items>
                     </Menu>
 
 
-                    <Menu mnemonicParsing="false" id="search_btn">
+                    <Menu id="search_btn" mnemonicParsing="false">
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
@@ -93,30 +101,32 @@
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <Pane id="profile-pane" prefHeight="156.0" prefWidth="190.0">
+                                    <VBox id="profile-pane" layoutX="100" layoutY="100" prefHeight="200.0"
+                                          prefWidth="100.0">
                                         <children>
-                                            <Label fx:id="userLabel3" alignment="TOP_CENTER" layoutX="81.0"
-                                                   layoutY="12.0" prefHeight="47.0" prefWidth="94.0"
-                                                   style="-fx-font-family: &quot;Segoe Print&quot;; -fx-font-size: 14;"
-                                                   text="Angel" textFill="#210cda">
-                                                <font>
-                                                    <Font name="Tahoma" size="15.0"/>
-                                                </font>
-                                            </Label>
-                                            <ImageView fitHeight="39.0" fitWidth="43.0" layoutX="16.0" layoutY="16.0"
-                                                       pickOnBounds="true" preserveRatio="false">
+                                            <ImageView>
                                                 <image>
-                                                    <Image url="@../res/img/defaultProfile.jpg"/>
+                                                    <Image url="@../res/icons/settins_sub_menu.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView>
+                                                <image>
+                                                    <Image url="@../res/icons/messages_sub_menu.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView>
+                                                <image>
+                                                    <Image url="@../res/icons/logoff_sub_menu.png"/>
                                                 </image>
                                             </ImageView>
                                         </children>
-                                    </Pane>
+                                    </VBox>
                                 </graphic>
                             </MenuItem>
                         </items>
                     </Menu>
 
-                    <Menu mnemonicParsing="false" id="settings_btn">
+                    <Menu id="settings_btn" mnemonicParsing="false">
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="1710.0" layoutY="8.0">
                                 <image>
@@ -127,18 +137,26 @@
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <Pane id="profile-pane" prefHeight="156.0" prefWidth="190.0">
+                                    <VBox id="profile-pane" layoutX="100" layoutY="100" prefHeight="200.0"
+                                          prefWidth="100.0">
                                         <children>
-                                            <Label fx:id="userLabel4" alignment="TOP_CENTER" layoutX="81.0"
-                                                   layoutY="12.0" prefHeight="47.0" prefWidth="94.0"
-                                                   style="-fx-font-family: &quot;Segoe Print&quot;; -fx-font-size: 14;"
-                                                   text="Angel" textFill="#210cda">
-                                                <font>
-                                                    <Font name="Tahoma" size="15.0"/>
-                                                </font>
-                                            </Label>
+                                            <ImageView>
+                                                <image>
+                                                    <Image url="@../res/icons/settins_sub_menu.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView>
+                                                <image>
+                                                    <Image url="@../res/icons/messages_sub_menu.png"/>
+                                                </image>
+                                            </ImageView>
+                                            <ImageView>
+                                                <image>
+                                                    <Image url="@../res/icons/logoff_sub_menu.png"/>
+                                                </image>
+                                            </ImageView>
                                         </children>
-                                    </Pane>
+                                    </VBox>
                                 </graphic>
                             </MenuItem>
                         </items>
