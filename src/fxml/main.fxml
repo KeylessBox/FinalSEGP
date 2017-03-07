@@ -75,27 +75,13 @@
                         </graphic>
                         <items>
                             <MenuItem mnemonicParsing="false">
-                                <graphic>
-                                    <VBox id="profile-pane" layoutX="100" layoutY="100" prefHeight="200.0" prefWidth="100.0">
-                                        <children>
-                                            <ImageView>
-                                                <image>
-                                                    <Image url="@../res/icons/settins_sub_menu.png" />
-                                                </image>
-                                            </ImageView>
-                                            <ImageView>
-                                                <image>
-                                                    <Image url="@../res/icons/messages_sub_menu.png" />
-                                                </image>
-                                            </ImageView>
-                                            <ImageView>
-                                                <image>
-                                                    <Image url="@../res/icons/logoff_sub_menu.png" />
-                                                </image>
-                                            </ImageView>
-                                        </children>
-                                    </VBox>
-                                </graphic>
+                        <graphic>
+                           <ImageView fitHeight="80.0" fitWidth="300.0">
+                              <image>
+                                 <Image url="@../res/icons/search_bar.png" />
+                              </image>
+                           </ImageView>
+                        </graphic>
                             </MenuItem>
                         </items>
                     </Menu>
