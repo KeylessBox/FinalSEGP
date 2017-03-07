@@ -3,8 +3,11 @@
     -fx-background-size: 1920, 1080;
 }
 
-#upline.menu-bar {
+.upline{
     -fx-background-image: url("../res/new_images/upline_background.jpg");
+}
+.addButton{
+    -fx-image: url("../res/new_images/add_button.png");
 }
 
 

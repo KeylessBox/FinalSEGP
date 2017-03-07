@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 
-<BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
-        <MenuBar id="menubar" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Tools">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="View">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Get Help!" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
+        <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView layoutX="1590.0" layoutY="14.0" onMouseClicked="#openExtraMenu">
+               <image>
+                  <Image url="@../res/new_images/add_button.png" />
+               </image>
+            </ImageView>
+            <ImageView layoutX="1670.0" layoutY="9.0">
+               <image>
+                  <Image url="@../res/new_images/search_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView layoutX="1710.0" layoutY="8.0">
+               <image>
+                  <Image url="@../res/new_images/settings_icon.png" />
+               </image>
+            </ImageView>
+            <ImageView layoutX="1630.0" layoutY="10.0">
+               <image>
+                  <Image url="@../res/new_images/user_icon.png" />
+               </image>
+            </ImageView>
+         </children></Pane>
     </top>
     <left>
     </left>
