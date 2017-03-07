@@ -16,9 +16,9 @@
               BorderPane.alignment="CENTER">
             <MenuBar layoutX="1602.0" prefHeight="42.0" prefWidth="153.0">
                 <menus>
-                    <Menu mnemonicParsing="false">
+                    <Menu mnemonicParsing="false" styleClass="addButton">
                         <graphic>
-                            <ImageView fitHeight="15.0" fitWidth="15.0" styleClass="cross ">
+                            <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
                                     <Image url="@../res/icons/add_icon.png"/>
                                 </image>

@@ -15,17 +15,14 @@
     -fx-cursor: default;
 }
 
-.menu-button:hover{
-    -fx-effect: null;
+.menu:hover{
+    -fx-effect:null;
     -fx-background-color: transparent;
-    /*-fx-accent: white;*/
-    /*-fx-focus-color: white;*/
+    -fx-background-image: url("../res/icons/add_icon_hover.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
 }
-.img:hover{
-    -fx-effect: null;
-    -fx-background-color: transparent;
-}
-
 .menu:showing{
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
     -fx-padding: 8;
