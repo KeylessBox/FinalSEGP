@@ -15,13 +15,13 @@
 <BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
         <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
-            <MenuBar layoutX="1602.0" prefHeight="42.0" prefWidth="153.0" style="-fx-background-color: transparent">
+            <MenuBar layoutX="1602.0" prefHeight="42.0" prefWidth="153.0">
                 <menus>
                     <Menu mnemonicParsing="false">
                         <graphic>
-                            <ImageView layoutX="1590.0" layoutY="14.0">
+                            <ImageView layoutX="1590.0" layoutY="14.0"  pickOnBounds="true" preserveRatio="true"  >
                                 <image>
-                                    <Image url="@../res/icons/add_icon.png" />
+                                    <Image url="@../res/icons/add_icon.png"/>
                                 </image>
                             </ImageView>
                         </graphic>
@@ -46,8 +46,6 @@
                             </MenuItem>
                         </items>
                     </Menu>
-
-
                     <Menu mnemonicParsing="false">
                         <graphic>
                             <ImageView layoutX="1630.0" layoutY="10.0">
@@ -152,10 +150,10 @@
             </children>
         </Pane>
     </top>
-    <left>
-    </left>
-    <center>
-    </center>
-    <right>
-    </right>
+    <!--<left>-->
+    <!--</left>-->
+    <!--<center>-->
+    <!--</center>-->
+    <!--<right>-->
+    <!--</right>-->
 </BorderPane>

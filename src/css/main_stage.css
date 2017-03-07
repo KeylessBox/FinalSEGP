@@ -1,18 +1,52 @@
 #root {
     -fx-background-image: url("../res/new_images/grey-solid-color-background.png");
     -fx-background-size: 1920, 1080;
+    -fx-cursor: default;
 }
 
 .upline{
     -fx-background-image: url("../res/new_images/upline_background.jpg");
-}
-.addButton{
-    -fx-image: url("../res/new_images/add_button.png");
+    -fx-cursor: default;
 }
 
-.upmenu {
-    fx-background: linear-gradient(to bottom, #4d6383 1%, #3e506a 1%, #3e506a 1%, #3e506a 50%, #3d4f69 98%, #2f3f57 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+.menu-bar{
+    -fx-background-color: transparent;
+    -fx-cursor: default;
 }
+
+.menu-button:hover{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    -fx-padding: 8;
+    -fx-background-color: #43546e;
+    -fx-background-radius: 2;
+}
+
+/*.menu-button:selected{*/
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);*/
+    /*-fx-padding: 8;*/
+    /*-fx-background-color: #43546e;*/
+    /*-fx-background-radius: 2;*/
+/*}*/
+/*.menu-button:pressed{*/
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);*/
+    /*-fx-padding: 8;*/
+    /*-fx-background-color: #43546e;*/
+    /*-fx-background-radius: 2;*/
+/*}*/
+/*.menu-button:focused{*/
+     /*-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);*/
+     /*-fx-padding: 8;*/
+     /*-fx-background-color: #43546e;*/
+     /*-fx-background-radius: 2;*/
+ /*}*/
+
+/*.menu-button:visited{*/
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);*/
+    /*-fx-padding: 8;*/
+    /*-fx-background-color: #43546e;*/
+    /*-fx-background-radius: 2;*/
+/*}*/
+
 
 
 /*#casesPane {*/
