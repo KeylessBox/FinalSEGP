@@ -15,7 +15,7 @@
 <BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
         <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
-            <MenuBar layoutX="1595.0" prefHeight="42.0" prefWidth="160.0" style="-fx-background-color: transparent">
+            <MenuBar layoutX="1602.0" prefHeight="42.0" prefWidth="153.0" style="-fx-background-color: transparent">
                 <menus>
                     <Menu mnemonicParsing="false">
                         <graphic>
