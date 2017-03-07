@@ -27,10 +27,7 @@
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
-    -fx-padding: 8;
-    -fx-background-color: #43546e;
-    -fx-background-radius: 2;
+    -fx-background-color: transparent;
 }
 
 #user_btn.menu:hover {
@@ -38,10 +35,7 @@
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
-    -fx-padding: 8;
-    -fx-background-color: #43546e;
-    -fx-background-radius: 2;
+    -fx-background-color: transparent;
 }
 
 #search_btn.menu:hover {
@@ -49,10 +43,7 @@
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
-    -fx-padding: 8;
-    -fx-background-color: #43546e;
-    -fx-background-radius: 2;
+    -fx-background-color: transparent;
 }
 
 #settings_btn.menu:hover {
@@ -60,10 +51,7 @@
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
-    -fx-padding: 8;
-    -fx-background-color: #43546e;
-    -fx-background-radius: 2;
+    -fx-background-color: transparent;
 }
 .context-menu {
 -fx-background-color:transparent;
