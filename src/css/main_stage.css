@@ -15,71 +15,79 @@
     -fx-cursor: default;
 }
 
+.menu {
+    -fx-opacity: 0.5;
+    -fx-padding: 8;
+}
 
 .menu:showing {
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
-    -fx-padding: 8;
+    -fx-opacity: 1;
     -fx-background-color: #43546e;
     -fx-background-radius: 2;
 }
-
 #add_btn.menu:hover {
-    -fx-background-image: url("../res/icons/add_icon_hover.png");
     -fx-background-repeat: stretch;
+    -fx-opacity: 1;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
-    -fx-padding: 8;
-    -fx-background-color: #43546e;
-    -fx-background-radius: 2;
+    -fx-background-color: transparent;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
+    /*-fx-background-color: #43546e;*/
+    /*-fx-background-radius: 2;*/
 }
 
 #user_btn.menu:hover {
-    -fx-background-image: url("../res/icons/user_icon_hover.png");
+    -fx-opacity: 1;
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
-    -fx-padding: 8;
-    -fx-background-color: #43546e;
-    -fx-background-radius: 2;
+    -fx-background-color: transparent;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
+    /*-fx-background-color: #43546e;*/
+    /*-fx-background-radius: 2;*/
 }
 
 #search_btn.menu:hover {
-    -fx-background-image: url("../res/icons/search_icon_hover.png");
+    -fx-opacity: 1;
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
-    -fx-padding: 8;
-    -fx-background-color: #43546e;
-    -fx-background-radius: 2;
+    -fx-background-color: transparent;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
+    /*-fx-background-color: #43546e;*/
+    /*-fx-background-radius: 2;*/
 }
 
 #settings_btn.menu:hover {
-    -fx-background-image: url("../res/icons/settings_icon_hover.png");
+    -fx-opacity: 1;
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
-    -fx-padding: 8;
-    -fx-background-color: #43546e;
-    -fx-background-radius: 2;
+    -fx-background-color: transparent;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
+    /*-fx-background-color: #43546e;*/
+    /*-fx-background-radius: 2;*/
 }
+
 .context-menu {
--fx-background-color:transparent;
+    -fx-background-color: transparent;
 }
-.context-menu .label{
--fx-background-color:transparent;
--fx-opacity:10;
--fx-text-fill:black
+
+.context-menu .label {
+    -fx-background-color: transparent;
+    -fx-opacity: 10;
+    -fx-text-fill: black
 }
+
 .menu-items:hover {
--fx-background-color:transparent;
+    -fx-background-color: transparent;
 }
-.menu-item:focused{
--fx-background-color:transparent;
+
+.menu-item:focused {
+    -fx-background-color: transparent;
 }
-.menu-item:focused .label{
--fx-text-fill: blue
+
+.menu-item:focused .label {
+    -fx-text-fill: blue
 }
