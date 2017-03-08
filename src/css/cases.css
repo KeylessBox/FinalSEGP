@@ -6,13 +6,12 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
 }
 
-
 #test.button {
     -fx-min-height: 30px;
     -fx-min-width: 30px;
     -fx-background-size: 16px 16px;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: center ;
+    -fx-background-position: center;
     -fx-background-image: url("../res/icons/add_icon.png");
     -fx-background-color: transparent;
     -fx-opacity: 0.5;
@@ -23,45 +22,42 @@
     -fx-background-color: transparent;
 }
 
-.custom_scroll_pane{
+.custom_scroll_pane {
     -fx-background-color: transparent;
     -fx-min-height: 0px;
     -fx-min-width: 228px;
 }
 
 .toggle-button {
-    -fx-background-color:#42536d;
+    -fx-background-color: #42536d;
     -fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
     -fx-background-radius: 0;
     -fx-padding: 0.4em 1.833333em 0.4em 1.833333em;
     -fx-text-fill: white;
     -fx-border-color: black;
-    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 5, 0, 0, 0);
 }
 
 .toggle-button:selected {
-    /*-fx-background-color: #6a7c91;*/
-    /*-fx-border-color: transparent;*/
-    /*-fx-text-fill: black;*/
-    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
     -fx-background-color: #ffffff;
     -fx-text-fill: black;
     -fx-border-color: #3e506a;
 }
 
 .toggle-button.first {
-     -fx-background-insets: 0, 1, 2 1 1 1;
-     -fx-background-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2;
-     -fx-border-insets: 0, 1, 2 1 1 1;
-     -fx-border-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2 ;
- }
-
+    -fx-background-insets: 0, 1, 2 1 1 1;
+    -fx-background-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2;
+    -fx-border-insets: 0, 1, 2 1 1 1;
+    -fx-border-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2;
+    -fx-border-width: 1 0 1 1;
+}
 
 .toggle-button.last {
     -fx-border-insets: 0, 1 1 1 0, 2 1 1 1;
     -fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
     -fx-border-radius: 0 3 3 0, 0 2 2 0, 0 2 2 0;
     -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 2 2 0;
+    -fx-border-width: 1 1 1 0;
 }
 
 
