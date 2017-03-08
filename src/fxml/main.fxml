@@ -1,86 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css"
+            xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.MainController">
     <top>
-        <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
-            <Label layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" text="Cheeky Scar" textFill="WHITE">
+        <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css"
+              BorderPane.alignment="CENTER">
+            <Label layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" text="Cheeky Scar"
+                   textFill="WHITE">
                 <font>
-                    <Font size="26.0" />
+                    <Font size="26.0"/>
                 </font>
             </Label>
-
-            <MenuBar depthTest="DISABLE" layoutX="1602.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="153.0">
+            <MenuBar depthTest="DISABLE" layoutX="1602.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0"
+                     prefWidth="153.0">
                 <menus>
-
                     <Menu id="settings_btn" mnemonicParsing="false">
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="1710.0" layoutY="8.0">
                                 <image>
-                                    <Image url="@../res/icons/settings_icon.png" />
-                                </image>
-                            </ImageView>
-                        </graphic>
-                        <items>
-                            <MenuItem mnemonicParsing="false">
-                        <graphic>
-                           <ImageView>
-                              <image>
-                                 <Image url="@../res/icons/settins_sub_menu.png" />
-                              </image>
-                           </ImageView>
-                        </graphic>
-                            </MenuItem>
-                     <MenuItem mnemonicParsing="false">
-                        <graphic>
-                           <ImageView>
-                              <image>
-                                 <Image url="@../res/icons/messages_sub_menu.png" />
-                              </image>
-                           </ImageView>
-                        </graphic>
-                     </MenuItem>
-                     <MenuItem mnemonicParsing="false">
-                        <graphic>
-                           <ImageView>
-                              <image>
-                                 <Image url="@../res/icons/logoff_sub_menu.png" />
-                              </image>
-                           </ImageView>
-                        </graphic>
-                     </MenuItem>
-                        </items>
-                    </Menu>
-
-
-                    <Menu id="search_btn" mnemonicParsing="false">
-                        <graphic>
-                            <ImageView fitHeight="15.0" fitWidth="15.0">
-                                <image>
-                                    <Image url="@../res/icons/search_icon.png" />
+                                    <Image url="@../res/icons/settings_icon.png"/>
                                 </image>
                             </ImageView>
                         </graphic>
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <Pane nodeOrientation="LEFT_TO_RIGHT" styleClass="search_bar" stylesheets="@../css/main_stage.css" minWidth="300" minHeight="80">
-                                        <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0" promptText="keyword..." />
-                                        <Button layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0" text="search">
+                                    <ImageView>
+                                        <image>
+                                            <Image url="@../res/icons/settins_sub_menu.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </MenuItem>
+                            <MenuItem mnemonicParsing="false">
+                                <graphic>
+                                    <ImageView>
+                                        <image>
+                                            <Image url="@../res/icons/messages_sub_menu.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </MenuItem>
+                            <MenuItem mnemonicParsing="false">
+                                <graphic>
+                                    <ImageView>
+                                        <image>
+                                            <Image url="@../res/icons/logoff_sub_menu.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </MenuItem>
+                        </items>
+                    </Menu>
+                    <Menu id="search_btn" mnemonicParsing="false">
+                        <graphic>
+                            <ImageView fitHeight="15.0" fitWidth="15.0">
+                                <image>
+                                    <Image url="@../res/icons/search_icon.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <items>
+                            <MenuItem mnemonicParsing="false">
+                                <graphic>
+                                    <Pane nodeOrientation="LEFT_TO_RIGHT" styleClass="search_bar"
+                                          stylesheets="@../css/main_stage.css" minWidth="300" minHeight="80">
+                                        <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0"
+                                                   promptText="keyword..."/>
+                                        <Button layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0"
+                                                text="search">
                                         </Button>
                                     </Pane>
                                 </graphic>
@@ -91,31 +86,32 @@
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
-                                    <Image url="@../res/icons/user_icon.png" />
+                                    <Image url="@../res/icons/user_icon.png"/>
                                 </image>
                             </ImageView>
                         </graphic>
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <VBox id="profile-pane" layoutX="100" layoutY="100" prefHeight="200.0" prefWidth="100.0">
+                                    <VBox id="profile-pane" layoutX="100" layoutY="100" prefHeight="200.0"
+                                          prefWidth="100.0">
                                         <children>
                                             <VBox>
-                                            <ImageView>
-                                                <image>
-                                                    <Image url="@../res/icons/settins_sub_menu.png" />
-                                                </image>
-                                            </ImageView>
-                                            <ImageView>
-                                                <image>
-                                                    <Image url="@../res/icons/messages_sub_menu.png" />
-                                                </image>
-                                            </ImageView>
-                                            <ImageView>
-                                                <image>
-                                                    <Image url="@../res/icons/logoff_sub_menu.png" />
-                                                </image>
-                                            </ImageView>
+                                                <ImageView>
+                                                    <image>
+                                                        <Image url="@../res/icons/settins_sub_menu.png"/>
+                                                    </image>
+                                                </ImageView>
+                                                <ImageView>
+                                                    <image>
+                                                        <Image url="@../res/icons/messages_sub_menu.png"/>
+                                                    </image>
+                                                </ImageView>
+                                                <ImageView>
+                                                    <image>
+                                                        <Image url="@../res/icons/logoff_sub_menu.png"/>
+                                                    </image>
+                                                </ImageView>
                                             </VBox>
                                         </children>
                                     </VBox>
@@ -127,41 +123,36 @@
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
-                                    <Image url="@../res/icons/add_icon.png" />
+                                    <Image url="@../res/icons/add_icon.png"/>
                                 </image>
                             </ImageView>
                         </graphic>
                         <items>
                             <MenuItem mnemonicParsing="false" text="Settings">
-                        <graphic>
-                           <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                        </graphic>
+                                <graphic>
+                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true"
+                                               preserveRatio="true"/>
+                                </graphic>
                             </MenuItem>
                         </items>
                     </Menu>
                 </menus>
                 <opaqueInsets>
-                    <Insets />
+                    <Insets/>
                 </opaqueInsets>
                 <padding>
-                    <Insets left="15.0" right="15.0" top="5.0" />
+                    <Insets left="15.0" right="15.0" top="5.0"/>
                 </padding>
                 <cursor>
-                    <Cursor fx:constant="CLOSED_HAND" />
+                    <Cursor fx:constant="CLOSED_HAND"/>
                 </cursor>
             </MenuBar>
-
-
-            <children>
-
-
-            </children>
         </Pane>
     </top>
-    <!--<left>-->
-    <!--</left>-->
-    <!--<center>-->
-    <!--</center>-->
-    <!--<right>-->
-    <!--</right>-->
+    <left>
+    </left>
+    <center>
+    </center>
+    <right>
+    </right>
 </BorderPane>
