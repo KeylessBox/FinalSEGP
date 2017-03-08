@@ -1,0 +1,68 @@
+#filters_box {
+    -fx-border-color: grey;
+    -fx-border-insets: 20px;
+    -fx-background-insets: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+#filters_bar {
+    -fx-background-color: #43546e;
+    -fx-padding: 5px;
+
+}
+#filters_label {
+    -fx-text-fill: #ffffff;
+}
+#add_green_btn {
+    -fx-background-image: url("../res/icons/green_add_icon.png");
+
+    -fx-border-width: 0 1 0 1;
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+}
+#add_red_btn {
+    -fx-background-image: url("../res/icons/red_add_icon.png");
+    -fx-background-repeat: stretch;
+
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 1 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-margin: 0 0 0 0;
+}
+.filter_btn {
+    -fx-opacity: 0.70;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-border-color: #57626e;
+}
+.filter_btn:hover {
+    -fx-opacity: 1;
+}
+#setting_btn {
+    -fx-background-image: url("../res/icons/settings_icon.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+}
+#filters_scroll {
+    -fx-min-height: 125px;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+#filters_scroll > .viewport{
+    -fx-background-image: url("../res/images/background.jpg");
+}
+#filters_scroll:focused{
+    -fx-background-insets: 0;
+}
+#filters_scroll .corner{
+    -fx-background-insets: 0;
+}
