@@ -30,30 +30,39 @@
 }
 
 .toggle-button {
-    -fx-background-color:
-            #161616,
-            #404040,
-            linear-gradient(to bottom, #555555 2%, #1e1e1e 98%);
+    -fx-background-color:#42536d;
     -fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
     -fx-background-radius: 0;
     -fx-padding: 0.4em 1.833333em 0.4em 1.833333em;
-    -fx-text-fill: rgb(255, 255, 255);
+    -fx-text-fill: white;
+    -fx-border-color: black;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
 }
 
-#first.toggle-button{
-    -fx-background-insets: 0, 1, 2 1 1 1;
-    -fx-background-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2;
+.toggle-button:selected {
+    /*-fx-background-color: #6a7c91;*/
+    /*-fx-border-color: transparent;*/
+    /*-fx-text-fill: black;*/
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
+    -fx-background-color: #ffffff;
+    -fx-text-fill: black;
+    -fx-border-color: #3e506a;
 }
 
-#last.toggle-button {
+.toggle-button.first {
+     -fx-background-insets: 0, 1, 2 1 1 1;
+     -fx-background-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2;
+     -fx-border-insets: 0, 1, 2 1 1 1;
+     -fx-border-radius: 3 0 0 3, 2 0 0 2, 2 0 0 2 ;
+ }
+
+
+.toggle-button.last {
+    -fx-border-insets: 0, 1 1 1 0, 2 1 1 1;
     -fx-background-insets: 0, 1 1 1 0, 2 1 1 1;
+    -fx-border-radius: 0 3 3 0, 0 2 2 0, 0 2 2 0;
     -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 2 2 0;
 }
 
-.toggle-button:selected{
-    -fx-background-color:
-            rgba(218, 218, 218, 0.3),
-            #344029,
-            linear-gradient(to bottom, #555555 2%, #1e1e1e 98%);
-}
+
 

@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css"
-            xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.MainController">
+
+<BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
-        <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css"
-              BorderPane.alignment="CENTER">
-            <Label layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" text="Cheeky Scar"
-                   textFill="WHITE">
+        <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
+            <Label layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" text="Cheeky Scar" textFill="WHITE">
                 <font>
-                    <Font size="26.0"/>
+                    <Font size="26.0" />
                 </font>
             </Label>
-            <MenuBar depthTest="DISABLE" layoutX="1602.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0"
-                     prefWidth="153.0">
+            <MenuBar depthTest="DISABLE" layoutX="1602.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="153.0">
                 <menus>
                     <Menu id="settings_btn" mnemonicParsing="false">
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="1710.0" layoutY="8.0">
                                 <image>
-                                    <Image url="@../res/icons/settings_icon.png"/>
+                                    <Image url="@../res/icons/settings_icon.png" />
                                 </image>
                             </ImageView>
                         </graphic>
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <Pane minHeight="340" minWidth="450" nodeOrientation="LEFT_TO_RIGHT"
-                                          styleClass="settings_bar" stylesheets="@../css/main_stage.css">
+                                    <Pane minHeight="340" minWidth="450" nodeOrientation="LEFT_TO_RIGHT" styleClass="settings_bar" stylesheets="@../css/main_stage.css">
                                         <!--<TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0"-->
                                         <!--promptText="keyword..."/>-->
                                         <!--<Button layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0"-->
@@ -49,7 +54,7 @@
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
-                                    <Image url="@../res/icons/add_icon.png"/>
+                                    <Image url="@../res/icons/add_icon.png" />
                                 </image>
                             </ImageView>
                         </graphic>
@@ -58,7 +63,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/coming_soon_sub_menu.png"/>
+                                            <Image url="@../res/icons/coming_soon_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -67,7 +72,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/manual_sub_menu.png"/>
+                                            <Image url="@../res/icons/manual_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -76,7 +81,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/extra_sub_menu.png"/>
+                                            <Image url="@../res/icons/extra_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -88,19 +93,16 @@
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
-                                    <Image url="@../res/icons/search_icon.png"/>
+                                    <Image url="@../res/icons/search_icon.png" />
                                 </image>
                             </ImageView>
                         </graphic>
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <Pane minHeight="80" minWidth="300" nodeOrientation="LEFT_TO_RIGHT"
-                                          styleClass="search_bar" stylesheets="@../css/main_stage.css">
-                                        <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0"
-                                                   promptText="keyword..."/>
-                                        <Button layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0"
-                                                text="search">
+                                    <Pane minHeight="80" minWidth="300" nodeOrientation="LEFT_TO_RIGHT" styleClass="search_bar" stylesheets="@../css/main_stage.css">
+                                        <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0" promptText="keyword..." />
+                                        <Button layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0" text="search">
                                         </Button>
                                     </Pane>
                                 </graphic>
@@ -111,7 +113,7 @@
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
-                                    <Image url="@../res/icons/user_icon.png"/>
+                                    <Image url="@../res/icons/user_icon.png" />
                                 </image>
                             </ImageView>
                         </graphic>
@@ -120,7 +122,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/settins_sub_menu.png"/>
+                                            <Image url="@../res/icons/settins_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -129,7 +131,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/messages_sub_menu.png"/>
+                                            <Image url="@../res/icons/messages_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -138,7 +140,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/logoff_sub_menu.png"/>
+                                            <Image url="@../res/icons/logoff_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -147,13 +149,13 @@
                     </Menu>
                 </menus>
                 <opaqueInsets>
-                    <Insets/>
+                    <Insets />
                 </opaqueInsets>
                 <padding>
-                    <Insets left="15.0" right="15.0" top="5.0"/>
+                    <Insets left="15.0" right="15.0" top="5.0" />
                 </padding>
                 <cursor>
-                    <Cursor fx:constant="CLOSED_HAND"/>
+                    <Cursor fx:constant="CLOSED_HAND" />
                 </cursor>
             </MenuBar>
         </Pane>
@@ -161,22 +163,26 @@
     <left>
         <Pane prefHeight="886.0" prefWidth="228.0">
             <children>
-                <Pane layoutX="14.0" layoutY="24.0" prefHeight="72.0" prefWidth="228.0" styleClass="up"
-                      stylesheets="@../css/cases.css">
-                    <Button fx:id="test" layoutX="195.0"/>
-                    <HBox fx:id="tog" layoutX="26.0" layoutY="36.0">
-                        <ToggleButton text="All" fx:id="first" stylesheets="@../css/cases.css">
-                        </ToggleButton>
-                        <ToggleButton selected="true" text="New" stylesheets="@../css/cases.css">
-                        </ToggleButton>
-                        <ToggleButton text="Done" fx:id="last" stylesheets="@../css/cases.css">
-                        </ToggleButton>
-                    </HBox>
+                <Pane layoutX="14.0" layoutY="24.0" prefHeight="72.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
+                    <Button fx:id="test" layoutX="195.0" />
+               <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
+                       <ToggleButton prefHeight="25.0" prefWidth="56.0" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
+                     <font>
+                        <Font size="10.0" />
+                     </font></ToggleButton>
+                       <ToggleButton prefHeight="25.0" prefWidth="67.0" selected="true" text="New">
+                     <font>
+                        <Font size="10.0" />
+                     </font></ToggleButton>
+                       <ToggleButton prefHeight="25.0" prefWidth="67.0" styleClass="last" stylesheets="@../css/cases.css" text="Done">
+                     <font>
+                        <Font size="10.0" />
+                     </font></ToggleButton>
+               </HBox>
 
                 </Pane>
-                <ScrollPane layoutX="14.0" layoutY="97.0" styleClass="custom_scroll_pane"
-                            stylesheets="@../css/cases.css">
-                    <VBox fx:id="CasesContainer" spacing="0"/>
+                <ScrollPane layoutX="14.0" layoutY="97.0" styleClass="custom_scroll_pane" stylesheets="@../css/cases.css">
+                    <VBox fx:id="CasesContainer" spacing="0" />
                 </ScrollPane>
             </children>
         </Pane>
