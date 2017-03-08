@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
@@ -32,12 +33,12 @@
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <Pane nodeOrientation="LEFT_TO_RIGHT" styleClass="settings_bar"
-                                          stylesheets="@../css/main_stage.css" minWidth="450" minHeight="340">
+                                    <Pane minHeight="340" minWidth="450" nodeOrientation="LEFT_TO_RIGHT"
+                                          styleClass="settings_bar" stylesheets="@../css/main_stage.css">
                                         <!--<TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0"-->
-                                                   <!--promptText="keyword..."/>-->
+                                        <!--promptText="keyword..."/>-->
                                         <!--<Button layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0"-->
-                                                <!--text="search">-->
+                                        <!--text="search">-->
                                         <!--</Button>-->
                                     </Pane>
                                 </graphic>
@@ -54,14 +55,14 @@
                         </graphic>
                         <items>
                             <MenuItem mnemonicParsing="false">
-                            <graphic>
-                                <ImageView>
-                                    <image>
-                                        <Image url="@../res/icons/coming_soon_sub_menu.png"/>
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </MenuItem>
+                                <graphic>
+                                    <ImageView>
+                                        <image>
+                                            <Image url="@../res/icons/coming_soon_sub_menu.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </MenuItem>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
                                     <ImageView>
@@ -94,8 +95,8 @@
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <Pane nodeOrientation="LEFT_TO_RIGHT" styleClass="search_bar"
-                                          stylesheets="@../css/main_stage.css" minWidth="300" minHeight="80">
+                                    <Pane minHeight="80" minWidth="300" nodeOrientation="LEFT_TO_RIGHT"
+                                          styleClass="search_bar" stylesheets="@../css/main_stage.css">
                                         <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0"
                                                    promptText="keyword..."/>
                                         <Button layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0"
@@ -158,11 +159,31 @@
         </Pane>
     </top>
     <left>
-        <fx:include source="cases.fxml" fx:id="cases"/>
+        <Pane prefHeight="886.0" prefWidth="228.0">
+            <children>
+                <Pane layoutX="14.0" layoutY="24.0" prefHeight="72.0" prefWidth="228.0" styleClass="up"
+                      stylesheets="@../css/cases.css">
+                    <Button fx:id="test" layoutX="195.0"/>
+                    <HBox fx:id="tog" layoutX="26.0" layoutY="36.0">
+                        <ToggleButton text="All" fx:id="first" stylesheets="@../css/cases.css">
+                        </ToggleButton>
+                        <ToggleButton selected="true" text="New" stylesheets="@../css/cases.css">
+                        </ToggleButton>
+                        <ToggleButton text="Done" fx:id="last" stylesheets="@../css/cases.css">
+                        </ToggleButton>
+                    </HBox>
+
+                </Pane>
+                <ScrollPane layoutX="14.0" layoutY="97.0" styleClass="custom_scroll_pane"
+                            stylesheets="@../css/cases.css">
+                    <VBox fx:id="CasesContainer" spacing="0"/>
+                </ScrollPane>
+            </children>
+        </Pane>
     </left>
     <center>
         <VBox>
-            <fx:include source="filters.fxml" fx:id="filters" />
+            <!--<fx:include source="filters.fxml" fx:id="filters" />-->
             <!--<fx:include source="table.fxml" fx:id="table" />-->
         </VBox>
     </center>
