@@ -32,9 +32,41 @@
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
+                                    <Pane nodeOrientation="LEFT_TO_RIGHT" styleClass="settings_bar"
+                                          stylesheets="@../css/main_stage.css" minWidth="450" minHeight="340">
+                                        <!--<TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0"-->
+                                                   <!--promptText="keyword..."/>-->
+                                        <!--<Button layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0"-->
+                                                <!--text="search">-->
+                                        <!--</Button>-->
+                                    </Pane>
+                                </graphic>
+                            </MenuItem>
+                        </items>
+                    </Menu>
+                    <Menu id="add_btn" mnemonicParsing="false">
+                        <graphic>
+                            <ImageView fitHeight="15.0" fitWidth="15.0">
+                                <image>
+                                    <Image url="@../res/icons/add_icon.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                        <items>
+                            <MenuItem mnemonicParsing="false">
+                            <graphic>
+                                <ImageView>
+                                    <image>
+                                        <Image url="@../res/icons/coming_soon_sub_menu.png"/>
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                        </MenuItem>
+                            <MenuItem mnemonicParsing="false">
+                                <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/settins_sub_menu.png"/>
+                                            <Image url="@../res/icons/manual_sub_menu.png"/>
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -43,22 +75,14 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/messages_sub_menu.png"/>
-                                        </image>
-                                    </ImageView>
-                                </graphic>
-                            </MenuItem>
-                            <MenuItem mnemonicParsing="false">
-                                <graphic>
-                                    <ImageView>
-                                        <image>
-                                            <Image url="@../res/icons/logoff_sub_menu.png"/>
+                                            <Image url="@../res/icons/extra_sub_menu.png"/>
                                         </image>
                                     </ImageView>
                                 </graphic>
                             </MenuItem>
                         </items>
                     </Menu>
+
                     <Menu id="search_btn" mnemonicParsing="false">
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
@@ -93,45 +117,29 @@
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <VBox id="profile-pane" layoutX="100" layoutY="100" prefHeight="200.0"
-                                          prefWidth="100.0">
-                                        <children>
-                                            <VBox>
-                                                <ImageView>
-                                                    <image>
-                                                        <Image url="@../res/icons/settins_sub_menu.png"/>
-                                                    </image>
-                                                </ImageView>
-                                                <ImageView>
-                                                    <image>
-                                                        <Image url="@../res/icons/messages_sub_menu.png"/>
-                                                    </image>
-                                                </ImageView>
-                                                <ImageView>
-                                                    <image>
-                                                        <Image url="@../res/icons/logoff_sub_menu.png"/>
-                                                    </image>
-                                                </ImageView>
-                                            </VBox>
-                                        </children>
-                                    </VBox>
+                                    <ImageView>
+                                        <image>
+                                            <Image url="@../res/icons/settins_sub_menu.png"/>
+                                        </image>
+                                    </ImageView>
                                 </graphic>
                             </MenuItem>
-                        </items>
-                    </Menu>
-                    <Menu id="add_btn" mnemonicParsing="false">
-                        <graphic>
-                            <ImageView fitHeight="15.0" fitWidth="15.0">
-                                <image>
-                                    <Image url="@../res/icons/add_icon.png"/>
-                                </image>
-                            </ImageView>
-                        </graphic>
-                        <items>
-                            <MenuItem mnemonicParsing="false" text="Settings">
+                            <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true"
-                                               preserveRatio="true"/>
+                                    <ImageView>
+                                        <image>
+                                            <Image url="@../res/icons/messages_sub_menu.png"/>
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </MenuItem>
+                            <MenuItem mnemonicParsing="false">
+                                <graphic>
+                                    <ImageView>
+                                        <image>
+                                            <Image url="@../res/icons/logoff_sub_menu.png"/>
+                                        </image>
+                                    </ImageView>
                                 </graphic>
                             </MenuItem>
                         </items>

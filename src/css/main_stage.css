@@ -57,6 +57,12 @@
     -fx-background-image: url("../res/icons/search_bar.png");
 }
 
+.settings_bar {
+    -fx-background-repeat: stretch;
+    -fx-background-size: 450 340;
+    -fx-background-image: url("../res/icons/settings_bar.png");
+}
+
 #settings_btn.menu:hover {
     -fx-opacity: 1;
     -fx-background-repeat: stretch;
@@ -72,6 +78,13 @@
 .menu-item {
     -fx-padding: 0;
     -fx-background-color: transparent;
+    -fx-opacity: 0.90;
+}
+
+.menu-item:hover {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-opacity: 1.5;
 }
 
 .button {
@@ -82,6 +95,8 @@
     -fx-background-radius: 0 3 3 0;
     -fx-background-color: #FFFFFF,
     #FFFFFF;
+    -fx-padding: 5 10 5 10;
+    -fx-text-alignment: left;
 }
 
 .button:pressed {
@@ -109,8 +124,8 @@
 
 .text-field {
     -fx-border-color: gray;
-
     -fx-border-radius: 0, 0, 0, 0;
+    -fx-padding: 5 10 5 10;
 }
 
 .text-field {
