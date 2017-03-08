@@ -10,6 +10,8 @@
     -fx-cursor: default;
 }
 
+
+
 .menu-bar {
     -fx-background-color: transparent;
     -fx-cursor: default;
@@ -26,15 +28,13 @@
     -fx-background-color: #43546e;
     -fx-background-radius: 2;
 }
+
 #add_btn.menu:hover {
     -fx-background-repeat: stretch;
     -fx-opacity: 1;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
     -fx-background-color: transparent;
-    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
-    /*-fx-background-color: #43546e;*/
-    /*-fx-background-radius: 2;*/
 }
 
 #user_btn.menu:hover {
@@ -43,9 +43,6 @@
     -fx-background-size: 15 15;
     -fx-background-position: center center;
     -fx-background-color: transparent;
-    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
-    /*-fx-background-color: #43546e;*/
-    /*-fx-background-radius: 2;*/
 }
 
 #search_btn.menu:hover {
@@ -54,9 +51,12 @@
     -fx-background-size: 15 15;
     -fx-background-position: center center;
     -fx-background-color: transparent;
-    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
-    /*-fx-background-color: #43546e;*/
-    /*-fx-background-radius: 2;*/
+}
+
+.search_bar{
+    -fx-background-repeat: stretch;
+    -fx-background-size: 300 80;
+    -fx-background-image: url("../res/icons/search_bar.png");
 }
 
 #settings_btn.menu:hover {
@@ -65,35 +65,31 @@
     -fx-background-size: 15 15;
     -fx-background-position: center center;
     -fx-background-color: transparent;
-    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);*/
-    /*-fx-background-color: #43546e;*/
-    /*-fx-background-radius: 2;*/
 }
-
 
 .context-menu {
     -fx-background-color: transparent;
 }
 
-/*.context-menu {*/
-    /*-fx-background-color: transparent;*/
-/*}*/
-
-/*.context-menu .label {*/
-    /*-fx-background-color: transparent;*/
-    /*-fx-opacity: 10;*/
-    /*-fx-text-fill: black*/
-/*}*/
-
-.menu-item{
+.menu-item {
     -fx-padding: 0;
     -fx-background-color: transparent;
 }
 
 /*.menu-item:focused {*/
-    /*-fx-background-color: transparent;*/
+/*-fx-background-color: transparent;*/
 /*}*/
 
 /*.menu-item:focused .label {*/
-    /*-fx-text-fill: blue*/
+/*-fx-text-fill: blue*/
+/*}*/
+
+/*.context-menu {*/
+/*-fx-background-color: transparent;*/
+/*}*/
+
+/*.context-menu .label {*/
+/*-fx-background-color: transparent;*/
+/*-fx-opacity: 10;*/
+/*-fx-text-fill: black*/
 /*}*/
