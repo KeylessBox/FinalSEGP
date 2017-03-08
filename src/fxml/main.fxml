@@ -158,13 +158,13 @@
         </Pane>
     </top>
     <left>
-        <!--<fx:include source="cases.fxml" fx:id="cases"/>-->
+        <fx:include source="cases.fxml" fx:id="cases"/>
     </left>
     <center>
-        <HBox>
-            <!--<fx:include source="filters.fxml" fx:id="filters" />-->
+        <VBox>
+            <fx:include source="filters.fxml" fx:id="filters" />
             <!--<fx:include source="table.fxml" fx:id="table" />-->
-        </HBox>
+        </VBox>
     </center>
     <right>
         <!--<fx:include source="notes.fxml" fx:id="notes" />-->
