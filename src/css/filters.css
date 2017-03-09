@@ -5,8 +5,10 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 #filters_bar {
-    -fx-background-color: #43546e;
-    -fx-padding: 5px;
+    -fx-background-image: url("../res/icons/filters_top_bar.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
 
 }
 #filters_label {
@@ -37,7 +39,6 @@
     -fx-opacity: 0.70;
     -fx-min-width: 25px;
     -fx-min-height: 25px;
-    -fx-border-color: #57626e;
 }
 .filter_btn:hover {
     -fx-opacity: 1;

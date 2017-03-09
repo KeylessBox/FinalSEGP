@@ -10,37 +10,4 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox id="filters_box" stylesheets="@../css/filters.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox id="filters_bar" spacing="2.0">
-         <children>
-            <ImageView fitHeight="17.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../res/icons/39919.png" />
-               </image>
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </ImageView>
-            <Label id="filters_label" text="Filters">
-               <HBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </HBox.margin>
-            </Label>
-            <Button styleClass="filter_btn" fx:id="add_green_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" />
-            <Button styleClass="filter_btn" fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" />
-            <Region HBox.hgrow="ALWAYS" />
-            <Button styleClass="filter_btn" fx:id="setting_btn" mnemonicParsing="false" />
-         </children>
-      </HBox>
-      <ScrollPane id="filters_scroll">
-         <content>
-            <HBox>
-               <children>
 
-               </children>
-            </HBox>
-         </content>
-      </ScrollPane>
-   </children>
-</VBox>
