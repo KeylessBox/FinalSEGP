@@ -211,14 +211,14 @@
         <VBox minWidth="1458">
         <AnchorPane>
             <children>
-                <VBox id="filters_box" prefHeight="196.0" prefWidth="1678.0" stylesheets="@../css/filters.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="0.0">
+                <VBox id="filters_box" maxWidth="1678.0" minWidth="1678.0" prefHeight="196.0" prefWidth="1678.0" stylesheets="@../css/filters.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <HBox id="filters_bar" spacing="2.0">
+                        <HBox id="filters_bar" maxWidth="1458.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
                             <children>
-                           <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="80.0" />
+                           <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
                                 <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
                               <HBox.margin>
-                                 <Insets left="5.0" />
+                                 <Insets left="2.0" />
                               </HBox.margin></Button>
                                 <!--<ImageView fitHeight="17.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -235,13 +235,13 @@
                                 </Label>-->
                                 <Button fx:id="add_green_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
                               <HBox.margin>
-                                 <Insets left="8.0" />
+                                 <Insets left="6.0" />
                               </HBox.margin></Button>
-                           <Region maxWidth="1458.0" minWidth="1458.0" prefWidth="1458.0" HBox.hgrow="ALWAYS" />
+                           <Region maxWidth="1280.0" minWidth="1280.0" prefWidth="1280.0" />
                                 <Button fx:id="setting_btn" mnemonicParsing="false" prefHeight="27.0" prefWidth="33.0" styleClass="filter_btn" />
                             </children>
                         </HBox>
-                        <ScrollPane id="filters_scroll" prefHeight="125.0" prefWidth="1458.0">
+                        <ScrollPane id="filters_scroll" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
                             <content>
                                 <HBox>
                                     <children>

@@ -6,8 +6,6 @@
 }
 #filters_bar {
     -fx-background-image: url("../res/icons/filters_top_bar.png");
-    -fx-background-repeat: repeat-x;
-    -fx-background-size: cover;
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
