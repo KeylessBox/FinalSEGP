@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane id="suspect_pane" layoutX="3.0" layoutY="3.0" stylesheets="@../css/suspect.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox id="suspect_box">
+            <children>
+                <HBox id="suspect_bar">
+                    <children>
+                        <Label id="suspect_identification" text="A"/>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="suspect_label" text="Suspect"/>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <HBox alignment="TOP_RIGHT">
+                            <children>
+                                <Button minHeight="12.0" minWidth="15.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="button_edit">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Button>
+                                <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="button_delete">
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </Button>
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+                <TextField id="suspect_name_text"> </TextField>
+                <TextField id="suspect_phone_text">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin></TextField>
+            </children>
+        </VBox>
+    </children>
+    <padding>
+        <Insets right="10.0" />
+    </padding>
+</Pane>

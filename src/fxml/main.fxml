@@ -249,18 +249,15 @@
                                 <content>
                                     <HBox spacing="5.0">
                                         <children>
+                                            <fx:include source="suspect.fxml" />
+                                            <fx:include source="victim.fxml" />
+                                            <fx:include source="suspect.fxml" />
                                             <fx:include source="victim.fxml" />
                                             <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
+                                            <fx:include source="suspect.fxml" />
+                                            <fx:include source="suspect.fxml" />
+                                            <fx:include source="suspect.fxml" />
+                                            <fx:include source="suspect.fxml" />
                                         </children>
                               <padding>
                                  <Insets left="15.0" top="15.0" />
