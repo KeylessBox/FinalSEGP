@@ -163,9 +163,35 @@
         </Pane>
     </top>
     <left>
-        <Pane prefHeight="886.0" prefWidth="228.0" style="-fx-background-color: transparent; -fx-border-color:transparent">
+        <Pane prefHeight="886.0" prefWidth="228.0" style="-fx-background-color: transparent ">
             <children>
-                <Pane layoutX="20.0" layoutY="20.0" prefHeight="72.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
+            <Pane layoutX="18.0" layoutY="89.0">
+               <children>
+                      <ScrollPane layoutX="2.0" layoutY="2.0" prefWidth="228.0" stylesheets="@../css/cases.css">
+                          <VBox fx:id="CasesContainer" prefWidth="228.0" spacing="0">
+                              <children>
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                              </children>
+                          </VBox>
+                          <padding>
+                              <Insets top="2.0" />
+                          </padding>
+                      </ScrollPane>
+               </children>
+            </Pane>
+                <Pane layoutX="20.0" layoutY="14.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
                     <Button fx:id="test" layoutX="190.0" layoutY="-5.0" stylesheets="@../css/cases.css" />
                     <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
                         <ToggleButton prefHeight="25.0" prefWidth="56.0" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
@@ -185,28 +211,6 @@
                         </ToggleButton>
                     </HBox>
                 </Pane>
-                <ScrollPane layoutX="19.0" layoutY="91.0" style="-fx-background-color: transparent; -fx-border-color:transparent">
-                    <VBox fx:id="CasesContainer" spacing="1" style="-fx-background-color: transparent; -fx-border-color:transparent">
-                        <children>
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                            <fx:include source="case.fxml" />
-                        </children>
-                    </VBox>
-                    <padding>
-                        <Insets top="2.0" />
-                    </padding>
-                </ScrollPane>
             </children>
         </Pane>
     </left>
@@ -259,11 +263,6 @@
                     </VBox>
                 </children>
             </AnchorPane>
-            <ImageView fitHeight="28.0" fitWidth="1458.0">
-                <image>
-                    <Image url="@../res/icons/filters_top_bar.png" />
-                </image>
-            </ImageView>
             <BorderPane.margin>
                 <Insets left="30.0" />
             </BorderPane.margin>

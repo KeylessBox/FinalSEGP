@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="40.0" prefWidth="230.0" styleClass="custom_hbox" stylesheets="@../css/case.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox prefHeight="38.0" prefWidth="230.0" styleClass="custom_hbox" stylesheets="@../css/case.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <Pane prefHeight="40.0" prefWidth="4.0" styleClass="indicator" stylesheets="@../css/case.css">
          <HBox.margin>
@@ -30,7 +30,7 @@
                         <Insets left="2.0" top="4.0" />
                      </HBox.margin>
                       </Label>
-                      <TextField fx:id="caseName" prefHeight="17.0" prefWidth="113.0" text="Cheeky Scar ">
+                      <TextField fx:id="caseName" prefHeight="17.0" prefWidth="113.0" text="Cheeky Scar Suka">
                           <font>
                               <Font name="Calibri Bold" size="15.0" />
                           </font>
@@ -77,7 +77,4 @@
     <opaqueInsets>
         <Insets />
     </opaqueInsets>
-    <padding>
-        <Insets right="5.0" />
-    </padding>
 </HBox>

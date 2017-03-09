@@ -30,7 +30,6 @@
 .scroll-bar:vertical .track{
 	-fx-background-color: transparent;
 	-fx-border-color:derive(gray,80%);
-
 	-fx-background-radius: 2em;
 	-fx-border-radius:2em;
 }
