@@ -7,6 +7,13 @@
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 1, 0, 0, 0);
+    -fx-opacity: 1;
+}
+.custom_hbox:hover {
+    -fx-opacity: 0.91;
+}
+.custom_hbox:pressed {
+    -fx-opacity: 1;
 }
 
 .indicator{
@@ -14,7 +21,7 @@
     -fx-background-color: #5cc1df;
     -fx-border-color: rgba(147, 147, 147, 0.5);
     -fx-background-radius: 1;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 1, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 1, 0, 0, 0);
 }
 
 #custom.label{
