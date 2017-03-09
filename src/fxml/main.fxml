@@ -12,13 +12,14 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.AnchorPane?>
 <BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
         <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
@@ -184,24 +185,19 @@
                         </ToggleButton>
                     </HBox>
                 </Pane>
-                <ScrollPane layoutX="19.0" layoutY="91.0" styleClass="custom_scroll_pane" stylesheets="@../css/cases.css" >
-                    <VBox fx:id="CasesContainer" prefWidth="228" spacing="1">
+                <ScrollPane layoutX="19.0" layoutY="91.0" styleClass="custom_scroll_pane" stylesheets="@../css/cases.css">
+                    <VBox fx:id="CasesContainer" prefWidth="228" spacing="0">
                         <children>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
-                            <fx:include source="case.fxml"/>
+                            <ImageView fitHeight="34.0" fitWidth="228.0">
+                                <image>
+                                    <Image url="@../res/icons/case_frame.png" />
+                                </image>
+                            </ImageView>
+                            <ImageView fitHeight="34.0" fitWidth="228.0">
+                                <image>
+                                    <Image url="@../res/icons/case_frame.png" />
+                                </image>
+                            </ImageView>
                         </children>
                     </VBox>
                 </ScrollPane>
@@ -209,15 +205,51 @@
         </Pane>
     </left>
     <center>
-        <!--<VBox minWidth="1458">-->
-        <!--<AnchorPane>-->
-        <!--<children>-->
-        <!--<fx:include source="filters.fxml" fx:id="filters"  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"-->
-        <!--AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>-->
-        <!--</children>-->
-        <!--</AnchorPane>-->
-        <!--&lt;!&ndash;<fx:include source="table.fxml" fx:id="table" />&ndash;&gt;-->
-        <!--</VBox>-->
+        <VBox minWidth="1458">
+        <AnchorPane>
+            <children>
+                <VBox id="filters_box" stylesheets="@../css/filters.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <HBox id="filters_bar" spacing="2.0">
+                            <children>
+                           <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="80.0" />
+                                <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="30.0" styleClass="filter_btn" />
+                                <!--<ImageView fitHeight="17.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../res/icons/filters_icon.png" />
+                                    </image>
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </HBox.margin>
+                                </ImageView>
+                                <Label id="filters_label" text="Filters">
+                                    <HBox.margin>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </HBox.margin>
+                                </Label>-->
+                                <Button fx:id="add_green_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="35.0" styleClass="filter_btn" />
+                           <Region HBox.hgrow="ALWAYS" />
+                                <Button fx:id="setting_btn" mnemonicParsing="false" prefHeight="27.0" prefWidth="33.0" styleClass="filter_btn" />
+                            </children>
+                        </HBox>
+                        <ScrollPane id="filters_scroll">
+                            <content>
+                                <HBox>
+                                    <children>
+
+                                    </children>
+                                </HBox>
+                            </content>
+                        </ScrollPane>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+         <BorderPane.margin>
+            <Insets left="30.0" />
+         </BorderPane.margin>
+        <!--<fx:include source="table.fxml" fx:id="table" />-->
+        </VBox>
     </center>
     <right>
         <!--<fx:include source="notes.fxml" fx:id="notes" />-->
