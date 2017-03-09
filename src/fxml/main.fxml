@@ -185,8 +185,8 @@
                         </ToggleButton>
                     </HBox>
                 </Pane>
-                <ScrollPane layoutX="19.0" layoutY="91.0" styleClass="custom_scroll_pane" stylesheets="@../css/cases.css">
-                    <VBox fx:id="CasesContainer" prefWidth="228" spacing="0">
+                <ScrollPane layoutX="19.0" layoutY="91.0" style="-fx-background-color: transparent ">
+                    <VBox fx:id="CasesContainer" spacing="0" style="-fx-background-color: transparent ">
                         <children>
                             <fx:include source="case.fxml" />
                             <fx:include source="case.fxml" />
@@ -203,66 +203,71 @@
                             <fx:include source="case.fxml" />
                         </children>
                     </VBox>
+                    <padding>
+                        <Insets top="2.0" />
+                    </padding>
                 </ScrollPane>
             </children>
         </Pane>
     </left>
     <center>
         <VBox minWidth="1458">
-        <AnchorPane>
-            <children>
-                <VBox id="filters_box" maxWidth="1678.0" minWidth="1678.0" prefHeight="196.0" prefWidth="1678.0" stylesheets="@../css/filters.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="0.0">
-                    <children>
-                        <HBox id="filters_bar" maxWidth="1458.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
-                            <children>
-                           <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
-                                <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
-                              <HBox.margin>
-                                 <Insets left="2.0" />
-                              </HBox.margin></Button>
-                                <!--<ImageView fitHeight="17.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../res/icons/filters_icon.png" />
-                                    </image>
-                                    <HBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </HBox.margin>
-                                </ImageView>
-                                <Label id="filters_label" text="Filters">
-                                    <HBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </HBox.margin>
-                                </Label>-->
-                                <Button fx:id="add_green_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
-                              <HBox.margin>
-                                 <Insets left="6.0" />
-                              </HBox.margin></Button>
-                           <Region maxWidth="1275.0" minWidth="1279.0" prefWidth="1275.0" />
-                                <Button fx:id="setting_btn" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                            </children>
-                        </HBox>
-                        <ScrollPane id="filters_scroll" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
-                            <content>
-                                <HBox>
-                                    <children>
+            <AnchorPane>
+                <children>
+                    <VBox id="filters_box" maxWidth="1678.0" minWidth="1678.0" prefHeight="196.0" prefWidth="1678.0" stylesheets="@../css/filters.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="0.0">
+                        <children>
+                            <HBox id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
+                                <children>
+                                    <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
+                                    <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
+                                        <HBox.margin>
+                                            <Insets left="2.0" />
+                                        </HBox.margin>
+                                    </Button>
+                                    <!--<ImageView fitHeight="17.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../res/icons/filters_icon.png" />
+                                        </image>
+                                        <HBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </HBox.margin>
+                                    </ImageView>
+                                    <Label id="filters_label" text="Filters">
+                                        <HBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </HBox.margin>
+                                    </Label>-->
+                                    <Button fx:id="add_green_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
+                                        <HBox.margin>
+                                            <Insets left="6.0" />
+                                        </HBox.margin>
+                                    </Button>
+                                    <Region maxWidth="1275.0" minWidth="1279.0" prefWidth="1275.0" />
+                                    <Button fx:id="setting_btn" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                </children>
+                            </HBox>
+                            <ScrollPane id="filters_scroll" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
+                                <content>
+                                    <HBox>
+                                        <children>
 
-                                    </children>
-                                </HBox>
-                            </content>
-                        </ScrollPane>
-                    </children>
-                </VBox>
-            </children>
-        </AnchorPane>
-         <ImageView fitHeight="28.0" fitWidth="1458.0">
-            <image>
-               <Image url="@../res/icons/filters_top_bar.png" />
-            </image>
-         </ImageView>
-         <BorderPane.margin>
-            <Insets left="30.0" />
-         </BorderPane.margin>
-        <!--<fx:include source="table.fxml" fx:id="table" />-->
+                                        </children>
+                                    </HBox>
+                                </content>
+                            </ScrollPane>
+                        </children>
+                    </VBox>
+                </children>
+            </AnchorPane>
+            <ImageView fitHeight="28.0" fitWidth="1458.0">
+                <image>
+                    <Image url="@../res/icons/filters_top_bar.png" />
+                </image>
+            </ImageView>
+            <BorderPane.margin>
+                <Insets left="30.0" />
+            </BorderPane.margin>
+            <!--<fx:include source="table.fxml" fx:id="table" />-->
         </VBox>
     </center>
     <right>

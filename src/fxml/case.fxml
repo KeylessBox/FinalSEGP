@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="40.0" prefWidth="228.0" styleClass="custom_hbox" stylesheets="@../css/case.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox prefHeight="40.0" prefWidth="230.0" styleClass="custom_hbox" stylesheets="@../css/case.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <Pane prefHeight="40.0" prefWidth="5.0" styleClass="indicator" stylesheets="@../css/case.css">
+      <Pane prefHeight="40.0" prefWidth="4.0" styleClass="indicator" stylesheets="@../css/case.css">
          <HBox.margin>
             <Insets />
          </HBox.margin></Pane>
@@ -19,13 +19,16 @@
             <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="custom" alignment="TOP_CENTER" prefHeight="16.0" prefWidth="48.0" text="new">
+                  <Label fx:id="custom" alignment="TOP_CENTER" prefHeight="14.0" prefWidth="42.0" text="new">
                      <font>
-                        <Font name="Calibri Bold" size="16.0" />
+                        <Font name="Calibri Bold" size="11.0" />
                      </font>
                       <padding>
                           <Insets bottom="1.0" />
                       </padding>
+                     <HBox.margin>
+                        <Insets left="2.0" top="4.0" />
+                     </HBox.margin>
                       </Label>
                       <TextField fx:id="caseName" prefHeight="17.0" prefWidth="113.0" text="Cheeky Scar ">
                           <font>
