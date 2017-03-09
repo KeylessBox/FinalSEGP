@@ -24,7 +24,7 @@
 <BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
         <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
-            <Label layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" text="Cheeky Scar" textFill="WHITE">
+            <Label id="case_name" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" text="Cheeky Scar" textFill="WHITE">
                 <font>
                     <Font size="26.0" />
                 </font>

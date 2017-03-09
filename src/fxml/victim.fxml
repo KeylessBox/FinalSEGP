@@ -15,9 +15,9 @@
          <children>
             <HBox id="victim_bar">
                <children>
-                  <Label id="victim_identification" text="A"></Label>
+                  <Label id="victim_identification" text="A"/>
                   <Region HBox.hgrow="ALWAYS" />
-                   <Label fx:id="victim_label" text="Victim"></Label>
+                   <Label fx:id="victim_label" text="Victim"/>
                   <Region HBox.hgrow="ALWAYS" />
                    <HBox alignment="TOP_RIGHT">
                        <children>

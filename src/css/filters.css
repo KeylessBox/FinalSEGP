@@ -72,3 +72,25 @@
 #filters_scroll .corner{
     -fx-background-insets: 0;
 }
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color:#42536d;
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+
+}
+.scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar:horizontal .track-background {
+    visibility: hidden;
+}
+
+.scroll-bar:horizontal .track {
+    visibility: hidden;
+}
+.hide-thumb .scroll-bar:horizontal .thumb {
+    -fx-background-color: transparent;
+}
