@@ -185,18 +185,23 @@
                     </HBox>
                 </Pane>
                 <ScrollPane layoutX="19.0" layoutY="91.0" styleClass="custom_scroll_pane" stylesheets="@../css/cases.css" >
-                    <VBox fx:id="CasesContainer" prefWidth="228" spacing="0">
+                    <VBox fx:id="CasesContainer" prefWidth="228" spacing="1">
                         <children>
-                            <ImageView fitHeight="34.0" fitWidth="228.0">
-                                <image>
-                                    <Image url="@../res/icons/case_frame.png" />
-                                </image>
-                            </ImageView>
-                            <ImageView fitHeight="34.0" fitWidth="228.0">
-                                <image>
-                                    <Image url="@../res/icons/case_frame.png" />
-                                </image>
-                            </ImageView>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
+                            <fx:include source="case.fxml"/>
                         </children>
                     </VBox>
                 </ScrollPane>
@@ -204,15 +209,15 @@
         </Pane>
     </left>
     <center>
-        <VBox minWidth="1458">
-        <AnchorPane>
-        <children>
-        <fx:include source="filters.fxml" fx:id="filters"  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
-        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
-        </children>
-        </AnchorPane>
-        <!--<fx:include source="table.fxml" fx:id="table" />-->
-        </VBox>
+        <!--<VBox minWidth="1458">-->
+        <!--<AnchorPane>-->
+        <!--<children>-->
+        <!--<fx:include source="filters.fxml" fx:id="filters"  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"-->
+        <!--AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>-->
+        <!--</children>-->
+        <!--</AnchorPane>-->
+        <!--&lt;!&ndash;<fx:include source="table.fxml" fx:id="table" />&ndash;&gt;-->
+        <!--</VBox>-->
     </center>
     <right>
         <!--<fx:include source="notes.fxml" fx:id="notes" />-->

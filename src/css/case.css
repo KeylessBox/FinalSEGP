@@ -1,9 +1,26 @@
-.root{
+
+.hbox-custom {
     -fx-background-image: url("../res/icons/case_frame.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 228 40;
-    -fx-background-color: transparent;
+    -fx-background-color: red;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);
+}
+
+.indicator{
+    -fx-background-color: #5cc1df;
+    -fx-border-color: gray;
+    -fx-background-radius: 2;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);
+}
+
+#custom.label{
+    -fx-background-radius:5;
+    -fx-border-radius:5;
+    -fx-text-fill: white;
+    -fx-background-color: #5cc1df;
+    -fx-text-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 3, 0, 0, 0);
 }
 
 .text-field {
@@ -11,11 +28,42 @@
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-padding: 0;
-    -fx-text-fill: grey;
+    -fx-text-fill: black;
 }
-.hbox:hover .text-field{
-    -fx-text-fill: blue;
+.button.button_edit{
+    -fx-min-height: 20px;
+    -fx-min-width: 20px;
+    -fx-background-size: 11px 11px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-image: url("../res/icons/edit_case_icon.png");
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-opacity: 0.8;
+    -fx-padding: 2;
 }
-.pane:hover . text-field{
-    -fx-text-fill: blue;
+.button.button_delete{
+    -fx-min-height: 20px;
+    -fx-min-width: 20px;
+    -fx-background-size: 11px 11px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-image: url("../res/icons/close_case_icon.png");
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-opacity: 0.8;
+    -fx-padding: 2;
+}
+
+.button.button_edit:hover{
+    -fx-opacity: 1;
+}
+.button.button_edit:pressed{
+    -fx-opacity: 0.5;
+}
+.button.button_delete:hover{
+    -fx-opacity: 1;
+}
+.button.button_delete:pressed{
+    -fx-opacity: 0.5;
 }

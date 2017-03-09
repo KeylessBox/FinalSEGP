@@ -9,48 +9,66 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="40.0" prefWidth="228.0" stylesheets="@../css/case.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-
+<HBox prefHeight="40.0" prefWidth="228.0" stylesheets="@../css/case.css" styleClass="hbox-custom" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <Pane prefHeight="40.0" prefWidth="5.0" />
+      <Pane prefHeight="40.0" prefWidth="5.0" styleClass="indicator" stylesheets="@../css/case.css">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin></Pane>
         <VBox prefHeight="40.0" prefWidth="170.0">
             <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="35.0" text="Label" />
-                      <TextField fx:id="caseName" prefHeight="21.0" prefWidth="105.0" text="Empty">
+                  <Label fx:id="custom" alignment="TOP_CENTER" prefHeight="16.0" prefWidth="48.0" text="new">
+                     <font>
+                        <Font name="Calibri Bold" size="16.0" />
+                     </font>
+                      <padding>
+                          <Insets bottom="1.0" />
+                      </padding>
+                      </Label>
+                      <TextField fx:id="caseName" prefHeight="17.0" prefWidth="113.0" text="Cheeky Scar ">
                           <font>
-                              <Font size="15.0" />
+                              <Font name="Calibri Bold" size="15.0" />
                           </font>
+                     <HBox.margin>
+                        <Insets left="4.0" />
+                     </HBox.margin>
                       </TextField>
                </children>
             </HBox>
-                <Label prefHeight="15.0" prefWidth="49.0" text="Label">
+                <Label prefHeight="15.0" prefWidth="135.0" text="Last time updated: 15:15:2017">
                     <padding>
                         <Insets left="1.0" />
                     </padding>
                     <font>
                         <Font size="10.0" />
                     </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
                 </Label>
             </children>
-            <padding>
-                <Insets left="15.0" top="4.0" />
-            </padding>
+         <padding>
+            <Insets left="10.0" top="4.0" />
+         </padding>
         </VBox>
-        <HBox prefHeight="22.0" prefWidth="48.0">
+        <HBox prefHeight="26.0" prefWidth="48.0">
             <children>
-                <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@../css/case.css">
+                <Button minHeight="12.0" minWidth="15.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="button_edit" stylesheets="@../css/case.css">
                     <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="8.0" />
                     </HBox.margin>
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" stylesheets="@../css/case.css">
+                <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="button_delete" stylesheets="@../css/case.css">
                     <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="8.0" />
                     </HBox.margin>
                 </Button>
             </children>
+         <padding>
+            <Insets top="2.0" />
+         </padding>
         </HBox>
     </children>
     <opaqueInsets>
