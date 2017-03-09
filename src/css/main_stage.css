@@ -20,6 +20,7 @@
     -fx-padding: 8;
 }
 
+
 .menu:showing {
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
     -fx-opacity: 1;
@@ -27,12 +28,19 @@
     -fx-background-radius: 2;
 }
 
+
 #add_btn.menu:hover {
     -fx-background-repeat: stretch;
     -fx-opacity: 1;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-background-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
+    -fx-opacity: 1;
+    -fx-background-color: #43546e;
+    -fx-background-radius: 2;
+}
+#add_btn.menu:pressed {
+    -fx-opacity: 0.5;
 }
 
 #user_btn.menu:hover {
@@ -40,7 +48,13 @@
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-background-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
+    -fx-opacity: 1;
+    -fx-background-color: #43546e;
+    -fx-background-radius: 2;
+}
+#user_btn.menu:pressed {
+    -fx-opacity: 0.5;
 }
 
 #search_btn.menu:hover {
@@ -48,8 +62,16 @@
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-background-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
+    -fx-opacity: 1;
+    -fx-background-color: #43546e;
+    -fx-background-radius: 2;
 }
+
+#search_btn.menu:pressed {
+   -fx-opacity: 0.5;
+}
+
 
 .search_bar {
     -fx-background-repeat: stretch;
@@ -68,7 +90,14 @@
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
-    -fx-background-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
+    -fx-opacity: 1;
+    -fx-background-color: #43546e;
+    -fx-background-radius: 2;
+}
+
+#settings_btn.menu:pressed {
+    -fx-opacity: 0.5;
 }
 
 .context-menu {

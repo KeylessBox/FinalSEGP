@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.AnchorPane?>
 <BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
         <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
@@ -169,33 +170,49 @@
                         <ToggleButton prefHeight="25.0" prefWidth="56.0" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
                             <font>
                                 <Font size="10.0" />
-                            </font></ToggleButton>
+                            </font>
+                        </ToggleButton>
                         <ToggleButton prefHeight="25.0" prefWidth="67.0" selected="true" text="New">
                             <font>
-                        <Font size="10.0" />
-                     </font></ToggleButton>
-                       <ToggleButton prefHeight="25.0" prefWidth="67.0" styleClass="last" stylesheets="@../css/cases.css" text="Done">
-                     <font>
-                        <Font size="10.0" />
-                     </font></ToggleButton>
-               </HBox>
+                                <Font size="10.0" />
+                            </font>
+                        </ToggleButton>
+                        <ToggleButton prefHeight="25.0" prefWidth="67.0" styleClass="last" stylesheets="@../css/cases.css" text="Done">
+                            <font>
+                                <Font size="10.0" />
+                            </font>
+                        </ToggleButton>
+                    </HBox>
                 </Pane>
-                <ScrollPane layoutX="14.0" layoutY="97.0" styleClass="custom_scroll_pane" stylesheets="@../css/cases.css">
-                    <VBox fx:id="CasesContainer" spacing="0" />
+                <ScrollPane layoutX="19.0" layoutY="91.0" styleClass="custom_scroll_pane" stylesheets="@../css/cases.css" >
+                    <VBox fx:id="CasesContainer" prefWidth="228" spacing="0">
+                        <children>
+                            <ImageView fitHeight="34.0" fitWidth="228.0">
+                                <image>
+                                    <Image url="@../res/icons/case_frame.png" />
+                                </image>
+                            </ImageView>
+                            <ImageView fitHeight="34.0" fitWidth="228.0">
+                                <image>
+                                    <Image url="@../res/icons/case_frame.png" />
+                                </image>
+                            </ImageView>
+                        </children>
+                    </VBox>
                 </ScrollPane>
             </children>
         </Pane>
     </left>
     <center>
-        <!--<VBox minWidth="1458">-->
-            <!--<AnchorPane>-->
-                <!--<children>-->
-                    <!--<fx:include source="filters.fxml" fx:id="filters"  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"-->
-                                <!--AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>-->
-                <!--</children>-->
-            <!--</AnchorPane>-->
-            <!--&lt;!&ndash;<fx:include source="table.fxml" fx:id="table" />&ndash;&gt;-->
-        <!--</VBox>-->
+        <VBox minWidth="1458">
+        <AnchorPane>
+        <children>
+        <fx:include source="filters.fxml" fx:id="filters"  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+        </children>
+        </AnchorPane>
+        <!--<fx:include source="table.fxml" fx:id="table" />-->
+        </VBox>
     </center>
     <right>
         <!--<fx:include source="notes.fxml" fx:id="notes" />-->

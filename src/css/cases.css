@@ -3,7 +3,7 @@
     -fx-background-size: 228 72;
     -fx-background-color: transparent;
     -fx-background-image: url("../res/icons/cases_menu_bar.png");
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);
 }
 
 #test.button {
@@ -20,11 +20,11 @@
 }
 
 #test.button:hover {
-    -fx-opacity: 0.9;
+    -fx-opacity: 1;
+    -fx-background-color: transparent;
 }
 #test.button:pressed {
-    -fx-opacity: 2;
-
+    -fx-opacity: 0.6;
 }
 
 .custom_scroll_pane {
