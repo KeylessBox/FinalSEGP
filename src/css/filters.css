@@ -6,8 +6,8 @@
 }
 #filters_bar {
     -fx-background-image: url("../res/icons/filters_top_bar.png");
-    -fx-background-repeat: stretch;
-    -fx-background-position: center center;
+    -fx-background-repeat: repeat-x;
+    -fx-background-size: cover;
     -fx-background-color: transparent;
 
 }
@@ -17,7 +17,6 @@
 #add_green_btn {
     -fx-background-image: url("../res/icons/green_add_icon.png");
 
-    -fx-border-width: 0 1 0 1;
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
@@ -30,10 +29,11 @@
     -fx-background-size: 15 15;
     -fx-background-position: center center;
     -fx-background-color: transparent;
-    -fx-border-width: 0 1 0 0;
+
     -fx-min-width: 25px;
     -fx-min-height: 25px;
     -fx-margin: 0 0 0 0;
+    -fx-padding: 0;
 }
 .filter_btn {
     -fx-opacity: 0.70;
