@@ -193,6 +193,7 @@
                           </VBox>
                           <padding>
                               <Insets top="2.0" />
+                              
                           </padding>
                       </ScrollPane>
                </children>
