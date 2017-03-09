@@ -40,6 +40,11 @@
 .filter_btn:hover {
     -fx-opacity: 1;
 }
+.filter_btn:pressed{
+    -fx-opacity: 0.5;
+}
+
+
 #setting_btn {
     -fx-background-image: url("../res/icons/settings_icon.png");
     -fx-background-repeat: stretch;
