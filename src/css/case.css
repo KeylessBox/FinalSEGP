@@ -34,6 +34,7 @@
     -fx-padding: 0;
     -fx-text-fill: black;
     -fx-prompt-text-fill: transparent;
+    -fx-accent: #3e506a;
 }
 .text-field:hover{
     -fx-background-color: transparent;
