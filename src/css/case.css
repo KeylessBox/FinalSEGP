@@ -2,8 +2,10 @@
 .custom_hbox {
     -fx-background-image: url("../res/icons/case_frame.png");
     -fx-background-repeat: stretch;
-    -fx-background-size: 229 39;
+    -fx-background-size: 228 40;
+    -fx-pref-size: 228 40;
     -fx-background-color: transparent;
+    -fx-border-color: transparent;
     /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);*/
 }
 

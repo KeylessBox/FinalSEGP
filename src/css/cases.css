@@ -3,7 +3,7 @@
     -fx-background-size: 228 72;
     -fx-background-color: transparent;
     -fx-background-image: url("../res/icons/cases_menu_bar.png");
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);*/
 }
 
 #test.button {

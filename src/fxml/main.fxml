@@ -163,7 +163,7 @@
         </Pane>
     </top>
     <left>
-        <Pane prefHeight="886.0" prefWidth="228.0">
+        <Pane prefHeight="886.0" prefWidth="228.0" style="-fx-background-color: transparent; -fx-border-color:transparent">
             <children>
                 <Pane layoutX="20.0" layoutY="20.0" prefHeight="72.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
                     <Button fx:id="test" layoutX="190.0" layoutY="-5.0" stylesheets="@../css/cases.css" />
@@ -185,8 +185,8 @@
                         </ToggleButton>
                     </HBox>
                 </Pane>
-                <ScrollPane layoutX="19.0" layoutY="91.0" style="-fx-background-color: transparent ">
-                    <VBox fx:id="CasesContainer" spacing="0" style="-fx-background-color: transparent ">
+                <ScrollPane layoutX="19.0" layoutY="91.0" style="-fx-background-color: transparent; -fx-border-color:transparent">
+                    <VBox fx:id="CasesContainer" spacing="1" style="-fx-background-color: transparent; -fx-border-color:transparent">
                         <children>
                             <fx:include source="case.fxml" />
                             <fx:include source="case.fxml" />
