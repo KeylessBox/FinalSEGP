@@ -183,6 +183,12 @@
                                   <fx:include source="case.fxml" />
                                   <fx:include source="case.fxml" />
                                   <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
                               </children>
                           </VBox>
                           <padding>
