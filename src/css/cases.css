@@ -15,10 +15,16 @@
     -fx-background-image: url("../res/icons/add_icon.png");
     -fx-background-color: transparent;
     -fx-opacity: 0.5;
+    -fx-padding: 2;
 }
 
 #test.button:hover {
     -fx-opacity: 1;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    /*-fx-background-repeat: stretch;*/
+    /*-fx-background-size: 15 15;*/
+    /*-fx-background-position: center center;*/
     -fx-background-color: transparent;
 }
 
