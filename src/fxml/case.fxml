@@ -40,7 +40,7 @@
                       </TextField>
                </children>
             </HBox>
-                <Label prefHeight="13.0" prefWidth="149.0" text="Last time updated at: 15:15:2017" textAlignment="CENTER">
+                <Label prefHeight="13.0" prefWidth="149.0" text="Last time updated at: 15:15:2017" textAlignment="CENTER" textFill="#909090">
                     <padding>
                         <Insets left="1.0" />
                     </padding>
@@ -48,7 +48,7 @@
                         <Font name="Calibri Bold Italic" size="10.0" />
                     </font>
                <VBox.margin>
-                  <Insets bottom="1.0" left="5.0" />
+                  <Insets bottom="1.0" left="4.0" />
                </VBox.margin>
                 </Label>
             </children>
