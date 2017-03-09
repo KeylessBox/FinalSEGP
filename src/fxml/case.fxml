@@ -19,7 +19,7 @@
             <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="custom" alignment="TOP_CENTER" prefHeight="14.0" prefWidth="42.0" text="new">
+                  <Label fx:id="custom" alignment="TOP_CENTER" prefHeight="14.0" prefWidth="32.0" text="new">
                      <font>
                         <Font name="Calibri Bold" size="11.0" />
                      </font>

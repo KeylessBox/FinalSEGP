@@ -165,7 +165,7 @@
     <left>
         <Pane prefHeight="886.0" prefWidth="228.0" style="-fx-background-color: transparent ">
             <children>
-            <Pane layoutX="18.0" layoutY="89.0">
+            <Pane layoutX="23.0" layoutY="97.0">
                <children>
                       <ScrollPane layoutX="2.0" layoutY="2.0" prefWidth="228.0" stylesheets="@../css/cases.css">
                           <VBox fx:id="CasesContainer" prefWidth="228.0" spacing="0">
@@ -191,7 +191,7 @@
                       </ScrollPane>
                </children>
             </Pane>
-                <Pane layoutX="20.0" layoutY="14.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
+                <Pane layoutX="25.0" layoutY="22.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
                     <Button fx:id="test" layoutX="190.0" layoutY="-5.0" stylesheets="@../css/cases.css" />
                     <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
                         <ToggleButton prefHeight="25.0" prefWidth="56.0" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
