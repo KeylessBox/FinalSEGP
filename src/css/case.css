@@ -1,9 +1,14 @@
 
-.hbox-custom {
-    -fx-background-image: url("../res/icons/case_frame.png");
-    -fx-background-repeat: stretch;
-    -fx-background-size: 228 40;
-    -fx-background-color: red;
+/*.hbox-custom {*/
+     /*-fx-background-image: url("../res/icons/case_frame.png");*/
+     /*-fx-background-repeat: stretch;*/
+     /*-fx-background-size: 228 40;*/
+     /*-fx-background-color: red;*/
+     /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);*/
+ /*}*/
+.custom_hbox {
+    -fx-border-color: gray;
+    -fx-background-color: transparent;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);
 }
 

@@ -1,5 +1,5 @@
 #filters_box {
-    -fx-border-color: grey;
+    -fx-border-color: transparent;
     -fx-border-insets: 20px;
     -fx-background-insets: 20px;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
@@ -9,7 +9,7 @@
     -fx-background-repeat: repeat-x;
     -fx-background-size: cover;
     -fx-background-color: transparent;
-
+    -fx-border-color: transparent;
 }
 #filters_label {
     -fx-text-fill: #ffffff;

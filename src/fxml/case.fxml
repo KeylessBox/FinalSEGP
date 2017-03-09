@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="40.0" prefWidth="228.0" stylesheets="@../css/case.css" styleClass="hbox-custom" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<HBox prefHeight="40.0" prefWidth="228.0" styleClass="custom_hbox" stylesheets="@../css/case.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <Pane prefHeight="40.0" prefWidth="5.0" styleClass="indicator" stylesheets="@../css/case.css">
          <HBox.margin>
