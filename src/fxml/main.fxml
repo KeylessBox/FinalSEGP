@@ -105,7 +105,7 @@
                                 <graphic>
                                     <Pane minHeight="80" minWidth="300" nodeOrientation="LEFT_TO_RIGHT" styleClass="search_bar" stylesheets="@../css/main_stage.css">
                                         <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0" promptText="keyword..." />
-                                        <Button layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0" text="search">
+                                        <Button contentDisplay="CENTER" layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0" text="search" textAlignment="CENTER">
                                         </Button>
                                     </Pane>
                                 </graphic>
@@ -272,7 +272,7 @@
                     </VBox>
                 </children>
             </AnchorPane>
-            <Pane fx:id="Table" prefHeight="793.0" prefWidth="1458.0" stylesheets="@../css/table.css">
+            <Pane fx:id="Table" prefHeight="637.0" prefWidth="1458.0" stylesheets="@../css/table.css">
             <styleClass>
                <String fx:value="root" />
                <String fx:value="Table" />
