@@ -14,7 +14,6 @@
 }
 #add_green_btn {
     -fx-background-image: url("../res/icons/green_add_icon.png");
-
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;

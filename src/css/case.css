@@ -1,15 +1,10 @@
 
-/*.hbox-custom {*/
-     /*-fx-background-image: url("../res/icons/case_frame.png");*/
-     /*-fx-background-repeat: stretch;*/
-     /*-fx-background-size: 228 40;*/
-     /*-fx-background-color: red;*/
-     /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);*/
- /*}*/
 .custom_hbox {
     -fx-border-color: gray;
     -fx-background-color: transparent;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);
+    -fx-border-radius: 0,2,2,0;
+    -fx-background-radius: 0,2,2,0;
+    /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);*/
 }
 
 .indicator{
@@ -29,12 +24,40 @@
 }
 
 .text-field {
+    -fx-border-color: transparent;
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-padding: 0;
     -fx-text-fill: black;
+    
 }
+
+.text-field:pressed{
+    -fx-background-color: transparent;
+}
+.text-field:selected{
+    -fx-background-color: transparent;
+}
+.text-field:showing{
+    -fx-background-color: transparent;
+}
+.text-field:armed{
+    -fx-background-color: transparent;
+}
+.text-field:hover{
+    -fx-background-color: transparent;
+}
+.text-field:focused{
+    -fx-background-color: transparent;
+}
+.text-field:editable{
+    -fx-background-color: transparent;
+}
+
+
+
+
 .button.button_edit{
     -fx-min-height: 20px;
     -fx-min-width: 20px;
