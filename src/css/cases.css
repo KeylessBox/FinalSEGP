@@ -63,13 +63,25 @@
     fx-background-width: 44;
     -fx-border-radius: 2,2,2,2;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 3, 0, 0, 0);
-
+    /*-fx-border-color:transparent ;*/
+    -fx-background-insets: 0;
+    -fx-padding: 0;
 }
 .scroll-pane{
     fx-background-width: 44;
     -fx-border-radius: 2,2,2,2;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 3, 0, 0, 0);
+    /*-fx-border-color:transparent ;*/
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
 
+.scroll-pane:focused {
+    -fx-background-insets: 0;
+}
+
+.scroll-pane .corner {
+    -fx-background-insets: 0;
 }
 
 
