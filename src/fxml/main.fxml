@@ -239,7 +239,7 @@
                             </HBox>
                             <ScrollPane id="filters_scroll" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
                                 <content>
-                                    <HBox>
+                                    <HBox spacing="5.0">
                                         <children>
                                             <fx:include source="victim.fxml" />
                                             <fx:include source="victim.fxml" />
@@ -254,6 +254,9 @@
                                             <fx:include source="victim.fxml" />
                                             <fx:include source="victim.fxml" />
                                         </children>
+                              <padding>
+                                 <Insets left="15.0" top="15.0" />
+                              </padding>
                                     </HBox>
                                 </content>
                             </ScrollPane>

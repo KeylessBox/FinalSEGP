@@ -9,18 +9,15 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-
-<Pane id="victim_pane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../css/victim.css">
+<Pane id="victim_pane" layoutX="3.0" layoutY="3.0" stylesheets="@../css/victim.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox id="victim_box" >
+      <VBox id="victim_box">
          <children>
             <HBox id="victim_bar">
                <children>
-                  <Label id="victim_identification" text="A">
-            </Label>
+                  <Label id="victim_identification" text="A"></Label>
                   <Region HBox.hgrow="ALWAYS" />
-                   <Label fx:id="victim_label" text="Victim">
-             </Label>
+                   <Label fx:id="victim_label" text="Victim"></Label>
                   <Region HBox.hgrow="ALWAYS" />
                    <HBox alignment="TOP_RIGHT">
                        <children>
@@ -39,9 +36,14 @@
                </children>
             </HBox>
              <TextField id="victim_name_text"> </TextField>
-      
-             <TextField id="victim_phone_text"> </TextField>
+             <TextField id="victim_phone_text">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></TextField>
          </children>
       </VBox>
    </children>
+   <padding>
+      <Insets right="10.0" />
+   </padding>
 </Pane>

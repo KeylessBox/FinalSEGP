@@ -8,6 +8,7 @@
     -fx-background-image: url("../res/icons/filters_top_bar.png");
     -fx-background-color: transparent;
     -fx-border-color: transparent;
+    -fx-margin: 10px;
 }
 #filters_label {
     -fx-text-fill: #ffffff;
@@ -56,15 +57,17 @@
     -fx-min-height: 25px;
 }
 #filters_scroll {
-    -fx-min-height: 125px;
+    -fx-min-height: 150px;
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
 #filters_scroll > .viewport{
     -fx-background-image: url("../res/images/background.jpg");
+    -fx-padding: 10px;
 }
 #filters_scroll:focused{
     -fx-background-insets: 0;
+
 }
 #filters_scroll .corner{
     -fx-background-insets: 0;

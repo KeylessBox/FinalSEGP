@@ -1,31 +1,33 @@
 #victim_pane {
-    -fx-background-color: transparent;
+    -fx-border-radius: 10px;
 }
 #victim_box {
-    -fx-background-image: url("../res/icons/victim_filter.png");
-
+    -fx-background-color: #e6ffe6;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 200, 200;
+    -fx-padding: 10px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+    -fx-background-radius: 10px;
 }
 #victim_bar {
     -fx-padding: 5px;
-    -fx-background-color: #ccffcc;
-    -fx-border-radius:  5px;
 }
 #victim_name_text {
-    -fx-background-color: #ccffcc;
-
+    -fx-background-color: transparent;
     -fx-border-width: 0 0 1 0;
     -fx-border-color: black;
     -fx-margin: 0 0 1px 0;
 }
 
 #victim_phone_text {
-    -fx-background-color: #ccffcc;
+    -fx-background-color: transparent;
     -fx-border-width: 0 0 1 0;
     -fx-border-color: black;
     -fx-margin: 0 0 3px 0;
 }
 #victim_identification {
-    -fx-text-fill: #00ff00;
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
     -fx-font-size: 16;
