@@ -308,7 +308,7 @@
                            <Insets left="45.0" top="8.0" />
                         </padding>
                      </HBox>
-                     <TableView editable="true" prefHeight="563.0" prefWidth="1464.0" VBox.vgrow="ALWAYS">
+                     <TableView editable="true" maxHeight="553.0" maxWidth="1440.0" prefHeight="563.0" prefWidth="1300.0" VBox.vgrow="ALWAYS">
                        <columns>
                            <TableColumn prefWidth="75.0" text="From">
                               <columns>
@@ -330,6 +330,9 @@
                         <columnResizePolicy>
                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                         </columnResizePolicy>
+                        <VBox.margin>
+                           <Insets left="10.0" />
+                        </VBox.margin>
                      </TableView>
                   </children>
                </VBox>
