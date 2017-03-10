@@ -135,10 +135,10 @@
     -fx-opacity: 0.5;
 }
 
-.button.btn:focused{
+.button.btn:focused {
     -fx-pref-height: 30;
     -fx-background-radius: 0 3 3 0;
-    -fx-padding:  0.083333em;
+    -fx-padding: 0.083333em;
 }
 
 .text-field {
@@ -169,6 +169,42 @@
     -fx-background-color: #43546e,
     #FFFFFF;
 }
+
+.tableview .tablecolumn .tablecolumn-background {
+    -fx-opacity: 0;
+}
+
+.tableview {
+    -fx-tab-min-width: 90px;
+}
+
+.tablecolumn {
+    -fx-background-insets: 0 1 0 1, 0, 0;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #e6e6e6;
+
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #3c3c3c;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #828282;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #96b946;
+}
+
+
+
 
 
 

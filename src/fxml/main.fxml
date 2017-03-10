@@ -308,7 +308,7 @@
                            <Insets left="45.0" top="8.0" />
                         </padding>
                      </HBox>
-                     <TableView editable="true" maxHeight="553.0" maxWidth="1440.0" prefHeight="563.0" prefWidth="1300.0" VBox.vgrow="ALWAYS">
+                     <TableView editable="true" maxHeight="553.0" maxWidth="1438.0" prefHeight="563.0" prefWidth="1298.0" stylesheets="@../css/table_view.css" VBox.vgrow="ALWAYS">
                        <columns>
                            <TableColumn prefWidth="75.0" text="From">
                               <columns>

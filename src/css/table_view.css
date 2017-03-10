@@ -1,48 +1,18 @@
 
-
-.table-column {
-  -fx-alignment: CENTER;
+.table-view{
+    -fx-border-radius: 2,2,2,2;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);
+    -fx-background-insets: 0;
+    -fx-padding: 0;
 }
 
-.text-field {
-    -fx-font-size: 15pt;
-    -fx-font-weight: bold
+.table-view:focused {
+    -fx-background-color: rgba(67, 84, 110, 0.01) /* or transparent or other preferred color */,-fx-box-border,-fx-control-inner-background;
+    -fx-background-insets: -1.4, 0, 1;
+    -fx-background-radius: 1.4, 0, 0;
+    -fx-padding: 1; /* 0.083333em; */
 }
 
-.table-view .column-header{
-    -fx-font-size: 15;
-    -fx-font-weight: bold
-}
 
-.table-cell {
-    -fx-font-size: 15px;
-    -fx-font-weight: bold
-}
-
-.text-field {
-    -fx-background-color:
-            #000000,
-            #FFFFFF;
-    -fx-background-insets: 0, 2;
-    -fx-background-radius: 0, 0;
-}
-
-.text-field:focused {
-    -fx-background-color:
-            #0093EF,
-            #FFFFFF;
-}
-
-.text-field:hover {
-    -fx-background-color:
-            #909090,
-            #FFFFFF;
-}
-
-.text-field:focused:hover {
-    -fx-background-color:
-            #0093EF,
-            #FFFFFF;
-}
 
 
