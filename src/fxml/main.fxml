@@ -105,7 +105,7 @@
                                 <graphic>
                                     <Pane minHeight="80" minWidth="300" nodeOrientation="LEFT_TO_RIGHT" styleClass="search_bar" stylesheets="@../css/main_stage.css">
                                         <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0" promptText="keyword..." />
-                                        <Button contentDisplay="CENTER" layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0" text="search" textAlignment="CENTER">
+                                        <Button contentDisplay="CENTER" layoutX="225.0" layoutY="28.0" prefHeight="29.0" prefWidth="61.0" text="search" textAlignment="CENTER">
                                         </Button>
                                     </Pane>
                                 </graphic>
@@ -231,7 +231,7 @@
                             <HBox id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
                                 <children>
                                     <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
-                                    <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
+                                    <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" stylesheets="@../css/filters.css">
                                         <HBox.margin>
                                             <Insets left="2.0" />
                                         </HBox.margin>
@@ -283,7 +283,15 @@
                   <Button fx:id="reload_button" layoutX="1359.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                   <Button fx:id="attach_button" layoutX="1324.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                   <Button fx:id="save_button" layoutX="1290.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-            </children></Pane>
+               <TextField layoutX="44.0" layoutY="38.0" prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
+               <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="467.0" layoutY="38.0" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
+                  <font>
+                     <Font name="Calibri Bold" size="14.0" />
+                  </font></Button>
+            </children>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets></Pane>
 
             <BorderPane.margin>
                 <Insets left="30.0" />

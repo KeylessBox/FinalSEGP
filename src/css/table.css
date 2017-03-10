@@ -30,7 +30,7 @@
     -fx-opacity: 0.8;
 }
 
-#add_button{
+#add_button {
     -fx-background-image: url("../res/icons/add_icon.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
@@ -50,7 +50,7 @@
     -fx-opacity: 0.8;
 }
 
-#reload_button{
+#reload_button {
     -fx-background-image: url("../res/icons/reload_icon.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 17 17;
@@ -70,7 +70,7 @@
     -fx-opacity: 0.8;
 }
 
-#attach_button{
+#attach_button {
     -fx-background-image: url("../res/icons/attach_icon.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
@@ -90,7 +90,7 @@
     -fx-opacity: 0.8;
 }
 
-#save_button{
+#save_button {
     -fx-background-image: url("../res/icons/save_report_icon.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 20 20;
@@ -108,6 +108,61 @@
 
 #save_button:pressed {
     -fx-opacity: 0.8;
+}
+
+.button.btn {
+    -fx-border-width: 1;
+    -fx-border-radius: 0 3 3 0;
+    -fx-background-radius: 0 3 3 0;
+    -fx-text-alignment: center;
+    -fx-background-color: #334259,
+    #43546e;
+    -fx-opacity: 0.9;
+    -fx-focus-color: transparent;
+    -fx-pref-height: 29;
+}
+
+.button.btn:hover {
+    -fx-opacity: 1;
+}
+
+.button.btn:pressed {
+    -fx-opacity: 0.5;
+}
+
+.button.btn:focused{
+    -fx-pref-height: 30;
+    -fx-background-radius: 0 3 3 0;
+    -fx-padding:  0.083333em;
+}
+
+.text-field {
+    -fx-border-color: #43546e;
+    -fx-border-radius: 0, 0, 0, 0;
+    -fx-padding: 5 10 5 10;
+}
+
+.text-field {
+    -fx-background-color: #FFFFFF,
+    #FFFFFF;
+    -fx-border-width: 1;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 0, 0;
+}
+
+.text-field:focused {
+    -fx-background-color: #43546e,
+    #FFFFFF;
+}
+
+.text-field:hover {
+    -fx-background-color: #909090,
+    #FFFFFF;
+}
+
+.text-field:focused:hover {
+    -fx-background-color: #43546e,
+    #FFFFFF;
 }
 
 
