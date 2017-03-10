@@ -269,7 +269,7 @@
                     </VBox>
                 </children>
             </AnchorPane>
-            <Pane fx:id="Table" prefHeight="637.0" prefWidth="1458.0" stylesheets="@../css/table.css">
+            <Pane fx:id="Table" prefHeight="637.0" minWidth="1458.0" stylesheets="@../css/table.css">
             <styleClass>
                <String fx:value="root" />
                <String fx:value="Table" />

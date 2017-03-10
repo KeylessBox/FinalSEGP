@@ -19,11 +19,12 @@
     -fx-background-size: 15 15;
     -fx-background-position: center center;
     -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
 #add_red_btn {
     -fx-background-image: url("../res/icons/red_add_icon.png");
     -fx-background-repeat: stretch;
-
+     -fx-border-color: transparent;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
     -fx-background-color: transparent;
@@ -43,6 +44,16 @@
 }
 .filter_btn:pressed{
     -fx-opacity: 0.5;
+}
+
+.filter_btn:focused:pressed{
+    -fx-opacity: 0.5;
+}
+.filter_btn:focused{
+    -fx-opacity: 0.7;
+}
+.filter_btn:hover{
+    -fx-opacity: 1;
 }
 
 #setting_btn {

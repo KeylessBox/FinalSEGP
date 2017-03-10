@@ -111,6 +111,11 @@
 }
 
 .button.btn {
+    -fx-background-image: url("../res/icons/search_forward_icon.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 19 19;
+    -fx-background-position: center center;
+    -fx-text-fill: transparent;
     -fx-border-width: 1;
     -fx-border-radius: 0 3 3 0;
     -fx-background-radius: 0 3 3 0;
