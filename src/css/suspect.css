@@ -32,6 +32,7 @@
 	-fx-font-size: 16;
 }
 #suspect_label {
+
 	-fx-text-fill: #ff0000;
 	-fx-font-family: "Calibri";
 	-fx-font-weight: bold;
