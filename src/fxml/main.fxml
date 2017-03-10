@@ -1,40 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
 <?import java.lang.String?>
-<BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css"
-            xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controllers.MainController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="root" prefHeight="924.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
-        <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css"
-              BorderPane.alignment="CENTER">
-            <Label id="case_name" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" text="Cheeky Scar"
-                   textFill="WHITE">
+        <Pane id="menubar" prefHeight="42.0" prefWidth="1755.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
+            <Label id="case_name" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" text="Cheeky Scar" textFill="WHITE">
                 <font>
-                    <Font size="26.0"/>
+                    <Font size="26.0" />
                 </font>
             </Label>
-            <MenuBar depthTest="DISABLE" layoutX="1602.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0"
-                     prefWidth="153.0">
+            <MenuBar depthTest="DISABLE" layoutX="1602.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="153.0">
                 <menus>
                     <Menu id="settings_btn" mnemonicParsing="false">
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="1710.0" layoutY="8.0">
                                 <image>
-                                    <Image url="@../res/icons/settings_icon.png"/>
+                                    <Image url="@../res/icons/settings_icon.png" />
                                 </image>
                             </ImageView>
                         </graphic>
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <Pane minHeight="340" minWidth="450" nodeOrientation="LEFT_TO_RIGHT"
-                                          styleClass="settings_bar" stylesheets="@../css/main_stage.css">
+                                    <Pane minHeight="340" minWidth="450" nodeOrientation="LEFT_TO_RIGHT" styleClass="settings_bar" stylesheets="@../css/main_stage.css">
                                         <!--<TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0"-->
                                         <!--promptText="keyword..."/>-->
                                         <!--<Button layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0"-->
@@ -49,7 +57,7 @@
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
-                                    <Image url="@../res/icons/add_icon.png"/>
+                                    <Image url="@../res/icons/add_icon.png" />
                                 </image>
                             </ImageView>
                         </graphic>
@@ -58,7 +66,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/coming_soon_sub_menu.png"/>
+                                            <Image url="@../res/icons/coming_soon_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -67,7 +75,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/manual_sub_menu.png"/>
+                                            <Image url="@../res/icons/manual_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -76,7 +84,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/extra_sub_menu.png"/>
+                                            <Image url="@../res/icons/extra_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -88,19 +96,16 @@
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
-                                    <Image url="@../res/icons/search_icon.png"/>
+                                    <Image url="@../res/icons/search_icon.png" />
                                 </image>
                             </ImageView>
                         </graphic>
                         <items>
                             <MenuItem mnemonicParsing="false">
                                 <graphic>
-                                    <Pane minHeight="80" minWidth="300" nodeOrientation="LEFT_TO_RIGHT"
-                                          styleClass="search_bar" stylesheets="@../css/main_stage.css">
-                                        <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0"
-                                                   promptText="keyword..."/>
-                                        <Button contentDisplay="CENTER" layoutX="225.0" layoutY="28.0" prefHeight="30.0"
-                                                prefWidth="61.0" text="search" textAlignment="CENTER">
+                                    <Pane minHeight="80" minWidth="300" nodeOrientation="LEFT_TO_RIGHT" styleClass="search_bar" stylesheets="@../css/main_stage.css">
+                                        <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0" promptText="keyword..." />
+                                        <Button contentDisplay="CENTER" layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0" text="search" textAlignment="CENTER">
                                         </Button>
                                     </Pane>
                                 </graphic>
@@ -111,7 +116,7 @@
                         <graphic>
                             <ImageView fitHeight="15.0" fitWidth="15.0">
                                 <image>
-                                    <Image url="@../res/icons/user_icon.png"/>
+                                    <Image url="@../res/icons/user_icon.png" />
                                 </image>
                             </ImageView>
                         </graphic>
@@ -120,7 +125,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/settins_sub_menu.png"/>
+                                            <Image url="@../res/icons/settins_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -129,7 +134,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/messages_sub_menu.png"/>
+                                            <Image url="@../res/icons/messages_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -138,7 +143,7 @@
                                 <graphic>
                                     <ImageView>
                                         <image>
-                                            <Image url="@../res/icons/logoff_sub_menu.png"/>
+                                            <Image url="@../res/icons/logoff_sub_menu.png" />
                                         </image>
                                     </ImageView>
                                 </graphic>
@@ -147,13 +152,13 @@
                     </Menu>
                 </menus>
                 <opaqueInsets>
-                    <Insets/>
+                    <Insets />
                 </opaqueInsets>
                 <padding>
-                    <Insets left="15.0" right="15.0" top="5.0"/>
+                    <Insets left="15.0" right="15.0" top="5.0" />
                 </padding>
                 <cursor>
-                    <Cursor fx:constant="CLOSED_HAND"/>
+                    <Cursor fx:constant="CLOSED_HAND" />
                 </cursor>
             </MenuBar>
         </Pane>
@@ -161,58 +166,55 @@
     <left>
         <Pane prefHeight="886.0" prefWidth="228.0" style="-fx-background-color: transparent ">
             <children>
-                <Pane layoutX="23.0" layoutY="97.0">
-                    <children>
-                        <ScrollPane layoutX="2.0" layoutY="2.0" prefWidth="228.0" stylesheets="@../css/cases.css">
-                            <VBox fx:id="CasesContainer" prefWidth="228.0" spacing="0">
-                                <children>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                    <fx:include source="case.fxml"/>
-                                </children>
-                            </VBox>
-                            <padding>
-                                <Insets top="2.0"/>
-
-                            </padding>
-                        </ScrollPane>
-                    </children>
-                </Pane>
-                <Pane layoutX="25.0" layoutY="22.0" prefHeight="77.0" prefWidth="228.0" styleClass="up"
-                      stylesheets="@../css/cases.css">
-                    <Button fx:id="test" layoutX="190.0" layoutY="-5.0" stylesheets="@../css/cases.css"/>
+            <Pane layoutX="23.0" layoutY="97.0">
+               <children>
+                      <ScrollPane layoutX="2.0" layoutY="2.0" prefWidth="228.0" stylesheets="@../css/cases.css">
+                          <VBox fx:id="CasesContainer" prefWidth="228.0" spacing="0">
+                              <children>
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                                  <fx:include source="case.fxml" />
+                              </children>
+                          </VBox>
+                          <padding>
+                              <Insets top="2.0" />
+                              
+                          </padding>
+                      </ScrollPane>
+               </children>
+            </Pane>
+                <Pane layoutX="25.0" layoutY="22.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
+                    <Button fx:id="test" layoutX="190.0" layoutY="-5.0" stylesheets="@../css/cases.css" />
                     <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
-                        <ToggleButton prefHeight="25.0" prefWidth="56.0" styleClass="first"
-                                      stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
+                        <ToggleButton prefHeight="25.0" prefWidth="56.0" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
                             <font>
-                                <Font size="10.0"/>
+                                <Font size="10.0" />
                             </font>
                         </ToggleButton>
                         <ToggleButton prefHeight="25.0" prefWidth="67.0" selected="true" text="New">
                             <font>
-                                <Font size="10.0"/>
+                                <Font size="10.0" />
                             </font>
                         </ToggleButton>
-                        <ToggleButton prefHeight="25.0" prefWidth="67.0" styleClass="last"
-                                      stylesheets="@../css/cases.css" text="Done">
+                        <ToggleButton prefHeight="25.0" prefWidth="67.0" styleClass="last" stylesheets="@../css/cases.css" text="Done">
                             <font>
-                                <Font size="10.0"/>
+                                <Font size="10.0" />
                             </font>
                         </ToggleButton>
                     </HBox>
@@ -224,52 +226,42 @@
         <VBox minWidth="1458">
             <AnchorPane>
                 <children>
-                    <VBox id="filters_box" maxWidth="1678.0" minWidth="1678.0" prefHeight="196.0" prefWidth="1678.0"
-                          stylesheets="@../css/filters.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                          AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="0.0">
+                    <VBox id="filters_box" maxWidth="1678.0" minWidth="1678.0" prefHeight="196.0" prefWidth="1678.0" stylesheets="@../css/filters.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="0.0">
                         <children>
-                            <HBox id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0"
-                                  prefWidth="1458.0" spacing="2.0">
+                            <HBox id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
                                 <children>
-                                    <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0"/>
-                                    <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0"
-                                            prefWidth="25.0" styleClass="filter_btn">
+                                    <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
+                                    <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
                                         <HBox.margin>
-                                            <Insets left="2.0"/>
+                                            <Insets left="2.0" />
                                         </HBox.margin>
                                     </Button>
-                                    <Button fx:id="add_green_btn" mnemonicParsing="false" prefHeight="25.0"
-                                            prefWidth="25.0" styleClass="filter_btn">
+                                    <Button fx:id="add_green_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
                                         <HBox.margin>
-                                            <Insets left="6.0"/>
+                                            <Insets left="6.0" />
                                         </HBox.margin>
                                     </Button>
-                                    <Region maxWidth="1275.0" minWidth="1279.0" prefWidth="1275.0"/>
-                                    <Button fx:id="setting_btn" mnemonicParsing="false" prefHeight="27.0"
-                                            prefWidth="27.0" styleClass="filter_btn"/>
+                                    <Region maxWidth="1275.0" minWidth="1279.0" prefWidth="1275.0" />
+                                    <Button fx:id="setting_btn" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                 </children>
                             </HBox>
-                            <ScrollPane id="filters_scroll" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0"
-                                        prefWidth="1458.0">
+                            <ScrollPane id="filters_scroll" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
                                 <content>
                                     <HBox spacing="5.0">
                                         <children>
-                                            <fx:include source="victim.fxml"/>
-                                            <fx:include source="victim.fxml"/>
-                                            <fx:include source="victim.fxml"/>
-                                            <fx:include source="victim.fxml"/>
-                                            <fx:include source="victim.fxml"/>
-                                            <fx:include source="victim.fxml"/>
-                                            <fx:include source="victim.fxml"/>
-                                            <fx:include source="victim.fxml"/>
-                                            <fx:include source="victim.fxml"/>
-                                            <fx:include source="victim.fxml"/>
-                                            <fx:include source="victim.fxml"/>
-                                            <fx:include source="victim.fxml"/>
+                                            <fx:include source="suspect.fxml" />
+                                            <fx:include source="victim.fxml" />
+                                            <fx:include source="suspect.fxml" />
+                                            <fx:include source="victim.fxml" />
+                                            <fx:include source="victim.fxml" />
+                                            <fx:include source="suspect.fxml" />
+                                            <fx:include source="suspect.fxml" />
+                                            <fx:include source="suspect.fxml" />
+                                            <fx:include source="suspect.fxml" />
                                         </children>
-                                        <padding>
-                                            <Insets left="15.0" top="15.0"/>
-                                        </padding>
+                              <padding>
+                                 <Insets left="15.0" top="15.0" />
+                              </padding>
                                     </HBox>
                                 </content>
                             </ScrollPane>
@@ -278,26 +270,15 @@
                 </children>
             </AnchorPane>
             <Pane fx:id="Table" prefHeight="637.0" prefWidth="1458.0" stylesheets="@../css/table.css">
-                <styleClass>
-                    <String fx:value="root"/>
-                    <String fx:value="Table"/>
-                </styleClass>
-                <VBox.margin>
-                    <Insets left="20.0"/>
-                </VBox.margin>
-                <Button layoutX="1427" layoutY="2" fx:id="setting_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0"
-                        styleClass="filter_btn"/>
-                <Button layoutX="1392" layoutY="2" fx:id="add_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0"
-                        styleClass="filter_btn"/>
-                <Button layoutX="1358" layoutY="2" fx:id="reload_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0"
-                        styleClass="filter_btn"/>
-                <Button layoutX="1324" layoutY="2" fx:id="attach_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0"
-                        styleClass="filter_btn"/>
-                <Button layoutX="1290" layoutY="2" fx:id="save_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0"
-                        styleClass="filter_btn"/>
-            </Pane>
+            <styleClass>
+               <String fx:value="root" />
+               <String fx:value="Table" />
+            </styleClass>
+            <VBox.margin>
+               <Insets left="20.0" />
+            </VBox.margin></Pane>
             <BorderPane.margin>
-                <Insets left="30.0"/>
+                <Insets left="30.0" />
             </BorderPane.margin>
         </VBox>
     </center>

@@ -1,5 +1,78 @@
-.pane {
-	-fx-background-image: url("../res/images/suspect.png");
-	-fx-background-repeat: no-repeat;
-	-fx-background-size: 200, 200;	
+#suspect_pane {
+	-fx-border-radius: 10px;
 }
+#suspect_box {
+	-fx-background-color: #ffcccc;
+	-fx-background-repeat: no-repeat;
+	-fx-background-size: 200, 200;
+	-fx-padding: 10px;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+	-fx-border-radius: 10px;
+	-fx-border-width: 1px;
+	-fx-background-radius: 10px;
+}
+#suspect_bar {
+	-fx-padding: 5px;
+}
+#suspect_name_text {
+	-fx-background-color: transparent;
+	-fx-border-width: 0 0 1 0;
+	-fx-border-color: black;
+	-fx-margin: 0 0 1px 0;
+}
+#suspect_phone_text {
+	-fx-background-color: transparent;
+	-fx-border-width: 0 0 1 0;
+	-fx-border-color: black;
+	-fx-margin: 0 0 3px 0;
+}
+#suspect_identification {
+	-fx-font-family: "Calibri";
+	-fx-font-weight: bold;
+	-fx-font-size: 16;
+}
+#suspect_label {
+	-fx-text-fill: #ff0000;
+	-fx-font-family: "Calibri";
+	-fx-font-weight: bold;
+	-fx-font-size: 16px;
+	-fx-stroke: black;
+	-fx-stroke-width: 2;
+}
+.button.button_edit{
+	-fx-min-height: 20px;
+	-fx-min-width: 20px;
+	-fx-background-size: 11px 11px;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+	-fx-background-image: url("../res/icons/edit_case_icon.png");
+	-fx-background-color: transparent;
+	-fx-border-color: transparent;
+	-fx-opacity: 0.8;
+	-fx-padding: 2;
+}
+.button.button_delete{
+	-fx-min-height: 20px;
+	-fx-min-width: 20px;
+	-fx-background-size: 11px 11px;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+	-fx-background-image: url("../res/icons/close_case_icon.png");
+	-fx-background-color: transparent;
+	-fx-border-color: transparent;
+	-fx-opacity: 0.8;
+	-fx-padding: 2;
+}
+.button.button_edit:hover{
+	-fx-opacity: 1;
+}
+.button.button_edit:pressed{
+	-fx-opacity: 0.5;
+}
+.button.button_delete:hover{
+	-fx-opacity: 1;
+}
+.button.button_delete:pressed{
+	-fx-opacity: 0.5;
+}
+

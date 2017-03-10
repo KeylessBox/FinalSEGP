@@ -26,13 +26,11 @@
     -fx-border-width: 0 0 1 0;
     -fx-border-color: black;
     -fx-margin: 0 0 3px 0;
-
 }
 #victim_identification {
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
     -fx-font-size: 16;
-
 }
 #victim_label {
     -fx-text-fill: #00ff00;
@@ -53,7 +51,6 @@
 	-fx-border-color: transparent;
 	-fx-opacity: 0.8;
 	-fx-padding: 2;
-
 }
 .button.button_delete{
 	-fx-min-height: 20px;
@@ -67,7 +64,6 @@
 	-fx-opacity: 0.8;
 	-fx-padding: 2;
 }
-
 .button.button_edit:hover{
 	-fx-opacity: 1;
 }
