@@ -325,6 +325,7 @@
                         </ScrollPane>
                         <HBox id="notes_settings_bar" prefHeight="25.0" prefWidth="50.0">
                             <children>
+                                
                                 <Button id="notes_add_btn" blendMode="SRC_ATOP" mnemonicParsing="false">
                                     <HBox.margin>
                                         <Insets bottom="2.0" left="4.0" />
