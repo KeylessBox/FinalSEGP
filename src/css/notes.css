@@ -25,7 +25,7 @@
 #notes_bar_settings_btn {
     -fx-background-image: url("../res/icons/settings_icon.png");
     -fx-background-repeat: stretch;
-    -fx-background-size: 15 15;
+    -fx-background-size: 10 10;
     -fx-background-position: center center;
     -fx-background-color: transparent;
     -fx-border-width: 0 0 0 0;
@@ -35,7 +35,7 @@
 #notes_add_btn {
     -fx-min-height: 18px;
     -fx-min-width: 18px;
-    -fx-background-size: 15px 15px;
+    -fx-background-size: 10px 10px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
     -fx-background-image: url("../res/icons/add_icon.png");

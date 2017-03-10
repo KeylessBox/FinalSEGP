@@ -6,7 +6,7 @@
 
 <Pane stylesheets="@../css/notes.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView id="note_icon" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView id="note_icon" fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
           <image>
               <Image url="@../res/icons/note_icon.png" />
           </image>

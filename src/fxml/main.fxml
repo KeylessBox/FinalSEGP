@@ -29,7 +29,7 @@
                     <Font size="26.0" />
                 </font>
             </Label>
-            <MenuBar depthTest="DISABLE" layoutX="1602.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="153.0">
+            <MenuBar depthTest="DISABLE" layoutX="1656.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="149.0">
                 <menus>
                     <Menu id="settings_btn" mnemonicParsing="false">
                         <graphic>
@@ -155,7 +155,7 @@
                     <Insets />
                 </opaqueInsets>
                 <padding>
-                    <Insets left="15.0" right="15.0" top="5.0" />
+                    <Insets right="15.0" top="5.0" />
                 </padding>
                 <cursor>
                     <Cursor fx:constant="CLOSED_HAND" />
@@ -269,7 +269,7 @@
                     </VBox>
                 </children>
             </AnchorPane>
-            <Pane fx:id="Table" prefHeight="637.0" minWidth="1458.0" stylesheets="@../css/table.css">
+            <Pane fx:id="Table" minWidth="1458.0" prefHeight="637.0" stylesheets="@../css/table.css">
             <styleClass>
                <String fx:value="root" />
                <String fx:value="Table" />
@@ -316,7 +316,7 @@
                                                 <fx:include source="note.fxml" />
                                             </children>
                                  <padding>
-                                    <Insets left="12.0" top="15.0" />
+                                    <Insets left="10.0" top="10.0" />
                                  </padding>
                                         </VBox>
                                     </children>
@@ -327,19 +327,19 @@
                             <children>
                                 <Button id="notes_add_btn" blendMode="SRC_ATOP" mnemonicParsing="false">
                                     <HBox.margin>
-                                        <Insets bottom="2.0" right="6.0" />
+                                        <Insets bottom="2.0" left="4.0" />
                                     </HBox.margin></Button>
                                 <Button id="notes_bar_settings_btn" blendMode="SCREEN" mnemonicParsing="false">
                            <HBox.margin>
-                              <Insets bottom="2.0" />
+                              <Insets bottom="2.0" left="6.0" />
                            </HBox.margin></Button>
                             </children>
                             <VBox.margin>
                                 <Insets />
                             </VBox.margin>
-                            <padding>
-                                <Insets left="5.0" right="3.0" top="5.0" />
-                            </padding></HBox>
+                     <padding>
+                        <Insets top="3.0" />
+                     </padding></HBox>
                     </children>
                 </VBox>
             </children>

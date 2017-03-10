@@ -30,7 +30,7 @@
                         <Insets left="2.0" top="4.0" />
                      </HBox.margin>
                       </Label>
-                      <TextField fx:id="caseName" prefHeight="17.0" prefWidth="113.0" text="Cheeky Scar Suka">
+                      <TextField fx:id="caseName" editable="false" prefHeight="17.0" prefWidth="113.0" text="Cheeky Scar Suka">
                           <font>
                               <Font name="Calibri Bold" size="15.0" />
                           </font>
