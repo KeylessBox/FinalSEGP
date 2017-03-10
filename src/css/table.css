@@ -93,7 +93,7 @@
 #save_button{
     -fx-background-image: url("../res/icons/save_report_icon.png");
     -fx-background-repeat: stretch;
-    -fx-background-size: 20 20
+    -fx-background-size: 20 20;
     -fx-background-position: center center;
     -fx-background-color: transparent;
     -fx-border-width: 0 0 0 0;
