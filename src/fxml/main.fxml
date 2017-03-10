@@ -325,7 +325,7 @@
                            <TableColumn id="dateCoumn" prefWidth="75.0" text="Date" />
                            <TableColumn id="timeColumn" prefWidth="75.0" text="Time" />
                            <TableColumn id="typeColumn" prefWidth="75.0" text="Type Of Call" />
-                           <TableColumn id="durationColumn" prefWidth="75.0" text="Duration" />
+                           <TableColumn id="durationColumn" prefWidth="220.25" text="Duration" />
                        </columns>
                         <columnResizePolicy>
                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
