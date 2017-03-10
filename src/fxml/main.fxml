@@ -277,6 +277,17 @@
             <VBox.margin>
                <Insets left="20.0" />
             </VBox.margin></Pane>
+            <Button layoutX="1427" layoutY="2" fx:id="setting_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0"
+                    styleClass="filter_btn"/>
+            <Button layoutX="1392" layoutY="2" fx:id="add_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0"
+                    styleClass="filter_btn"/>
+            <Button layoutX="1358" layoutY="2" fx:id="reload_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0"
+                    styleClass="filter_btn"/>
+            <Button layoutX="1324" layoutY="2" fx:id="attach_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0"
+                    styleClass="filter_btn"/>
+            <Button layoutX="1290" layoutY="2" fx:id="save_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0"
+                    styleClass="filter_btn"/>
+
             <BorderPane.margin>
                 <Insets left="30.0" />
             </BorderPane.margin>
