@@ -9,3 +9,107 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);
     -fx-opacity: 1;
 }
+
+#setting_button {
+    -fx-background-image: url("../res/icons/settings_icon.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#setting_button:hover {
+    -fx-opacity: 1;
+}
+
+#setting_button:pressed {
+    -fx-opacity: 0.8;
+}
+
+#add_button{
+    -fx-background-image: url("../res/icons/add_icon.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#add_button:hover {
+    -fx-opacity: 1;
+}
+
+#add_button:pressed {
+    -fx-opacity: 0.8;
+}
+
+#reload_button{
+    -fx-background-image: url("../res/icons/reload_icon.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#reload_button:hover {
+    -fx-opacity: 1;
+}
+
+#reload_button:pressed {
+    -fx-opacity: 0.8;
+}
+
+#attach_button{
+    -fx-background-image: url("../res/icons/attach_icon.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#attach_button:hover {
+    -fx-opacity: 1;
+}
+
+#attach_button:pressed {
+    -fx-opacity: 0.8;
+}
+
+#save_button{
+    -fx-background-image: url("../res/icons/save_report_icon.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#save_button:hover {
+    -fx-opacity: 1;
+}
+
+#save_button:pressed {
+    -fx-opacity: 0.8;
+}
+
+
+
+
