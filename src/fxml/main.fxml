@@ -9,6 +9,8 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
@@ -278,16 +280,59 @@
                <Insets left="20.0" />
             </VBox.margin>
             <children>
-                  <Button fx:id="setting_button" layoutX="1426.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                  <Button fx:id="add_button" layoutX="1393.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                  <Button fx:id="reload_button" layoutX="1359.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                  <Button fx:id="attach_button" layoutX="1324.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                  <Button fx:id="save_button" layoutX="1290.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-               <TextField layoutX="44.0" layoutY="38.0" prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
-               <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="467.0" layoutY="38.0" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
-                  <font>
-                     <Font name="Calibri Bold" size="14.0" />
-                  </font></Button>
+               <VBox prefHeight="639.0" prefWidth="1458.0">
+                  <children>
+                     <HBox prefHeight="30.0" prefWidth="1458.0" spacing="7.0">
+                        <children>
+                           <Region HBox.hgrow="ALWAYS" />
+                              <Button fx:id="save_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                              <Button fx:id="attach_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                              <Button fx:id="reload_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                              <Button fx:id="add_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                              <Button fx:id="setting_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                        </children>
+                        <padding>
+                           <Insets bottom="2.0" left="2.0" right="4.0" top="2.0" />
+                        </padding>
+                     </HBox>
+                     <HBox prefHeight="46.0" prefWidth="1458.0">
+                        <children>
+                           <TextField prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
+                           <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
+                              <font>
+                                 <Font name="Calibri Bold" size="14.0" />
+                              </font>
+                           </Button>
+                        </children>
+                        <padding>
+                           <Insets left="45.0" top="8.0" />
+                        </padding>
+                     </HBox>
+                     <TableView editable="true" prefHeight="563.0" prefWidth="1464.0" VBox.vgrow="ALWAYS">
+                       <columns>
+                           <TableColumn prefWidth="75.0" text="From">
+                              <columns>
+                                 <TableColumn id="originIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
+                               <TableColumn id="originPhoneColumn" prefWidth="280.0" text="Phone Number" />
+                              </columns>
+                           </TableColumn>
+                           <TableColumn prefWidth="75.0" text="To">
+                              <columns>
+                                 <TableColumn id="destinationIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
+                               <TableColumn id="destinationPhoneColumn" prefWidth="206.0" text="Phone Number" />
+                              </columns>
+                           </TableColumn>
+                           <TableColumn id="dateCoumn" prefWidth="75.0" text="Date" />
+                           <TableColumn id="timeColumn" prefWidth="75.0" text="Time" />
+                           <TableColumn id="typeColumn" prefWidth="75.0" text="Type Of Call" />
+                           <TableColumn id="durationColumn" prefWidth="75.0" text="Duration" />
+                       </columns>
+                        <columnResizePolicy>
+                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                        </columnResizePolicy>
+                     </TableView>
+                  </children>
+               </VBox>
             </children>
             <opaqueInsets>
                <Insets />
