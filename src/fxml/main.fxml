@@ -322,6 +322,7 @@
                                     <TableColumn id="timeColumn" prefWidth="75.0" text="Time" />
                                     <TableColumn id="typeColumn" prefWidth="75.0" text="Type Of Call" />
                                     <TableColumn id="durationColumn" prefWidth="220.25" text="Duration" />
+                                    <TableColumn id="deleteColumn" maxWidth="40" minWidth="40" text="x" />
                                 </columns>
                                 <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
