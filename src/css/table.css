@@ -137,8 +137,6 @@
 
 .button.btn:focused {
     -fx-pref-height: 30;
-    -fx-background-radius: 0 3 3 0;
-    -fx-padding: 0.083333em;
 }
 
 .text-field {
