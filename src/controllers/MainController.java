@@ -162,9 +162,17 @@ public class MainController {
 
         //  CaseObj is considered as one of the case entries on the pane (with its image,labels and buttons)
         casesData = sql.loadCases();    //  Load Cases List from database:
-        // Clear current tabs:
-
         toggleControl();
+        String status = "All";
+        casesContainer.getChildren().clear();
+        if (casesTab.getSelectedToggle() == newToggleBtn) {
+            status = "New";
+        }
+        else if (casesTab.getSelectedToggle() == doneToggleBtn){
+            status = "Done";
+        }
+        loadTest(status);
+
         casesTab.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle toggle, Toggle newToggle) {
@@ -181,7 +189,6 @@ public class MainController {
         });
         //Every row of the Case table (thus, every case that exists in the database) has a status attribute (Investigating, Solved or Preliminary)
         //The for loop takes each case and checks what status it has, and then assigns the CaseObj position in the tab
-
     }
     private void loadTest(String status) {
         HBox CaseObject = null;
@@ -495,6 +502,7 @@ public class MainController {
 
         CaseRecord callRecord = new CaseRecord(String.valueOf(0), "case" + id++, "Description", "New", currentTime());
         sql.addCase(callRecord);
+
         loadCases();
     }
 
