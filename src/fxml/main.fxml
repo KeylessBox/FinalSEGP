@@ -348,31 +348,6 @@
                                     <children>
                                         <VBox fx:id="notes_box" prefHeight="939.0" prefWidth="50.0" spacing="10.0" AnchorPane.bottomAnchor="-89.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
-                                                <fx:include source="note.fxml" />
                                             </children>
                                             <padding>
                                                 <Insets left="10.0" top="10.0" />
