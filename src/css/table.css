@@ -30,7 +30,7 @@
     -fx-opacity: 0.8;
 }
 
-#add_button {
+#addCall {
     -fx-background-image: url("../res/icons/add_icon.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
@@ -42,11 +42,11 @@
     -fx-opacity: 0.8;
 }
 
-#add_button:hover {
+#addCall:hover {
     -fx-opacity: 1;
 }
 
-#add_button:pressed {
+#addCall:pressed {
     -fx-opacity: 0.8;
 }
 

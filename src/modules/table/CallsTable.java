@@ -27,14 +27,14 @@ public class CallsTable {
         };
 
         origin.setMinWidth(minCellWidth + 100);
-        origin.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("origin"));
+        origin.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("originPhoneColumn"));
         origin.setCellFactory(editableFactory);
         origin.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setOrigin(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "origin",t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "originPhoneColumn",t.getNewValue());
             }
         });
     }

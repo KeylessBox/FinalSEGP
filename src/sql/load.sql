@@ -10,7 +10,7 @@ CREATE TABLE `accounts` (id INT PRIMARY KEY AUTO_INCREMENT,
 
 CREATE TABLE IF NOT EXISTS cases(id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(35),
-    details VARCHAR(255), status ENUM ('Investigating','Solved','Preliminary'), date DATETIME DEFAULT NULL ) ENGINE= InnoDB;
+    details VARCHAR(255), status ENUM ('New','Done'), date DATETIME DEFAULT NULL ) ENGINE= InnoDB;
 
 CREATE TABLE IF NOT EXISTS notes(id INT PRIMARY KEY AUTO_INCREMENT,
     accountID INT, caseID INT, title VARCHAR(100), date DATE, data VARCHAR(255),
@@ -42,14 +42,14 @@ INSERT INTO `accounts`(`name`, `surname`, `email`, `password`, `privileges`) VAL
 ('', '', '', '', 'user');
 
 INSERT INTO cases(name, details, status, date) VALUES
-    ('Cheeky Scar', 'A mass murderer in Essex terrorizes peaceful people','Investigating','2017-02-14 17:52:20'),
-    ('Little Rabbit', 'A girl found dead with her rabbit close by', 'Solved','2017-02-14 17:52:20'),
-    ('Black Shoe', 'Description', 'Investigating','2017-02-14 17:52:20'),
-    ('Red Wedding', 'Description', 'Investigating','2017-02-14 17:52:20'),
-    ('Bloody locker', 'Description', 'Investigating','2017-02-14 17:52:20'),
-    ('Forest trail', 'Description', 'Investigating','2017-02-14 17:52:20'),
-    ('Donuts of skin', 'Description', 'Investigating','2017-02-14 17:52:20'),
-    ('Python in the house', 'Description', 'Investigating','2017-02-14 17:52:20');
+    ('Cheeky Scar', 'A mass murderer in Essex terrorizes peaceful people','New','2017-02-14 17:52:20'),
+    ('Little Rabbit', 'A girl found dead with her rabbit close by', 'New','2017-02-14 17:52:20'),
+    ('Black Shoe', 'Description', 'New','2017-02-14 17:52:20'),
+    ('Red Wedding', 'Description', 'Done','2017-02-14 17:52:20'),
+    ('Bloody locker', 'Description', 'Done','2017-02-14 17:52:20'),
+    ('Forest trail', 'Description', 'Done','2017-02-14 17:52:20'),
+    ('Donuts of skin', 'Description', 'Done','2017-02-14 17:52:20'),
+    ('Python in the house', 'Description', 'Done','2017-02-14 17:52:20');
 
 
 INSERT INTO people(firstName, lastName, gender, dayOfBirth, monthOfBirth, yearOfBirth, dateOfBirth) VALUES

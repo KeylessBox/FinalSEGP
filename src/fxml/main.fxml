@@ -28,7 +28,7 @@
     <top>
         <BorderPane id="menubar" prefHeight="42.0" prefWidth="1766.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
             <center>
-            <Label id="case_name" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" text="Cheeky Scar" textFill="WHITE">
+            <Label fx:id="caseTitle" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0"  textFill="WHITE">
                 <font>
                     <Font size="26.0" />
                 </font>
@@ -188,7 +188,7 @@
                 <Pane layoutX="18.0" layoutY="95.0">
                     <children>
                         <ScrollPane layoutX="2.0" layoutY="2.0" prefWidth="228.0" stylesheets="@../css/cases.css">
-                            <VBox fx:id="CasesContainer" prefWidth="228.0" spacing="0">
+                            <VBox fx:id="casesContainer" prefWidth="228.0" spacing="0">
                                 <children>
                                     <fx:include source="case.fxml" />
                                     <fx:include source="case.fxml" />
@@ -223,17 +223,17 @@
                 <Pane layoutX="20.0" layoutY="20.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
                     <Button fx:id="test" layoutX="190.0" layoutY="-5.0" stylesheets="@../css/cases.css" />
                     <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
-                        <ToggleButton prefHeight="25.0" prefWidth="56.0" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
+                        <ToggleButton fx:id="allToggleBtn" prefHeight="25.0" prefWidth="56.0" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER" >
                             <font>
                                 <Font size="10.0" />
                             </font>
                         </ToggleButton>
-                        <ToggleButton prefHeight="25.0" prefWidth="67.0" selected="true" text="New">
+                        <ToggleButton fx:id="newToggleBtn" prefHeight="25.0" prefWidth="67.0" selected="true" text="New">
                             <font>
                                 <Font size="10.0" />
                             </font>
                         </ToggleButton>
-                        <ToggleButton prefHeight="25.0" prefWidth="67.0" styleClass="last" stylesheets="@../css/cases.css" text="Done">
+                        <ToggleButton fx:id="doneToggleBtn" prefHeight="25.0" prefWidth="67.0" styleClass="last" stylesheets="@../css/cases.css" text="Done">
                             <font>
                                 <Font size="10.0" />
                             </font>
@@ -252,19 +252,10 @@
                 <VBox fillWidth="false" layoutX="9.0" minWidth="1444.0" prefHeight="958.0" prefWidth="1444.0">
                     <Pane id="filters_box" maxWidth="1678.0" minWidth="1481.0" prefHeight="170.0" prefWidth="1481.0" stylesheets="@../css/filters.css">
                         <children>
-                            <ScrollPane id="filters_scroll" layoutY="30.0" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
+                            <ScrollPane fx:id="filters_scroll" layoutY="30.0" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
                                 <content>
-                                    <HBox spacing="5.0">
+                                    <HBox fx:id="notesCT" spacing="5.0">
                                         <children>
-                                            <fx:include source="suspect.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="suspect.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="suspect.fxml" />
-                                            <fx:include source="suspect.fxml" />
-                                            <fx:include source="suspect.fxml" />
-                                            <fx:include source="suspect.fxml" />
                                         </children>
                                         <padding>
                                             <Insets left="15.0" top="15.0" />
@@ -277,12 +268,14 @@
                                     <HBox id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
                                         <children>
                                             <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
-                                            <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" stylesheets="@../css/filters.css">
+                                            <Button id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0"
+                                                  styleClass="filter_btn" stylesheets="@../css/filters.css" onAction="#addSuspect">
                                                 <HBox.margin>
                                                     <Insets left="2.0" />
                                                 </HBox.margin>
                                             </Button>
-                                            <Button fx:id="add_green_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
+                                            <Button id="add_green_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn"
+                                                  onAction="#addVictim">
                                                 <HBox.margin>
                                                     <Insets left="6.0" />
                                                 </HBox.margin>
@@ -295,87 +288,86 @@
                             </Pane>
                         </children>
                     </Pane>
-                    <Pane fx:id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1475.0" stylesheets="@../css/table.css">
-                        <styleClass>
-                            <String fx:value="root" />
-                            <String fx:value="Table" />
-                        </styleClass>
-                        <VBox.margin>
-                            <Insets top="30.0" />
-                        </VBox.margin>
+                <Pane id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1475.0" stylesheets="@../css/table.css">
+            <styleClass>
+               <String fx:value="root" />
+               <String fx:value="Table" />
+            </styleClass>
+            <VBox.margin>
+               <Insets top="30.0" />
+            </VBox.margin>
+            <children>
+               <TableView fx:id="table"editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
+                 <columns>
+                     <TableColumn prefWidth="75.0" text="From">
+                        <columns>
+                           <TableColumn fx:id="originIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
+                         <TableColumn fx:id="originPhoneColumn" prefWidth="280.0" text="Phone Number" />
+                        </columns>
+                     </TableColumn>
+                     <TableColumn prefWidth="75.0" text="To">
+                        <columns>
+                           <TableColumn fx:id="destinationIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
+                         <TableColumn fx:id="destinationPhoneColumn" prefWidth="206.0" text="Phone Number" />
+                        </columns>
+                     </TableColumn>
+                     <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
+                     <TableColumn fx:id="timeColumn" prefWidth="75.0" text="Time" />
+                     <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type Of Call" />
+                     <TableColumn fx:id="durationColumn" prefWidth="220.25" text="Duration" />
+                 </columns>
+                  <columnResizePolicy>
+                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                  </columnResizePolicy>
+               </TableView>
+               <VBox prefHeight="92.0" prefWidth="1458.0">
+                  <children>
+                     <HBox prefHeight="30.0" prefWidth="1458.0" spacing="7.0">
                         <children>
-                            <TableView editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
-                                <columns>
-                                    <TableColumn prefWidth="75.0" text="From">
-                                        <columns>
-                                            <TableColumn id="originIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
-                                            <TableColumn id="originPhoneColumn" prefWidth="280.0" text="Phone Number" />
-                                        </columns>
-                                    </TableColumn>
-                                    <TableColumn prefWidth="75.0" text="To">
-                                        <columns>
-                                            <TableColumn id="destinationIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
-                                            <TableColumn id="destinationPhoneColumn" prefWidth="206.0" text="Phone Number" />
-                                        </columns>
-                                    </TableColumn>
-                                    <TableColumn id="dateCoumn" prefWidth="75.0" text="Date" />
-                                    <TableColumn id="timeColumn" prefWidth="75.0" text="Time" />
-                                    <TableColumn id="typeColumn" prefWidth="75.0" text="Type Of Call" />
-                                    <TableColumn id="durationColumn" prefWidth="220.25" text="Duration" />
-                                </columns>
-                                <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                </columnResizePolicy>
-                            </TableView>
-                            <VBox prefHeight="92.0" prefWidth="1458.0">
-                                <children>
-                                    <HBox prefHeight="30.0" prefWidth="1458.0" spacing="7.0">
-                                        <children>
-                                            <Region HBox.hgrow="ALWAYS" />
-                                            <Button fx:id="save_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button fx:id="attach_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button fx:id="reload_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button fx:id="add_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button fx:id="setting_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                        </children>
-                                        <padding>
-                                            <Insets bottom="2.0" left="2.0" right="4.0" top="2.0" />
-                                        </padding>
-                                    </HBox>
-                                    <HBox prefHeight="46.0" prefWidth="1458.0">
-                                        <children>
-                                            <TextField prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
-                                            <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
-                                                <font>
-                                                    <Font name="Calibri Bold" size="14.0" />
-                                                </font>
-                                            </Button>
-                                        </children>
-                                        <padding>
-                                            <Insets left="45.0" top="8.0" />
-                                        </padding>
-                                    </HBox>
-                                </children>
-                            </VBox>
+                           <Region HBox.hgrow="ALWAYS" />
+                              <Button fx:id="save_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                              <Button fx:id="attach_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" onAction="#importFile"/>
+                              <Button fx:id="reload_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                              <Button fx:id="addCall" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                              <Button fx:id="setting_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                         </children>
-                        <opaqueInsets>
-                            <Insets />
-                        </opaqueInsets>
-                    </Pane>
-                </VBox>
+                        <padding>
+                           <Insets bottom="2.0" left="2.0" right="4.0" top="2.0" />
+                        </padding>
+                     </HBox>
+                     <HBox prefHeight="46.0" prefWidth="1458.0">
+                        <children>
+                           <TextField fx:id="searchBar"prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
+                           <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
+                              <font>
+                                 <Font name="Calibri Bold" size="14.0" />
+                              </font>
+                           </Button>
+                        </children>
+                        <padding>
+                           <Insets left="45.0" top="8.0" />
+                        </padding>
+                     </HBox>
+                  </children>
+               </VBox>
             </children>
-        </Pane>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets></Pane>
+</VBox>
+            </children>
+                </Pane>
     </center>
     <right>
         <Pane maxWidth="50.0" prefHeight="934.0" prefWidth="50.0" stylesheets="@../css/notes.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
             <children>
                 <VBox id="notes_vbox" prefHeight="938.0" prefWidth="50.0">
                     <children>
-                        <ScrollPane id="notes_scroll_pane" prefHeight="912.0" prefWidth="50.0">
+                        <ScrollPane fx:id="notes_scroll_pane" prefHeight="912.0" prefWidth="50.0">
                             <content>
                                 <AnchorPane prefHeight="850.0" prefWidth="50.0">
                                     <children>
-                                        <VBox id="notes_box" prefHeight="939.0" prefWidth="50.0" spacing="10.0" AnchorPane.bottomAnchor="-89.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <VBox fx:id="notes_box" prefHeight="939.0" prefWidth="50.0" spacing="10.0" AnchorPane.bottomAnchor="-89.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
                                                 <fx:include source="note.fxml" />
                                                 <fx:include source="note.fxml" />
