@@ -59,7 +59,7 @@
 }
 
 .table-row-cell {
-    -fx-background-color: -fx-table-cell-border-color, #e5e5e5;
+    -fx-background-color: -fx-table-cell-border-color, rgb(232, 232, 232);
     -fx-background-insets: 0, 0 0 1 0;
 }
 
