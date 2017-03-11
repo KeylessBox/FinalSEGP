@@ -152,7 +152,6 @@ public class MainController {
 
     private void toggleControl () {
         allToggleBtn.setToggleGroup(casesTab);
-        allToggleBtn.setSelected(true);
         newToggleBtn.setToggleGroup(casesTab);
         doneToggleBtn.setToggleGroup(casesTab);
     }
@@ -164,107 +163,109 @@ public class MainController {
         //  CaseObj is considered as one of the case entries on the pane (with its image,labels and buttons)
         casesData = sql.loadCases();    //  Load Cases List from database:
         // Clear current tabs:
-        casesContainer.getChildren().clear();
+
         toggleControl();
         casesTab.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle toggle, Toggle newToggle) {
-                if (newToggle == allToggleBtn) {
-                    HBox CaseObject = null;
-                    for (CaseRecord caseRecord : casesData) {
-                        try {
-                            CaseObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/case.fxml")); // Case object loads the fxml, with its nodes
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-
-                        // Initialise elements from Case object:
-                        HBox hb = (HBox) CaseObject.getChildren().get(2);
-                        Button deleteBtn = (Button) hb.getChildren().get(1);
-                        HBox finalCaseObj = CaseObject;
-                        VBox temp = (VBox) CaseObject.getChildren().get(1);
-                        HBox temp2 = (HBox) temp.getChildren().get(0);
-                        TextField caseName = (TextField) temp2.getChildren().get(1);
-                        caseName.setText(caseRecord.getName());
-                        Label caseDate = (Label) temp.getChildren().get(1);
-
-                        try {
-                            caseDate.setText(new SimpleDateFormat("yy-MM-dd  [HH:mm]").format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(caseRecord.getDate())));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-                        finalCaseObj.setId(String.valueOf(caseRecord.getCaseID()));
-
-                        // Update the main working area and load case files:
-                        finalCaseObj.setOnMouseClicked(event -> {
-                            String date = currentTime();
-                            int id = Integer.valueOf(finalCaseObj.getId());
-                            caseTitle.setText(caseRecord.getName());
-                            caseID = id;
-                            loadTable(caseID);
-                            loadFiles(caseID);
-                            search();
-                            sql.updateDate(caseID, date);
-                            caseRecord.setDate(date);
-                            try {
-                                caseDate.setText(new SimpleDateFormat("yy-MM-dd  [HH:mm]").format(new SimpleDateFormat(
-                                        "yyyy-MM-dd HH:mm:ss").parse(date)));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                        });
-
-                        //Update case name:
-                        caseName.setOnMouseClicked(event -> {
-                            caseName.setEditable(true);
-                            editing = true;
-                            int id = Integer.valueOf(finalCaseObj.getId());
-                            caseID = id;
-                            caseTitle.setText(caseRecord.getName());
-                            loadTable(caseID);
-                            loadFiles(caseID);
-                            search();
-                        });
-
-                        caseName.setOnAction(event -> {
-                            String change = caseName.getText();
-                            int id = Integer.valueOf(finalCaseObj.getId());
-                            System.out.println("Change case " + id + " name to : " + change);
-                            sql.updateCaseName(id, change);
-                            loadCases();
-                            caseName.setEditable(false);
-                            caseTitle.setText(change);
-                            editing = false;
-                        });
-                        deleteBtn.setOnAction(event -> {
-                            sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
-                            casesContainer.getChildren().remove(finalCaseObj);
-                        });
-                        casesContainer.getChildren().add(finalCaseObj);
-                    }
+                String status = "All";
+                casesContainer.getChildren().clear();
+                if (newToggle == newToggleBtn) {
+                    status = "New";
                 }
-               /* else if (newToggle == newToggleBtn) {
-                    casesContainer.getChildren().add(finalCaseObj);
-                    deleteBtn.setOnAction(event -> {
-                        sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
-                        casesContainer.getChildren().remove(finalCaseObj);
-                    });
+                else if (newToggle == doneToggleBtn){
+                    status = "Done";
                 }
-                else {
-                    casesContainer.getChildren().add(finalCaseObj);
-                    deleteBtn.setOnAction(event -> {
-                        sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
-                        casesContainer.getChildren().remove(finalCaseObj);
-                    });
-                }*/
+                loadTest(status);
             }
         });
         //Every row of the Case table (thus, every case that exists in the database) has a status attribute (Investigating, Solved or Preliminary)
         //The for loop takes each case and checks what status it has, and then assigns the CaseObj position in the tab
 
     }
+    private void loadTest(String status) {
+        HBox CaseObject = null;
+        for (CaseRecord caseRecord : casesData) {
+            try {
+                CaseObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/case.fxml")); // Case object loads the fxml, with its nodes
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
+            // Initialise elements from Case object:
+            HBox hb = (HBox) CaseObject.getChildren().get(2);
+            Button deleteBtn = (Button) hb.getChildren().get(1);
+            HBox finalCaseObj = CaseObject;
+            VBox temp = (VBox) CaseObject.getChildren().get(1);
+            HBox temp2 = (HBox) temp.getChildren().get(0);
+            TextField caseName = (TextField) temp2.getChildren().get(1);
+            caseName.setText(caseRecord.getName());
+            Label caseDate = (Label) temp.getChildren().get(1);
+
+            try {
+                caseDate.setText(new SimpleDateFormat("yy-MM-dd  [HH:mm]").format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(caseRecord.getDate())));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            finalCaseObj.setId(String.valueOf(caseRecord.getCaseID()));
+
+            // Update the main working area and load case files:
+            finalCaseObj.setOnMouseClicked(event -> {
+                String date = currentTime();
+                int id = Integer.valueOf(finalCaseObj.getId());
+                caseTitle.setText(caseRecord.getName());
+                caseID = id;
+                loadTable(caseID);
+                loadFiles(caseID);
+                search();
+                sql.updateDate(caseID, date);
+                caseRecord.setDate(date);
+                try {
+                    caseDate.setText(new SimpleDateFormat("yy-MM-dd  [HH:mm]").format(new SimpleDateFormat(
+                            "yyyy-MM-dd HH:mm:ss").parse(date)));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            });
+
+            //Update case name:
+            caseName.setOnMouseClicked(event -> {
+                caseName.setEditable(true);
+                editing = true;
+                int id = Integer.valueOf(finalCaseObj.getId());
+                caseID = id;
+                caseTitle.setText(caseRecord.getName());
+                loadTable(caseID);
+                loadFiles(caseID);
+                search();
+            });
+
+            caseName.setOnAction(event -> {
+                String change = caseName.getText();
+                int id = Integer.valueOf(finalCaseObj.getId());
+                System.out.println("Change case " + id + " name to : " + change);
+                sql.updateCaseName(id, change);
+                loadCases();
+                caseName.setEditable(false);
+                caseTitle.setText(change);
+                editing = false;
+            });
+            deleteBtn.setOnAction(event -> {
+                sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
+                casesContainer.getChildren().remove(finalCaseObj);
+            });
+            if (status.equals("All")) {
+                casesContainer.getChildren().add(finalCaseObj);
+            }
+            if (status.equals("New") && caseRecord.getStatus().equals("New")) {
+                casesContainer.getChildren().add(finalCaseObj);
+            } else if (status.equals("Done") && caseRecord.getStatus().equals("Done")) {
+                casesContainer.getChildren().add(finalCaseObj);
+            }
+
+        }
+    }
     /**
      * Loads the Case Files (notes) of a specific case into the app
      * @param caseID
@@ -492,9 +493,7 @@ public class MainController {
      */
     public void addCase(ActionEvent actionEvent) {
 
-        String status = "";
-        status = casesTab.getSelectedToggle().toString();
-        CaseRecord callRecord = new CaseRecord(String.valueOf(0), "case" + id++, "Description", status, currentTime());
+        CaseRecord callRecord = new CaseRecord(String.valueOf(0), "case" + id++, "Description", "New", currentTime());
         sql.addCase(callRecord);
         loadCases();
     }
@@ -642,7 +641,6 @@ public class MainController {
 
     @FXML
     public void initialize () {
-
         filters_scroll.setPannable(true);
         filters_scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         notes_scroll_pane.setPannable(true);

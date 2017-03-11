@@ -200,15 +200,15 @@
                     </children>
                 </Pane>
                 <Pane layoutX="20.0" layoutY="20.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
-                    <Button fx:id="test" layoutX="190.0" layoutY="-5.0" stylesheets="@../css/cases.css" />
+                    <Button fx:id="test" layoutX="190.0" layoutY="-5.0" stylesheets="@../css/cases.css" onAction="#addCase" />
                     <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
                         <ToggleButton fx:id="allToggleBtn" prefHeight="25.0" prefWidth="56.0" styleClass="first"
-                                      stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
+                                      stylesheets="@../css/cases.css" text="All" textAlignment="CENTER" selected="true">
                             <font>
                                 <Font size="10.0" />
                             </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="newToggleBtn" prefHeight="25.0" prefWidth="67.0" selected="true" text="New">
+                        <ToggleButton fx:id="newToggleBtn" prefHeight="25.0" prefWidth="67.0"  text="New">
                             <font>
                                 <Font size="10.0" />
                             </font>
