@@ -7,8 +7,6 @@ import javafx.beans.property.StringProperty;
  * Created by AndreiM on 2/3/2017.
  */
 public class CallRecord {
-
-
     /**
      * DataStructure for accessing and modifying Call records from DataBase and TableView
      */

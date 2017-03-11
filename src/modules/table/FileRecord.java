@@ -7,10 +7,6 @@ package modules.table;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-
-/**
- * Created by AndreiM on 2/3/2017.
- */
 public class FileRecord {
     /**
      * DataStructure for accessing and modifying Note(Case files) records from DataBase and TableView
