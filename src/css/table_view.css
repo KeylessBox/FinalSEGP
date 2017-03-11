@@ -59,12 +59,12 @@
 }
 
 .table-row-cell {
-    -fx-background-color: -fx-table-cell-border-color, rgb(232, 232, 232);
+    -fx-background-color: -fx-table-cell-border-color, #f5f5f5;
     -fx-background-insets: 0, 0 0 1 0;
 }
 
 .table-row-cell:odd {
-    -fx-background-color: -fx-table-cell-border-color, #fbfbfb;
+    -fx-background-color: -fx-table-cell-border-color, #ffffff;
 }
 
 .table-cell {
@@ -101,7 +101,7 @@
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #42536d;
+    -fx-background-color: #5D6C83;
     -fx-text-fill: white;
     -fx-background-insets: 0;
     -fx-background-radius: 1;

@@ -1,7 +1,7 @@
 
 #root {
     -fx-background-image: url("../res/new_images/grey-solid-color-background.png");
-    -fx-background-size: 1920, 1080;
+    /*-fx-background-size: 1920, 1080;*/
     -fx-cursor: default;
 }
 

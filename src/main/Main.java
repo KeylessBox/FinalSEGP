@@ -35,8 +35,9 @@ public class Main extends Application {
 //        primaryStage.setTitle("Sign In");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setMinHeight(924.0);
-        primaryStage.setMinWidth(1825.0);
+        primaryStage.setMinHeight(1000.0);
+        primaryStage.setMinWidth(1812.0);
+//        primaryStage.setResizable(false);
         primaryStage.show();
     }
 }
