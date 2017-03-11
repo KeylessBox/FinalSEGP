@@ -148,6 +148,7 @@ public class MainController {
         columnFactory.createTimeColumn(timeColumn);
         columnFactory.createTypeOfCallColumn(typeColumn);
         columnFactory.createDurationColumn(durationColumn);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         table.setItems(callsData);  // adds the data into the table
         table.setEditable(true);

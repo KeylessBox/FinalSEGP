@@ -28,7 +28,7 @@
     <top>
         <BorderPane fx:id="menubar" prefHeight="42.0" prefWidth="1766.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
             <center>
-            <Label fx:id="caseTitle" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" textFill="WHITE">
+            <Label fx:id="caseTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="300.0" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
                 <font>
                     <Font size="26.0" />
                 </font>
@@ -276,22 +276,22 @@
                         <children>
                             <TableView fx:id="table" editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
                                 <columns>
-                                    <TableColumn prefWidth="75.0" text="From">
+                                    <TableColumn maxWidth="350.0" minWidth="350.0" text="From">
                                         <columns>
-                                            <TableColumn fx:id="originIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
-                                            <TableColumn fx:id="originPhoneColumn" prefWidth="280.0" text="Phone Number" />
+                                            <TableColumn fx:id="originIdentifierColumn" maxWidth="175.0" minWidth="175.0" text="Name/Identifier" />
+                                            <TableColumn fx:id="originPhoneColumn" maxWidth="175.0" minWidth="175.0" text="Phone Number" />
                                         </columns>
                                     </TableColumn>
-                                    <TableColumn prefWidth="75.0" text="To">
+                                    <TableColumn maxWidth="350.0" minWidth="350.0" text="To">
                                         <columns>
-                                            <TableColumn fx:id="destinationIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
-                                            <TableColumn fx:id="destinationPhoneColumn" prefWidth="206.0" text="Phone Number" />
+                                            <TableColumn fx:id="destinationIdentifierColumn" maxWidth="175.0" minWidth="175.0" text="Name/Identifier" />
+                                            <TableColumn fx:id="destinationPhoneColumn" maxWidth="175.0" minWidth="175.0" text="Phone Number" />
                                         </columns>
                                     </TableColumn>
-                                    <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
-                                    <TableColumn fx:id="timeColumn" prefWidth="75.0" text="Time" />
-                                    <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type Of Call" />
-                                    <TableColumn fx:id="durationColumn" prefWidth="220.25" text="Duration" />
+                                    <TableColumn fx:id="dateColumn" maxWidth="175.0" minWidth="175.0" text="Date" />
+                                    <TableColumn fx:id="timeColumn" maxWidth="175.0" minWidth="175.0"  text="Time" />
+                                    <TableColumn fx:id="typeColumn" maxWidth="175.0" minWidth="175.0"  text="Type Of Call" />
+                                    <TableColumn fx:id="durationColumn" maxWidth="175.0" minWidth="175.0"  text="Duration" />
                                 <TableColumn fx:id="deleteColumn" maxWidth="40" minWidth="40" text="x" />
                                 </columns>
                                 <columnResizePolicy>

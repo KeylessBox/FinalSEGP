@@ -15,8 +15,6 @@ import java.util.List;
 public class CallsTable {
     private static SQL sql = new SQL();
 
-    private static int minCellWidth = 100;
-
     public static void createOriginColumn(TableColumn origin) {
 
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
@@ -26,7 +24,6 @@ public class CallsTable {
             }
         };
 
-        origin.setMinWidth(minCellWidth + 100);
         origin.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("origin"));
         origin.setCellFactory(editableFactory);
         origin.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
@@ -48,7 +45,6 @@ public class CallsTable {
                 return new EditingCell();
             }
         };
-        destination.setMinWidth(minCellWidth + 100);
         destination.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destination"));
         destination.setCellFactory(editableFactory);
         destination.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
@@ -71,7 +67,6 @@ public class CallsTable {
             }
         };
 
-        date.setMinWidth(minCellWidth);
         date.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("date"));
         date.setCellFactory(editableFactory);
         date.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
@@ -92,7 +87,6 @@ public class CallsTable {
                 return new EditingCell();
             }
         };
-        time.setMinWidth(minCellWidth);
         time.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("time"));
         time.setCellFactory(editableFactory);
         time.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
@@ -114,7 +108,6 @@ public class CallsTable {
             }
         };
 
-        typeOfCall.setMinWidth(minCellWidth + 50);
         typeOfCall.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("typeOfCall"));
         typeOfCall.setCellFactory(editableFactory);
         typeOfCall.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
@@ -135,7 +128,6 @@ public class CallsTable {
                 return new EditingCell();
             }
         };
-        duration.setMinWidth(minCellWidth);
         duration.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("duration"));
         duration.setCellFactory(editableFactory);
         duration.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
