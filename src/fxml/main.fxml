@@ -28,7 +28,7 @@
     <top>
         <BorderPane id="menubar" prefHeight="42.0" prefWidth="1766.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
             <center>
-            <Label fx:id="caseTitle" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0"  textFill="WHITE">
+            <Label id="case_name" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" text="Cheeky Scar" textFill="WHITE">
                 <font>
                     <Font size="26.0" />
                 </font>
@@ -295,7 +295,7 @@
                             </Pane>
                         </children>
                     </Pane>
-                    <Pane id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1475.0" stylesheets="@../css/table.css">
+                    <Pane fx:id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1475.0" stylesheets="@../css/table.css">
                         <styleClass>
                             <String fx:value="root" />
                             <String fx:value="Table" />
@@ -304,25 +304,25 @@
                             <Insets top="30.0" />
                         </VBox.margin>
                         <children>
-                            <TableView fx:id="table"editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
+                            <TableView editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
                                 <columns>
                                     <TableColumn prefWidth="75.0" text="From">
                                         <columns>
-                                            <TableColumn fx:id="originIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
-                                            <TableColumn fx:id="originPhoneColumn" prefWidth="280.0" text="Phone Number" />
+                                            <TableColumn id="originIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
+                                            <TableColumn id="originPhoneColumn" prefWidth="280.0" text="Phone Number" />
                                         </columns>
                                     </TableColumn>
                                     <TableColumn prefWidth="75.0" text="To">
                                         <columns>
-                                            <TableColumn fx:id="destinationIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
-                                            <TableColumn fx:id="destinationPhoneColumn" prefWidth="206.0" text="Phone Number" />
+                                            <TableColumn id="destinationIdentifierColumn" prefWidth="75.0" text="Name/Identifier" />
+                                            <TableColumn id="destinationPhoneColumn" prefWidth="206.0" text="Phone Number" />
                                         </columns>
                                     </TableColumn>
-                                    <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Date" />
-                                    <TableColumn fx:id="timeColumn" prefWidth="75.0" text="Time" />
-                                    <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type Of Call" />
-                                    <TableColumn fx:id="durationColumn" prefWidth="220.25" text="Duration" />
-                                <TableColumn id="deleteColumn" maxWidth="40" minWidth="40" text="x" />
+                                    <TableColumn id="dateCoumn" prefWidth="75.0" text="Date" />
+                                    <TableColumn id="timeColumn" prefWidth="75.0" text="Time" />
+                                    <TableColumn id="typeColumn" prefWidth="75.0" text="Type Of Call" />
+                                    <TableColumn id="durationColumn" prefWidth="220.25" text="Duration" />
+                                    <TableColumn id="deleteColumn" maxWidth="40" minWidth="40" text="x" />
                                 </columns>
                                 <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -334,9 +334,9 @@
                                         <children>
                                             <Region HBox.hgrow="ALWAYS" />
                                             <Button fx:id="save_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button fx:id="attach_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" onAction="#importFile"/>
+                                            <Button fx:id="attach_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="reload_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button fx:id="addCall" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                            <Button fx:id="add_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="setting_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                         </children>
                                         <padding>
@@ -345,8 +345,11 @@
                                     </HBox>
                                     <HBox prefHeight="46.0" prefWidth="1458.0">
                                         <children>
-                                            <TextField fx:id="searchBar"prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
-                                            <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
+                                            <TextField prefHeight="30.0" prefWidth="423.0" promptText="keyword..."/>
+                                            <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0"
+                                                    prefHeight="29.0" prefWidth="61.0" styleClass="btn"
+                                                    stylesheets="@../css/table.css" text="search"
+                                                    textAlignment="CENTER">
                                                 <font>
                                                     <Font name="Calibri Bold" size="14.0" />
                                                 </font>
