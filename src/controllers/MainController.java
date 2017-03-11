@@ -96,6 +96,9 @@ public class MainController {
     protected Label caseTitle;
 
     @FXML
+    protected HBox filtersBox;
+
+    @FXML
     protected BorderPane root;
     private MyTask myTask;
 
@@ -376,7 +379,10 @@ public class MainController {
      * Add a victim functionality
      */
     public void addVictim() {
-        System.out.println("VICTIM");
+
+        //TODO add counting A B C D for filters and table view when searching
+        
+        System.out.println("ADD VICTIM");
         Pane victimNote = null;
         try {
             victimNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/victim.fxml"));   // Prepares the template
@@ -384,16 +390,23 @@ public class MainController {
             e1.printStackTrace();
         }
         Pane temp = (Pane) victimNote.getChildren().get(0);
-        Button delete = (Button) temp.getChildren().get(1);
+        System.out.println(temp);
+        Pane temp2 = (Pane) temp.getChildren().get(0);
+        System.out.println(temp2);
+        Pane temp3 = (Pane) temp2.getChildren().get(4);
+        System.out.println("HERE" + temp3);
+        Button delete = (Button) temp3.getChildren().get(1);
+        TextField txtField = (TextField) temp.getChildren().get(2);
+
         Pane finalVictimNote = victimNote;
         delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
-            notes_box.getChildren().remove(finalVictimNote);
+            filtersBox.getChildren().remove(finalVictimNote);
             searchData = callsData;
             table.setItems(searchData);
+            System.out.println("DELETE VICTIM");
         });
         //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
-        VBox vbox = (VBox) temp.getChildren().get(0);
-        TextField txtField = (TextField) vbox.getChildren().get(1);
+
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
             if (txtField.textProperty().get().isEmpty()) {
@@ -423,29 +436,36 @@ public class MainController {
                 }
             }
         });
-        notes_box.getChildren().addAll(victimNote);
+        filtersBox.getChildren().addAll(victimNote);
     }
 
     //TODO Comments to add
     public void addSuspect() {
-        System.out.println("Suspect");
+        System.out.println("ADD SUSPECT");
         Pane suspectNote = null;
         try {
-            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/filter.fxml"));
+            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/suspect.fxml"));   // Prepares the template
         } catch (IOException e1) {
             e1.printStackTrace();
         }
         Pane temp = (Pane) suspectNote.getChildren().get(0);
-        Button delete = (Button) temp.getChildren().get(0);
-        Pane finalSuspectNote = suspectNote;
-        delete.setOnAction(event -> {
-            notes_box.getChildren().remove(finalSuspectNote);
+        System.out.println(temp);
+        Pane temp2 = (Pane) temp.getChildren().get(0);
+        System.out.println(temp2);
+        Pane temp3 = (Pane) temp2.getChildren().get(4);
+        System.out.println("HERE" + temp3);
+        Button delete = (Button) temp3.getChildren().get(1);
+        TextField txtField = (TextField) temp.getChildren().get(2);
+
+        Pane finalVictimNote = suspectNote;
+        delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
+            filtersBox.getChildren().remove(finalVictimNote);
             searchData = callsData;
             table.setItems(searchData);
+            System.out.println("DELETE SUSPECT");
         });
+        //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
 
-        VBox vbox = (VBox) temp.getChildren().get(1);
-        TextField txtField = (TextField) vbox.getChildren().get(1);
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
             if (txtField.textProperty().get().isEmpty()) {
@@ -458,10 +478,9 @@ public class MainController {
 
                 for (int i = 0; i < searchData.size(); i++) {
                     for (int j = 0; j < cols.size(); j++) {
-                        if (j == 0) {
+                        if (j == 1) {
                             TableColumn col = cols.get(j);
                             String cellValue = col.getCellData(searchData.get(i)).toString();
-                            System.out.println("Column: " + cellValue);
                             cellValue = cellValue.toLowerCase();
                             if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
                                 tableItems.add(searchData.get(i));
@@ -472,11 +491,11 @@ public class MainController {
                 }
                 if (searchData != tableItems) {
                     searchData = tableItems;
-                    table.setItems(searchData);
+                    table.setItems(tableItems);
                 }
             }
         });
-        notes_box.getChildren().add(suspectNote);
+        filtersBox.getChildren().addAll(suspectNote);
     }
 
     /**
@@ -649,6 +668,7 @@ public class MainController {
 
     @FXML
     public void initialize () {
+
         filters_scroll.setPannable(true);
         filters_scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         notes_scroll_pane.setPannable(true);

@@ -28,7 +28,7 @@
     <top>
         <BorderPane fx:id="menubar" prefHeight="42.0" prefWidth="1766.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
             <center>
-            <Label fx:id="caseTitle" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0"  textFill="WHITE">
+            <Label fx:id="caseTitle" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" textFill="WHITE">
                 <font>
                     <Font size="26.0" />
                 </font>
@@ -200,15 +200,14 @@
                     </children>
                 </Pane>
                 <Pane layoutX="20.0" layoutY="20.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
-                    <Button fx:id="test" layoutX="190.0" layoutY="-5.0" stylesheets="@../css/cases.css" onAction="#addCase" />
+                    <Button fx:id="test" layoutX="190.0" layoutY="-5.0" onAction="#addCase" stylesheets="@../css/cases.css" />
                     <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
-                        <ToggleButton fx:id="allToggleBtn" prefHeight="25.0" prefWidth="56.0" styleClass="first"
-                                      stylesheets="@../css/cases.css" text="All" textAlignment="CENTER" selected="true">
+                        <ToggleButton fx:id="allToggleBtn" prefHeight="25.0" prefWidth="56.0" selected="true" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
                             <font>
                                 <Font size="10.0" />
                             </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="newToggleBtn" prefHeight="25.0" prefWidth="67.0"  text="New">
+                        <ToggleButton fx:id="newToggleBtn" prefHeight="25.0" prefWidth="67.0" text="New">
                             <font>
                                 <Font size="10.0" />
                             </font>
@@ -234,17 +233,8 @@
                         <children>
                             <ScrollPane fx:id="filters_scroll" layoutY="30.0" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
                                 <content>
-                                    <HBox spacing="5.0">
+                                    <HBox fx:id="filtersBox" spacing="20.0">
                                         <children>
-                                            <fx:include source="suspect.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="suspect.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="victim.fxml" />
-                                            <fx:include source="suspect.fxml" />
-                                            <fx:include source="suspect.fxml" />
-                                            <fx:include source="suspect.fxml" />
-                                            <fx:include source="suspect.fxml" />
                                         </children>
                                         <padding>
                                             <Insets left="15.0" top="15.0" />
@@ -257,12 +247,12 @@
                                     <HBox fx:id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
                                         <children>
                                             <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
-                                            <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" stylesheets="@../css/filters.css">
+                                            <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" onAction="#addSuspect" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" stylesheets="@../css/filters.css">
                                                 <HBox.margin>
                                                     <Insets left="2.0" />
                                                 </HBox.margin>
                                             </Button>
-                                            <Button fx:id="add_green_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
+                                            <Button fx:id="add_green_btn" mnemonicParsing="false" onAction="#addVictim" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
                                                 <HBox.margin>
                                                     <Insets left="6.0" />
                                                 </HBox.margin>
@@ -314,7 +304,7 @@
                                         <children>
                                             <Region HBox.hgrow="ALWAYS" />
                                             <Button fx:id="save_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button fx:id="attach_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" onAction="#importFile"/>
+                                            <Button fx:id="attach_button" mnemonicParsing="false" onAction="#importFile" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="reload_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="addCall" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="setting_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
@@ -354,7 +344,7 @@
                     <children>
                         <ScrollPane fx:id="notes_scroll_pane" prefHeight="912.0" prefWidth="50.0">
                             <content>
-                                <AnchorPane prefHeight="850.0" prefWidth="50.0" >
+                                <AnchorPane prefHeight="850.0" prefWidth="50.0">
                                     <children>
                                         <VBox fx:id="notes_box" prefHeight="939.0" prefWidth="50.0" spacing="10.0" AnchorPane.bottomAnchor="-89.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
@@ -383,7 +373,6 @@
                                                 <fx:include source="note.fxml" />
                                                 <fx:include source="note.fxml" />
                                                 <fx:include source="note.fxml" />
-
                                             </children>
                                             <padding>
                                                 <Insets left="10.0" top="10.0" />

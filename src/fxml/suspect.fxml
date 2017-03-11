@@ -51,8 +51,8 @@
                         </HBox>
                     </children>
                 </HBox>
-                <TextField id="suspect_name_text" />
-                <TextField id="suspect_phone_text">
+                <TextField id="suspect_name_text" promptText="Name" />
+                <TextField id="suspect_phone_text" promptText="Number">
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>
