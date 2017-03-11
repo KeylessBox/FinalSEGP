@@ -13,6 +13,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -23,7 +24,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" prefHeight="980.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<BorderPane fx:id="root" maxHeight="1000.0" maxWidth="1755.0" prefHeight="1000.0" prefWidth="1755.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
         <Pane id="menubar" prefHeight="42.0" prefWidth="1766.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
             <Label id="case_name" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="143.0" text="Cheeky Scar" textFill="WHITE">
@@ -31,7 +32,7 @@
                     <Font size="26.0" />
                 </font>
             </Label>
-            <MenuBar depthTest="DISABLE" layoutX="1624.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="135.0">
+            <MenuBar depthTest="DISABLE" layoutX="1611.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="135.0">
                 <menus>
                     <Menu id="settings_btn" mnemonicParsing="false">
                         <graphic>
@@ -163,17 +164,20 @@
                     <Cursor fx:constant="CLOSED_HAND" />
                 </cursor>
             </MenuBar>
-         <ImageView fitHeight="36.0" fitWidth="29.0" layoutX="1770.0" layoutY="1.0">
+         <ImageView fitHeight="36.0" fitWidth="29.0" layoutX="1755.0" layoutY="3.0">
             <image>
                <Image url="@../res/icons/logo.png" />
             </image>
+            <effect>
+               <DropShadow radius="4.875" width="0.5" />
+            </effect>
          </ImageView>
         </Pane>
     </top>
     <left>
         <Pane prefHeight="886.0" prefWidth="228.0" style="-fx-background-color: transparent ">
             <children>
-            <Pane layoutX="8.0" layoutY="85.0">
+            <Pane layoutX="18.0" layoutY="95.0">
                <children>
                       <ScrollPane layoutX="2.0" layoutY="2.0" prefWidth="228.0" stylesheets="@../css/cases.css">
                           <VBox fx:id="CasesContainer" prefWidth="228.0" spacing="0">
@@ -208,7 +212,7 @@
                       </ScrollPane>
                </children>
             </Pane>
-                <Pane layoutX="10.0" layoutY="10.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
+                <Pane layoutX="20.0" layoutY="20.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
                     <Button fx:id="test" layoutX="190.0" layoutY="-5.0" stylesheets="@../css/cases.css" />
                     <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
                         <ToggleButton prefHeight="25.0" prefWidth="56.0" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
@@ -235,26 +239,9 @@
         <VBox minWidth="1458">
             <AnchorPane>
                 <children>
-                    <VBox id="filters_box" maxWidth="1678.0" minWidth="1481.0" prefHeight="222.0" prefWidth="1481.0" stylesheets="@../css/filters.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Pane id="filters_box" maxWidth="1678.0" minWidth="1481.0" prefHeight="170.0" prefWidth="1481.0" stylesheets="@../css/filters.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                         <children>
-                            <HBox id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
-                                <children>
-                                    <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
-                                    <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" stylesheets="@../css/filters.css">
-                                        <HBox.margin>
-                                            <Insets left="2.0" />
-                                        </HBox.margin>
-                                    </Button>
-                                    <Button fx:id="add_green_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
-                                        <HBox.margin>
-                                            <Insets left="6.0" />
-                                        </HBox.margin>
-                                    </Button>
-                                    <Region maxWidth="1275.0" minWidth="1279.0" prefWidth="1275.0" />
-                                    <Button fx:id="setting_btn" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                </children>
-                            </HBox>
-                            <ScrollPane id="filters_scroll" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
+                            <ScrollPane id="filters_scroll" layoutY="30.0" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
                                 <content>
                                     <HBox spacing="5.0">
                                         <children>
@@ -274,23 +261,44 @@
                                     </HBox>
                                 </content>
                             </ScrollPane>
+                     <Pane>
+                        <children>
+                                  <HBox id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
+                                      <children>
+                                          <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
+                                          <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" stylesheets="@../css/filters.css">
+                                              <HBox.margin>
+                                                  <Insets left="2.0" />
+                                              </HBox.margin>
+                                          </Button>
+                                          <Button fx:id="add_green_btn" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
+                                              <HBox.margin>
+                                                  <Insets left="6.0" />
+                                              </HBox.margin>
+                                          </Button>
+                                          <Region maxWidth="1275.0" minWidth="1279.0" prefWidth="1275.0" />
+                                          <Button fx:id="setting_btn" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                      </children>
+                                  </HBox>
                         </children>
-                    </VBox>
+                     </Pane>
+                        </children>
+                    </Pane>
                 </children>
             <VBox.margin>
                <Insets />
             </VBox.margin>
             </AnchorPane>
-            <Pane fx:id="Table" minWidth="1458.0" prefHeight="706.0" prefWidth="1458.0" stylesheets="@../css/table.css">
+            <Pane fx:id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1458.0" stylesheets="@../css/table.css">
             <styleClass>
                <String fx:value="root" />
                <String fx:value="Table" />
             </styleClass>
             <VBox.margin>
-               <Insets left="20.0" />
+               <Insets top="20.0" />
             </VBox.margin>
             <children>
-               <TableView editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="621.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
+               <TableView editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
                  <columns>
                      <TableColumn prefWidth="75.0" text="From">
                         <columns>
@@ -349,20 +357,20 @@
             </opaqueInsets></Pane>
 
             <BorderPane.margin>
-                <Insets left="20.0" />
+                <Insets left="40.0" />
             </BorderPane.margin>
         </VBox>
     </center>
     <right>
-        <Pane prefHeight="922.0" prefWidth="50.0" stylesheets="@../css/notes.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+        <Pane prefHeight="934.0" prefWidth="50.0" stylesheets="@../css/notes.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
             <children>
-                <VBox id="notes_vbox">
+                <VBox id="notes_vbox" prefHeight="938.0" prefWidth="50.0">
                     <children>
-                        <ScrollPane id="notes_scroll_pane" prefHeight="900.0" prefWidth="50.0">
+                        <ScrollPane id="notes_scroll_pane" prefHeight="912.0" prefWidth="50.0">
                             <content>
                                 <AnchorPane prefHeight="850.0" prefWidth="50.0">
                                     <children>
-                                        <VBox id="notes_box" prefHeight="902.0" prefWidth="50.0" spacing="10.0" AnchorPane.bottomAnchor="-52.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <VBox id="notes_box" prefHeight="939.0" prefWidth="50.0" spacing="10.0" AnchorPane.bottomAnchor="-89.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <children>
                                                 <fx:include source="note.fxml" />
                                                 <fx:include source="note.fxml" />
@@ -400,7 +408,7 @@
                 </VBox>
             </children>
          <BorderPane.margin>
-            <Insets left="45.0" />
+            <Insets left="20.0" />
          </BorderPane.margin>
         </Pane>
 
