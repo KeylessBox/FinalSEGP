@@ -291,30 +291,31 @@ public class MainController {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
+                System.out.println("NOTES");
                 // Putting the data into the templates
                 //TODO Still needs working on these. Make them a bit unique.
-                HBox temp = (HBox) CaseFile.getChildren().get(1);
-                HBox temp2 = (HBox) CaseFile.getChildren().get(0);
-                TextField fileName = (TextField) temp2.getChildren().get(0);
-                fileName.setText(element.getName());
-                Button delete = (Button) temp.getChildren().get(2);
-                Pane finalCaseFile = CaseFile;
-
-                fileName.setOnAction(event -> {
-                    String change = fileName.getText();
-                    int id = Integer.valueOf(element.getFileID());
-                    System.out.println("Change case file " + id + " name to : " + change);
-                    sql.updateCaseFile(id, change);
-                    fileName.setEditable(false);
-                });
-                fileName.setOnMouseClicked(event -> {
-                    fileName.setEditable(true);
-                });
-
-                delete.setOnAction(event -> {
-                    notes_box.getChildren().remove(finalCaseFile);
-                    sql.removeNote(Integer.parseInt(element.getFileID()));
-                });
+//                HBox temp = (HBox) CaseFile.getChildren().get(1);
+//                HBox temp2 = (HBox) CaseFile.getChildren().get(0);
+//                TextField fileName = (TextField) temp2.getChildren().get(0);
+//                fileName.setText(element.getName());
+//                Button delete = (Button) temp.getChildren().get(2);
+//                Pane finalCaseFile = CaseFile;
+//
+//                fileName.setOnAction(event -> {
+//                    String change = fileName.getText();
+//                    int id = Integer.valueOf(element.getFileID());
+//                    System.out.println("Change case file " + id + " name to : " + change);
+//                    sql.updateCaseFile(id, change);
+//                    fileName.setEditable(false);
+//                });
+//                fileName.setOnMouseClicked(event -> {
+//                    fileName.setEditable(true);
+//                });
+//
+//                delete.setOnAction(event -> {
+//                    notes_box.getChildren().remove(finalCaseFile);
+//                    sql.removeNote(Integer.parseInt(element.getFileID()));
+//                });
                 notes_box.getChildren().add(CaseFile);     // the case files get loaded to the app
             }
         }
@@ -381,7 +382,7 @@ public class MainController {
     public void addVictim() {
 
         //TODO add counting A B C D for filters and table view when searching
-        
+
         System.out.println("ADD VICTIM");
         Pane victimNote = null;
         try {
@@ -528,8 +529,7 @@ public class MainController {
     /**
      * Add a case file
      */
-    public void addCaseFile(ActionEvent actionEvent) {
-
+    public void addNote(ActionEvent actionEvent) {
         FileRecord nr = new FileRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + caseID + "",
                 "\"" + "Case file" + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
         sql.insertFile(nr);
