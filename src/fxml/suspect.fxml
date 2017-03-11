@@ -8,6 +8,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
 <Pane id="suspect_pane" layoutX="3.0" layoutY="3.0" stylesheets="@../css/suspect.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
@@ -15,11 +18,24 @@
             <children>
                 <HBox id="suspect_bar">
                     <children>
-                        <Label id="suspect_identification" text="A"/>
+                        <Label id="suspect_identification" text="A" />
                         <Region HBox.hgrow="ALWAYS" />
-                        <Label fx:id="suspect_label" text="Suspect"/>
+                        <Label fx:id="suspect_label" alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="75.0" text="SUSPECT">
+                            <font>
+                                <Font name="Calibri Bold" size="15.0" />
+                            </font>
+                            <textFill>
+                                <RadialGradient centerX="0.6166666666666667" centerY="0.3333333333333333" focusAngle="9.46" focusDistance="-0.046511627906976716" radius="0.6511627906976745">
+                                    <stops>
+                                        <Stop color="#e41a1a" />
+                                        <Stop color="#ff3434" offset="1.0" />
+                                    </stops>
+                                </RadialGradient>
+                            </textFill>
+
+                        </Label>
                         <Region HBox.hgrow="ALWAYS" />
-                        <HBox alignment="TOP_RIGHT">
+                        <HBox alignment="TOP_RIGHT" prefWidth="39.0">
                             <children>
                                 <Button minHeight="12.0" minWidth="15.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="button_edit">
                                     <HBox.margin>
@@ -35,11 +51,12 @@
                         </HBox>
                     </children>
                 </HBox>
-                <TextField id="suspect_name_text"> </TextField>
+                <TextField id="suspect_name_text" />
                 <TextField id="suspect_phone_text">
                     <VBox.margin>
                         <Insets />
-                    </VBox.margin></TextField>
+                    </VBox.margin>
+                </TextField>
             </children>
         </VBox>
     </children>

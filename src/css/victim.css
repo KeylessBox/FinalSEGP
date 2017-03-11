@@ -33,12 +33,7 @@
     -fx-font-size: 16;
 }
 #victim_label {
-    -fx-text-fill: #00ff00;
-    -fx-font-family: "Calibri";
-    -fx-font-weight: bold;
-    -fx-font-size: 16px;
-    -fx-stroke: black;
-    -fx-stroke-width: 2;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 1, 0, 0, 0);
 }
 .button.button_edit{
 	-fx-min-height: 20px;

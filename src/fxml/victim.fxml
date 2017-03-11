@@ -8,6 +8,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
 <Pane id="victim_pane" layoutX="3.0" layoutY="3.0" stylesheets="@../css/victim.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -15,9 +18,20 @@
          <children>
             <HBox id="victim_bar">
                <children>
-                  <Label id="victim_identification" text="A"/>
+                  <Label id="victim_identification" text="A" />
                   <Region HBox.hgrow="ALWAYS" />
-                   <Label fx:id="victim_label" text="Victim"/>
+                   <Label fx:id="victim_label" alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="66.0" text="VICTIM">
+                     <font>
+                        <Font name="Calibri Bold" size="15.0" />
+                     </font>
+                     <textFill>
+                        <RadialGradient centerX="0.5166666666666667" centerY="0.4714285714285714" cycleMethod="REFLECT" focusAngle="-45.0" focusDistance="-0.046511627906976716" radius="1.0">
+                           <stops>
+                              <Stop color="#1ac422" />
+                              <Stop color="#28973e" offset="1.0" />
+                           </stops>
+                        </RadialGradient>
+                     </textFill></Label>
                   <Region HBox.hgrow="ALWAYS" />
                    <HBox alignment="TOP_RIGHT">
                        <children>
