@@ -301,7 +301,7 @@
                                     <HBox prefHeight="30.0" prefWidth="1458.0" spacing="7.0">
                                         <children>
                                             <Region HBox.hgrow="ALWAYS" />
-                                            <Button fx:id="save_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                            <Button fx:id="save_button" onAction="#exportCSV" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="attach_button" mnemonicParsing="false" onAction="#importFile" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button id="addCall" mnemonicParsing="false" onAction="#addCall" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" />
                                  <Button fx:id="delete_button" mnemonicParsing="false" onAction="#deleteCall" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />

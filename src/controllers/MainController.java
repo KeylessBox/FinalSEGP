@@ -21,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import modules.file_export.csvExport;
 import modules.manageAccounts.User;
 import modules.table.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -1124,5 +1125,30 @@ public class MainController {
         }
     }
 
+    public void exportCSV() {
+
+        csvExport bla = new csvExport();
+        File exports = new File(System.getProperty("user.dir"), "./reports");
+        if (!exports.exists()) {
+            exports.mkdirs();
+        }
+
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilterCSV = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilterCSV);
+        fileChooser.setInitialFileName(caseTitle.getText().toString());
+        fileChooser.setInitialDirectory(exports);
+
+        //Show save file dialog
+        try {
+            File file = fileChooser.showSaveDialog(new Stage());
+            String filePath = file.getPath();
+
+            bla.csvOut(filePath, searchData);
+        } catch (Exception e) {
+        }
+    }
 }
 
