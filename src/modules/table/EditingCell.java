@@ -88,7 +88,6 @@ import javafx.scene.input.KeyEvent;
                     if (!arg2) { commitEdit(textField.getText()); }
                 }
             });
-            textField.setAlignment(Pos.CENTER_LEFT);
             textField.setOnKeyReleased(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent t) {

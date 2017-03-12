@@ -71,7 +71,8 @@
 
 .table-cell {
     -fx-alignment: center;
-    -fx-text-alignment: center;
+    /*-fx-text-alignment: center;*/
+    -fx-padding: 3;
     -fx-font-size: 14px;
 }
 
@@ -173,6 +174,7 @@
     #FFFFFF;
     -fx-background-insets: 0, 2;
     -fx-background-radius: 0, 0;
+    -fx-max-width: 20;
 }
 
 .text-field:focused {
