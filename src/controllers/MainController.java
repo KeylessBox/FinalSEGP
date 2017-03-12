@@ -238,6 +238,7 @@ public class MainController {
                 }
                 alphabet = 'A' - 1;
                 filtersBox.getChildren().clear();
+                searchBar.clear();
             });
 
             //Update case name:
@@ -338,39 +339,34 @@ public class MainController {
     public void search() {
 
         searchData = callsData;
-        searchBar.clear();
 
-        searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+        if (searchBar.textProperty().get().isEmpty()) {
+            searchData = callsData;
+            table.setItems(searchData);
+        } else {
 
-            if (searchBar.textProperty().get().isEmpty()) {
-                searchData = callsData;
-                table.setItems(searchData);
-            } else {
+            ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
+            ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
 
-                ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-                ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
-
-                if (searchData != null) {
-                    for (int i = 0; i < searchData.size(); i++) {
-                        for (int j = 0; j < cols.size(); j++) {
-                            TableColumn col = cols.get(j);
-                            String cellValue = col.getCellData(searchData.get(i)).toString();
-                            cellValue = cellValue.toLowerCase();
-                            if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
-                                tableItems.add(searchData.get(i));
-                                break;
-                            }
+            if (searchData != null) {
+                for (int i = 0; i < searchData.size(); i++) {
+                    for (int j = 0; j < cols.size(); j++) {
+                        TableColumn col = cols.get(j);
+                        String cellValue = col.getCellData(searchData.get(i)).toString();
+                        cellValue = cellValue.toLowerCase();
+                        if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
+                            tableItems.add(searchData.get(i));
+                            break;
                         }
                     }
-                    if (searchData != tableItems) {
-                        searchData = tableItems;
-                        table.setItems(searchData);
-                    }
+                }
+                if (searchData != tableItems) {
+                    searchData = tableItems;
+                    table.setItems(searchData);
                 }
             }
-        });
-        searchBar.setOnAction(event -> {
-        });
+        }
+
     }
 
     /**
@@ -401,7 +397,7 @@ public class MainController {
         }
 
         if (alphabet <= 'Z') {
-            System.out.println("ADD VICTIM");
+            System.out.println("ADD VICTIM " + alphabet);
             Pane victimNote = null;
             try {
                 victimNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/victim.fxml"));   // Prepares the template
@@ -467,7 +463,7 @@ public class MainController {
         }
 
         if (alphabet <= 'Z') {
-            System.out.println("ADD SUSPECT");
+            System.out.println("ADD SUSPECT " + alphabet);
             Pane suspectNote = null;
             try {
                 suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/suspect.fxml"));   // Prepares the template
