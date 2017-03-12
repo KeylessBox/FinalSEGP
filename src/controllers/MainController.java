@@ -5,35 +5,33 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
-import javafx.event.EventHandler;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
-import javafx.util.Duration;
-import modules.manageAccounts.User;
-import modules.table.*;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.usermodel.Cell;
-import sql.SQL;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Iterator;
-
+import javafx.util.Duration;
+import modules.manageAccounts.User;
+import modules.table.CallRecord;
+import modules.table.CallsTable;
+import modules.table.CaseRecord;
+import modules.table.FileRecord;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import sql.SQL;
 
 import java.io.*;
 import java.text.ParseException;
@@ -83,7 +81,7 @@ public class MainController {
     protected ToggleButton newToggleBtn;
     @FXML
     protected ToggleButton doneToggleBtn;
-    final ToggleGroup casesTab = new ToggleGroup();
+    final ToggleGroup casesToggleGroup = new ToggleGroup();
 
     @FXML
     protected VBox casesContainer;
@@ -137,6 +135,7 @@ public class MainController {
 
     /**
      * Loads the table with data from database
+     *
      * @param caseID the case id whose data is to be shown
      */
     public void loadTable(int caseID) {
@@ -154,11 +153,12 @@ public class MainController {
         table.setEditable(true);
     }
 
-    private void toggleControl () {
-        allToggleBtn.setToggleGroup(casesTab);
-        newToggleBtn.setToggleGroup(casesTab);
-        doneToggleBtn.setToggleGroup(casesTab);
+    private void toggleControl() {
+        allToggleBtn.setToggleGroup(casesToggleGroup);
+        newToggleBtn.setToggleGroup(casesToggleGroup);
+        doneToggleBtn.setToggleGroup(casesToggleGroup);
     }
+
     /**
      * Initialises the cases on the TabPane.
      */
@@ -169,23 +169,22 @@ public class MainController {
         toggleControl();
         String status = "All";
         casesContainer.getChildren().clear();
-        if (casesTab.getSelectedToggle() == newToggleBtn) {
+        if (casesToggleGroup.getSelectedToggle() == newToggleBtn) {
             status = "New";
-        }
-        else if (casesTab.getSelectedToggle() == doneToggleBtn){
+        } else if (casesToggleGroup.getSelectedToggle() == doneToggleBtn) {
             status = "Done";
         }
+
         loadTest(status);
 
-        casesTab.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+        casesToggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle toggle, Toggle newToggle) {
                 String status = "All";
                 casesContainer.getChildren().clear();
                 if (newToggle == newToggleBtn) {
                     status = "New";
-                }
-                else if (newToggle == doneToggleBtn){
+                } else if (newToggle == doneToggleBtn) {
                     status = "Done";
                 }
                 loadTest(status);
@@ -194,6 +193,7 @@ public class MainController {
         //Every row of the Case table (thus, every case that exists in the database) has a status attribute (Investigating, Solved or Preliminary)
         //The for loop takes each case and checks what status it has, and then assigns the CaseObj position in the tab
     }
+
     private void loadTest(String status) {
         HBox CaseObject = null;
         for (CaseRecord caseRecord : casesData) {
@@ -208,10 +208,13 @@ public class MainController {
             Button deleteBtn = (Button) hb.getChildren().get(1);
             HBox finalCaseObj = CaseObject;
             VBox temp = (VBox) CaseObject.getChildren().get(1);
+            Pane caseIndicator =  (Pane) CaseObject.getChildren().get(0);
             HBox temp2 = (HBox) temp.getChildren().get(0);
+            Label caseStatus = (Label) temp2.getChildren().get(0);
             TextField caseName = (TextField) temp2.getChildren().get(1);
             caseName.setText(caseRecord.getName());
             Label caseDate = (Label) temp.getChildren().get(1);
+
 
             try {
                 caseDate.setText(new SimpleDateFormat("yy-MM-dd  [HH:mm]").format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(caseRecord.getDate())));
@@ -265,19 +268,29 @@ public class MainController {
                 sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                 casesContainer.getChildren().remove(finalCaseObj);
             });
-            if (status.equals("All")) {
-                casesContainer.getChildren().add(finalCaseObj);
+            if (caseRecord.getStatus().equals("New")){
+                caseStatus.setText("New");
+            }else{
+                caseStatus.setText("Done");
+                caseStatus.setStyle("-fx-background-color: #df1e00;");
+                caseIndicator.setStyle("-fx-background-color: #df2100;");
             }
+
             if (status.equals("New") && caseRecord.getStatus().equals("New")) {
                 casesContainer.getChildren().add(finalCaseObj);
             } else if (status.equals("Done") && caseRecord.getStatus().equals("Done")) {
                 casesContainer.getChildren().add(finalCaseObj);
             }
+            if (status.equals("All")) {
+                casesContainer.getChildren().add(finalCaseObj);
+            }
 
         }
     }
+
     /**
      * Loads the Case Files (notes) of a specific case into the app
+     *
      * @param caseID
      */
     private void loadFiles(int caseID) {
@@ -516,6 +529,7 @@ public class MainController {
 
     /**
      * Add case button functionality
+     *
      * @param actionEvent
      */
     public void addCase(ActionEvent actionEvent) {
@@ -541,6 +555,7 @@ public class MainController {
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         return timeStamp;
     }
+
     //TODO Add Comments
     public boolean casesUpdate() {
         ObservableList<CaseRecord> temp2 = sql.loadCases();
@@ -577,6 +592,7 @@ public class MainController {
             return requireUpdate;
         }
     }
+
     //TODO Add Comments
     public boolean filesUpdate() {
         ObservableList<FileRecord> temp2 = sql.loadFiles(caseID);
@@ -619,6 +635,7 @@ public class MainController {
             return requireUpdate;
         }
     }
+
     //TODO Add Comments
     public boolean callsUpdate() {
         ObservableList<CallRecord> temp2 = sql.loadCalls(caseID);
@@ -667,7 +684,7 @@ public class MainController {
     }
 
     @FXML
-    public void initialize () {
+    public void initialize() {
 
         filters_scroll.setPannable(true);
         filters_scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -786,14 +803,14 @@ public class MainController {
 
     /**
      * Imports the data from a file. It must be csv, xls, xlsx
+     *
      * @param filePath full path of file
      */
     public void importFile(String filePath) {
         if (filePath.endsWith("csv")) {
             importCSV(filePath);
             System.out.println("IMPORT FROM CSV");
-        }
-        else {
+        } else {
             importExcel(filePath);
             System.out.println("IMPORT FROM EXCEL");
         }
@@ -805,6 +822,7 @@ public class MainController {
      * Takes the rest of data and puts it under their respective columns
      * Sends it to database
      * Works only with columns that are already in the database.
+     *
      * @param filePath full path of file to be imported
      */
     public void importCSV(String filePath) {
@@ -874,6 +892,7 @@ public class MainController {
      * Takes the rest of data and puts it under their respective columns
      * Sends it to database
      * Works only with columns that are already in the database.
+     *
      * @param filePath full path of file to be imported
      */
     public void importExcel(String filePath) {
@@ -930,8 +949,9 @@ public class MainController {
 
     /**
      * Cells are considered objects. To get the data on them the following way has to be done.
+     *
      * @param cell Cell to take the value from
-     * @return  The information contained in the cell
+     * @return The information contained in the cell
      */
     private Object getCellValue(Cell cell) {
         if (cell.getCellTypeEnum() == CellType.STRING) {        // getCellTypeEnum is not deprecated in this version of Apache poi. It's just a bug
@@ -944,8 +964,8 @@ public class MainController {
 
     /**
      * Alert box that asks the user for the importance of some unrecognized columns in the database
-     * @param fileString    The unrecognized column
-     * @return The user decision. If it returns -1, the user decided to discard it.
+     *
+     * @param fileString The unrecognized column
      * @return If it returns a number the user decided to use it as an existing column in the database
      */
     public int alert(String fileString) {
@@ -959,7 +979,7 @@ public class MainController {
         ButtonType buttonTypeCancel = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeCancel);
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeYes){     // If user selects "Yes" button, a new pop-up asks him the correct column that should be used (if any)
+        if (result.get() == buttonTypeYes) {     // If user selects "Yes" button, a new pop-up asks him the correct column that should be used (if any)
             List<String> choices = new ArrayList<>();
             choices.addAll(getColumnNames());
 
@@ -975,12 +995,10 @@ public class MainController {
             });
             if (cr.alias(dialog.getSelectedItem()) != -1) {
                 return cr.alias(dialog.getSelectedItem());
-            }
-            else {
+            } else {
                 return -1;
             }
-        }
-        else {
+        } else {
             return -1;
         }
     }
