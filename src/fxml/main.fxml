@@ -237,7 +237,7 @@
                                         <children>
                                         </children>
                                         <padding>
-                                            <Insets left="15.0" top="15.0" />
+                                            <Insets left="28.0" right="20.0" top="13.0" />
                                         </padding>
                                     </HBox>
                                 </content>
@@ -305,7 +305,7 @@
                                             <Region HBox.hgrow="ALWAYS" />
                                             <Button fx:id="save_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="attach_button" mnemonicParsing="false" onAction="#importFile" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button fx:id="reload_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                            <Button fx:id="reload_button" mnemonicParsing="false" onAction="#update" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="addCall" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="setting_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                         </children>

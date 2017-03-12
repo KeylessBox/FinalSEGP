@@ -1,15 +1,11 @@
 package controllers;
 
 import com.Ostermiller.util.CSVParser;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -21,7 +17,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import modules.manageAccounts.User;
 import modules.table.CallRecord;
 import modules.table.CallsTable;
@@ -54,6 +49,7 @@ public class MainController {
     private int caseID = 1;
     private int id = 1;
     private boolean editing = false;
+    private char alphabet = 'A';
 
     @FXML
     private ScrollPane notes_scroll_pane;
@@ -98,7 +94,6 @@ public class MainController {
 
     @FXML
     protected BorderPane root;
-    private MyTask myTask;
 
     /**
      * Import functionality.
@@ -206,12 +201,13 @@ public class MainController {
             // Initialise elements from Case object:
             HBox hb = (HBox) CaseObject.getChildren().get(2);
             Button deleteBtn = (Button) hb.getChildren().get(1);
+            Button editBtn = (Button) hb.getChildren().get(0);
             HBox finalCaseObj = CaseObject;
             VBox temp = (VBox) CaseObject.getChildren().get(1);
-            Pane caseIndicator =  (Pane) CaseObject.getChildren().get(0);
+            Pane caseIndicator = (Pane) CaseObject.getChildren().get(0);
             HBox temp2 = (HBox) temp.getChildren().get(0);
             Label caseStatus = (Label) temp2.getChildren().get(0);
-            TextField caseName = (TextField) temp2.getChildren().get(1);
+            Label caseName = (Label) temp2.getChildren().get(1);
             caseName.setText(caseRecord.getName());
             Label caseDate = (Label) temp.getChildren().get(1);
 
@@ -240,11 +236,12 @@ public class MainController {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                alphabet = 'A' - 1;
+                filtersBox.getChildren().clear();
             });
 
             //Update case name:
             caseName.setOnMouseClicked(event -> {
-                caseName.setEditable(true);
                 editing = true;
                 int id = Integer.valueOf(finalCaseObj.getId());
                 caseID = id;
@@ -254,23 +251,26 @@ public class MainController {
                 search();
             });
 
-            caseName.setOnAction(event -> {
-                String change = caseName.getText();
-                int id = Integer.valueOf(finalCaseObj.getId());
-                System.out.println("Change case " + id + " name to : " + change);
-                sql.updateCaseName(id, change);
-                loadCases();
-                caseName.setEditable(false);
-                caseTitle.setText(change);
-                editing = false;
+//            caseName.setOnAction(event -> {
+//                String change = caseName.getText();
+//                int id = Integer.valueOf(finalCaseObj.getId());
+//                System.out.println("Change case " + id + " name to : " + change);
+//                sql.updateCaseName(id, change);
+//                loadCases();
+//                caseTitle.setText(change);
+//                editing = false;
+//            });
+
+            editBtn.setOnAction(event -> {
+
             });
             deleteBtn.setOnAction(event -> {
                 sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                 casesContainer.getChildren().remove(finalCaseObj);
             });
-            if (caseRecord.getStatus().equals("New")){
+            if (caseRecord.getStatus().equals("New")) {
                 caseStatus.setText("New");
-            }else{
+            } else {
                 caseStatus.setText("Done");
                 caseStatus.setStyle("-fx-background-color: #df1e00;");
                 caseIndicator.setStyle("-fx-background-color: #df2100;");
@@ -396,120 +396,132 @@ public class MainController {
 
         //TODO add counting A B C D for filters and table view when searching
 
-        System.out.println("ADD VICTIM");
-        Pane victimNote = null;
-        try {
-            victimNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/victim.fxml"));   // Prepares the template
-        } catch (IOException e1) {
-            e1.printStackTrace();
+        if (filtersBox.getChildren().size() == 0) {
+            alphabet = 'A';
         }
-        Pane temp = (Pane) victimNote.getChildren().get(0);
-        System.out.println(temp);
-        Pane temp2 = (Pane) temp.getChildren().get(0);
-        System.out.println(temp2);
-        Pane temp3 = (Pane) temp2.getChildren().get(4);
-        System.out.println("HERE" + temp3);
-        Button delete = (Button) temp3.getChildren().get(1);
-        TextField txtField = (TextField) temp.getChildren().get(2);
 
-        Pane finalVictimNote = victimNote;
-        delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
-            filtersBox.getChildren().remove(finalVictimNote);
-            searchData = callsData;
-            table.setItems(searchData);
-            System.out.println("DELETE VICTIM");
-        });
-        //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
+        if (alphabet <= 'Z') {
+            System.out.println("ADD VICTIM");
+            Pane victimNote = null;
+            try {
+                victimNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/victim.fxml"));   // Prepares the template
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            Pane temp = (Pane) victimNote.getChildren().get(0);
+            Pane temp2 = (Pane) temp.getChildren().get(0);
+            Label letter = (Label) temp2.getChildren().get(0);
+            Pane temp3 = (Pane) temp2.getChildren().get(4);
+            Button delete = (Button) temp3.getChildren().get(1);
+            TextField txtField = (TextField) temp.getChildren().get(2);
 
-        txtField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-            if (txtField.textProperty().get().isEmpty()) {
+            Pane finalVictimNote = victimNote;
+            delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
+                filtersBox.getChildren().remove(finalVictimNote);
                 searchData = callsData;
                 table.setItems(searchData);
-            } else {
+                System.out.println("DELETE VICTIM");
+            });
+            //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
 
-                ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-                ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+            txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
-                for (int i = 0; i < searchData.size(); i++) {
-                    for (int j = 0; j < cols.size(); j++) {
-                        if (j == 1) {
-                            TableColumn col = cols.get(j);
-                            String cellValue = col.getCellData(searchData.get(i)).toString();
-                            cellValue = cellValue.toLowerCase();
-                            if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
-                                tableItems.add(searchData.get(i));
-                                break;
+                if (txtField.textProperty().get().isEmpty()) {
+                    searchData = callsData;
+                    table.setItems(searchData);
+                } else {
+
+                    ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
+                    ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+
+                    for (int i = 0; i < searchData.size(); i++) {
+                        for (int j = 0; j < cols.size(); j++) {
+                            if (j == 1) {
+                                TableColumn col = cols.get(j);
+                                String cellValue = col.getCellData(searchData.get(i)).toString();
+                                cellValue = cellValue.toLowerCase();
+                                if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
+                                    tableItems.add(searchData.get(i));
+                                    break;
+                                }
                             }
                         }
                     }
+                    if (searchData != tableItems) {
+                        searchData = tableItems;
+                        table.setItems(tableItems);
+                    }
                 }
-                if (searchData != tableItems) {
-                    searchData = tableItems;
-                    table.setItems(tableItems);
-                }
-            }
-        });
-        filtersBox.getChildren().addAll(victimNote);
+            });
+            letter.setText(String.valueOf(alphabet));
+            filtersBox.getChildren().add(victimNote);
+            alphabet++;
+        }
     }
 
     //TODO Comments to add
     public void addSuspect() {
-        System.out.println("ADD SUSPECT");
-        Pane suspectNote = null;
-        try {
-            suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/suspect.fxml"));   // Prepares the template
-        } catch (IOException e1) {
-            e1.printStackTrace();
+
+        if (filtersBox.getChildren().size() == 0) {
+            alphabet = 'A';
         }
-        Pane temp = (Pane) suspectNote.getChildren().get(0);
-        System.out.println(temp);
-        Pane temp2 = (Pane) temp.getChildren().get(0);
-        System.out.println(temp2);
-        Pane temp3 = (Pane) temp2.getChildren().get(4);
-        System.out.println("HERE" + temp3);
-        Button delete = (Button) temp3.getChildren().get(1);
-        TextField txtField = (TextField) temp.getChildren().get(2);
 
-        Pane finalVictimNote = suspectNote;
-        delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
-            filtersBox.getChildren().remove(finalVictimNote);
-            searchData = callsData;
-            table.setItems(searchData);
-            System.out.println("DELETE SUSPECT");
-        });
-        //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
-
-        txtField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-            if (txtField.textProperty().get().isEmpty()) {
+        if (alphabet <= 'Z') {
+            System.out.println("ADD SUSPECT");
+            Pane suspectNote = null;
+            try {
+                suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/suspect.fxml"));   // Prepares the template
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            Pane temp = (Pane) suspectNote.getChildren().get(0);
+            Pane temp2 = (Pane) temp.getChildren().get(0);
+            Label letter = (Label) temp2.getChildren().get(0);
+            Pane temp3 = (Pane) temp2.getChildren().get(4);
+            Button delete = (Button) temp3.getChildren().get(1);
+            TextField txtField = (TextField) temp.getChildren().get(2);
+            Pane finalVictimNote = suspectNote;
+            delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
+                filtersBox.getChildren().remove(finalVictimNote);
                 searchData = callsData;
                 table.setItems(searchData);
-            } else {
+                System.out.println("DELETE SUSPECT");
+            });
+            //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
 
-                ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-                ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+            txtField.textProperty().addListener((observable, oldValue, newValue) -> {
 
-                for (int i = 0; i < searchData.size(); i++) {
-                    for (int j = 0; j < cols.size(); j++) {
-                        if (j == 1) {
-                            TableColumn col = cols.get(j);
-                            String cellValue = col.getCellData(searchData.get(i)).toString();
-                            cellValue = cellValue.toLowerCase();
-                            if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
-                                tableItems.add(searchData.get(i));
-                                break;
+                if (txtField.textProperty().get().isEmpty()) {
+                    searchData = callsData;
+                    table.setItems(searchData);
+                } else {
+
+                    ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
+                    ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+
+                    for (int i = 0; i < searchData.size(); i++) {
+                        for (int j = 0; j < cols.size(); j++) {
+                            if (j == 1) {
+                                TableColumn col = cols.get(j);
+                                String cellValue = col.getCellData(searchData.get(i)).toString();
+                                cellValue = cellValue.toLowerCase();
+                                if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
+                                    tableItems.add(searchData.get(i));
+                                    break;
+                                }
                             }
                         }
                     }
+                    if (searchData != tableItems) {
+                        searchData = tableItems;
+                        table.setItems(tableItems);
+                    }
                 }
-                if (searchData != tableItems) {
-                    searchData = tableItems;
-                    table.setItems(tableItems);
-                }
-            }
-        });
-        filtersBox.getChildren().addAll(suspectNote);
+            });
+            letter.setText(String.valueOf(alphabet));
+            alphabet++;
+            filtersBox.getChildren().addAll(suspectNote);
+        }
     }
 
     /**
@@ -688,6 +700,7 @@ public class MainController {
 
         filters_scroll.setPannable(true);
         filters_scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        filters_scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         notes_scroll_pane.setPannable(true);
         notes_scroll_pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         //TODO Is this the drag/drop functionality? Let's find another place for it
@@ -724,43 +737,28 @@ public class MainController {
         });
         setUserLabel();
         loadCases();
-        myTask = new MyTask();
-        new Thread(myTask).start();
     }
 
-    //TODO Add Comments
-    class MyTask extends Task<Void> {
-
-        @Override
-        protected Void call() throws Exception {
-            Timeline Updater = new Timeline(new KeyFrame(Duration.seconds(3), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    if (!editing) {
-                        System.out.println("UPDATE");
-                        if (casesUpdate()) {
-                            System.out.println("EXTERNAL CHANGE IN CASES");
-                            loadCases();
-                            for (CaseRecord temp : casesData) {
-                                if (Integer.valueOf(temp.getCaseID()) == caseID) {
-                                    caseTitle.setText(temp.getName());
-                                }
-                            }
-                        }
-                        if (filesUpdate()) {
-                            System.out.println("EXTERNAL CHANGE IN FILES");
-                            loadFiles(caseID);
-                        }
-                        if (callsUpdate()) {
-                            System.out.println("EXTERNAL CHANGE IN TABLE");
-                            loadTable(caseID);
-                        }
+    public void update() {
+        if (!editing) {
+            System.out.println("UPDATE");
+            if (casesUpdate()) {
+                System.out.println("EXTERNAL CHANGE IN CASES");
+                loadCases();
+                for (CaseRecord temp : casesData) {
+                    if (Integer.valueOf(temp.getCaseID()) == caseID) {
+                        caseTitle.setText(temp.getName());
                     }
                 }
-            }));
-            Updater.setCycleCount(Timeline.INDEFINITE);
-            Updater.play();
-            return null;
+            }
+            if (filesUpdate()) {
+                System.out.println("EXTERNAL CHANGE IN FILES");
+                loadFiles(caseID);
+            }
+            if (callsUpdate()) {
+                System.out.println("EXTERNAL CHANGE IN TABLE");
+                loadTable(caseID);
+            }
         }
     }
 
