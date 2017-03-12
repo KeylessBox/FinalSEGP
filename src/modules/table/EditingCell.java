@@ -3,6 +3,7 @@ package modules.table;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -87,7 +88,7 @@ import javafx.scene.input.KeyEvent;
                     if (!arg2) { commitEdit(textField.getText()); }
                 }
             });
-
+            textField.setAlignment(Pos.CENTER_LEFT);
             textField.setOnKeyReleased(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent t) {

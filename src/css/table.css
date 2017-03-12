@@ -110,6 +110,26 @@
     -fx-opacity: 0.8;
 }
 
+#delete_button {
+    -fx-background-image: url("../res/icons/delete_icon.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 18 18;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#delete_button:hover {
+    -fx-opacity: 1;
+}
+
+#delete_button:pressed {
+    -fx-opacity: 0.8;
+}
+
 .button.btn {
     -fx-background-image: url("../res/icons/search_forward_icon.png");
     -fx-background-repeat: stretch;
@@ -137,35 +157,6 @@
 
 .button.btn:focused {
     -fx-pref-height: 30;
-}
-
-.text-field {
-    -fx-border-color: #43546e;
-    -fx-border-radius: 0, 0, 0, 0;
-    -fx-padding: 5 10 5 10;
-}
-
-.text-field {
-    -fx-background-color: #FFFFFF,
-    #FFFFFF;
-    -fx-border-width: 1;
-    -fx-background-insets: 0, 2;
-    -fx-background-radius: 0, 0;
-}
-
-.text-field:focused {
-    -fx-background-color: #43546e,
-    #FFFFFF;
-}
-
-.text-field:hover {
-    -fx-background-color: #909090,
-    #FFFFFF;
-}
-
-.text-field:focused:hover {
-    -fx-background-color: #43546e,
-    #FFFFFF;
 }
 
 .tableview .tablecolumn .tablecolumn-background {

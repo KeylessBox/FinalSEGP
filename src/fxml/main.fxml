@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" minWidth="1795.0" prefHeight="1000.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<BorderPane fx:id="root" minHeight="1000.0" minWidth="1795.0" prefHeight="1000.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
         <BorderPane fx:id="menubar" prefHeight="42.0" prefWidth="1766.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
             <center>
@@ -287,11 +287,10 @@
                                             <TableColumn fx:id="destinationPhoneColumn" maxWidth="175.0" minWidth="175.0" text="Phone Number" />
                                         </columns>
                                     </TableColumn>
-                                    <TableColumn fx:id="dateColumn" maxWidth="175.0" minWidth="175.0" text="Date" />
-                                    <TableColumn fx:id="timeColumn" maxWidth="175.0" minWidth="175.0" text="Time" />
-                                    <TableColumn fx:id="typeColumn" maxWidth="175.0" minWidth="175.0" text="Type Of Call" />
-                                    <TableColumn fx:id="durationColumn" maxWidth="175.0" minWidth="175.0" text="Duration" />
-                                <TableColumn fx:id="deleteColumn" maxWidth="40" minWidth="40" text="x" />
+                                    <TableColumn fx:id="dateColumn" maxWidth="185.0" minWidth="185.0" text="Date" />
+                                    <TableColumn fx:id="timeColumn" maxWidth="185.0" minWidth="185.0" text="Time" />
+                                    <TableColumn fx:id="typeColumn" maxWidth="185.0" minWidth="185.0" text="Type Of Call" />
+                                    <TableColumn fx:id="durationColumn" maxWidth="185.0" minWidth="185.0" text="Duration" />
                                 </columns>
                                 <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -304,8 +303,9 @@
                                             <Region HBox.hgrow="ALWAYS" />
                                             <Button fx:id="save_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="attach_button" mnemonicParsing="false" onAction="#importFile" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                            <Button id="addCall" mnemonicParsing="false" onAction="#addCall" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" />
+                                 <Button fx:id="delete_button" mnemonicParsing="false" onAction="#deleteCall" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="reload_button" mnemonicParsing="false" onAction="#update" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button id="addCall" mnemonicParsing="false" onAction="#addCall" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="setting_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                         </children>
                                         <padding>

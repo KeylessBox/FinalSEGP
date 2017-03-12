@@ -153,9 +153,7 @@ public class MainController {
         columnFactory.createTimeColumn(timeColumn);
         columnFactory.createTypeOfCallColumn(typeColumn);
         columnFactory.createDurationColumn(durationColumn);
-        createDeleteColumn(deleteColumn);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
         table.setItems(callsData);  // adds the data into the table
         table.setEditable(true);
     }
@@ -461,6 +459,7 @@ public class MainController {
                 sql.removeCall(Integer.parseInt(record.getCallID()));   // Delete from database part
                 callsData.remove(table.getSelectionModel().getSelectedItem());  // Remove from table part
                 System.out.println("DELETE: call " + record.getCallID());
+                table.getSelectionModel().clearSelection();
             }
         }
     }
@@ -613,6 +612,7 @@ public class MainController {
         callsData.add(cr);  // Add to table (visually) part
         sql.addCall(cr);        // Add to database part
         System.out.println("ADD: call");
+
     }
 
     /**
