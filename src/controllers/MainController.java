@@ -15,13 +15,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import modules.file_import.Case;
 import modules.manageAccounts.User;
-import modules.table.CallRecord;
-import modules.table.CallsTable;
-import modules.table.CaseRecord;
-import modules.table.FileRecord;
+import modules.table.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.*;
@@ -33,6 +32,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+
+import static javafx.scene.paint.Color.BLACK;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -288,7 +289,24 @@ public class MainController {
 
         }
     }
+    private void showNote(int noteID) {
+        ObservableList<FileRecord> noteRecord = sql.loadNote(noteID);
+        Pane notePane = null;
+        try {
+            notePane = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_pane.fxml")); // Case file template
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
 
+      /*  Rectangle rectangle = new Rectangle(50, 50);
+        rectangle.setFill(BLACK);
+        DragResizeMod.makeResizable(rectangle, null);
+        DragResizeMod.setNode();
+        Pane stuff = new Pane();
+        stuff.getChildren().add(rectangle);
+        root.getChildren().add(stuff);*/
+
+    }
     /**
      * Loads the Case Files (notes) of a specific case into the app
      *
@@ -307,6 +325,11 @@ public class MainController {
                 }
                 // Putting the data into the templates
                 //TODO Still needs working on these. Make them a bit unique.
+                CaseFile.setId(String.valueOf(element.getNoteID()));
+                CaseFile.setOnMouseClicked(event -> {
+                    int id = Integer.valueOf(element.getNoteID());
+                    showNote(id);
+                });
 //                HBox temp = (HBox) CaseFile.getChildren().get(1);
 //                HBox temp2 = (HBox) CaseFile.getChildren().get(0);
 //                TextField fileName = (TextField) temp2.getChildren().get(0);
@@ -316,7 +339,7 @@ public class MainController {
 //
 //                fileName.setOnAction(event -> {
 //                    String change = fileName.getText();
-//                    int id = Integer.valueOf(element.getFileID());
+//                    int id = Integer.valueOf(element.getNoteID());
 //                    System.out.println("Change case file " + id + " name to : " + change);
 //                    sql.updateCaseFile(id, change);
 //                    fileName.setEditable(false);
@@ -327,7 +350,7 @@ public class MainController {
 //
 //                delete.setOnAction(event -> {
 //                    notes_box.getChildren().remove(finalCaseFile);
-//                    sql.removeNote(Integer.parseInt(element.getFileID()));
+//                    sql.removeNote(Integer.parseInt(element.getNoteID()));
 //                });
                 notes_box.getChildren().add(CaseFile);     // the case files get loaded to the app
             }
@@ -622,7 +645,7 @@ public class MainController {
                     if (!fileRecord.getDate().equals(filesData.get(i).getDate())) {
                         requireUpdate = true;
                     }
-                    if (!fileRecord.getFileID().equals(filesData.get(i).getFileID())) {
+                    if (!fileRecord.getNoteID().equals(filesData.get(i).getNoteID())) {
                         requireUpdate = true;
                     }
                     if (!fileRecord.getName().equals(filesData.get(i).getName())) {

@@ -305,7 +305,7 @@
                                             <Button fx:id="save_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="attach_button" mnemonicParsing="false" onAction="#importFile" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="reload_button" mnemonicParsing="false" onAction="#update" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button id="addCall" onAction="#addCall" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                            <Button id="addCall" mnemonicParsing="false" onAction="#addCall" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                             <Button fx:id="setting_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
                                         </children>
                                         <padding>
@@ -343,7 +343,7 @@
                     <children>
                         <ScrollPane fx:id="notes_scroll_pane" hbarPolicy="NEVER" prefHeight="912.0" prefWidth="50.0" vbarPolicy="NEVER">
                             <content>
-                                <VBox fx:id="notes_box" prefHeight="939.0" prefWidth="50.0" spacing="10.0">
+                                <VBox fx:id="notes_box" prefWidth="50.0" spacing="10.0">
                                     <children>
                                     </children>
                                     <padding>

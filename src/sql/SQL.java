@@ -173,22 +173,54 @@ public class SQL {
     /**
      * Loads the note records from the database
      *
-     * @param i
+     * @param caseID
      * @return
      */
-    public ObservableList<FileRecord> loadFiles(int i) {
+    public ObservableList<FileRecord> loadFiles(int caseID) {
         Connection connection = dbConnection.connect();
         ObservableList<FileRecord> data = FXCollections.observableArrayList();
 
         try {
             //execute query and store result in a result SET:
-            ResultSet caseRS = connection.createStatement().executeQuery("SELECT * FROM notes WHERE caseID=" + i + ";");
+            ResultSet caseRS = connection.createStatement().executeQuery("SELECT * FROM notes WHERE caseID=" + caseID + ";");
 
             while (caseRS.next()) {
                 if (Integer.parseInt(caseRS.getString(1)) > maxIDNote) {
                     maxIDNote = Integer.parseInt(caseRS.getString(1));
                 }
                 data.add(new FileRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4), caseRS.getString(5), caseRS.getString(6)));
+            }
+            maxIDNote = 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+
+        }
+        return data;
+    }
+
+    /**
+     * Loads the note record from the database
+     *
+     * @param noteID
+     * @return
+     */
+    public ObservableList<FileRecord> loadNote(int noteID) {
+        Connection connection = dbConnection.connect();
+        ObservableList<FileRecord> data = FXCollections.observableArrayList();
+
+        try {
+            //execute query and store result in a result SET:
+            ResultSet noteRS = connection.createStatement().executeQuery("SELECT * FROM notes WHERE id=" + noteID + ";");
+
+            while (noteRS.next()) {
+                if (Integer.parseInt(noteRS.getString(1)) > maxIDNote) {
+                    maxIDNote = Integer.parseInt(noteRS.getString(1));
+                }
+                data.add(new FileRecord(noteRS.getString(1), noteRS.getString(2), noteRS.getString(3), noteRS.getString(4), noteRS.getString(5), noteRS.getString(6)));
             }
             maxIDNote = 1;
         } catch (Exception ex) {

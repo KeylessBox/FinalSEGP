@@ -6,16 +6,16 @@
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
+#notes_scroll_pane > .viewport{
+    -fx-border-color: grey;
+    -fx-background-color: #bfbfbf;
+    -fx-border-width: 0 0 0 1;
+  }
 #notes_scroll_pane:focused{
     -fx-background-insets: 0;
 }
 #notes_scroll_pane.corner{
     -fx-background-insets: 0;
-}
-#notes_box {
-    -fx-background-color: #bfbfbf;
-    -fx-border-color: grey;
-    -fx-border-width: 0 0 0 1;
 }
 #notes_settings_bar {
     -fx-background-image: url("../res/icons/note_settings_bar.png");

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -9,7 +11,13 @@
    <children>
       <VBox id="note_box" prefHeight="261.0" prefWidth="169.0">
          <children>
-            <HBox id="note_control_bar" prefHeight="23.0" prefWidth="169.0" />
+            <HBox id="note_control_bar" prefHeight="23.0" prefWidth="169.0">
+               <children>
+                  <Label text="Name" />
+               </children>
+               <padding>
+                  <Insets left="5.0" top="5.0" />
+               </padding></HBox>
             <TextArea id="note_text" blendMode="MULTIPLY" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
