@@ -35,7 +35,7 @@ public class SQL {
      *
      * @return ObservableList<StudentRecord>
      */
-    public ObservableList<CallRecord> loadCalls(int i) {
+    public ObservableList<CallRecord> loadCalls(int caseID) {
 
         Connection connection = dbConnection.connect();
         ObservableList<CallRecord> data = FXCollections.observableArrayList();
@@ -43,17 +43,25 @@ public class SQL {
         try {
 
             //execute query and store result in a result SET:
-            ResultSet callsRS = connection.createStatement().executeQuery("SELECT * FROM calls WHERE caseId = " + i);
+            ResultSet callsRS = connection.createStatement().executeQuery("SELECT * FROM calls WHERE caseId = " + caseID);
 
             while (callsRS.next()) {
+                ResultSet originRS = connection.createStatement().executeQuery("SELECT personName FROM phoneNumbers WHERE phoneNumber= '"
+                         + callsRS.getString(3) + "';");
 
+                ResultSet destinationRS = connection.createStatement().executeQuery
+                        ("SELECT personName FROM phoneNumbers WHERE phoneNumber= '" +
+                        callsRS.getString(4) + "';");
                 if (Integer.parseInt(callsRS.getString(1)) > maxIDCall) {
                     maxIDCall = Integer.parseInt(callsRS.getString(1));
                 }
-
-                data.add(new CallRecord(callsRS.getString(1), callsRS.getString(2), callsRS.getString(3),
-                        callsRS.getString(4), callsRS.getString(5), callsRS.getString(6), callsRS.getString(7),
-                        callsRS.getString(8)));
+                originRS.next();
+                System.out.println(originRS.getString(1));
+                destinationRS.next();
+                data.add(new CallRecord(callsRS.getString(1), callsRS.getString(2), originRS.getString(1),
+                        callsRS.getString(3), destinationRS.getString(1),
+                        callsRS.getString(4), callsRS.getString(5), callsRS.getString(6),
+                        callsRS.getString(7), callsRS.getString(8)));
             }
 
         } catch (Exception ex) {
@@ -306,6 +314,10 @@ public class SQL {
             connection.createStatement().executeUpdate("INSERT INTO calls(caseId, origin, destination, date, time, typeOfCall, duration)\n" +
                     "VALUES(" + cr.getCaseID() + ",'" + cr.getOrigin() + "','" + cr.getDestination() + "','" +
                     cr.getDate() + "','" + cr.getTime() + "','" + cr.getTypeOfCall() + "','" + cr.getDuration() + "');");
+            connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
+                    "('','" +cr.getOrigin() + "');");
+            connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
+                    "('','" +cr.getDestination() + "');");
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
