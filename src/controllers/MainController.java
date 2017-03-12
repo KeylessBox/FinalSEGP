@@ -53,8 +53,6 @@ public class MainController {
     private int id = 1;
     private boolean editing = false;
     private char alphabet = 'A';
-    private NotePane[] listOfNotePanes = new NotePane[20];
-    public int indexNote = -1;
 
     @FXML
     private ScrollPane notes_scroll_pane;
@@ -348,21 +346,17 @@ public class MainController {
 
         }
     }
-    @FXML
-    private void closeNote() {
-
-    }
     private void showNote(int noteID) {
 
         ObservableList<FileRecord> noteRecord = sql.loadNote(noteID);
-        NotePane notePane = null;
+        Pane notePane = null;
         try {
-            notePane = (NotePane) FXMLLoader.load(getClass().getResource("/fxml/note_pane.fxml")); // Case file template
+            notePane = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_pane.fxml")); // Case file template
         } catch (IOException e1) {
             e1.printStackTrace();
         }
         notePane.setId(String.valueOf(noteID));
-        NotePane note = notePane;
+        Pane note = notePane;
 //        boolean isOpen = false;
 //        for (int i=0; i<indexNote; i++){
 //            if (listOfNotePanes[indexNote].getNoteID() == notePane.getNoteID()) {
@@ -373,16 +367,24 @@ public class MainController {
 //            indexNote++;
 //            listOfNotePanes[indexNote] = notePane;
             DragResizeMod.makeResizable(notePane, null);
+            notePane.setLayoutX(1560);
+            notePane.setLayoutY(60);
+
             root.getChildren().add(notePane);
-            System.out.println(notePane.getOpen());
 //        }
         VBox temp = (VBox) notePane.getChildren().get(0);
         HBox noteBar = (HBox) temp.getChildren().get(0);
-        Button closeNote = (Button) noteBar.getChildren().get(4);
-        Button deleteNote = (Button) noteBar.getChildren().get(3);
+        Button closeNote = (Button) noteBar.getChildren().get(3);
+        Button deleteNote = (Button) noteBar.getChildren().get(4);
+        TextArea data = (TextArea) temp.getChildren().get(1);
+        for (FileRecord fr : noteRecord) {
+            data.appendText(fr.getData());
+        }
 
         closeNote.setOnAction(event -> {
             root.getChildren().remove(note);
+            sql.updateNote(data.getText(), note.getId());
+
         });
 
         deleteNote.setOnAction(event -> {

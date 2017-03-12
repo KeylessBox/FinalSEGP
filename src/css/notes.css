@@ -84,7 +84,7 @@
     -fx-border-color: transparent;
 }
 #delete_note {
-    -fx-background-image: url("../res/icons/close_case_icon.png");
+    -fx-background-image: url("../res/icons/delete_note_icon.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;

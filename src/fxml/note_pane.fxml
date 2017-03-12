@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<?import modules.table.NotePane?>
-<NotePane stylesheets="@../css/notes.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<Pane stylesheets="@../css/notes.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox id="note_box" prefHeight="261.0" prefWidth="169.0">
          <children>
@@ -19,8 +18,8 @@
                   <Label text="Name" />
                   <Region HBox.hgrow="ALWAYS" />
                   <Button id="edit_name" mnemonicParsing="false" />
-                  <Button id="delete_note" mnemonicParsing="false" />
                   <Button id="close_note" mnemonicParsing="false" />
+                  <Button id="delete_note" mnemonicParsing="false" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -29,4 +28,4 @@
          </children>
       </VBox>
    </children>
-</NotePane>
+</Pane>
