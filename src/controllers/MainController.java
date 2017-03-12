@@ -53,6 +53,8 @@ public class MainController {
     private int id = 1;
     private boolean editing = false;
     private char alphabet = 'A';
+    private NotePane[] listOfNotePanes = new NotePane[20];
+    public int indexNote = -1;
 
     @FXML
     private ScrollPane notes_scroll_pane;
@@ -346,21 +348,65 @@ public class MainController {
 
         }
     }
+    @FXML
+    private void closeNote() {
 
+    }
     private void showNote(int noteID) {
+
         ObservableList<FileRecord> noteRecord = sql.loadNote(noteID);
-        Pane notePane = null;
+        NotePane notePane = null;
         try {
-            notePane = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_pane.fxml")); // Case file template
+            notePane = (NotePane) FXMLLoader.load(getClass().getResource("/fxml/note_pane.fxml")); // Case file template
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+        notePane.setId(String.valueOf(noteID));
+        NotePane note = notePane;
+//        boolean isOpen = false;
+//        for (int i=0; i<indexNote; i++){
+//            if (listOfNotePanes[indexNote].getNoteID() == notePane.getNoteID()) {
+//                isOpen = true;
+//            }
+//        }
+//        if (!isOpen) {
+//            indexNote++;
+//            listOfNotePanes[indexNote] = notePane;
+            DragResizeMod.makeResizable(notePane, null);
+            root.getChildren().add(notePane);
+            System.out.println(notePane.getOpen());
+//        }
+        VBox temp = (VBox) notePane.getChildren().get(0);
+        HBox noteBar = (HBox) temp.getChildren().get(0);
+        Button closeNote = (Button) noteBar.getChildren().get(4);
+        Button deleteNote = (Button) noteBar.getChildren().get(3);
 
-        Rectangle rectangle = new Rectangle(50, 50);
-        rectangle.setFill(BLACK);
-        DragResizeMod.makeResizable(notePane, null);
-//        DragResizeMod.setNode();
-        root.getChildren().add(notePane);
+        closeNote.setOnAction(event -> {
+            root.getChildren().remove(note);
+        });
+
+        deleteNote.setOnAction(event -> {
+            Pane left = (Pane) root.getChildren().get(3);
+            VBox notesVBox = (VBox) left.getChildren().get(0);
+            ScrollPane notesScrollPAne = (ScrollPane) notesVBox.getChildren().get(0);
+            VBox notesBox = (VBox) notesScrollPAne.getContent();
+            int i = 0;
+            Pane noteIcon;
+            try {
+                while ((noteIcon = (Pane) notesBox.getChildren().get(i)) != null) {
+                    if (noteIcon.getId().equals(note.getId())) {
+                        notes_box.getChildren().remove(noteIcon);
+                        root.getChildren().remove(note);
+                        sql.removeNote(Integer.valueOf(note.getId()));
+                    }
+                    i++;
+                }
+            } catch(IndexOutOfBoundsException e) {
+                // DO Nothing. It works as intended
+            }
+
+        });
+
     }
 
     /**
@@ -382,10 +428,12 @@ public class MainController {
                 // Putting the data into the templates
                 //TODO Still needs working on these. Make them a bit unique.
                 CaseFile.setId(String.valueOf(element.getNoteID()));
-                CaseFile.setOnMouseClicked(event -> {
-                    int id = Integer.valueOf(element.getNoteID());
-                    showNote(id);
-                });
+                    CaseFile.setOnMouseClicked(event -> {
+                        int id = Integer.valueOf(element.getNoteID());
+
+                        showNote(id);
+                    });
+
 //                HBox temp = (HBox) CaseFile.getChildren().get(1);
 //                HBox temp2 = (HBox) CaseFile.getChildren().get(0);
 //                TextField fileName = (TextField) temp2.getChildren().get(0);
@@ -404,10 +452,7 @@ public class MainController {
 //                    fileName.setEditable(true);
 //                });
 //
-//                delete.setOnAction(event -> {
-//                    notes_box.getChildren().remove(finalCaseFile);
-//                    sql.removeNote(Integer.parseInt(element.getNoteID()));
-//                });
+
                 notes_box.getChildren().add(CaseFile);     // the case files get loaded to the app
             }
         }

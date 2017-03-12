@@ -76,6 +76,30 @@
 #note_box {
     -fx-background-image: url("../res/icons/note_pane.png");
 }
+#edit_name {
+    -fx-background-image: url("../res/icons/note_icon.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+#delete_note {
+    -fx-background-image: url("../res/icons/close_case_icon.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+#close_note {
+    -fx-background-image: url("../res/icons/ok_icon.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
 #note_text {
     -fx-background-color: transparent;
 }
