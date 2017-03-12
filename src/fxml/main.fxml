@@ -187,7 +187,7 @@
             <children>
                 <Pane layoutX="18.0" layoutY="95.0">
                     <children>
-                        <ScrollPane hbarPolicy="NEVER" layoutX="2.0" layoutY="2.0" prefHeight="300.0" prefWidth="228.0" stylesheets="@../css/cases.css" vbarPolicy="NEVER">
+                        <ScrollPane hbarPolicy="NEVER" layoutX="2.0" layoutY="2.0" maxHeight="500.0" prefWidth="228.0" stylesheets="@../css/cases.css" vbarPolicy="NEVER">
                             <VBox fx:id="casesContainer" prefWidth="228.0" spacing="0">
                                 <children>
                                 </children>
