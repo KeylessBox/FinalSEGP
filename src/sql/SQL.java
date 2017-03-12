@@ -67,13 +67,11 @@ public class SQL {
                 } else {
                     destinationName = "";
                 }
-
                 data.add(new CallRecord(callsRS.getString(1), callsRS.getString(2), originName,
                         callsRS.getString(3), destinationName,
                         callsRS.getString(4), callsRS.getString(5), callsRS.getString(6),
                         callsRS.getString(7), callsRS.getString(8)));
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -659,7 +659,7 @@ public class MainController {
     public void addCall() {
         // Data manipulation part (the default data is ready to be used)
         CallRecord cr = new CallRecord(String.valueOf(sql.getMaxCallID() + 1), "\"" + caseID + "\"",
-                "0", "0", "1900/01/01", "00:00", "Standard", "00:00");
+                "1", "1", "1900/01/01", "00:00", "Standard", "00:00");
         callsData.add(cr);  // Add to table (visually) part
         sql.addCall(cr);        // Add to database part
         System.out.println("ADD: call");

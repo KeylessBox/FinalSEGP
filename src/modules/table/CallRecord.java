@@ -54,9 +54,9 @@ public class CallRecord {
                       String typeOfCall, String duration) {
         this.callID = new SimpleStringProperty(callID);
         this.caseID = new SimpleStringProperty(caseID);
-        this.originName = null;
+        originName = new SimpleStringProperty("");
         this.origin = new SimpleStringProperty(origin);
-        this.destinationName = null;
+        destinationName = new SimpleStringProperty("");
         this.destination = new SimpleStringProperty(destination);
         this.date = new SimpleStringProperty(date);
         this.time = new SimpleStringProperty(time);
@@ -69,9 +69,9 @@ public class CallRecord {
                       String typeOfCall, String duration) {
         callID = null;
         this.caseID = new SimpleStringProperty(caseID);
-        this.originName = null;
+        originName = new SimpleStringProperty("");
         this.origin = new SimpleStringProperty(origin);
-        this.destinationName = null;
+        destinationName = new SimpleStringProperty("");
         this.destination = new SimpleStringProperty(destination);
         this.date = new SimpleStringProperty(date);
         this.time = new SimpleStringProperty(time);
@@ -170,15 +170,15 @@ public class CallRecord {
             caseID.set(CaseID);
         }
 
-    public void setOriginName(String origin) {
-        this.originName.set(origin);
+    public void setOriginName(String originName) {
+        this.originName.set(originName);
     }
 
     public void setOrigin(String origin) {
             this.origin.set(origin);
         }
 
-    public void setDestinationName(String destination) {this.destinationName.set(destination);}
+    public void setDestinationName(String destinationName) {this.destinationName.set(destinationName);}
 
     public void setDestination(String destination) {this.destination.set(destination);}
 
