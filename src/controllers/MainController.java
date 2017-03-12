@@ -305,7 +305,6 @@ public class MainController {
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                System.out.println("NOTES");
                 // Putting the data into the templates
                 //TODO Still needs working on these. Make them a bit unique.
 //                HBox temp = (HBox) CaseFile.getChildren().get(1);
