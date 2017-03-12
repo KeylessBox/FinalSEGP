@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane stylesheets="@../css/notes.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<Pane id="note_pane" stylesheets="@../css/notes.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox id="note_box" prefHeight="261.0" prefWidth="169.0">
+      <VBox id="note_box" prefHeight="320.0" prefWidth="200.0">
          <children>
             <HBox id="note_control_bar" prefHeight="23.0" prefWidth="169.0">
                <children>

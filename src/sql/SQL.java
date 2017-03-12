@@ -55,10 +55,21 @@ public class SQL {
                 if (Integer.parseInt(callsRS.getString(1)) > maxIDCall) {
                     maxIDCall = Integer.parseInt(callsRS.getString(1));
                 }
-                originRS.next();
-                destinationRS.next();
-                data.add(new CallRecord(callsRS.getString(1), callsRS.getString(2), originRS.getString(1),
-                        callsRS.getString(3), destinationRS.getString(1),
+                String originName;
+                String destinationName;
+                if (originRS.next()) {
+                    originName = originRS.getString(1);
+                } else {
+                    originName = "";
+                }
+                if (destinationRS.next()) {
+                    destinationName = destinationRS.getString(1);
+                } else {
+                    destinationName = "";
+                }
+
+                data.add(new CallRecord(callsRS.getString(1), callsRS.getString(2), originName,
+                        callsRS.getString(3), destinationName,
                         callsRS.getString(4), callsRS.getString(5), callsRS.getString(6),
                         callsRS.getString(7), callsRS.getString(8)));
             }
@@ -328,9 +339,9 @@ public class SQL {
                     "VALUES(" + cr.getCaseID() + ",'" + cr.getOrigin() + "','" + cr.getDestination() + "','" +
                     cr.getDate() + "','" + cr.getTime() + "','" + cr.getTypeOfCall() + "','" + cr.getDuration() + "');");
             connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
-                    "('','" +cr.getOrigin() + "');");
+                    "(' ','" +cr.getOrigin() + "');");
             connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
-                    "('','" +cr.getDestination() + "');");
+                    "(' ','" +cr.getDestination() + "');");
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();

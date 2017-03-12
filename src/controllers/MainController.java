@@ -368,11 +368,11 @@ public class MainController {
 //            indexNote++;
 //            listOfNotePanes[indexNote] = notePane;
             DragResizeMod.makeResizable(notePane, null);
-            notePane.setLayoutX(1560);
+            notePane.setLayoutX(1530);
             notePane.setLayoutY(60);
 
             root.getChildren().add(notePane);
-//        }
+//      }
         VBox temp = (VBox) notePane.getChildren().get(0);
         HBox noteBar = (HBox) temp.getChildren().get(0);
         Button closeNote = (Button) noteBar.getChildren().get(3);
@@ -382,10 +382,13 @@ public class MainController {
             data.appendText(fr.getData());
         }
 
+        temp.setOnMousePressed(event -> {
+            temp.setStyle("-fx-blend-mode: src-over;");
+        });
+
         closeNote.setOnAction(event -> {
             root.getChildren().remove(note);
             sql.updateNote(data.getText(), note.getId());
-
         });
 
         deleteNote.setOnAction(event -> {
