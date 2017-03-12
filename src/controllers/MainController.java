@@ -471,11 +471,11 @@ public class MainController {
             ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
             ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
 
-            if (searchData != null) {
-                for (int i = 0; i < searchData.size(); i++) {
+            if (callsData != null) {
+                for (int i = 0; i < callsData.size(); i++) {
                     for (int j = 0; j < cols.size(); j++) {
                         TableColumn col = cols.get(j);
-                        String cellValue = col.getCellData(searchData.get(i)).toString();
+                        String cellValue = col.getCellData(callsData.get(i)).toString();
                         cellValue = cellValue.toLowerCase();
                         if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
                             tableItems.add(searchData.get(i));
@@ -657,7 +657,8 @@ public class MainController {
         callsData.add(cr);  // Add to table (visually) part
         sql.addCall(cr);        // Add to database part
         System.out.println("ADD: call");
-
+        table.scrollTo(cr);
+        table.getSelectionModel().select(cr);
     }
 
     /**
