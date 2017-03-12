@@ -13,7 +13,9 @@ public class CallRecord {
     private final StringProperty callID;
     private final StringProperty caseID;
     private final StringProperty origin;
+    private final StringProperty originName;
     private final StringProperty destination;
+    private final StringProperty destinationName;
     private final StringProperty date;
     private final StringProperty time;
     private final StringProperty typeOfCall;
@@ -23,18 +25,23 @@ public class CallRecord {
         this.callID = null;
         this.caseID = null;
         this.origin = null;
+        this.originName = null;
         this.destination = null;
+        this.destinationName = null;
         this.date = null;
         this.time = null;
         this.typeOfCall = null;
         this.duration = null;
     }
 
-    public CallRecord(String callID, String caseID, String origin, String destination, String date, String time,
+    public CallRecord(String callID, String caseID, String originName, String origin, String destinationName,
+                      String destination, String date, String time,
                       String typeOfCall, String duration) {
         this.callID = new SimpleStringProperty(callID);
         this.caseID = new SimpleStringProperty(caseID);
+        this.originName = new SimpleStringProperty(originName);
         this.origin = new SimpleStringProperty(origin);
+        this.destinationName = new SimpleStringProperty(destinationName);
         this.destination = new SimpleStringProperty(destination);
         this.date = new SimpleStringProperty(date);
         this.time = new SimpleStringProperty(time);
@@ -42,11 +49,29 @@ public class CallRecord {
         this.duration = new SimpleStringProperty(duration);
     }
 
-    public CallRecord(String caseID, String origin, String destination, String date, String time,
+    public CallRecord(String callID, String caseID, String origin,
+                      String destination, String date, String time,
+                      String typeOfCall, String duration) {
+        this.callID = new SimpleStringProperty(callID);
+        this.caseID = new SimpleStringProperty(caseID);
+        this.originName = null;
+        this.origin = new SimpleStringProperty(origin);
+        this.destinationName = null;
+        this.destination = new SimpleStringProperty(destination);
+        this.date = new SimpleStringProperty(date);
+        this.time = new SimpleStringProperty(time);
+        this.typeOfCall = new SimpleStringProperty(typeOfCall);
+        this.duration = new SimpleStringProperty(duration);
+    }
+
+    public CallRecord(String caseID, String origin,
+                      String destination, String date, String time,
                       String typeOfCall, String duration) {
         callID = null;
         this.caseID = new SimpleStringProperty(caseID);
+        this.originName = null;
         this.origin = new SimpleStringProperty(origin);
+        this.destinationName = null;
         this.destination = new SimpleStringProperty(destination);
         this.date = new SimpleStringProperty(date);
         this.time = new SimpleStringProperty(time);
@@ -103,9 +128,17 @@ public class CallRecord {
             return caseID.get();
         }
 
+    public String getOriginName() {
+        return originName.get();
+    }
+
     public String getOrigin() {
             return origin.get();
         }
+
+    public String getDestinationName() {
+        return destinationName.get();
+    }
 
     public String getDestination() {
             return destination.get();
@@ -137,9 +170,15 @@ public class CallRecord {
             caseID.set(CaseID);
         }
 
+    public void setOriginName(String origin) {
+        this.originName.set(origin);
+    }
+
     public void setOrigin(String origin) {
             this.origin.set(origin);
         }
+
+    public void setDestinationName(String destination) {this.destinationName.set(destination);}
 
     public void setDestination(String destination) {this.destination.set(destination);}
 
@@ -169,9 +208,17 @@ public class CallRecord {
             return caseID;
         }
 
+    public StringProperty originNameProperty() {
+        return originName;
+    }
+
     public StringProperty originProperty() {
             return origin;
         }
+
+    public StringProperty destinationNameProperty() {
+        return destinationName;
+    }
 
     public StringProperty destinationProperty() {
             return destination;

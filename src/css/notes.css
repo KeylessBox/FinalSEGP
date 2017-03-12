@@ -10,7 +10,7 @@
     -fx-border-color: grey;
     -fx-background-color: #bfbfbf;
     -fx-border-width: 0 0 0 1;
-  }
+}
 #notes_scroll_pane:focused{
     -fx-background-insets: 0;
 }

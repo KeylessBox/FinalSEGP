@@ -28,6 +28,27 @@ import javafx.stage.Stage;
 public class CallsTable {
     private static SQL sql = new SQL();
 
+    public static void createOriginNameColumn(TableColumn originName) {
+
+        Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
+            @Override
+            public TableCell call(TableColumn p) {
+                return new EditingCell();
+            }
+        };
+
+        originName.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("originName"));
+        originName.setCellFactory(editableFactory);
+        originName.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
+                System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
+                t.getRowValue().setOriginName(t.getNewValue());
+                sql.editCell(t.getRowValue().getOrigin(), "personName",t.getNewValue());
+            }
+        });
+    }
+
     public static void createOriginColumn(TableColumn origin) {
 
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
@@ -45,6 +66,27 @@ public class CallsTable {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setOrigin(t.getNewValue());
                 sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "origin", t.getNewValue());
+            }
+        });
+    }
+
+    public static void createDestinationNameColumn(TableColumn destinationName) {
+
+        Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
+            @Override
+            public TableCell call(TableColumn p) {
+
+                return new EditingCell();
+            }
+        };
+        destinationName.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destinationName"));
+        destinationName.setCellFactory(editableFactory);
+        destinationName.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
+                System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
+                t.getRowValue().setDestinationName(t.getNewValue());
+                sql.editCell(t.getRowValue().getDestination(), "personName",t.getNewValue());
             }
         });
     }

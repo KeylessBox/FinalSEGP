@@ -57,7 +57,11 @@ public class MainController {
     @FXML
     private ScrollPane notes_scroll_pane;
     @FXML
+    protected TableColumn originIdentifierColumn;
+    @FXML
     protected TableColumn originPhoneColumn;
+    @FXML
+    protected TableColumn destinationIdentifierColumn;
     @FXML
     protected TableColumn destinationPhoneColumn;
     @FXML
@@ -141,7 +145,9 @@ public class MainController {
     public void loadTable(int caseID) {
         callsData = sql.loadCalls(caseID);  // takes the data from the database and puts it into an observable list
         // builds the columns, without data
+        columnFactory.createOriginNameColumn(originIdentifierColumn);
         columnFactory.createOriginColumn(originPhoneColumn);
+        columnFactory.createDestinationNameColumn(destinationIdentifierColumn);
         columnFactory.createDestinationColumn(destinationPhoneColumn);
         columnFactory.createDateColumn(dateColumn);
         columnFactory.createTimeColumn(timeColumn);
