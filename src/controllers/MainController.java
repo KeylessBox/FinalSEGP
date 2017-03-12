@@ -17,14 +17,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import modules.manageAccounts.User;
-import modules.table.CallRecord;
-import modules.table.CallsTable;
-import modules.table.CaseRecord;
-import modules.table.FileRecord;
+import modules.table.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.*;
@@ -36,6 +34,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+
+import static javafx.scene.paint.Color.BLACK;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -358,14 +358,11 @@ public class MainController {
             e1.printStackTrace();
         }
 
-      /*  Rectangle rectangle = new Rectangle(50, 50);
+        Rectangle rectangle = new Rectangle(50, 50);
         rectangle.setFill(BLACK);
-        DragResizeMod.makeResizable(rectangle, null);
-        DragResizeMod.setNode();
-        Pane stuff = new Pane();
-        stuff.getChildren().add(rectangle);
-        root.getChildren().add(stuff);*/
-
+        DragResizeMod.makeResizable(notePane, null);
+//        DragResizeMod.setNode();
+        root.getChildren().add(notePane);
     }
 
     /**
