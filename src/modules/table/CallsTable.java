@@ -30,8 +30,8 @@ public class CallsTable {
             @Override
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setOrigin(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "originName",t.getNewValue());
+                t.getRowValue().setOriginName(t.getNewValue());
+                sql.editCell(t.getRowValue().getOrigin(), "personName",t.getNewValue());
             }
         });
     }
@@ -72,8 +72,8 @@ public class CallsTable {
             @Override
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setDestination(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "destinationName",t.getNewValue());
+                t.getRowValue().setDestinationName(t.getNewValue());
+                sql.editCell(t.getRowValue().getDestination(), "personName",t.getNewValue());
             }
         });
     }

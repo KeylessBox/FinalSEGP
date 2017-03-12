@@ -56,7 +56,6 @@ public class SQL {
                     maxIDCall = Integer.parseInt(callsRS.getString(1));
                 }
                 originRS.next();
-                System.out.println(originRS.getString(1));
                 destinationRS.next();
                 data.add(new CallRecord(callsRS.getString(1), callsRS.getString(2), originRS.getString(1),
                         callsRS.getString(3), destinationRS.getString(1),
@@ -368,7 +367,23 @@ public class SQL {
         Connection connection = dbConnection.connect();
 
         try {
+            if (columnName.equals("Name/Identifier")) {
+                connection.createStatement().executeUpdate("UPDATE phoneNumbers SET " + columnName + "= '" + change +
+                        "' WHERE phoneNumber='" + id + "';");
+
+            }
             connection.createStatement().executeUpdate("UPDATE calls SET " + columnName + "= '" + change + "' WHERE id =" + id);
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void editCell(String phoneNumber, String columnName, String change) {
+        Connection connection = dbConnection.connect();
+        try {
+            connection.createStatement().executeUpdate("UPDATE phoneNumbers SET " + columnName + "= '" + change +
+                    "' WHERE phoneNumber='" + phoneNumber + "';");
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
