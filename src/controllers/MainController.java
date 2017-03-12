@@ -218,7 +218,6 @@ public class MainController {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
             finalCaseObj.setId(String.valueOf(caseRecord.getCaseID()));
 
             // Update the main working area and load case files:
