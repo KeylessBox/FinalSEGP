@@ -1,11 +1,13 @@
 package controllers;
 
 import com.Ostermiller.util.CSVParser;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -15,12 +17,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import modules.file_import.Case;
+import javafx.util.Callback;
 import modules.manageAccounts.User;
-import modules.table.*;
+import modules.table.CallRecord;
+import modules.table.CallsTable;
+import modules.table.CaseRecord;
+import modules.table.FileRecord;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.*;
@@ -32,8 +36,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
-
-import static javafx.scene.paint.Color.BLACK;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -66,6 +68,8 @@ public class MainController {
     protected TableColumn typeColumn;
     @FXML
     protected TableColumn durationColumn;
+    @FXML
+    protected TableColumn deleteColumn;
     @FXML
     protected TableView table;
     @FXML
@@ -143,10 +147,59 @@ public class MainController {
         columnFactory.createTimeColumn(timeColumn);
         columnFactory.createTypeOfCallColumn(typeColumn);
         columnFactory.createDurationColumn(durationColumn);
+        createDeleteColumn(deleteColumn);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         table.setItems(callsData);  // adds the data into the table
         table.setEditable(true);
+    }
+
+    public void createDeleteColumn(TableColumn deleteColumn) {
+
+        deleteColumn.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<CallRecord, Boolean>,
+                        ObservableValue<Boolean>>() {
+
+                    @Override
+                    public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<CallRecord, Boolean> p) {
+                        return new SimpleBooleanProperty(p.getValue() != null);
+                    }
+                });
+
+        deleteColumn.setCellFactory(
+                new Callback<TableColumn<CallRecord, Boolean>, TableCell<CallRecord, Boolean>>() {
+
+                    @Override
+                    public TableCell<CallRecord, Boolean> call(TableColumn<CallRecord, Boolean> p) {
+                        return new ButtonCell();
+                    }
+
+                });
+        deleteColumn.setSortable(false);
+
+    }
+
+    private class ButtonCell extends TableCell<CallRecord, Boolean> {
+        final Button cellButton = new Button("");
+
+        ButtonCell() {
+            cellButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                    deleteCall();
+                }
+            });
+            cellButton.setId("delete-button");
+        }
+
+        //Display button if the row is not empty
+        @Override
+        protected void updateItem(Boolean t, boolean empty) {
+            super.updateItem(t, empty);
+            if (!empty) {
+                setGraphic(cellButton);
+            }
+        }
     }
 
     private void toggleControl() {
@@ -289,6 +342,7 @@ public class MainController {
 
         }
     }
+
     private void showNote(int noteID) {
         ObservableList<FileRecord> noteRecord = sql.loadNote(noteID);
         Pane notePane = null;
@@ -307,6 +361,7 @@ public class MainController {
         root.getChildren().add(stuff);*/
 
     }
+
     /**
      * Loads the Case Files (notes) of a specific case into the app
      *
