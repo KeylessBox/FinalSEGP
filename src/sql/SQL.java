@@ -162,6 +162,20 @@ public class SQL {
         return userId;
     }
 
+    public void updateNote(String data, String noteId) {
+        Connection connection = dbConnection.connect();
+
+        try {
+            String query = ("UPDATE notes SET data ='" + data +
+                    "' WHERE id='" + noteId + "';");
+            System.out.println(query);
+            connection.createStatement().executeUpdate(query);
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void insertFile(FileRecord nr) {
         Connection connection = dbConnection.connect();
 
