@@ -375,21 +375,21 @@ public class MainController {
 //      }
         VBox temp = (VBox) notePane.getChildren().get(0);
         HBox noteBar = (HBox) temp.getChildren().get(0);
-        TextField noteName = (TextField) noteBar.getChildren().get(0);
+        Label noteName = (Label) noteBar.getChildren().get(0);
         Button closeNote = (Button) noteBar.getChildren().get(3);
         Button deleteNote = (Button) noteBar.getChildren().get(2);
         TextArea data = (TextArea) temp.getChildren().get(1);
 
-        noteName.setOnAction(event -> {
-                    String change = noteName.getText();
-                    int id = Integer.valueOf(parent.getId());
-                    System.out.println("Change case file " + id + " name to : " + change);
-                    sql.updateCaseFile(id, change);
-                    noteName.setEditable(false);
-                });
-                noteName.setOnMouseClicked(event -> {
-                    noteName.setEditable(true);
-                });
+//        noteName.setOnAction(event -> {
+//                    String change = noteName.getText();
+//                    int id = Integer.valueOf(parent.getId());
+//                    System.out.println("Change case file " + id + " name to : " + change);
+//                    sql.updateCaseFile(id, change);
+//                    noteName.setEditable(false);
+//                });
+//                noteName.setOnMouseClicked(event -> {
+//                    noteName.setEditable(true);
+//                });
         data.setWrapText(true);
         for (FileRecord fr : noteRecord) {
             noteName.setText(fr.getName());
