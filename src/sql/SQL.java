@@ -435,7 +435,7 @@ public class SQL {
         Connection connection = dbConnection.connect();
 
         try {
-            connection.createStatement().executeUpdate("UPDATE notes SET title" + "= '" + change + "' WHERE id =" + id);
+            connection.createStatement().executeUpdate("UPDATE notes SET title= '" + change + "' WHERE id =" + id);
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();

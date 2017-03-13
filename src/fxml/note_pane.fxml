@@ -2,8 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
@@ -15,7 +15,7 @@
          <children>
             <HBox id="note_control_bar" prefHeight="23.0" prefWidth="169.0" style="-fx-cursor: default">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" prefWidth="132.0" style="-fx-cursor: default" text="NOTE 1 DEMO" />
+                  <TextField blendMode="MULTIPLY" promptText="Note Name" />
                   <Region HBox.hgrow="ALWAYS" />
                   <Button id="delete_note" mnemonicParsing="false" style="-fx-cursor: default" />
                   <Button id="close_note" mnemonicParsing="false" style="-fx-cursor: default" />

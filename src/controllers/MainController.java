@@ -375,11 +375,24 @@ public class MainController {
 //      }
         VBox temp = (VBox) notePane.getChildren().get(0);
         HBox noteBar = (HBox) temp.getChildren().get(0);
+        TextField noteName = (TextField) noteBar.getChildren().get(0);
         Button closeNote = (Button) noteBar.getChildren().get(3);
         Button deleteNote = (Button) noteBar.getChildren().get(2);
         TextArea data = (TextArea) temp.getChildren().get(1);
+
+        noteName.setOnAction(event -> {
+                    String change = noteName.getText();
+                    int id = Integer.valueOf(parent.getId());
+                    System.out.println("Change case file " + id + " name to : " + change);
+                    sql.updateCaseFile(id, change);
+                    noteName.setEditable(false);
+                });
+                noteName.setOnMouseClicked(event -> {
+                    noteName.setEditable(true);
+                });
         data.setWrapText(true);
         for (FileRecord fr : noteRecord) {
+            noteName.setText(fr.getName());
             data.appendText(fr.getData());
         }
 
@@ -453,16 +466,7 @@ public class MainController {
 //                Button delete = (Button) temp.getChildren().get(2);
 //                Pane finalCaseFile = CaseFile;
 //
-//                fileName.setOnAction(event -> {
-//                    String change = fileName.getText();
-//                    int id = Integer.valueOf(element.getNoteID());
-//                    System.out.println("Change case file " + id + " name to : " + change);
-//                    sql.updateCaseFile(id, change);
-//                    fileName.setEditable(false);
-//                });
-//                fileName.setOnMouseClicked(event -> {
-//                    fileName.setEditable(true);
-//                });
+//
 //
                 notes_box.getChildren().add(CaseFile);     // the case files get loaded to the app
             }
