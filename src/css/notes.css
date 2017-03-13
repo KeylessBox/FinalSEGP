@@ -1,27 +1,33 @@
 #notes_vbox {
 
 }
+
 #notes_scroll_pane {
     -fx-height: 50px;
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
-#notes_scroll_pane > .viewport{
+
+#notes_scroll_pane > .viewport {
     -fx-border-color: grey;
     -fx-background-color: #bfbfbf;
     -fx-border-width: 0 0 0 1;
 }
-#notes_scroll_pane:focused{
+
+#notes_scroll_pane:focused {
     -fx-background-insets: 0;
 }
-#notes_scroll_pane.corner{
+
+#notes_scroll_pane.corner {
     -fx-background-insets: 0;
 }
+
 #notes_settings_bar {
     -fx-background-image: url("../res/icons/note_settings_bar.png");
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
+
 #notes_bar_settings_btn {
     -fx-background-image: url("../res/icons/settings_icon.png");
     -fx-background-repeat: stretch;
@@ -32,6 +38,7 @@
     -fx-min-width: 18px;
     -fx-min-height: 18px;
 }
+
 #notes_add_btn {
     -fx-min-height: 18px;
     -fx-min-width: 18px;
@@ -44,17 +51,21 @@
     -fx-opacity: 0.7;
     -fx-padding: 2;
 }
+
 .button:hover {
     -fx-opacity: 1;
 }
-.button:pressed{
+
+.button:pressed {
     -fx-opacity: 0.5;
 }
+
 .button {
     -fx-opacity: 0.80;
     -fx-min-width: 25px;
     -fx-min-height: 25px;
 }
+
 #notes_add_btn:hover {
     -fx-opacity: 1;
 }
@@ -65,7 +76,7 @@
 
 #note_icon {
     -fx-background-image: url("../res/icons/note_icon.png");
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3   ), 10, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
     -fx-opacity: 0.8;
 }
 
@@ -73,12 +84,12 @@
     -fx-opacity: 1;
 }
 
-
 #note_box {
     -fx-background-image: url("../res/icons/note_pane.png");
     -fx-border-width: 1;
     -fx-border-color: black;
 }
+
 #edit_name {
     -fx-background-image: url("../res/icons/note_icon.png");
     -fx-background-repeat: stretch;
@@ -86,6 +97,7 @@
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
+
 #delete_note {
     -fx-background-image: url("../res/icons/delete_note_icon.png");
     -fx-background-repeat: stretch;
@@ -94,6 +106,7 @@
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
+
 #close_note {
     -fx-background-image: url("../res/icons/ok_icon.png");
     -fx-background-repeat: stretch;
@@ -109,10 +122,11 @@
 
 .scroll-bar:horizontal .thumb,
 .scroll-bar:vertical .thumb {
-    -fx-background-color:#42536d;
+    -fx-background-color: #42536d;
     -fx-background-insets: 2, 0, 0;
     -fx-background-radius: 2em;
 }
+
 .scroll-bar:horizontal {
     -fx-background-color: transparent;
 }
@@ -124,6 +138,26 @@
 .scroll-bar:horizontal .track {
     visibility: hidden;
 }
+
 .hide-thumb .scroll-bar:horizontal .thumb {
     -fx-background-color: transparent;
+}
+.text-area {
+    -fx-background-insets: 0;
+    -fx-background-color: transparent, white, transparent, white;
+    -fx-background-radius: 0, 0, 0, 0;
+
+    -fx-box-border: none;
+    -fx-focus-color: -fx-control-inner-background;
+    -fx-faint-focus-color: -fx-control-inner-background;
+    -fx-text-box-border: -fx-control-inner-background;
+    -fx-border-width: -1;
+}
+
+.text-area .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+.text-area:focused .content {
+    -fx-background-color: transparent, white, transparent, white;
 }
