@@ -17,7 +17,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -35,8 +34,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
-
-import static javafx.scene.paint.Color.BLACK;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -347,6 +344,7 @@ public class MainController {
 
         }
     }
+
     private void showNote(int noteID) {
 
         ObservableList<FileRecord> noteRecord = sql.loadNote(noteID);
@@ -367,11 +365,11 @@ public class MainController {
 //        if (!isOpen) {
 //            indexNote++;
 //            listOfNotePanes[indexNote] = notePane;
-            DragResizeMod.makeResizable(notePane, null);
-            notePane.setLayoutX(1530);
-            notePane.setLayoutY(60);
+        DragResizeMod.makeResizable(notePane, null);
+        notePane.setLayoutX(1530);
+        notePane.setLayoutY(60);
 
-            root.getChildren().add(notePane);
+        root.getChildren().add(notePane);
 //      }
         VBox temp = (VBox) notePane.getChildren().get(0);
         HBox noteBar = (HBox) temp.getChildren().get(0);
@@ -407,7 +405,7 @@ public class MainController {
                     }
                     i++;
                 }
-            } catch(IndexOutOfBoundsException e) {
+            } catch (IndexOutOfBoundsException e) {
                 // DO Nothing. It works as intended
             }
 
@@ -434,11 +432,11 @@ public class MainController {
                 // Putting the data into the templates
                 //TODO Still needs working on these. Make them a bit unique.
                 CaseFile.setId(String.valueOf(element.getNoteID()));
-                    CaseFile.setOnMouseClicked(event -> {
-                        int id = Integer.valueOf(element.getNoteID());
+                CaseFile.setOnMouseClicked(event -> {
+                    int id = Integer.valueOf(element.getNoteID());
 
-                        showNote(id);
-                    });
+                    showNote(id);
+                });
 
 //                HBox temp = (HBox) CaseFile.getChildren().get(1);
 //                HBox temp2 = (HBox) CaseFile.getChildren().get(0);
@@ -475,13 +473,13 @@ public class MainController {
         } else {
 
             ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-            ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+            ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn, originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn, timeColumn, typeColumn, durationColumn);
 
             if (callsData != null) {
-                for (int i = 0; i < callsData.size(); i++) {
-                    for (int j = 0; j < cols.size(); j++) {
+                for (int i = 0; i < searchData.size(); i++) {
+                    for (int j = 0; j < 8; j++) {
                         TableColumn col = cols.get(j);
-                        String cellValue = col.getCellData(callsData.get(i)).toString();
+                        String cellValue = col.getCellData(searchData.get(i)).toString();
                         cellValue = cellValue.toLowerCase();
                         if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
                             tableItems.add(searchData.get(i));
@@ -558,11 +556,11 @@ public class MainController {
                 } else {
 
                     ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-                    ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+                    ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn, originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn, timeColumn, typeColumn, durationColumn);
 
                     for (int i = 0; i < searchData.size(); i++) {
                         for (int j = 0; j < cols.size(); j++) {
-                            if (j == 1) {
+                            if (j == 3) {
                                 TableColumn col = cols.get(j);
                                 String cellValue = col.getCellData(searchData.get(i)).toString();
                                 cellValue = cellValue.toLowerCase();
@@ -623,11 +621,11 @@ public class MainController {
                 } else {
 
                     ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-                    ObservableList<TableColumn<CallRecord, ?>> cols = table.getColumns();
+                    ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn, originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn, timeColumn, typeColumn, durationColumn);
 
                     for (int i = 0; i < searchData.size(); i++) {
                         for (int j = 0; j < cols.size(); j++) {
-                            if (j == 1) {
+                            if (j == 1 ) {
                                 TableColumn col = cols.get(j);
                                 String cellValue = col.getCellData(searchData.get(i)).toString();
                                 cellValue = cellValue.toLowerCase();
