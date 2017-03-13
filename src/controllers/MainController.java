@@ -316,9 +316,18 @@ public class MainController {
 //                caseTitle.setText(change);
 //                editing = false;
 //            });
-
+            HBox CaseEditObject=null;
+            try {
+               CaseEditObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/case_edit_pane.fxml")); // Case object loads the fxml, with its nodes
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            HBox finalCaseEditObject = CaseEditObject;
             editBtn.setOnAction(event -> {
-
+                finalCaseEditObject.setLayoutX(40);
+                finalCaseEditObject.setLayoutY(40);
+                finalCaseEditObject.setStyle("-fx-background-color: red");
+                root.getChildren().add(finalCaseEditObject);
             });
             deleteBtn.setOnAction(event -> {
                 sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
@@ -521,6 +530,10 @@ public class MainController {
                 System.out.println("DELETE: call " + record.getCallID());
             }
         }
+    }
+
+    public void editCase(){
+        System.out.println("HERE");
     }
 
     /**
