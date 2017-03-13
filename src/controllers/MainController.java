@@ -21,7 +21,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import modules.file_export.csvExport;
-import modules.file_import.Case;
 import modules.manageAccounts.User;
 import modules.table.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -298,7 +297,6 @@ public class MainController {
 
             //Update case name:
             caseName.setOnMouseClicked(event -> {
-                editing = true;
                 int id = Integer.valueOf(finalCaseObj.getId());
                 caseID = id;
                 caseTitle.setText(caseRecord.getName());
@@ -307,28 +305,33 @@ public class MainController {
                 search();
             });
 
-//            caseName.setOnAction(event -> {
-//                String change = caseName.getText();
-//                int id = Integer.valueOf(finalCaseObj.getId());
-//                System.out.println("Change case " + id + " name to : " + change);
-//                sql.updateCaseName(id, change);
-//                loadCases();
-//                caseTitle.setText(change);
-//                editing = false;
-//            });
-            HBox CaseEditObject=null;
+            Pane CaseEditObject = null;
             try {
-               CaseEditObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/case_edit_pane.fxml")); // Case object loads the fxml, with its nodes
+                CaseEditObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/case_edit_pane.fxml")); // Case object loads the fxml, with its nodes
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            HBox finalCaseEditObject = CaseEditObject;
+            Pane finalCaseEditObject = CaseEditObject;
+            HBox t1 = (HBox) finalCaseEditObject.getChildren().get(0);
+            VBox t2 = (VBox) t1.getChildren().get(0);
+            TextField t3 = (TextField) t2.getChildren().get(1);
+            Button t4 = (Button) t1.getChildren().get(1);
+
+
             editBtn.setOnAction(event -> {
-                finalCaseEditObject.setLayoutX(40);
-                finalCaseEditObject.setLayoutY(40);
-                finalCaseEditObject.setStyle("-fx-background-color: red");
+                finalCaseEditObject.setLayoutX(21);
+                finalCaseEditObject.setLayoutY(90);
                 root.getChildren().add(finalCaseEditObject);
+                t3.setText(caseName.getText());
             });
+
+            t4.setOnAction(event -> {
+                caseTitle.setText(t3.getText());
+                sql.updateCaseName(caseID, t3.getText());
+                root.getChildren().remove(finalCaseEditObject);
+                loadCases();
+            });
+
             deleteBtn.setOnAction(event -> {
                 sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                 casesContainer.getChildren().remove(finalCaseObj);
@@ -532,7 +535,7 @@ public class MainController {
         }
     }
 
-    public void editCase(){
+    public void editCase() {
         System.out.println("HERE");
     }
 
@@ -843,7 +846,7 @@ public class MainController {
             return requireUpdate;
         }
     }
-    
+
 
     @FXML
     public void initialize() {

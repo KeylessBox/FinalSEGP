@@ -1,20 +1,20 @@
 
 .custom_hbox {
-    -fx-background-image: url("../res/icons/case_frame.png");
-    -fx-background-repeat: stretch;
-    -fx-background-size: 229 40;
-    -fx-pref-size: 229 40;
-    -fx-background-color: transparent;
+    /*-fx-background-image: url("../res/icons/case_frame.png");*/
+    /*-fx-background-repeat: stretch;*/
+    /*-fx-background-size: 229 40;*/
+    /*-fx-pref-size: 229 40;*/
+    -fx-background-color: #f0f0f0;
     -fx-border-color: transparent;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 1, 0, 0, 0);
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);
     -fx-opacity: 1;
 }
-.custom_hbox:hover {
-    -fx-opacity: 0.91;
-}
-.custom_hbox:pressed {
-    -fx-opacity: 1;
-}
+/*.custom_hbox:hover {*/
+    /*-fx-opacity: 0.91;*/
+/*}*/
+/*.custom_hbox:pressed {*/
+    /*-fx-opacity: 1;*/
+/*}*/
 
 .indicator{
     -fx-border-radius: 2,2,2,2;
@@ -42,13 +42,13 @@
 }
 
 .text-field {
-    -fx-border-color: transparent ;
+    -fx-border-color: #3e506a ;
     -fx-background-color: transparent;
     -fx-background-insets: 0;
     -fx-background-radius: 0;
     -fx-padding: 0;
     -fx-text-fill: black;
-    -fx-prompt-text-fill: transparent;
+    -fx-prompt-text-fill: black;
     -fx-accent: #3e506a;
 }
 
