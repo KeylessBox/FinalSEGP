@@ -11,20 +11,19 @@
 
 <Pane id="note_pane" stylesheets="@../css/notes.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox id="note_box" prefHeight="320.0" prefWidth="200.0">
+      <VBox id="note_box" prefHeight="320.0" prefWidth="200.0" style="-fx-cursor: default">
          <children>
-            <HBox id="note_control_bar" prefHeight="23.0" prefWidth="169.0">
+            <HBox id="note_control_bar" prefHeight="23.0" prefWidth="169.0" style="-fx-cursor: default">
                <children>
-                  <Label text="Name" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" prefWidth="132.0" style="-fx-cursor: default" text="NOTE 1 DEMO" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button id="edit_name" mnemonicParsing="false" />
-                  <Button id="close_note" mnemonicParsing="false" />
-                  <Button id="delete_note" mnemonicParsing="false" />
+                  <Button id="delete_note" mnemonicParsing="false" style="-fx-cursor: default" />
+                  <Button id="close_note" mnemonicParsing="false" style="-fx-cursor: default" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding></HBox>
-            <TextArea id="note_text" blendMode="MULTIPLY" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <TextArea id="note_text" blendMode="MULTIPLY" prefHeight="200.0" prefWidth="200.0" style="-fx-cursor: default" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </children>

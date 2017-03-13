@@ -374,7 +374,7 @@ public class MainController {
         VBox temp = (VBox) notePane.getChildren().get(0);
         HBox noteBar = (HBox) temp.getChildren().get(0);
         Button closeNote = (Button) noteBar.getChildren().get(3);
-        Button deleteNote = (Button) noteBar.getChildren().get(4);
+        Button deleteNote = (Button) noteBar.getChildren().get(2);
         TextArea data = (TextArea) temp.getChildren().get(1);
         for (FileRecord fr : noteRecord) {
             data.appendText(fr.getData());
