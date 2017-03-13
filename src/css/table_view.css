@@ -70,8 +70,8 @@
 }
 
 .table-cell {
-    -fx-alignment: center;
-    /*-fx-text-alignment: center;*/
+    -fx-alignment: baseline-left;
+    -fx-text-alignment: center;
     -fx-padding: 3;
     -fx-font-size: 14px;
 }
