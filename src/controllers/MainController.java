@@ -818,6 +818,7 @@ public class MainController {
             return requireUpdate;
         }
     }
+    
 
     @FXML
     public void initialize() {
