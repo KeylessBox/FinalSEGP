@@ -327,6 +327,7 @@ public class MainController {
                 finalCaseEditObject.setLayoutX(40);
                 finalCaseEditObject.setLayoutY(40);
                 finalCaseEditObject.setStyle("-fx-background-color: red");
+                finalCaseEditObject.toFront();
                 root.getChildren().add(finalCaseEditObject);
             });
             deleteBtn.setOnAction(event -> {
