@@ -1,62 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<Pane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+
+<Pane maxHeight="57.0" prefHeight="42.0" prefWidth="226.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <HBox prefHeight="49.0" prefWidth="226.0" spacing="10.0" styleClass="custom_hbox"
-              stylesheets="@../css/case_edit.css">
+        <HBox prefHeight="46.0" prefWidth="226.0" spacing="10.0" styleClass="custom_hbox" stylesheets="@../css/case_edit.css">
             <children>
-                <VBox prefHeight="40.0" prefWidth="170.0">
+                <VBox prefHeight="45.0" prefWidth="176.0">
                     <children>
                         <HBox prefHeight="9.0" prefWidth="160.0" spacing="10.0">
                             <children>
-                                <Label fx:id="custom" alignment="TOP_CENTER" prefHeight="14.0" prefWidth="40.0"
-                                       text="New">
+                                <ToggleButton id="custom" mnemonicParsing="false" prefHeight="4.0" prefWidth="40.0" text="New">
                                     <font>
-                                        <Font name="Calibri Bold" size="11.0"/>
+                                        <Font name="Calibri Bold" size="12.0" />
                                     </font>
-                                    <padding>
-                                        <Insets bottom="1.0"/>
-                                    </padding>
-                                </Label>
-                                <Label id="custom2" fx:id="custom1" alignment="TOP_CENTER" prefHeight="14.0"
-                                       prefWidth="40.0" text="Done">
+                           <padding>
+                              <Insets bottom="2.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets left="2.0" top="2.0" />
+                           </HBox.margin>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="custom" />
+                           </toggleGroup>
+                                </ToggleButton>
+                                <ToggleButton id="custom2" mnemonicParsing="false" prefHeight="4.0" prefWidth="40.0" text="Done" toggleGroup="$custom">
                                     <font>
-                                        <Font name="Calibri Bold" size="11.0"/>
+                                        <Font name="Calibri Bold" size="12.0" />
                                     </font>
-                                    <padding>
-                                        <Insets bottom="1.0"/>
-                                    </padding>
-                                </Label>
+                           <HBox.margin>
+                              <Insets left="2.0" top="2.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="2.0" />
+                           </padding>
+                                </ToggleButton>
                             </children>
                         </HBox>
-                        <TextField prefHeight="22.0" prefWidth="160.0">
+                        <TextField prefHeight="19.0" prefWidth="112.0">
                             <padding>
-                                <Insets top="2.0"/>
+                                <Insets top="2.0" />
                             </padding>
                             <VBox.margin>
-                                <Insets top="5.0"/>
+                                <Insets left="2.0" top="4.0" />
                             </VBox.margin>
                         </TextField>
                     </children>
                     <padding>
-                        <Insets left="10.0" top="4.0"/>
+                        <Insets left="5.0" top="2.0" />
                     </padding>
                 </VBox>
-                <Button mnemonicParsing="false" prefHeight="69.0" prefWidth="45.0" styleClass="button_ok"
-                        stylesheets="@../css/case_edit.css">
+                <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="23.0" styleClass="button_ok" stylesheets="@../css/case_edit.css">
                     <HBox.margin>
-                        <Insets/>
+                        <Insets left="4.0" top="11.0" />
                     </HBox.margin>
                 </Button>
             </children>
             <opaqueInsets>
-                <Insets/>
+                <Insets />
             </opaqueInsets>
         </HBox>
     </children>

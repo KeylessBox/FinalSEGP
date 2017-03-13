@@ -315,19 +315,32 @@ public class MainController {
             HBox t1 = (HBox) finalCaseEditObject.getChildren().get(0);
             VBox t2 = (VBox) t1.getChildren().get(0);
             TextField t3 = (TextField) t2.getChildren().get(1);
+            HBox t34 = (HBox) t2.getChildren().get(0);
+            ToggleButton t35 = (ToggleButton) t34.getChildren().get(0);
+            ToggleButton t36 = (ToggleButton) t34.getChildren().get(1);
+
             Button t4 = (Button) t1.getChildren().get(1);
 
 
             editBtn.setOnAction(event -> {
                 finalCaseEditObject.setLayoutX(21);
-                finalCaseEditObject.setLayoutY(90);
-                root.getChildren().add(finalCaseEditObject);
+                finalCaseEditObject.setLayoutY(92);
                 t3.setText(caseName.getText());
+                root.getChildren().add(finalCaseEditObject);
             });
 
             t4.setOnAction(event -> {
-                caseTitle.setText(t3.getText());
-                sql.updateCaseName(caseID, t3.getText());
+
+                int id = Integer.valueOf(finalCaseObj.getId());
+                if (caseID == id) {
+                    caseTitle.setText(t3.getText());
+                }
+                sql.updateCaseName(id, t3.getText());
+                if (t35.isSelected()) {
+                    sql.updateCaseStatus(id, "New");
+                } else {
+                    sql.updateCaseStatus(id, "Done");
+                }
                 root.getChildren().remove(finalCaseEditObject);
                 loadCases();
             });
