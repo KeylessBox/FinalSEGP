@@ -75,6 +75,9 @@
     -fx-padding: 3;
     -fx-font-size: 14px;
 }
+.context-menu {
+    -fx-background-color: #42536d;
+}
 
 .table-row-cell:selected {
     -fx-background-color: #5D6C83;

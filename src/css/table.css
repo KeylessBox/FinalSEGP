@@ -192,6 +192,12 @@
     -fx-text-fill: #96b946;
 }
 
+.context-menu {
+    /*-fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";*/
+    -fx-background-color: #d6e4ff;
+}
+
+
 
 
 

@@ -138,7 +138,7 @@
 }
 
 #delete-button.button {
-    -fx-background-insets: 1,1,1,1;
+    -fx-background-insets: 1, 1, 1, 1;
     -fx-min-height: 20px;
     -fx-min-width: 20px;
     -fx-background-size: 11px 11px;
@@ -148,7 +148,7 @@
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-opacity: 0.8;
-    -fx-padding:2;
+    -fx-padding: 2;
 }
 
 #delete-button.button:hover {
