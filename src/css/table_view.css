@@ -172,7 +172,7 @@
 }
 
 .text-field {
-    -fx-text-alignment: center;
+    -fx-text-alignment: right;
     -fx-background-color: #FFFFFF,
     #FFFFFF;
     -fx-background-insets: 0, 2;
@@ -181,18 +181,21 @@
 }
 
 .text-field:focused {
-    -fx-text-alignment: center;
+    -fx-text-alignment: right;
+
     -fx-background-color: #FFFFFF;
 }
 
 .text-field:hover {
-    -fx-text-alignment: center;
+    -fx-text-alignment: right;
+
     -fx-background-color: #FFFFFF;
     -fx-text-fill: black;
 }
 
 .text-field:focused:hover {
-    -fx-text-alignment: center;
+    -fx-text-alignment: right;
+
     -fx-background-color: #FFFFFF;
     -fx-text-fill: black;
 }

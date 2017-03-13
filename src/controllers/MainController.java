@@ -225,9 +225,7 @@ public class MainController {
         } else if (casesToggleGroup.getSelectedToggle() == doneToggleBtn) {
             status = "Done";
         }
-
         loadTest(status);
-
         casesToggleGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle toggle, Toggle newToggle) {
@@ -324,6 +322,7 @@ public class MainController {
             deleteBtn.setOnAction(event -> {
                 sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                 casesContainer.getChildren().remove(finalCaseObj);
+                loadCases();
             });
             if (caseRecord.getStatus().equals("New")) {
                 caseStatus.setText("New");
@@ -508,7 +507,6 @@ public class MainController {
                 sql.removeCall(Integer.parseInt(record.getCallID()));   // Delete from database part
                 callsData.remove(table.getSelectionModel().getSelectedItem());  // Remove from table part
                 System.out.println("DELETE: call " + record.getCallID());
-                table.getSelectionModel().clearSelection();
             }
         }
     }
@@ -625,7 +623,7 @@ public class MainController {
 
                     for (int i = 0; i < searchData.size(); i++) {
                         for (int j = 0; j < cols.size(); j++) {
-                            if (j == 1 ) {
+                            if (j == 1) {
                                 TableColumn col = cols.get(j);
                                 String cellValue = col.getCellData(searchData.get(i)).toString();
                                 cellValue = cellValue.toLowerCase();
@@ -866,26 +864,28 @@ public class MainController {
     }
 
     public void update() {
-        if (!editing) {
-            System.out.println("UPDATE");
-            if (casesUpdate()) {
-                System.out.println("EXTERNAL CHANGE IN CASES");
-                loadCases();
-                for (CaseRecord temp : casesData) {
-                    if (Integer.valueOf(temp.getCaseID()) == caseID) {
-                        caseTitle.setText(temp.getName());
-                    }
-                }
-            }
-            if (filesUpdate()) {
-                System.out.println("EXTERNAL CHANGE IN FILES");
-                loadFiles(caseID);
-            }
-            if (callsUpdate()) {
-                System.out.println("EXTERNAL CHANGE IN TABLE");
-                loadTable(caseID);
-            }
-        }
+        loadTable(caseID);
+        loadFiles(caseID);
+//        if (!editing) {
+//            System.out.println("UPDATE");
+//            if (casesUpdate()) {
+//                System.out.println("EXTERNAL CHANGE IN CASES");
+//                loadCases();
+//                for (CaseRecord temp : casesData) {
+//                    if (Integer.valueOf(temp.getCaseID()) == caseID) {
+//                        caseTitle.setText(temp.getName());
+//                    }
+//                }
+//            }
+//            if (filesUpdate()) {
+//                System.out.println("EXTERNAL CHANGE IN FILES");
+//                loadFiles(caseID);
+//            }
+//            if (callsUpdate()) {
+//                System.out.println("EXTERNAL CHANGE IN TABLE");
+//                loadTable(caseID);
+//            }
+//        }
     }
 
     /**
