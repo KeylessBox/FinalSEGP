@@ -340,6 +340,8 @@ public class SQL {
                     "(' ','" +cr.getOrigin() + "');");
             connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
                     "(' ','" +cr.getDestination() + "');");
+            connection.createStatement().executeUpdate("DELETE n1 FROM phoneNumbers n1, phoneNumbers n2 " +
+                    "WHERE n1.id > n2.id AND n1.phoneNumber = n2.phoneNumber");
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -366,13 +368,12 @@ public class SQL {
     /**
      * remove the Case selected
      *
-     * @param id
+     * @param caseID
      */
-    public void removeCase(int id) {
+    public void removeCase(int caseID) {
         Connection connection = dbConnection.connect();
-
         try {
-            connection.createStatement().executeUpdate("DELETE FROM `cases` WHERE id = " + id);
+            connection.createStatement().executeUpdate("DELETE FROM `cases` WHERE id = " + caseID);
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -388,13 +389,7 @@ public class SQL {
      */
     public void editCell(int id, String columnName, String change) {
         Connection connection = dbConnection.connect();
-
         try {
-            if (columnName.equals("Name/Identifier")) {
-                connection.createStatement().executeUpdate("UPDATE phoneNumbers SET " + columnName + "= '" + change +
-                        "' WHERE phoneNumber='" + id + "';");
-
-            }
             connection.createStatement().executeUpdate("UPDATE calls SET " + columnName + "= '" + change + "' WHERE id =" + id);
             connection.close();
         } catch (SQLException ex) {
@@ -402,16 +397,27 @@ public class SQL {
         }
     }
 
-    public void editCell(String phoneNumber, String columnName, String change) {
+    public void editCellNumber(String oldValue, String newValue) {
         Connection connection = dbConnection.connect();
         try {
-            connection.createStatement().executeUpdate("UPDATE phoneNumbers SET " + columnName + "= '" + change +
+            connection.createStatement().executeUpdate("INSERT INTO phoneNumbers (personName,phoneNumber) VALUES (' ','" + newValue + "');");
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void editCellName(String phoneNumber, String change) {
+        Connection connection = dbConnection.connect();
+        try {
+            connection.createStatement().executeUpdate("UPDATE phoneNumbers SET personName= '" + change +
                     "' WHERE phoneNumber='" + phoneNumber + "';");
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
+
 
     public void updateCaseName(int id, String change) {
 
