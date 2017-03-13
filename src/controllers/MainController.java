@@ -21,6 +21,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import modules.file_export.csvExport;
+import modules.file_import.Case;
 import modules.manageAccounts.User;
 import modules.table.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -344,7 +345,7 @@ public class MainController {
         }
     }
 
-    private void showNote(int noteID) {
+    private void showNote(int noteID, NoteIcon parent) {
 
         ObservableList<FileRecord> noteRecord = sql.loadNote(noteID);
         Pane notePane = null;
@@ -355,10 +356,9 @@ public class MainController {
         }
         notePane.setId(String.valueOf(noteID));
         Pane note = notePane;
-//        boolean isOpen = false;
-//        for (int i=0; i<indexNote; i++){
-//            if (listOfNotePanes[indexNote].getNoteID() == notePane.getNoteID()) {
-//                isOpen = true;
+//      for (int i=0; i<indexNote; i++){
+//            if (listOfNotePanes[indexNote].getId().equals(notePane.getId()) && !notePane.isOpen()) {
+//
 //            }
 //        }
 //        if (!isOpen) {
@@ -367,7 +367,10 @@ public class MainController {
         DragResizeMod.makeResizable(notePane, null);
         notePane.setLayoutX(1530);
         notePane.setLayoutY(60);
-
+//        if (!notePane.isOpen()) {
+//
+//            notePane.changeOpen(true);
+//        }
         root.getChildren().add(notePane);
 //      }
         VBox temp = (VBox) notePane.getChildren().get(0);
@@ -375,17 +378,23 @@ public class MainController {
         Button closeNote = (Button) noteBar.getChildren().get(3);
         Button deleteNote = (Button) noteBar.getChildren().get(2);
         TextArea data = (TextArea) temp.getChildren().get(1);
+        data.setWrapText(true);
         for (FileRecord fr : noteRecord) {
             data.appendText(fr.getData());
         }
 
-        temp.setOnMousePressed(event -> {
-            temp.setStyle("-fx-blend-mode: src-over;");
+        note.setOnMouseClicked(event -> {
+            note.toFront();
+        });
+
+        data.setOnMouseClicked(event -> {
+            note.toFront();
         });
 
         closeNote.setOnAction(event -> {
             root.getChildren().remove(note);
             sql.updateNote(data.getText(), note.getId());
+            parent.changeOpen(false);
         });
 
         deleteNote.setOnAction(event -> {
@@ -407,9 +416,7 @@ public class MainController {
             } catch (IndexOutOfBoundsException e) {
                 // DO Nothing. It works as intended
             }
-
         });
-
     }
 
     /**
@@ -419,24 +426,26 @@ public class MainController {
      */
     private void loadFiles(int caseID) {
         filesData = sql.loadFiles(caseID);  // Getting the data from the database part
-        Pane CaseFile = null;   //  Clearing the cases already shown
+        NoteIcon CaseFile = null;   //  Clearing the cases already shown
         notes_box.getChildren().clear();
         for (FileRecord element : filesData) {  // For every case file from the database, checks which one is on the given case, and loads them all into the app
             if (Integer.parseInt(element.getCaseID()) == caseID) {
                 try {
-                    CaseFile = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note.fxml")); // Case file template
+                    CaseFile = (NoteIcon) FXMLLoader.load(getClass().getResource("/fxml/note.fxml")); // Case file template
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
                 // Putting the data into the templates
                 //TODO Still needs working on these. Make them a bit unique.
                 CaseFile.setId(String.valueOf(element.getNoteID()));
+                NoteIcon noteIcon = CaseFile;
                 CaseFile.setOnMouseClicked(event -> {
-                    int id = Integer.valueOf(element.getNoteID());
-
-                    showNote(id);
+                    if (!noteIcon.isOpen()) {
+                        int id = Integer.valueOf(element.getNoteID());
+                        showNote(id, noteIcon);
+                        noteIcon.changeOpen(true);
+                    }
                 });
-
 //                HBox temp = (HBox) CaseFile.getChildren().get(1);
 //                HBox temp2 = (HBox) CaseFile.getChildren().get(0);
 //                TextField fileName = (TextField) temp2.getChildren().get(0);
@@ -455,7 +464,6 @@ public class MainController {
 //                    fileName.setEditable(true);
 //                });
 //
-
                 notes_box.getChildren().add(CaseFile);     // the case files get loaded to the app
             }
         }

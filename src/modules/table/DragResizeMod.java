@@ -127,12 +127,14 @@ public class DragResizeMod {
         node.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                node.toFront();
                 resizer.mousePressed(event);
             }
         });
         node.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                node.toFront();
                 resizer.mouseDragged(event);
             }
         });
