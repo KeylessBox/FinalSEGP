@@ -20,7 +20,7 @@
                     <children>
                         <Label id="victim_identification" text="A" />
                         <Region HBox.hgrow="ALWAYS" />
-                        <Label fx:id="victim_label" alignment="TOP_RIGHT" prefHeight="25.0" prefWidth="66.0" text="VICTIM">
+                        <Label fx:id="victim_label" alignment="TOP_CENTER" prefHeight="25.0" prefWidth="66.0" text="VICTIM">
                             <font>
                                 <Font name="Calibri Bold" size="15.0" />
                             </font>
@@ -36,11 +36,6 @@
                         <Region HBox.hgrow="ALWAYS" />
                         <HBox alignment="TOP_RIGHT">
                             <children>
-                                <Button minHeight="12.0" minWidth="15.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="button_edit">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Button>
                                 <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="button_delete">
                                     <HBox.margin>
                                         <Insets />

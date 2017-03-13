@@ -534,7 +534,7 @@ public class MainController {
             Pane temp2 = (Pane) temp.getChildren().get(0);
             Label letter = (Label) temp2.getChildren().get(0);
             Pane temp3 = (Pane) temp2.getChildren().get(4);
-            Button delete = (Button) temp3.getChildren().get(1);
+            Button delete = (Button) temp3.getChildren().get(0);
             TextField txtField = (TextField) temp.getChildren().get(2);
 
             Pane finalVictimNote = victimNote;
@@ -600,7 +600,7 @@ public class MainController {
             Pane temp2 = (Pane) temp.getChildren().get(0);
             Label letter = (Label) temp2.getChildren().get(0);
             Pane temp3 = (Pane) temp2.getChildren().get(4);
-            Button delete = (Button) temp3.getChildren().get(1);
+            Button delete = (Button) temp3.getChildren().get(0);
             TextField txtField = (TextField) temp.getChildren().get(2);
             Pane finalVictimNote = suspectNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container

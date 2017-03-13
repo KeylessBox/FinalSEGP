@@ -37,11 +37,6 @@
                         <Region HBox.hgrow="ALWAYS" />
                         <HBox alignment="TOP_RIGHT" prefWidth="39.0">
                             <children>
-                                <Button minHeight="12.0" minWidth="15.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="button_edit">
-                                    <HBox.margin>
-                                        <Insets />
-                                    </HBox.margin>
-                                </Button>
                                 <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="button_delete">
                                     <HBox.margin>
                                         <Insets />
