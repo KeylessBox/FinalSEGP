@@ -419,12 +419,21 @@ public class SQL {
     }
 
 
-    public void updateCaseName(int id, String change) {
-
+    public void updateCaseName(int caseId, String change) {
         Connection connection = dbConnection.connect();
 
         try {
-            connection.createStatement().executeUpdate("UPDATE cases SET name" + "= '" + change + "' WHERE id =" + id);
+            connection.createStatement().executeUpdate("UPDATE cases SET name" + "= '" + change + "' WHERE id =" + caseId);
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateCaseStatus(int caseId, String change) {
+        Connection connection = dbConnection.connect();
+        try {
+            connection.createStatement().executeUpdate("UPDATE cases SET status" + "= '" + change + "' WHERE id =" + caseId);
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
