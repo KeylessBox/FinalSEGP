@@ -307,7 +307,14 @@ public class MainController {
                 loadFiles(caseID);
                 search();
             });
-
+            if (status.equals("New") && caseRecord.getStatus().equals("New")) {
+                casesContainer.getChildren().add(finalCaseObj);
+            } else if (status.equals("Done") && caseRecord.getStatus().equals("Done")) {
+                casesContainer.getChildren().add(finalCaseObj);
+            }
+            if (status.equals("All")) {
+                casesContainer.getChildren().add(finalCaseObj);
+            }
 //            caseName.setOnAction(event -> {
 //                String change = caseName.getText();
 //                int id = Integer.valueOf(finalCaseObj.getId());
@@ -323,7 +330,7 @@ public class MainController {
             });
             deleteBtn.setOnAction(event -> {
                 sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
-                casesContainer.getChildren().remove(finalCaseObj);
+                loadCases();
             });
             if (caseRecord.getStatus().equals("New")) {
                 caseStatus.setText("New");
@@ -333,14 +340,7 @@ public class MainController {
                 caseIndicator.setStyle("-fx-background-color: #df2100;");
             }
 
-            if (status.equals("New") && caseRecord.getStatus().equals("New")) {
-                casesContainer.getChildren().add(finalCaseObj);
-            } else if (status.equals("Done") && caseRecord.getStatus().equals("Done")) {
-                casesContainer.getChildren().add(finalCaseObj);
-            }
-            if (status.equals("All")) {
-                casesContainer.getChildren().add(finalCaseObj);
-            }
+
 
         }
     }
@@ -508,7 +508,7 @@ public class MainController {
                 sql.removeCall(Integer.parseInt(record.getCallID()));   // Delete from database part
                 callsData.remove(table.getSelectionModel().getSelectedItem());  // Remove from table part
                 System.out.println("DELETE: call " + record.getCallID());
-                table.getSelectionModel().clearSelection();
+//                table.getSelectionModel().clearSelection();
             }
         }
     }

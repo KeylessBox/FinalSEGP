@@ -44,7 +44,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setOriginName(t.getNewValue());
-                sql.editCell(t.getRowValue().getOrigin(), "personName",t.getNewValue());
+                sql.editCellName(t.getRowValue().getOrigin(), t.getNewValue());
             }
         });
     }
@@ -65,6 +65,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setOrigin(t.getNewValue());
+                sql.editCellNumber(t.getOldValue(), t.getNewValue());
                 sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "origin", t.getNewValue());
             }
         });
@@ -86,7 +87,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setDestinationName(t.getNewValue());
-                sql.editCell(t.getRowValue().getDestination(), "personName",t.getNewValue());
+                sql.editCellName(t.getRowValue().getDestination(), t.getNewValue());
             }
         });
     }
@@ -107,6 +108,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setDestination(t.getNewValue());
+                sql.editCellNumber(t.getOldValue(), t.getNewValue());
                 sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "destination", t.getNewValue());
             }
         });
