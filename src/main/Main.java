@@ -15,6 +15,7 @@ public class Main extends Application {
     /**
      * Start of the application.fasdf
      * @param args
+     * 
      */
     public static void main(String[] args) {
         launch(args);
@@ -31,11 +32,14 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/signIn.fxml"));
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("Sign In");
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
+//        primaryStage.setResizable(false);
+//        primaryStage.setTitle("Sign In");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setMinHeight(1000.0);
+        primaryStage.setMinWidth(1812.0);
+//        primaryStage.setResizable(false);
         primaryStage.show();
 
 

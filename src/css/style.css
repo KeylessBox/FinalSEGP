@@ -1,22 +1,52 @@
+#root {
+	-fx-background-image: url("../res/new_images/grey-solid-color-background.jpg");
+}
 
+#centerPane {
+	-fx-background-image: url("../res/images/background2.png");
+}
+
+#caseFilePane {
+	-fx-background-image: url("../res/images/caseFile.png");
+	-fx-background-size: 190, 79;
+}
+
+#casesPane {
+	-fx-background-image: url("../res/images/cases.png");
+	-fx-background-size: 250, 700;
+}
+
+#profile-pane {
+	-fx-background-image: url("../res/images/profile.png");
+	-fx-background-size: 190, 79;
+}
 
 saveAsPane {
 	-fx-background-image: url("../res/images/saveAs.png");
 	-fx-background-size: 125, 125;
 }
 
-
+#caseBox{
+	-fx-background-image: url("../res/images/casebox.png");
+	-fx-background-size: 180, 180;
+}
 
 #callActionPane {
 	-fx-background-image: url("../res/images/background3.png");
 	-fx-background-size: 150, 150;
 }
 
+.addButton {
+	-fx-background-image: url("../res/images/add.png");
+	-fx-background-size: 20, 20;
+	-fx-background-repeat: no-repeat;
+}
 
-
-
-
-
+#addSuspect {
+	-fx-background-color: darkred;
+	-fx-font-family:"System";
+	-fx-font-size: 12;
+}
 #pane.text-field {
 	-fx-background-color: transparent;
 	-fx-background-insets: 0;
@@ -24,6 +54,19 @@ saveAsPane {
 	-fx-padding: 0;
 }
 
+#addSuspect:pressed{
+	-fx-background-color: #f33e54;
+}
+
+#addVictim {
+	-fx-background-color: green;
+	-fx-font-family:"System";
+	-fx-font-size: 12;
+}
+
+#addVictim:pressed{
+	-fx-background-color: #12e05f;
+}
 
 #importButton {
 	-fx-background-image: url("../res/images/import.png");
@@ -39,4 +82,80 @@ saveAsPane {
 	-fx-background-insets: 10%;
 }
 
+.profile-button {
+	-fx-background-color: ebebeb;
+	-fx-font-family:"Segoe Print";
+	-fx-font-size: 14;
+}
 
+.profile-button:hover{
+	-fx-text-fill: blue;
+}
+
+.profile-button:pressed{
+	-fx-font-weight: bold;
+}
+
+.caseButton1 {
+	-fx-background-radius: 16.4, 15;
+	-fx-background-insets: -1.4, 0;
+	-fx-border-radius: 15;
+	-fx-border-width: 2;
+	-fx-border-color: red;
+	-fx-padding: 0;
+	-fx-font-size: 0;
+}
+.caseButton1:focused {
+	-fx-effect: innershadow(gaussian, red, 15, 0, 0, 0);
+}
+.caseButton1:hover {
+	-fx-effect: innershadow(gaussian, red, 15, 0, 0, 0);
+	-fx-background-image: url("../res/images/close.png");
+}
+
+.caseButton2 {
+	-fx-background-radius: 16.4, 15;
+	-fx-background-insets: -1.4, 0;
+	-fx-border-radius: 15;
+	-fx-border-width: 2;
+	-fx-border-color: grey;
+	-fx-padding: 0;
+	-fx-font-size: 0;
+}
+
+.caseButton2:selected {
+	-fx-effect: innershadow(gaussian, blue, 15, 0, 0, 0);
+
+}
+.caseButton2:focused {
+	-fx-effect: innershadow(gaussian, blue, 15, 0, 0, 0);
+}
+
+.caseButton2:hover {
+	-fx-effect: innershadow(gaussian, blue, 15, 0, 0, 0);
+	-fx-background-image: url("../res/images/close.png");
+}
+
+.caseButton3 {
+	-fx-background-radius: 16.4, 15;
+	-fx-background-insets: -1.4, 0;
+	-fx-border-radius: 15;
+	-fx-border-width: 2;
+	-fx-border-color: grey;
+	-fx-padding: 0;
+	-fx-font-size: 0;
+}
+
+.caseButton3:selected {
+	-fx-effect: innershadow(gaussian, green, 15,0, 0, 0);
+
+}
+
+.caseButton3:focused {
+	-fx-effect: innershadow(gaussian, green, 15, 0, 0, 0);
+}
+
+.caseButton3:hover {
+	-fx-effect: innershadow(gaussian, green, 15, 0, 0, 0);
+	-fx-background-image: url("../res/images/close.png");
+}

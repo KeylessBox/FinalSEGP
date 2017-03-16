@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.collections.FXCollections?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignUpController">
+   <children>
+      <GridPane layoutX="151.0" layoutY="110.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="67.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="10.0" prefWidth="133.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="name" promptText="First Name" GridPane.columnIndex="1" />
+            <TextField fx:id="surname" promptText="Last Name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="email" promptText="E-mail address" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Last Name" GridPane.rowIndex="1" />
+            <Label text="E-mail" GridPane.rowIndex="2" />
+            <Label text="Password" GridPane.rowIndex="3" />
+
+            <PasswordField fx:id="pass" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="First Name" />
+
+         </children>
+      </GridPane>
+      <Separator layoutX="1.0" layoutY="46.0" prefHeight="1.0" prefWidth="500.0" />
+      <Button fx:id="signInButton" layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#back" prefHeight="17.0" prefWidth="59.0" text="Sign In" textAlignment="CENTER" underline="true">
+         <tooltip>
+            <Tooltip text="Returns you to the Sign In menu" />
+         </tooltip>
+         <font>
+            <Font name="Calibri" size="12.0" />
+         </font></Button>
+      <Button id="createAnAccountButton" layoutX="373.0" layoutY="12.0" mouseTransparent="true" prefHeight="14.0" prefWidth="113.0" text="Create an account" textAlignment="CENTER">
+         <tooltip>
+            <Tooltip text="Current menu" />
+         </tooltip>
+         <font>
+            <Font name="Calibri" size="12.0" />
+         </font></Button>
+      <Button fx:id="signUp" layoutX="169.0" layoutY="304.0" mnemonicParsing="false" onAction="#signUp" prefHeight="25.0" prefWidth="163.0" text="Sign Up">
+         <tooltip>
+            <Tooltip text="Confirm the details and proceed" />
+         </tooltip>
+         <font>
+            <Font name="Calibri" size="12.0" />
+         </font></Button>
+      <Line endX="100.0" layoutX="250.0" layoutY="291.0" startX="-100.0" />
+   </children>
+</AnchorPane>

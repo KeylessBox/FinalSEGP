@@ -1,0 +1,90 @@
+
+.custom_hbox {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 2, 0, 0, 0);
+    -fx-opacity: 1;
+}
+
+#custom.toggle-button {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-text-fill: white;
+    -fx-background-color: #5cc1df;
+    -fx-text-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 2, 0, 0, 0);
+}
+
+#custom2.toggle-button {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-text-fill: white;
+    -fx-background-color: #df1e00;
+    -fx-text-alignment: center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 2, 0, 0, 0);
+}
+
+.button.button_ok {
+    -fx-min-height: 20px;
+    -fx-min-width: 20px;
+    -fx-background-size: 15px 15px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-image: url("../res/icons/ok_icon.png");
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-opacity: 0.8;
+    -fx-padding: 2;
+}
+
+.button.button_ok:hover {
+    -fx-opacity: 1;
+}
+
+.button.button_ok:pressed {
+    -fx-opacity: 0.5;
+}
+
+#custom2.toggle-button:armed {
+    -fx-base: transparent;
+    -fx-background: transparent;
+    -fx-focus-color: transparent;
+
+    -fx-effect: null;
+}
+
+#custom.toggle-button:armed {
+    -fx-base: transparent;
+    -fx-background: transparent;
+    -fx-focus-color: transparent;
+    -fx-effect: null;
+}
+
+.text-field {
+    -fx-border-radius: 3;
+    -fx-padding: 0;
+    -fx-border-color:#43546e ;
+    -fx-text-fill: #43546e;
+    -fx-background-color: white;
+    -fx-border-width: 1;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 3;
+}
+
+.text-field:focused {
+    -fx-border-color:#43546e ;
+    -fx-text-fill: #43546e;
+    -fx-background-color: white;
+}
+
+.text-field:hover {
+    -fx-border-color:#43546e ;
+    -fx-text-fill: #43546e;
+    -fx-background-color: white;
+}
+
+.text-field:focused:hover {
+    -fx-border-color:#43546e ;
+    -fx-text-fill: #43546e;
+    -fx-background-color: white;
+}

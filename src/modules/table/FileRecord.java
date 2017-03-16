@@ -7,10 +7,6 @@ package modules.table;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-
-/**
- * Created by AndreiM on 2/3/2017.
- */
 public class FileRecord {
     /**
      * DataStructure for accessing and modifying Note(Case files) records from DataBase and TableView
@@ -22,8 +18,8 @@ public class FileRecord {
     private final StringProperty date;
     private final StringProperty data;
 
-    public FileRecord(String fileID, String userID, String caseID, String title, String date, String data) {
-        this.noteID = new SimpleStringProperty(fileID);
+    public FileRecord(String noteID, String userID, String caseID, String title, String date, String data) {
+        this.noteID = new SimpleStringProperty(noteID);
         this.userID = new SimpleStringProperty(userID);
         this.caseID = new SimpleStringProperty(caseID);
         this.title = new SimpleStringProperty(title);
@@ -32,7 +28,7 @@ public class FileRecord {
     }
 
     //Getters:
-    public String getFileID() {
+    public String getNoteID() {
         return noteID.get();
     }
 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+
+<?import modules.table.NoteIcon?>
+<NoteIcon stylesheets="@../css/notes.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView id="note_icon" fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+          <image>
+              <Image url="@../res/icons/note_icon.png" />
+          </image>
+      </ImageView>
+   </children>
+</NoteIcon>

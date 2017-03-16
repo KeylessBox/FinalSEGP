@@ -35,7 +35,7 @@ public class SQL {
      *
      * @return ObservableList<StudentRecord>
      */
-    public ObservableList<CallRecord> loadCalls(int i) {
+    public ObservableList<CallRecord> loadCalls(int caseID) {
 
         Connection connection = dbConnection.connect();
         ObservableList<CallRecord> data = FXCollections.observableArrayList();
@@ -43,19 +43,35 @@ public class SQL {
         try {
 
             //execute query and store result in a result SET:
-            ResultSet callsRS = connection.createStatement().executeQuery("SELECT * FROM calls WHERE caseId = " + i);
+            ResultSet callsRS = connection.createStatement().executeQuery("SELECT * FROM calls WHERE caseId = " + caseID);
 
             while (callsRS.next()) {
+                ResultSet originRS = connection.createStatement().executeQuery("SELECT personName FROM phoneNumbers WHERE phoneNumber= '"
+                         + callsRS.getString(3) + "';");
 
+                ResultSet destinationRS = connection.createStatement().executeQuery
+                        ("SELECT personName FROM phoneNumbers WHERE phoneNumber= '" +
+                        callsRS.getString(4) + "';");
                 if (Integer.parseInt(callsRS.getString(1)) > maxIDCall) {
                     maxIDCall = Integer.parseInt(callsRS.getString(1));
                 }
-
-                data.add(new CallRecord(callsRS.getString(1), callsRS.getString(2), callsRS.getString(3),
-                        callsRS.getString(4), callsRS.getString(5), callsRS.getString(6), callsRS.getString(7),
-                        callsRS.getString(8)));
+                String originName;
+                String destinationName;
+                if (originRS.next()) {
+                    originName = originRS.getString(1);
+                } else {
+                    originName = "";
+                }
+                if (destinationRS.next()) {
+                    destinationName = destinationRS.getString(1);
+                } else {
+                    destinationName = "";
+                }
+                data.add(new CallRecord(callsRS.getString(1), callsRS.getString(2), originName,
+                        callsRS.getString(3), destinationName,
+                        callsRS.getString(4), callsRS.getString(5), callsRS.getString(6),
+                        callsRS.getString(7), callsRS.getString(8)));
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -155,6 +171,20 @@ public class SQL {
         return userId;
     }
 
+    public void updateNote(String data, String noteId) {
+        Connection connection = dbConnection.connect();
+
+        try {
+            String query = ("UPDATE notes SET data ='" + data +
+                    "' WHERE id='" + noteId + "';");
+            System.out.println(query);
+            connection.createStatement().executeUpdate(query);
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public void insertFile(FileRecord nr) {
         Connection connection = dbConnection.connect();
 
@@ -173,22 +203,54 @@ public class SQL {
     /**
      * Loads the note records from the database
      *
-     * @param i
+     * @param caseID
      * @return
      */
-    public ObservableList<FileRecord> loadFiles(int i) {
+    public ObservableList<FileRecord> loadFiles(int caseID) {
         Connection connection = dbConnection.connect();
         ObservableList<FileRecord> data = FXCollections.observableArrayList();
 
         try {
             //execute query and store result in a result SET:
-            ResultSet caseRS = connection.createStatement().executeQuery("SELECT * FROM notes WHERE caseID=" + i + ";");
+            ResultSet caseRS = connection.createStatement().executeQuery("SELECT * FROM notes WHERE caseID=" + caseID + ";");
 
             while (caseRS.next()) {
                 if (Integer.parseInt(caseRS.getString(1)) > maxIDNote) {
                     maxIDNote = Integer.parseInt(caseRS.getString(1));
                 }
                 data.add(new FileRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4), caseRS.getString(5), caseRS.getString(6)));
+            }
+            maxIDNote = 1;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+
+        }
+        return data;
+    }
+
+    /**
+     * Loads the note record from the database
+     *
+     * @param noteID
+     * @return
+     */
+    public ObservableList<FileRecord> loadNote(int noteID) {
+        Connection connection = dbConnection.connect();
+        ObservableList<FileRecord> data = FXCollections.observableArrayList();
+
+        try {
+            //execute query and store result in a result SET:
+            ResultSet noteRS = connection.createStatement().executeQuery("SELECT * FROM notes WHERE id=" + noteID + ";");
+
+            while (noteRS.next()) {
+                if (Integer.parseInt(noteRS.getString(1)) > maxIDNote) {
+                    maxIDNote = Integer.parseInt(noteRS.getString(1));
+                }
+                data.add(new FileRecord(noteRS.getString(1), noteRS.getString(2), noteRS.getString(3), noteRS.getString(4), noteRS.getString(5), noteRS.getString(6)));
             }
             maxIDNote = 1;
         } catch (Exception ex) {
@@ -274,6 +336,12 @@ public class SQL {
             connection.createStatement().executeUpdate("INSERT INTO calls(caseId, origin, destination, date, time, typeOfCall, duration)\n" +
                     "VALUES(" + cr.getCaseID() + ",'" + cr.getOrigin() + "','" + cr.getDestination() + "','" +
                     cr.getDate() + "','" + cr.getTime() + "','" + cr.getTypeOfCall() + "','" + cr.getDuration() + "');");
+            connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
+                    "(' ','" +cr.getOrigin() + "');");
+            connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
+                    "(' ','" +cr.getDestination() + "');");
+            connection.createStatement().executeUpdate("DELETE n1 FROM phoneNumbers n1, phoneNumbers n2 " +
+                    "WHERE n1.id > n2.id AND n1.phoneNumber = n2.phoneNumber");
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -300,13 +368,12 @@ public class SQL {
     /**
      * remove the Case selected
      *
-     * @param id
+     * @param caseID
      */
-    public void removeCase(int id) {
+    public void removeCase(int caseID) {
         Connection connection = dbConnection.connect();
-
         try {
-            connection.createStatement().executeUpdate("DELETE FROM `cases` WHERE id = " + id);
+            connection.createStatement().executeUpdate("DELETE FROM `cases` WHERE id = " + caseID);
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -322,7 +389,6 @@ public class SQL {
      */
     public void editCell(int id, String columnName, String change) {
         Connection connection = dbConnection.connect();
-
         try {
             connection.createStatement().executeUpdate("UPDATE calls SET " + columnName + "= '" + change + "' WHERE id =" + id);
             connection.close();
@@ -331,12 +397,43 @@ public class SQL {
         }
     }
 
-    public void updateCaseName(int id, String change) {
+    public void editCellNumber(String oldValue, String newValue) {
+        Connection connection = dbConnection.connect();
+        try {
+            connection.createStatement().executeUpdate("INSERT INTO phoneNumbers (personName,phoneNumber) VALUES (' ','" + newValue + "');");
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 
+    public void editCellName(String phoneNumber, String change) {
+        Connection connection = dbConnection.connect();
+        try {
+            connection.createStatement().executeUpdate("UPDATE phoneNumbers SET personName= '" + change +
+                    "' WHERE phoneNumber='" + phoneNumber + "';");
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    public void updateCaseName(int caseId, String change) {
         Connection connection = dbConnection.connect();
 
         try {
-            connection.createStatement().executeUpdate("UPDATE cases SET name" + "= '" + change + "' WHERE id =" + id);
+            connection.createStatement().executeUpdate("UPDATE cases SET name" + "= '" + change + "' WHERE id =" + caseId);
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void updateCaseStatus(int caseId, String change) {
+        Connection connection = dbConnection.connect();
+        try {
+            connection.createStatement().executeUpdate("UPDATE cases SET status" + "= '" + change + "' WHERE id =" + caseId);
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -347,7 +444,7 @@ public class SQL {
         Connection connection = dbConnection.connect();
 
         try {
-            connection.createStatement().executeUpdate("UPDATE notes SET title" + "= '" + change + "' WHERE id =" + id);
+            connection.createStatement().executeUpdate("UPDATE notes SET title= '" + change + "' WHERE id =" + id);
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();

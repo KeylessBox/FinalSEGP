@@ -1,13 +1,26 @@
 package modules.table;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import sql.SQL;
-
-import java.util.List;
+import javafx.application.Application;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 /**
  * Created by AndreiM on 2/3/2017.
@@ -15,7 +28,26 @@ import java.util.List;
 public class CallsTable {
     private static SQL sql = new SQL();
 
-    private static int minCellWidth = 100;
+    public static void createOriginNameColumn(TableColumn originName) {
+
+        Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
+            @Override
+            public TableCell call(TableColumn p) {
+                return new EditingCell();
+            }
+        };
+
+        originName.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("originName"));
+        originName.setCellFactory(editableFactory);
+        originName.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
+                System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
+                t.getRowValue().setOriginName(t.getNewValue());
+                sql.editCellName(t.getRowValue().getOrigin(), t.getNewValue());
+            }
+        });
+    }
 
     public static void createOriginColumn(TableColumn origin) {
 
@@ -26,7 +58,6 @@ public class CallsTable {
             }
         };
 
-        origin.setMinWidth(minCellWidth + 100);
         origin.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("origin"));
         origin.setCellFactory(editableFactory);
         origin.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
@@ -34,7 +65,29 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setOrigin(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "origin",t.getNewValue());
+                sql.editCellNumber(t.getOldValue(), t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "origin", t.getNewValue());
+            }
+        });
+    }
+
+    public static void createDestinationNameColumn(TableColumn destinationName) {
+
+        Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
+            @Override
+            public TableCell call(TableColumn p) {
+
+                return new EditingCell();
+            }
+        };
+        destinationName.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destinationName"));
+        destinationName.setCellFactory(editableFactory);
+        destinationName.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
+                System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
+                t.getRowValue().setDestinationName(t.getNewValue());
+                sql.editCellName(t.getRowValue().getDestination(), t.getNewValue());
             }
         });
     }
@@ -48,8 +101,6 @@ public class CallsTable {
                 return new EditingCell();
             }
         };
-
-        destination.setMinWidth(minCellWidth + 100);
         destination.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destination"));
         destination.setCellFactory(editableFactory);
         destination.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
@@ -57,7 +108,8 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setDestination(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "destination",t.getNewValue());
+                sql.editCellNumber(t.getOldValue(), t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "destination", t.getNewValue());
             }
         });
     }
@@ -72,7 +124,6 @@ public class CallsTable {
             }
         };
 
-        date.setMinWidth(minCellWidth);
         date.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("date"));
         date.setCellFactory(editableFactory);
         date.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
@@ -80,7 +131,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setDate(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "date",t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "date", t.getNewValue());
             }
         });
     }
@@ -90,11 +141,9 @@ public class CallsTable {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-
                 return new EditingCell();
             }
         };
-        time.setMinWidth(minCellWidth);
         time.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("time"));
         time.setCellFactory(editableFactory);
         time.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
@@ -102,7 +151,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setTime(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "time",t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "time", t.getNewValue());
             }
         });
     }
@@ -112,12 +161,10 @@ public class CallsTable {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-
                 return new EditingCell();
             }
         };
 
-        typeOfCall.setMinWidth(minCellWidth + 50);
         typeOfCall.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("typeOfCall"));
         typeOfCall.setCellFactory(editableFactory);
         typeOfCall.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
@@ -125,7 +172,7 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setTypeOfCall(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "typeOfCall",t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "typeOfCall", t.getNewValue());
             }
         });
     }
@@ -135,11 +182,9 @@ public class CallsTable {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-
                 return new EditingCell();
             }
         };
-        duration.setMinWidth(minCellWidth);
         duration.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("duration"));
         duration.setCellFactory(editableFactory);
         duration.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
@@ -147,8 +192,9 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setDuration(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "duration",t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "duration", t.getNewValue());
             }
         });
+
     }
 }

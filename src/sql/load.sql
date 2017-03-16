@@ -10,7 +10,7 @@ CREATE TABLE `accounts` (id INT PRIMARY KEY AUTO_INCREMENT,
 
 CREATE TABLE IF NOT EXISTS cases(id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(35),
-    details VARCHAR(255), status ENUM ('Investigating','Solved','Preliminary'), date DATETIME DEFAULT NULL ) ENGINE= InnoDB;
+    details VARCHAR(255), status ENUM ('New','Done'), date DATETIME DEFAULT NULL ) ENGINE= InnoDB;
 
 CREATE TABLE IF NOT EXISTS notes(id INT PRIMARY KEY AUTO_INCREMENT,
     accountID INT, caseID INT, title VARCHAR(100), date DATE, data VARCHAR(255),
@@ -26,8 +26,7 @@ CREATE TABLE IF NOT EXISTS houseAddresses(Id INT PRIMARY KEY AUTO_INCREMENT,
     FOREIGN KEY(personID) REFERENCES people(id) ON DELETE CASCADE) ENGINE= InnoDB;
 
 CREATE TABLE IF NOT EXISTS phoneNumbers(id INT PRIMARY KEY AUTO_INCREMENT,
-    personID INT, phoneNumber VARCHAR(18),
-    FOREIGN KEY(personID) REFERENCES people(id) ON DELETE CASCADE) ENGINE= InnoDB;
+    personName VARCHAR(80), phoneNumber VARCHAR(18)) ENGINE= InnoDB;
 
 CREATE TABLE IF NOT EXISTS emailAddresses(id INT PRIMARY KEY AUTO_INCREMENT,
     personID INT, emailAddress VARCHAR(78),
@@ -42,14 +41,14 @@ INSERT INTO `accounts`(`name`, `surname`, `email`, `password`, `privileges`) VAL
 ('', '', '', '', 'user');
 
 INSERT INTO cases(name, details, status, date) VALUES
-    ('Cheeky Scar', 'A mass murderer in Essex terrorizes peaceful people','Investigating','2017-02-14 17:52:20'),
-    ('Little Rabbit', 'A girl found dead with her rabbit close by', 'Solved','2017-02-14 17:52:20'),
-    ('Black Shoe', 'Description', 'Investigating','2017-02-14 17:52:20'),
-    ('Red Wedding', 'Description', 'Investigating','2017-02-14 17:52:20'),
-    ('Bloody locker', 'Description', 'Investigating','2017-02-14 17:52:20'),
-    ('Forest trail', 'Description', 'Investigating','2017-02-14 17:52:20'),
-    ('Donuts of skin', 'Description', 'Investigating','2017-02-14 17:52:20'),
-    ('Python in the house', 'Description', 'Investigating','2017-02-14 17:52:20');
+    ('Cheeky Scar', 'A mass murderer in Essex terrorizes peaceful people','New','2017-02-14 17:52:20'),
+    ('Little Rabbit', 'A girl found dead with her rabbit close by', 'New','2017-02-14 17:52:20'),
+    ('Black Shoe', 'Description', 'New','2017-02-14 17:52:20'),
+    ('Red Wedding', 'Description', 'Done','2017-02-14 17:52:20'),
+    ('Bloody locker', 'Description', 'Done','2017-02-14 17:52:20'),
+    ('Forest trail', 'Description', 'Done','2017-02-14 17:52:20'),
+    ('Donuts of skin', 'Description', 'Done','2017-02-14 17:52:20'),
+    ('Python in the house', 'Description', 'Done','2017-02-14 17:52:20');
 
 
 INSERT INTO people(firstName, lastName, gender, dayOfBirth, monthOfBirth, yearOfBirth, dateOfBirth) VALUES
@@ -71,37 +70,13 @@ INSERT INTO houseAddresses(personId, houseNumber, streetName, town, county, post
     (6,'38','Fraserburgh Rd','LICKEY END','Worcestershire','B60 3XH', 'England');
 
 
-INSERT INTO phoneNumbers (personId)
-VALUES (1);
-UPDATE phoneNumbers SET phoneNumber = (SELECT calls.origin FROM calls WHERE id = 1)
-WHERE personId = 1;
-
-INSERT INTO phoneNumbers (personId)
-VALUES (2);
-UPDATE phoneNumbers SET phoneNumber = (SELECT calls.destination FROM calls WHERE Id = 1)
-WHERE personId = 2;
-
-INSERT INTO phoneNumbers (personId)
-VALUES (3);
-UPDATE phoneNumbers SET phoneNumber = (SELECT calls.destination FROM calls Where Id = 2)
-WHERE personId = 3;
-
-INSERT INTO phoneNumbers (personId)
-VALUES (4);
-UPDATE phoneNumbers SET phoneNumber = (SELECT calls.destination FROM calls Where Id = 3)
-WHERE personId = 4;
-
-INSERT INTO phoneNumbers (personId)
-VALUES (5);
-UPDATE phoneNumbers SET phoneNumber = (SELECT calls.origin FROM calls Where Id = 4)
-WHERE personId = 5;
-
-INSERT INTO phoneNumbers (personId)
-VALUES (6);
-UPDATE phoneNumbers SET phoneNumber = (SELECT calls.origin FROM calls Where Id = 5)
-WHERE personId = 6;
-
-
+INSERT INTO phoneNumbers (personName, phoneNumber) VALUES
+    ('Spencer Blackburn','078 0680 1334'),
+    ('Jack Sullivan', '077 3628 5886'),
+    ('Cameron Cole', '070 0913 6953'),
+    ('Elizabeth Powell','070 6369 5729'),
+    ('Mason Berry','077 6052 1169'),
+    ('Ben Clark','077 6109 8258');
 
 INSERT INTO calls(caseId, origin, destination, date, time, typeOfCall, duration) VALUES
     (1,'078 0680 1334','077 3628 5886','2016/03/19','10:15','Standard', '20:00'),

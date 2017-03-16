@@ -1,0 +1,189 @@
+
+#root {
+    -fx-background-image: url("../res/icons/pattern.png");
+    -fx-opacity: 1;
+    /*-fx-background-size: 1920, 1080;*/
+    -fx-cursor: default;
+}
+
+.upline {
+    -fx-background-image: url("../res/new_images/upline_background.jpg");
+    -fx-cursor: default;
+}
+
+.menu-bar {
+    -fx-background-color: transparent;
+    -fx-cursor: default;
+}
+
+.menu {
+    -fx-opacity: 0.5;
+    -fx-padding: 8;
+}
+
+.menu:showing {
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
+    -fx-opacity: 1;
+    -fx-background-color: #43546e;
+    -fx-background-radius: 2;
+}
+
+#add_btn.menu:hover {
+    -fx-background-repeat: stretch;
+    -fx-opacity: 1;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
+    -fx-opacity: 1;
+    -fx-background-color: #43546e;
+    -fx-background-radius: 2;
+}
+
+#add_btn.menu:pressed {
+    -fx-opacity: 0.5;
+}
+
+#user_btn.menu:hover {
+    -fx-opacity: 1;
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
+    -fx-opacity: 1;
+    -fx-background-color: #43546e;
+    -fx-background-radius: 2;
+}
+
+#user_btn.menu:pressed {
+    -fx-opacity: 0.5;
+}
+
+#search_btn.menu:hover {
+    -fx-opacity: 1;
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
+    -fx-opacity: 1;
+    -fx-background-color: #43546e;
+    -fx-background-radius: 2;
+}
+
+#search_btn.menu:pressed {
+    -fx-opacity: 0.5;
+}
+
+.search_bar {
+    -fx-background-repeat: stretch;
+    -fx-background-size: 300 80;
+    -fx-background-image: url("../res/icons/search_bar.png");
+}
+
+.settings_bar {
+    -fx-background-repeat: stretch;
+    -fx-background-size: 450 340;
+    -fx-background-image: url("../res/icons/settings_bar.png");
+}
+
+#settings_btn.menu:hover {
+    -fx-opacity: 1;
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 5, 0, 0, 0);
+    -fx-opacity: 1;
+    -fx-background-color: #43546e;
+    -fx-background-radius: 2;
+}
+
+#settings_btn.menu:pressed {
+    -fx-opacity: 0.5;
+}
+
+.context-menu {
+    -fx-background-color: transparent;
+}
+
+.menu-item {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-opacity: 0.90;
+}
+
+.menu-item:hover {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-opacity: 1.5;
+}
+
+.button {
+    -fx-border-color: black;
+    -fx-text-fill: white;
+    -fx-border-width: 1;
+    -fx-border-radius: 0 3 3 0;
+    -fx-background-radius: 0 3 3 0;
+    -fx-text-alignment: center;
+    -fx-background-color: #334259,
+    #43546e;
+    -fx-opacity: 0.9;
+}
+
+.button:hover {
+    -fx-opacity: 1;
+}
+
+.button:focused {
+    -fx-opacity: 1;
+    -fx-text-alignment: center;
+}
+
+#delete-button.button {
+    -fx-background-insets: 1, 1, 1, 1;
+    -fx-min-height: 20px;
+    -fx-min-width: 20px;
+    -fx-background-size: 11px 11px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-image: url("../res/icons/close_case_icon.png");
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-opacity: 0.8;
+    -fx-padding: 2;
+}
+
+#delete-button.button:hover {
+    -fx-opacity: 1;
+}
+
+#delete-button.button:pressed {
+    -fx-opacity: 0.5;
+}
+
+.text-field {
+    -fx-border-color: #43546e;
+    -fx-border-radius: 0, 0, 0, 0;
+    -fx-padding: 5 10 5 10;
+}
+
+.text-field {
+    -fx-background-color: #FFFFFF,
+    #FFFFFF;
+    -fx-border-width: 1;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 0, 0;
+}
+
+.text-field:focused {
+    -fx-background-color: #43546e,
+    #FFFFFF;
+}
+
+.text-field:hover {
+    -fx-background-color: #909090,
+    #FFFFFF;
+}
+
+.text-field:focused:hover {
+    -fx-background-color: #43546e,
+    #FFFFFF;
+}
