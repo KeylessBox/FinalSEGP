@@ -324,12 +324,12 @@
                                                     <Font name="Calibri Bold" size="14.0" />
                                                 </font>
                                             </Button>
-                                            <DatePicker promptText="Start Date">
+                                            <DatePicker fx:id ="startDate" promptText="Start Date" onAction="#getStartDate">
                                                 <HBox.margin>
                                                     <Insets left="20.0" />
                                                 </HBox.margin>
                                             </DatePicker>
-                                            <DatePicker promptText="End Date">
+                                            <DatePicker fx:id ="endDate" promptText="End Date" onAction="#getEndDate">
                                                 <HBox.margin>
                                                     <Insets left="20.0" />
                                                 </HBox.margin>

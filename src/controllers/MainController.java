@@ -51,6 +51,8 @@ public class MainController {
     private int id = 1;
     private boolean editing = false;
     private char alphabet = 'A';
+    private Object[][] filterConstraints = new Object[10][2];
+    private int filterIndex = 0;
 
     @FXML
     private ScrollPane notes_scroll_pane;
@@ -86,6 +88,10 @@ public class MainController {
     protected ToggleButton doneToggleBtn;
     final ToggleGroup casesToggleGroup = new ToggleGroup();
 
+    @FXML
+    protected DatePicker startDate;
+    @FXML
+    protected DatePicker endDate;
     @FXML
     protected VBox casesContainer;
     @FXML
@@ -208,6 +214,92 @@ public class MainController {
         allToggleBtn.setToggleGroup(casesToggleGroup);
         newToggleBtn.setToggleGroup(casesToggleGroup);
         doneToggleBtn.setToggleGroup(casesToggleGroup);
+    }
+
+    /**
+     * Filters table by date (at the moment)
+     * @throws ParseException
+     */
+    private void filter() throws  ParseException{
+        table.setItems(filter(0));
+    }
+
+    /**
+     * Recursive call for filtering the table
+     * @param i index of constraint in the filterConstraint array
+     * @return filtered data
+     * @throws ParseException
+     */
+    private ObservableList<CallRecord> filter(int i) throws ParseException{
+        if (i < filterIndex ) {
+            ObservableList<CallRecord> test = filter(i+1);
+            ObservableList<CallRecord> test2 =  FXCollections.observableArrayList();
+            Date date = (Date) filterConstraints[i][0];
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            if (filterConstraints[i][1].equals("start")) {
+                for (CallRecord callRecord : test) {
+                    Date callDate = sdf.parse(callRecord.getDate());
+                    if (callDate.compareTo(date) >= 0) {
+                        test2.add(callRecord);
+                    }
+                }
+            } else {
+                for (CallRecord callRecord : test) {
+                    Date callDate = sdf.parse(callRecord.getDate());
+                    if (callDate.compareTo(date) <= 0) {
+                        test2.add(callRecord);
+                    }
+                }
+            }
+            return test2;
+        } else {
+            return callsData;
+        }
+    }
+
+    /**
+     * Retrieves the start date and filters the table
+     * @throws ParseException
+     */
+    @FXML
+    private void getStartDate() throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = sdf.parse(startDate.getValue().toString());
+        boolean isOn = false;
+        for (int i =0; i< filterIndex; i++) {
+            if (filterConstraints[i][1].equals("start")) {
+                filterConstraints[i][0] = date;
+                isOn = true;
+            }
+        }
+        if (!isOn) {
+            filterConstraints[filterIndex][0] = date;
+            filterConstraints[filterIndex][1] = "start";
+            filterIndex++;
+        }
+        filter();
+    }
+    /**
+     * Retrieves the end date and filters the table
+     * @throws ParseException
+     */
+    @FXML
+    private void getEndDate() throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date =  sdf.parse(endDate.getValue().toString());
+        boolean isOn = false;
+        for (int i =0; i< filterIndex; i++) {
+            if (filterConstraints[i][1].equals("end")) {
+                filterConstraints[i][0] = date;
+                isOn = true;
+            }
+        }
+        if (!isOn) {
+            filterConstraints[filterIndex][0] = date;
+            filterConstraints[filterIndex][1] = "end";
+            filterIndex++;
+        }
+        filter();
     }
 
     /**
@@ -660,7 +752,9 @@ public class MainController {
                 } else {
 
                     ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-                    ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn, originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn, timeColumn, typeColumn, durationColumn);
+                    ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
+                            originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn,
+                            timeColumn, typeColumn, durationColumn);
 
                     for (int i = 0; i < searchData.size(); i++) {
                         for (int j = 0; j < cols.size(); j++) {
