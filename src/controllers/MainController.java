@@ -220,8 +220,14 @@ public class MainController {
      * Filters table by date (at the moment)
      * @throws ParseException
      */
-    private void filter() throws  ParseException{
-        table.setItems(filter(0));
+    private void filter() {
+        try {
+            table.setItems(filter(0));
+        }
+        catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -234,20 +240,39 @@ public class MainController {
         if (i < filterIndex ) {
             ObservableList<CallRecord> test = filter(i+1);
             ObservableList<CallRecord> test2 =  FXCollections.observableArrayList();
-            Date date = (Date) filterConstraints[i][0];
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            if (filterConstraints[i][1].equals("start")) {
-                for (CallRecord callRecord : test) {
-                    Date callDate = sdf.parse(callRecord.getDate());
-                    if (callDate.compareTo(date) >= 0) {
-                        test2.add(callRecord);
+            if (filterConstraints[i][1].equals("no")) {
+                return filter(i+1);
+            }
+            if (filterConstraints[i][0] instanceof Date) {
+                Date date = (Date) filterConstraints[i][0];
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                if (filterConstraints[i][1].equals("start")) {
+                    for (CallRecord callRecord : test) {
+                        Date callDate = sdf.parse(callRecord.getDate());
+                        if (callDate.compareTo(date) >= 0) {
+                            test2.add(callRecord);
+                        }
+                    }
+                } else {
+                    for (CallRecord callRecord : test) {
+                        Date callDate = sdf.parse(callRecord.getDate());
+                        if (callDate.compareTo(date) <= 0) {
+                            test2.add(callRecord);
+                        }
                     }
                 }
-            } else {
-                for (CallRecord callRecord : test) {
-                    Date callDate = sdf.parse(callRecord.getDate());
-                    if (callDate.compareTo(date) <= 0) {
-                        test2.add(callRecord);
+            } else if (filterConstraints[i][0] instanceof Person){
+                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn, originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn, timeColumn, typeColumn, durationColumn);
+                for (int k = 0; k < test.size(); k++) {
+                    for (int j=1; j<4; j+=2) {
+                        TableColumn col = cols.get(j);
+                        String cellValue = col.getCellData(test.get(k)).toString();
+                        cellValue = cellValue.toLowerCase();
+                        Person person = (Person) filterConstraints[i][0];
+                        if (cellValue.contains(person.getPhone())) {
+                            test2.add(test.get(k));
+                            break;
+                        }
                     }
                 }
             }
@@ -644,6 +669,34 @@ public class MainController {
         System.out.println("HERE");
     }
 
+    public void checkPhone(TextField phoneField, Person person) {
+        if (phoneField.textProperty().get().isEmpty()) {
+            for (int i =0; i< filterIndex; i++) {
+                if (filterConstraints[i][0].equals(person)) {
+                    filterConstraints[i][1] = "no";
+                }
+            }
+            filter();
+        } else {
+            boolean isOn = false;
+            for (int i =0; i< filterIndex; i++) {
+                if (filterConstraints[i][0].equals(person)) {
+                    person.setPhone(phoneField.getText());
+                    filterConstraints[i][0] = person;
+                    filterConstraints[i][1] = "yes";
+                    isOn = true;
+                }
+            }
+            if (!isOn) {
+                person.setPhone(phoneField.getText());
+                filterConstraints[filterIndex][0] = person;
+                filterConstraints[filterIndex][1] = "yes";
+                filterIndex++;
+            }
+            filter();
+        }
+    }
+
     /**
      * Add a victim functionality
      */
@@ -668,7 +721,11 @@ public class MainController {
             Label letter = (Label) temp2.getChildren().get(0);
             Pane temp3 = (Pane) temp2.getChildren().get(4);
             Button delete = (Button) temp3.getChildren().get(0);
-            TextField txtField = (TextField) temp.getChildren().get(2);
+            TextField nameField = (TextField) temp.getChildren().get(1);
+            TextField phoneField = (TextField) temp.getChildren().get(2);
+
+
+            Person victim = new Person(String.valueOf(alphabet));
 
             Pane finalVictimNote = victimNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
@@ -679,35 +736,9 @@ public class MainController {
             });
             //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
 
-            txtField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-                if (txtField.textProperty().get().isEmpty()) {
-                    searchData = callsData;
-                    table.setItems(searchData);
-                } else {
-
-                    ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-                    ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn, originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn, timeColumn, typeColumn, durationColumn);
-
-                    for (int i = 0; i < searchData.size(); i++) {
-                        for (int j = 0; j < cols.size(); j++) {
-                            if (j == 3) {
-                                TableColumn col = cols.get(j);
-                                String cellValue = col.getCellData(searchData.get(i)).toString();
-                                cellValue = cellValue.toLowerCase();
-                                if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
-                                    tableItems.add(searchData.get(i));
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (searchData != tableItems) {
-                        searchData = tableItems;
-                        table.setItems(tableItems);
-                    }
-                }
-            });
+            phoneField.textProperty().addListener((observable, oldValue, newValue) -> {
+                        checkPhone(phoneField, victim);
+                    });
             letter.setText(String.valueOf(alphabet));
             filtersBox.getChildren().add(victimNote);
             alphabet++;
@@ -734,7 +765,10 @@ public class MainController {
             Label letter = (Label) temp2.getChildren().get(0);
             Pane temp3 = (Pane) temp2.getChildren().get(4);
             Button delete = (Button) temp3.getChildren().get(0);
-            TextField txtField = (TextField) temp.getChildren().get(2);
+            TextField phoneField = (TextField) temp.getChildren().get(2);
+
+            Person suspect = new Person(String.valueOf(alphabet));
+
             Pane finalVictimNote = suspectNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
                 filtersBox.getChildren().remove(finalVictimNote);
@@ -744,36 +778,8 @@ public class MainController {
             });
             //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
 
-            txtField.textProperty().addListener((observable, oldValue, newValue) -> {
-
-                if (txtField.textProperty().get().isEmpty()) {
-                    searchData = callsData;
-                    table.setItems(searchData);
-                } else {
-
-                    ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-                    ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
-                            originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn,
-                            timeColumn, typeColumn, durationColumn);
-
-                    for (int i = 0; i < searchData.size(); i++) {
-                        for (int j = 0; j < cols.size(); j++) {
-                            if (j == 1) {
-                                TableColumn col = cols.get(j);
-                                String cellValue = col.getCellData(searchData.get(i)).toString();
-                                cellValue = cellValue.toLowerCase();
-                                if (cellValue.contains(txtField.textProperty().get().toLowerCase())) {
-                                    tableItems.add(searchData.get(i));
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (searchData != tableItems) {
-                        searchData = tableItems;
-                        table.setItems(tableItems);
-                    }
-                }
+            phoneField.textProperty().addListener((observable, oldValue, newValue) -> {
+                checkPhone(phoneField, suspect);
             });
             letter.setText(String.valueOf(alphabet));
             alphabet++;
