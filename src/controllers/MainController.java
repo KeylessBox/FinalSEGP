@@ -20,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import jdk.nashorn.internal.codegen.CompilerConstants;
 import modules.file_export.csvExport;
 import modules.manageAccounts.User;
 import modules.table.*;
@@ -34,6 +35,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -222,12 +224,12 @@ public class MainController {
      */
     private void filter() {
         try {
-            table.setItems(filter(0));
+            searchData = filterPhone(filterDates(0));
+            table.setItems(searchData);
         }
         catch (ParseException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -236,16 +238,18 @@ public class MainController {
      * @return filtered data
      * @throws ParseException
      */
-    private ObservableList<CallRecord> filter(int i) throws ParseException{
+    private ObservableList<CallRecord> filterDates(int i) throws ParseException{
         if (i < filterIndex ) {
-            ObservableList<CallRecord> test = filter(i+1);
+            ObservableList<CallRecord> test = filterDates(i+1);
             ObservableList<CallRecord> test2 =  FXCollections.observableArrayList();
+            boolean change = false;
             if (filterConstraints[i][1].equals("no")) {
-                return filter(i+1);
+                return filterDates(i+1);
             }
             if (filterConstraints[i][0] instanceof Date) {
                 Date date = (Date) filterConstraints[i][0];
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                change = true;
                 if (filterConstraints[i][1].equals("start")) {
                     for (CallRecord callRecord : test) {
                         Date callDate = sdf.parse(callRecord.getDate());
@@ -261,25 +265,84 @@ public class MainController {
                         }
                     }
                 }
-            } else if (filterConstraints[i][0] instanceof Person){
-                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn, originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn, timeColumn, typeColumn, durationColumn);
-                for (int k = 0; k < test.size(); k++) {
-                    for (int j=1; j<4; j+=2) {
-                        TableColumn col = cols.get(j);
+            }
+            if (change) {
+                return test2;
+            } else {
+                return test;
+            }
+        } else {
+            return callsData;
+        }
+    }
+
+  /*  private ObservableList<CallRecord> search (ObservableList<CallRecord> test) {
+        ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
+        for (int i=0; i<filterIndex; i++) {
+            if (filterConstraints[i][0] instanceof String && filterConstraints[i][1].equals("yes")) {
+                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
+                        originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn,
+                        dateColumn, timeColumn, typeColumn, durationColumn);
+
+                for (int j = 0; j < test.size(); j++) {
+                    for (int k = 0; k < 8; k++) {
+                        TableColumn col = cols.get(k);
                         String cellValue = col.getCellData(test.get(k)).toString();
                         cellValue = cellValue.toLowerCase();
-                        Person person = (Person) filterConstraints[i][0];
-                        if (cellValue.contains(person.getPhone())) {
-                            test2.add(test.get(k));
+                        if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
+                            tableItems.add(test.get(k));
                             break;
                         }
                     }
                 }
             }
-            return test2;
-        } else {
-            return callsData;
         }
+        return tableItems;
+        if (searchBar.textProperty().get().isEmpty()) {
+            searchData = callsData;
+            table.setItems(searchData);
+        } else {
+
+
+        }
+        return tableItems;
+    }*/
+
+    public ObservableList<CallRecord> filterPhone(ObservableList<CallRecord> test) {
+        ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
+        boolean change = false;
+        for (int i=0; i<filterIndex; i++) {
+            if (filterConstraints[i][0] instanceof Person && filterConstraints[i][1].equals("yes")) {
+                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
+                        originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn,
+                        timeColumn, typeColumn, durationColumn);
+                change = true;
+                for (int k = 0; k < test.size(); k++) {
+                    for (int j = 1; j < 4; j += 2) {
+                        TableColumn col = cols.get(j);
+                        String cellValue = col.getCellData(test.get(k)).toString();
+                        cellValue = cellValue.toLowerCase();
+                        Person person = (Person) filterConstraints[i][0];
+                        if (cellValue.contains(person.getPhone())) {
+                            tableItems.add(test.get(k));
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        if (change) {
+            ObservableList<CallRecord> result = FXCollections.observableArrayList();
+            HashSet<CallRecord> set = new HashSet<>();
+            for (CallRecord item : tableItems) {
+                if (!set.contains(item)) {
+                    result.add(item);
+                    set.add(item);
+                }
+            }
+            return result;
+        }
+        else return test;
     }
 
     /**
@@ -620,32 +683,7 @@ public class MainController {
 
         searchData = callsData;
 
-        if (searchBar.textProperty().get().isEmpty()) {
-            searchData = callsData;
-            table.setItems(searchData);
-        } else {
 
-            ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-            ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn, originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn, timeColumn, typeColumn, durationColumn);
-
-            if (callsData != null) {
-                for (int i = 0; i < searchData.size(); i++) {
-                    for (int j = 0; j < 8; j++) {
-                        TableColumn col = cols.get(j);
-                        String cellValue = col.getCellData(searchData.get(i)).toString();
-                        cellValue = cellValue.toLowerCase();
-                        if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
-                            tableItems.add(searchData.get(i));
-                            break;
-                        }
-                    }
-                }
-                if (searchData != tableItems) {
-                    searchData = tableItems;
-                    table.setItems(searchData);
-                }
-            }
-        }
 
     }
 
@@ -669,6 +707,11 @@ public class MainController {
         System.out.println("HERE");
     }
 
+    /**
+     * Filter by phone for victim/suspect
+     * @param phoneField
+     * @param person
+     */
     public void checkPhone(TextField phoneField, Person person) {
         if (phoneField.textProperty().get().isEmpty()) {
             for (int i =0; i< filterIndex; i++) {
