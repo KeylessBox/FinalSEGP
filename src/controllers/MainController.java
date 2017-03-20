@@ -224,7 +224,7 @@ public class MainController {
      */
     private void filter() {
         try {
-            searchData = filterPhone(filterDates(0));
+            searchData = filterSearch(filterPhone(filterDates(0)));
             table.setItems(searchData);
         }
         catch (ParseException e) {
@@ -277,36 +277,38 @@ public class MainController {
     }
 
   /*  private ObservableList<CallRecord> search (ObservableList<CallRecord> test) {
+
+        return tableItems;
+
+        return tableItems;
+    }*/
+
+    public ObservableList<CallRecord> filterSearch(ObservableList<CallRecord> test) {
         ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-        for (int i=0; i<filterIndex; i++) {
+        boolean change = false;
+        for (int i = 0; i < filterIndex; i++) {
             if (filterConstraints[i][0] instanceof String && filterConstraints[i][1].equals("yes")) {
                 ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
                         originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn,
                         dateColumn, timeColumn, typeColumn, durationColumn);
-
+                change = true;
                 for (int j = 0; j < test.size(); j++) {
                     for (int k = 0; k < 8; k++) {
                         TableColumn col = cols.get(k);
-                        String cellValue = col.getCellData(test.get(k)).toString();
+                        String cellValue = col.getCellData(test.get(j)).toString();
                         cellValue = cellValue.toLowerCase();
                         if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
-                            tableItems.add(test.get(k));
+                            tableItems.add(test.get(j));
                             break;
                         }
                     }
                 }
             }
         }
-        return tableItems;
-        if (searchBar.textProperty().get().isEmpty()) {
-            searchData = callsData;
-            table.setItems(searchData);
-        } else {
-
-
-        }
-        return tableItems;
-    }*/
+        if (change) {
+            return tableItems;
+        } else return test;
+    }
 
     public ObservableList<CallRecord> filterPhone(ObservableList<CallRecord> test) {
         ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
@@ -345,6 +347,10 @@ public class MainController {
         else return test;
     }
 
+   /* private void setSearchBarEmpty() {
+        searchBar.textProperty().set("");
+    }
+*/
     /**
      * Retrieves the start date and filters the table
      * @throws ParseException
@@ -461,7 +467,6 @@ public class MainController {
                 caseID = id;
                 loadTable(caseID);
                 loadFiles(caseID);
-                search();
                 sql.updateDate(caseID, date);
                 caseRecord.setDate(date);
                 try {
@@ -482,7 +487,7 @@ public class MainController {
                 caseTitle.setText(caseRecord.getName());
                 loadTable(caseID);
                 loadFiles(caseID);
-                search();
+
             });
 
             Pane CaseEditObject = null;
@@ -679,11 +684,32 @@ public class MainController {
     }
 
     //TODO Add comments
+
+    @FXML
     public void search() {
-
-        searchData = callsData;
-
-
+        String searchTxt = searchBar.textProperty().get();
+        if (searchTxt.isEmpty()) {
+            for (int i =0; i< filterIndex; i++) {
+                if (filterConstraints[i][0].equals(searchTxt)) {
+                    filterConstraints[i][1] = "no";
+                }
+            }
+        } else {
+            boolean isOn = false;
+            for (int i =0; i< filterIndex; i++) {
+                if (filterConstraints[i][0].equals(searchTxt)) {
+                    filterConstraints[i][0] = searchTxt;
+                    filterConstraints[i][1] = "yes";
+                    isOn = true;
+                }
+            }
+            if (!isOn) {
+                filterConstraints[filterIndex][0] = searchTxt;
+                filterConstraints[filterIndex][1] = "yes";
+                filterIndex++;
+            }
+        }
+        filter();
 
     }
 
@@ -773,8 +799,12 @@ public class MainController {
             Pane finalVictimNote = victimNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
                 filtersBox.getChildren().remove(finalVictimNote);
-                searchData = callsData;
-                table.setItems(searchData);
+                for (int i =0; i<filterIndex; i++) {
+                    if (filterConstraints[i][0].equals(victim)) {
+                        filterConstraints[i][1] = "no";
+                    }
+                }
+                filter();
                 System.out.println("DELETE VICTIM");
             });
             //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
@@ -815,8 +845,12 @@ public class MainController {
             Pane finalVictimNote = suspectNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
                 filtersBox.getChildren().remove(finalVictimNote);
-                searchData = callsData;
-                table.setItems(searchData);
+                for (int i =0; i<filterIndex; i++) {
+                    if (filterConstraints[i][0].equals(suspect)) {
+                        filterConstraints[i][1] = "no";
+                    }
+                }
+                filter();
                 System.out.println("DELETE SUSPECT");
             });
             //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
