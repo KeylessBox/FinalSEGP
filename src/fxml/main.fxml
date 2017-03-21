@@ -318,8 +318,8 @@
                                     </HBox>
                                     <HBox prefHeight="46.0" prefWidth="1458.0">
                                         <children>
-                                            <TextField fx:id="searchBar" onAction="#search" prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
-                                            <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" onAction="#search" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
+                                            <TextField fx:id="searchBar" prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
+                                            <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0"  prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
                                                 <font>
                                                     <Font name="Calibri Bold" size="14.0" />
                                                 </font>

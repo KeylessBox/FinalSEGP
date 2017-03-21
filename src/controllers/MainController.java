@@ -53,7 +53,7 @@ public class MainController {
     private int id = 1;
     private boolean editing = false;
     private char alphabet = 'A';
-    private Object[][] filterConstraints = new Object[10][2];
+    private List<Object[]> filterConstraints = new ArrayList<Object[]>();
     private int filterIndex = 0;
 
     @FXML
@@ -243,14 +243,14 @@ public class MainController {
             ObservableList<CallRecord> test = filterDates(i+1);
             ObservableList<CallRecord> test2 =  FXCollections.observableArrayList();
             boolean change = false;
-            if (filterConstraints[i][1].equals("no")) {
+            if (filterConstraints.get(i)[1].equals("no")) {
                 return filterDates(i+1);
             }
-            if (filterConstraints[i][0] instanceof Date) {
-                Date date = (Date) filterConstraints[i][0];
+            if (filterConstraints.get(i)[0] instanceof Date) {
+                Date date = (Date) filterConstraints.get(i)[0];
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 change = true;
-                if (filterConstraints[i][1].equals("start")) {
+                if (filterConstraints.get(i)[1].equals("start")) {
                     for (CallRecord callRecord : test) {
                         Date callDate = sdf.parse(callRecord.getDate());
                         if (callDate.compareTo(date) >= 0) {
@@ -286,8 +286,9 @@ public class MainController {
     public ObservableList<CallRecord> filterSearch(ObservableList<CallRecord> test) {
         ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
         boolean change = false;
+
         for (int i = 0; i < filterIndex; i++) {
-            if (filterConstraints[i][0] instanceof String && filterConstraints[i][1].equals("yes")) {
+            if (filterConstraints.get(i)[0] instanceof String && filterConstraints.get(i)[1].equals("yes")) {
                 ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
                         originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn,
                         dateColumn, timeColumn, typeColumn, durationColumn);
@@ -297,6 +298,7 @@ public class MainController {
                         TableColumn col = cols.get(k);
                         String cellValue = col.getCellData(test.get(j)).toString();
                         cellValue = cellValue.toLowerCase();
+
                         if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
                             tableItems.add(test.get(j));
                             break;
@@ -305,8 +307,18 @@ public class MainController {
                 }
             }
         }
+        // Duplicates Removal (I don't know why, search gives duplicates)
+        //TODO Find a way to make search unique. Only 1 entry in the filterConstraints
         if (change) {
-            return tableItems;
+            ObservableList<CallRecord> result = FXCollections.observableArrayList();
+            HashSet<CallRecord> set = new HashSet<>();
+            for (CallRecord item : tableItems) {
+                if (!set.contains(item)) {
+                    result.add(item);
+                    set.add(item);
+                }
+            }
+            return result;
         } else return test;
     }
 
@@ -314,7 +326,7 @@ public class MainController {
         ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
         boolean change = false;
         for (int i=0; i<filterIndex; i++) {
-            if (filterConstraints[i][0] instanceof Person && filterConstraints[i][1].equals("yes")) {
+            if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
                 ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
                         originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn,
                         timeColumn, typeColumn, durationColumn);
@@ -324,7 +336,7 @@ public class MainController {
                         TableColumn col = cols.get(j);
                         String cellValue = col.getCellData(test.get(k)).toString();
                         cellValue = cellValue.toLowerCase();
-                        Person person = (Person) filterConstraints[i][0];
+                        Person person = (Person) filterConstraints.get(i)[0];
                         if (cellValue.contains(person.getPhone())) {
                             tableItems.add(test.get(k));
                             break;
@@ -361,14 +373,16 @@ public class MainController {
         Date date = sdf.parse(startDate.getValue().toString());
         boolean isOn = false;
         for (int i =0; i< filterIndex; i++) {
-            if (filterConstraints[i][1].equals("start")) {
-                filterConstraints[i][0] = date;
+            if (filterConstraints.get(i)[1].equals("start")) {
+                filterConstraints.get(i)[0] = date;
                 isOn = true;
             }
         }
         if (!isOn) {
-            filterConstraints[filterIndex][0] = date;
-            filterConstraints[filterIndex][1] = "start";
+            Object[] temp = new Object[2];
+            temp[0] = date;
+            temp[1] = "start";
+            filterConstraints.add(temp);
             filterIndex++;
         }
         filter();
@@ -383,14 +397,16 @@ public class MainController {
         Date date =  sdf.parse(endDate.getValue().toString());
         boolean isOn = false;
         for (int i =0; i< filterIndex; i++) {
-            if (filterConstraints[i][1].equals("end")) {
-                filterConstraints[i][0] = date;
+            if (filterConstraints.get(i)[1].equals("end")) {
+                filterConstraints.get(i)[0] = date;
                 isOn = true;
             }
         }
         if (!isOn) {
-            filterConstraints[filterIndex][0] = date;
-            filterConstraints[filterIndex][1] = "end";
+            Object[] temp = new Object[2];
+            temp[0] = date;
+            temp[1] = "end";
+            filterConstraints.add(temp);
             filterIndex++;
         }
         filter();
@@ -542,6 +558,10 @@ public class MainController {
                 caseStatus.setStyle("-fx-background-color: #df1e00;");
                 caseIndicator.setStyle("-fx-background-color: #df2100;");
             }
+            // Search Listener
+            searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+                search();
+            });
 
             if (status.equals("New") && caseRecord.getStatus().equals("New")) {
                 casesContainer.getChildren().add(finalCaseObj);
@@ -684,28 +704,33 @@ public class MainController {
     }
 
     //TODO Add comments
-
     @FXML
     public void search() {
+
         String searchTxt = searchBar.textProperty().get();
+
         if (searchTxt.isEmpty()) {
             for (int i =0; i< filterIndex; i++) {
-                if (filterConstraints[i][0].equals(searchTxt)) {
-                    filterConstraints[i][1] = "no";
+                if (filterConstraints.get(i)[0].equals(searchTxt)) {
+                    System.out.println("Case 1");
+                    filterConstraints.get(i)[1] = "no";
                 }
             }
         } else {
             boolean isOn = false;
             for (int i =0; i< filterIndex; i++) {
-                if (filterConstraints[i][0].equals(searchTxt)) {
-                    filterConstraints[i][0] = searchTxt;
-                    filterConstraints[i][1] = "yes";
+                if (filterConstraints.get(i)[0].equals(searchTxt)) {
+                    filterConstraints.get(i)[0] = searchTxt;
+                    filterConstraints.get(i)[1] = "yes";
                     isOn = true;
                 }
             }
             if (!isOn) {
-                filterConstraints[filterIndex][0] = searchTxt;
-                filterConstraints[filterIndex][1] = "yes";
+                System.out.println("Case 3");
+                Object[] temp = new Object[2];
+                temp[0] = searchTxt;
+                temp[1] = "yes";
+                filterConstraints.add(temp);
                 filterIndex++;
             }
         }
@@ -741,26 +766,29 @@ public class MainController {
     public void checkPhone(TextField phoneField, Person person) {
         if (phoneField.textProperty().get().isEmpty()) {
             for (int i =0; i< filterIndex; i++) {
-                if (filterConstraints[i][0].equals(person)) {
-                    filterConstraints[i][1] = "no";
+                if (filterConstraints.get(i)[0].equals(person)) {
+                    filterConstraints.get(i)[1] = "no";
                 }
             }
             filter();
         } else {
             boolean isOn = false;
             for (int i =0; i< filterIndex; i++) {
-                if (filterConstraints[i][0].equals(person)) {
+                if (filterConstraints.get(i)[0].equals(person)) {
                     person.setPhone(phoneField.getText());
-                    filterConstraints[i][0] = person;
-                    filterConstraints[i][1] = "yes";
+                    filterConstraints.get(i)[0] = person;
+                    filterConstraints.get(i)[1] = "yes";
                     isOn = true;
                 }
             }
             if (!isOn) {
                 person.setPhone(phoneField.getText());
-                filterConstraints[filterIndex][0] = person;
-                filterConstraints[filterIndex][1] = "yes";
+                Object[] temp = new Object[2];
+                temp[0] = person;
+                temp[1] = "yes";
+                filterConstraints.add(temp);
                 filterIndex++;
+
             }
             filter();
         }
@@ -800,8 +828,8 @@ public class MainController {
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
                 filtersBox.getChildren().remove(finalVictimNote);
                 for (int i =0; i<filterIndex; i++) {
-                    if (filterConstraints[i][0].equals(victim)) {
-                        filterConstraints[i][1] = "no";
+                    if (filterConstraints.get(i)[0].equals(victim)) {
+                        filterConstraints.get(i)[1] = "no";
                     }
                 }
                 filter();
@@ -846,8 +874,8 @@ public class MainController {
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
                 filtersBox.getChildren().remove(finalVictimNote);
                 for (int i =0; i<filterIndex; i++) {
-                    if (filterConstraints[i][0].equals(suspect)) {
-                        filterConstraints[i][1] = "no";
+                    if (filterConstraints.get(i)[0].equals(suspect)) {
+                        filterConstraints.get(i)[1] = "no";
                     }
                 }
                 filter();
