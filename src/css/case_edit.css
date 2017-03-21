@@ -16,13 +16,13 @@
 }
 
 #custom2.toggle-button {
-    -fx-background-radius: 5;
-    -fx-border-radius: 5;
-    -fx-text-fill: white;
-    -fx-background-color: #df1e00;
-    -fx-text-alignment: center;
-    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 2, 0, 0, 0);
-}
+     -fx-background-radius: 5;
+     -fx-border-radius: 5;
+     -fx-text-fill: white;
+     -fx-background-color: #df1e00;
+     -fx-text-alignment: center;
+     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 2, 0, 0, 0);
+ }
 
 .button.button_ok {
     -fx-min-height: 20px;

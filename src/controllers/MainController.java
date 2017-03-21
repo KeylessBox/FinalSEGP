@@ -20,7 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import jdk.nashorn.internal.codegen.CompilerConstants;
 import modules.file_export.csvExport;
 import modules.manageAccounts.User;
 import modules.table.*;
@@ -35,7 +34,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -495,16 +493,11 @@ public class MainController {
                 alphabet = 'A' - 1;
                 filtersBox.getChildren().clear();
                 searchBar.clear();
-            });
-
-            //Update case name:
-            caseName.setOnMouseClicked(event -> {
-                int id = Integer.valueOf(finalCaseObj.getId());
-                caseID = id;
-                caseTitle.setText(caseRecord.getName());
-                loadTable(caseID);
-                loadFiles(caseID);
-
+                System.out.println(caseStatus.getText());
+                caseStatus.setMinWidth(40);
+                caseStatus.setText("Current");
+                caseStatus.setStyle("-fx-background-color: #22df46;");
+                caseIndicator.setStyle("-fx-background-color: #4dff42;");
             });
 
             Pane CaseEditObject = null;
@@ -920,7 +913,6 @@ public class MainController {
 
         CaseRecord callRecord = new CaseRecord(String.valueOf(0), "case" + id++, "Description", "New", currentTime());
         sql.addCase(callRecord);
-
         loadCases();
     }
 
@@ -1066,7 +1058,6 @@ public class MainController {
             return requireUpdate;
         }
     }
-
 
     @FXML
     public void initialize() {

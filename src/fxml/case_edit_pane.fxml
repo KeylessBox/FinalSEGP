@@ -26,23 +26,26 @@
                               <Insets bottom="2.0" />
                            </padding>
                            <HBox.margin>
-                              <Insets left="2.0" top="2.0" />
+                              <Insets left="4.0" top="2.0" />
                            </HBox.margin>
                            <toggleGroup>
                               <ToggleGroup fx:id="custom" />
                            </toggleGroup>
                                 </ToggleButton>
-                                <ToggleButton id="custom2" mnemonicParsing="false" prefHeight="4.0" prefWidth="40.0" text="Done" toggleGroup="$custom">
-                                    <font>
-                                        <Font name="Calibri Bold" size="12.0" />
-                                    </font>
-                           <HBox.margin>
-                              <Insets left="2.0" top="2.0" />
-                           </HBox.margin>
+                        <ToggleButton id="custom2" mnemonicParsing="false" prefHeight="4.0" prefWidth="40.0" text="Done">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="custom1" />
+                           </toggleGroup>
+                           <font>
+                              <Font name="Calibri Bold" size="12.0" />
+                           </font>
                            <padding>
                               <Insets bottom="2.0" />
                            </padding>
-                                </ToggleButton>
+                           <HBox.margin>
+                              <Insets top="2.0" />
+                           </HBox.margin>
+                        </ToggleButton>
                             </children>
                         </HBox>
                         <TextField prefHeight="19.0" prefWidth="112.0">
