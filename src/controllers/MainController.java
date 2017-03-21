@@ -43,6 +43,7 @@ import java.util.stream.Collectors;
  */
 
 public class MainController {
+
     SQL sql = new SQL();    //  sql functionality
     CallsTable columnFactory = new CallsTable();    // building the columns of the table
     private ObservableList<CallRecord> searchData;
@@ -89,7 +90,6 @@ public class MainController {
     @FXML
     protected ToggleButton doneToggleBtn;
     final ToggleGroup casesToggleGroup = new ToggleGroup();
-
     @FXML
     protected DatePicker startDate;
     @FXML
@@ -98,15 +98,12 @@ public class MainController {
     protected VBox casesContainer;
     @FXML
     protected ScrollPane filters_scroll;
-
     @FXML
     private VBox notes_box;
     @FXML
     protected Label caseTitle;
-
     @FXML
     protected HBox filtersBox;
-
     @FXML
     protected BorderPane root;
 
@@ -150,8 +147,7 @@ public class MainController {
      */
     public void loadTable(int caseID) {
         callsData = sql.loadCalls(caseID);  // takes the data from the database and puts it into an observable list
-        // builds the columns, without data
-        columnFactory.createOriginNameColumn(originIdentifierColumn);
+        columnFactory.createOriginNameColumn(originIdentifierColumn); // builds the columns, without data
         columnFactory.createOriginColumn(originPhoneColumn);
         columnFactory.createDestinationNameColumn(destinationIdentifierColumn);
         columnFactory.createDestinationColumn(destinationPhoneColumn);
@@ -220,31 +216,33 @@ public class MainController {
 
     /**
      * Filters table by date (at the moment)
+     *
      * @throws ParseException
      */
+    @FXML
     private void filter() {
         try {
             searchData = filterSearch(filterPhone(filterDates(0)));
             table.setItems(searchData);
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
     /**
      * Recursive call for filtering the table
+     *
      * @param i index of constraint in the filterConstraint array
      * @return filtered data
      * @throws ParseException
      */
-    private ObservableList<CallRecord> filterDates(int i) throws ParseException{
-        if (i < filterIndex ) {
-            ObservableList<CallRecord> test = filterDates(i+1);
-            ObservableList<CallRecord> test2 =  FXCollections.observableArrayList();
+    private ObservableList<CallRecord> filterDates(int i) throws ParseException {
+        if (i < filterIndex) {
+            ObservableList<CallRecord> test = filterDates(i + 1);
+            ObservableList<CallRecord> test2 = FXCollections.observableArrayList();
             boolean change = false;
             if (filterConstraints.get(i)[1].equals("no")) {
-                return filterDates(i+1);
+                return filterDates(i + 1);
             }
             if (filterConstraints.get(i)[0] instanceof Date) {
                 Date date = (Date) filterConstraints.get(i)[0];
@@ -325,7 +323,7 @@ public class MainController {
     public ObservableList<CallRecord> filterPhone(ObservableList<CallRecord> test) {
         ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
         boolean change = false;
-        for (int i=0; i<filterIndex; i++) {
+        for (int i = 0; i < filterIndex; i++) {
             if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
                 ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
                         originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn,
@@ -355,24 +353,25 @@ public class MainController {
                 }
             }
             return result;
-        }
-        else return test;
+        } else return test;
     }
 
    /* private void setSearchBarEmpty() {
         searchBar.textProperty().set("");
     }
 */
+
     /**
      * Retrieves the start date and filters the table
+     *
      * @throws ParseException
      */
     @FXML
-    private void getStartDate() throws ParseException{
+    private void getStartDate() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = sdf.parse(startDate.getValue().toString());
         boolean isOn = false;
-        for (int i =0; i< filterIndex; i++) {
+        for (int i = 0; i < filterIndex; i++) {
             if (filterConstraints.get(i)[1].equals("start")) {
                 filterConstraints.get(i)[0] = date;
                 isOn = true;
@@ -387,16 +386,18 @@ public class MainController {
         }
         filter();
     }
+
     /**
      * Retrieves the end date and filters the table
+     *
      * @throws ParseException
      */
     @FXML
-    private void getEndDate() throws ParseException{
+    private void getEndDate() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date =  sdf.parse(endDate.getValue().toString());
+        Date date = sdf.parse(endDate.getValue().toString());
         boolean isOn = false;
-        for (int i =0; i< filterIndex; i++) {
+        for (int i = 0; i < filterIndex; i++) {
             if (filterConstraints.get(i)[1].equals("end")) {
                 filterConstraints.get(i)[0] = date;
                 isOn = true;
@@ -710,7 +711,7 @@ public class MainController {
         String searchTxt = searchBar.textProperty().get();
 
         if (searchTxt.isEmpty()) {
-            for (int i =0; i< filterIndex; i++) {
+            for (int i = 0; i < filterIndex; i++) {
                 if (filterConstraints.get(i)[0].equals(searchTxt)) {
                     System.out.println("Case 1");
                     filterConstraints.get(i)[1] = "no";
@@ -718,7 +719,7 @@ public class MainController {
             }
         } else {
             boolean isOn = false;
-            for (int i =0; i< filterIndex; i++) {
+            for (int i = 0; i < filterIndex; i++) {
                 if (filterConstraints.get(i)[0].equals(searchTxt)) {
                     filterConstraints.get(i)[0] = searchTxt;
                     filterConstraints.get(i)[1] = "yes";
@@ -760,12 +761,13 @@ public class MainController {
 
     /**
      * Filter by phone for victim/suspect
+     *
      * @param phoneField
      * @param person
      */
     public void checkPhone(TextField phoneField, Person person) {
         if (phoneField.textProperty().get().isEmpty()) {
-            for (int i =0; i< filterIndex; i++) {
+            for (int i = 0; i < filterIndex; i++) {
                 if (filterConstraints.get(i)[0].equals(person)) {
                     filterConstraints.get(i)[1] = "no";
                 }
@@ -773,7 +775,7 @@ public class MainController {
             filter();
         } else {
             boolean isOn = false;
-            for (int i =0; i< filterIndex; i++) {
+            for (int i = 0; i < filterIndex; i++) {
                 if (filterConstraints.get(i)[0].equals(person)) {
                     person.setPhone(phoneField.getText());
                     filterConstraints.get(i)[0] = person;
@@ -827,7 +829,7 @@ public class MainController {
             Pane finalVictimNote = victimNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
                 filtersBox.getChildren().remove(finalVictimNote);
-                for (int i =0; i<filterIndex; i++) {
+                for (int i = 0; i < filterIndex; i++) {
                     if (filterConstraints.get(i)[0].equals(victim)) {
                         filterConstraints.get(i)[1] = "no";
                     }
@@ -838,8 +840,8 @@ public class MainController {
             //TODO Aleks can you please write some comments here? It would take a while for me to understand what's happening here :)
 
             phoneField.textProperty().addListener((observable, oldValue, newValue) -> {
-                        checkPhone(phoneField, victim);
-                    });
+                checkPhone(phoneField, victim);
+            });
             letter.setText(String.valueOf(alphabet));
             filtersBox.getChildren().add(victimNote);
             alphabet++;
@@ -873,7 +875,7 @@ public class MainController {
             Pane finalVictimNote = suspectNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
                 filtersBox.getChildren().remove(finalVictimNote);
-                for (int i =0; i<filterIndex; i++) {
+                for (int i = 0; i < filterIndex; i++) {
                     if (filterConstraints.get(i)[0].equals(suspect)) {
                         filterConstraints.get(i)[1] = "no";
                     }

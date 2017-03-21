@@ -41,7 +41,5 @@ public class Main extends Application {
         primaryStage.setMinWidth(1812.0);
 //        primaryStage.setResizable(false);
         primaryStage.show();
-
-
     }
 }

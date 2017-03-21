@@ -34,6 +34,19 @@
     -fx-margin: 0 0 0 0;
     -fx-padding: 0;
 }
+#add_filters {
+    -fx-background-image: url("../res/icons/filter.png");
+    -fx-background-repeat: stretch;
+    -fx-border-color: transparent;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-margin: 0 0 0 0;
+    -fx-padding: 0;
+}
 .filter_btn {
     -fx-opacity: 0.70;
     -fx-min-width: 25px;

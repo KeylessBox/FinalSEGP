@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -24,7 +32,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" minHeight="1000.0" minWidth="1795.0" prefHeight="1000.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<BorderPane fx:id="root" minHeight="1000.0" minWidth="1795.0" prefHeight="1000.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
         <BorderPane fx:id="menubar" prefHeight="42.0" prefWidth="1766.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
             <center>
@@ -112,9 +120,11 @@
                                         <MenuItem mnemonicParsing="false">
                                             <graphic>
                                                 <Pane minHeight="80" minWidth="300" nodeOrientation="LEFT_TO_RIGHT" styleClass="search_bar" stylesheets="@../css/main_stage.css">
-                                                    <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0" promptText="keyword..." />
-                                                    <Button contentDisplay="CENTER" layoutX="225.0" layoutY="28.0" prefHeight="29.0" prefWidth="61.0" text="search" textAlignment="CENTER">
-                                                    </Button>
+                                                    <children>
+                                                        <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0" promptText="keyword..." />
+                                                        <Button contentDisplay="CENTER" layoutX="225.0" layoutY="28.0" prefHeight="29.0" prefWidth="61.0" text="search" textAlignment="CENTER">
+                                                        </Button>
+                                                    </children>
                                                 </Pane>
                                             </graphic>
                                         </MenuItem>
@@ -188,10 +198,12 @@
                 <Pane layoutX="18.0" layoutY="95.0">
                     <children>
                         <ScrollPane hbarPolicy="NEVER" layoutX="2.0" layoutY="2.0" maxHeight="840.0" prefWidth="228.0" stylesheets="@../css/cases.css" vbarPolicy="NEVER">
-                            <VBox fx:id="casesContainer" prefWidth="228.0" spacing="0">
-                                <children>
-                                </children>
-                            </VBox>
+                            <content>
+                                <VBox fx:id="casesContainer" prefWidth="228.0" spacing="0">
+                                    <children>
+                                    </children>
+                                </VBox>
+                            </content>
                             <padding>
                                 <Insets top="2.0" />
 
@@ -200,24 +212,28 @@
                     </children>
                 </Pane>
                 <Pane layoutX="20.0" layoutY="20.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
-                    <Button fx:id="test" layoutX="190.0" layoutY="-5.0" onAction="#addCase" stylesheets="@../css/cases.css" />
-                    <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
-                        <ToggleButton fx:id="allToggleBtn" prefHeight="25.0" prefWidth="56.0" selected="true" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
-                            <font>
-                                <Font size="10.0" />
-                            </font>
-                        </ToggleButton>
-                        <ToggleButton fx:id="newToggleBtn" prefHeight="25.0" prefWidth="67.0" text="New">
-                            <font>
-                                <Font size="10.0" />
-                            </font>
-                        </ToggleButton>
-                        <ToggleButton fx:id="doneToggleBtn" prefHeight="25.0" prefWidth="67.0" styleClass="last" stylesheets="@../css/cases.css" text="Done">
-                            <font>
-                                <Font size="10.0" />
-                            </font>
-                        </ToggleButton>
-                    </HBox>
+                    <children>
+                        <Button fx:id="test" layoutX="190.0" layoutY="-5.0" onAction="#addCase" stylesheets="@../css/cases.css" />
+                        <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
+                            <children>
+                                <ToggleButton fx:id="allToggleBtn" prefHeight="25.0" prefWidth="56.0" selected="true" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
+                                    <font>
+                                        <Font size="10.0" />
+                                    </font>
+                                </ToggleButton>
+                                <ToggleButton fx:id="newToggleBtn" prefHeight="25.0" prefWidth="67.0" text="New">
+                                    <font>
+                                        <Font size="10.0" />
+                                    </font>
+                                </ToggleButton>
+                                <ToggleButton fx:id="doneToggleBtn" prefHeight="25.0" prefWidth="67.0" styleClass="last" stylesheets="@../css/cases.css" text="Done">
+                                    <font>
+                                        <Font size="10.0" />
+                                    </font>
+                                </ToggleButton>
+                            </children>
+                        </HBox>
+                    </children>
                 </Pane>
             </children>
         </Pane>
@@ -229,123 +245,129 @@
             </BorderPane.margin>
             <children>
                 <VBox fillWidth="false" layoutX="9.0" minWidth="1444.0" prefHeight="958.0" prefWidth="1444.0">
-                    <Pane fx:id="filters_box" maxWidth="1678.0" minWidth="1481.0" prefHeight="170.0" prefWidth="1481.0" stylesheets="@../css/filters.css">
-                        <children>
-                            <ScrollPane fx:id="filters_scroll" layoutY="30.0" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
-                                <content>
-                                    <HBox fx:id="filtersBox" spacing="20.0">
-                                        <children>
-                                        </children>
-                                        <padding>
-                                            <Insets left="28.0" right="20.0" top="13.0" />
-                                        </padding>
-                                    </HBox>
-                                </content>
-                            </ScrollPane>
-                            <Pane>
-                                <children>
-                                    <HBox fx:id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
-                                        <children>
-                                            <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
-                                            <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" onAction="#addSuspect" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" stylesheets="@../css/filters.css">
-                                                <HBox.margin>
-                                                    <Insets left="2.0" />
-                                                </HBox.margin>
-                                            </Button>
-                                            <Button fx:id="add_green_btn" mnemonicParsing="false" onAction="#addVictim" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
-                                                <HBox.margin>
-                                                    <Insets left="6.0" />
-                                                </HBox.margin>
-                                            </Button>
-                                            <Region maxWidth="1275.0" minWidth="1279.0" prefWidth="1275.0" />
-                                            <Button fx:id="setting_btn" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                        </children>
-                                    </HBox>
-                                </children>
-                            </Pane>
-                        </children>
-                    </Pane>
-                    <Pane id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1475.0" stylesheets="@../css/table.css">
-                        <styleClass>
-                            <String fx:value="root" />
-                            <String fx:value="Table" />
-                        </styleClass>
-                        <VBox.margin>
-                            <Insets top="30.0" />
-                        </VBox.margin>
-                        <children>
-                            <TableView fx:id="table" editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
-                                <columns>
-                                    <TableColumn maxWidth="350.0" minWidth="350.0" text="From">
-                                        <columns>
-                                            <TableColumn fx:id="originIdentifierColumn" maxWidth="175.0" minWidth="175.0" text="Name/Identifier" />
-                                            <TableColumn fx:id="originPhoneColumn" maxWidth="175.0" minWidth="175.0" text="Phone Number" />
-                                        </columns>
-                                    </TableColumn>
-                                    <TableColumn maxWidth="350.0" minWidth="350.0" text="To">
-                                        <columns>
-                                            <TableColumn fx:id="destinationIdentifierColumn" maxWidth="175.0" minWidth="175.0" text="Name/Identifier" />
-                                            <TableColumn fx:id="destinationPhoneColumn" maxWidth="175.0" minWidth="175.0" text="Phone Number" />
-                                        </columns>
-                                    </TableColumn>
-                                    <TableColumn fx:id="dateColumn" maxWidth="185.0" minWidth="185.0" text="Date" />
-                                    <TableColumn fx:id="timeColumn" maxWidth="185.0" minWidth="185.0" text="Time" />
-                                    <TableColumn fx:id="typeColumn" maxWidth="185.0" minWidth="185.0" text="Type Of Call" />
-                                    <TableColumn fx:id="durationColumn" maxWidth="185.0" minWidth="185.0" text="Duration" />
-                                </columns>
-                                <columnResizePolicy>
-                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                </columnResizePolicy>
-                            </TableView>
-                            <VBox prefHeight="92.0" prefWidth="1458.0">
-                                <children>
-                                    <HBox prefHeight="30.0" prefWidth="1458.0" spacing="7.0">
-                                        <children>
-                                            <Region HBox.hgrow="ALWAYS" />
-                                            <Button fx:id="save_button" mnemonicParsing="false" onAction="#exportCSV" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button fx:id="attach_button" mnemonicParsing="false" onAction="#importFile" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button id="addCall" mnemonicParsing="false" onAction="#addCall" prefHeight="25.0" prefWidth="27.0" styleClass="filter_btn">
-                                    <HBox.margin>
-                                       <Insets right="1.0" />
-                                    </HBox.margin></Button>
-                                            <Button fx:id="delete_button" mnemonicParsing="false" onAction="#deleteCall" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button fx:id="reload_button" mnemonicParsing="false" onAction="#update" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                            <Button fx:id="setting_button" mnemonicParsing="false" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                        </children>
-                                        <padding>
-                                            <Insets bottom="2.0" left="2.0" right="4.0" top="2.0" />
-                                        </padding>
-                                    </HBox>
-                                    <HBox prefHeight="46.0" prefWidth="1458.0">
-                                        <children>
-                                            <TextField fx:id="searchBar" prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
-                                            <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0"  prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
-                                                <font>
-                                                    <Font name="Calibri Bold" size="14.0" />
-                                                </font>
-                                            </Button>
-                                            <DatePicker fx:id ="startDate" promptText="Start Date" onAction="#getStartDate">
-                                                <HBox.margin>
-                                                    <Insets left="20.0" />
-                                                </HBox.margin>
-                                            </DatePicker>
-                                            <DatePicker fx:id ="endDate" promptText="End Date" onAction="#getEndDate">
-                                                <HBox.margin>
-                                                    <Insets left="20.0" />
-                                                </HBox.margin>
-                                            </DatePicker>
-                                        </children>
-                                        <padding>
-                                            <Insets left="45.0" top="8.0" />
-                                        </padding>
-                                    </HBox>
-                                </children>
-                            </VBox>
-                        </children>
-                        <opaqueInsets>
-                            <Insets />
-                        </opaqueInsets>
-                    </Pane>
+                    <children>
+                        <Pane fx:id="filters_box" maxWidth="1678.0" minWidth="1481.0" prefHeight="170.0" prefWidth="1481.0" stylesheets="@../css/filters.css">
+                            <children>
+                                <ScrollPane fx:id="filters_scroll" layoutY="30.0" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
+                                    <content>
+                                        <HBox fx:id="filtersBox" spacing="20.0">
+                                            <children>
+                                            </children>
+                                            <padding>
+                                                <Insets left="28.0" right="20.0" top="13.0" />
+                                            </padding>
+                                        </HBox>
+                                    </content>
+                                </ScrollPane>
+                                <Pane>
+                                    <children>
+                                        <HBox fx:id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
+                                            <children>
+                                                <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
+                                    <Region prefHeight="10.0" prefWidth="1274.0" />
+                                                <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" onAction="#addSuspect" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" stylesheets="@../css/filters.css">
+                                                    <HBox.margin>
+                                                        <Insets left="2.0" />
+                                                    </HBox.margin>
+                                                </Button>
+                                                <Button fx:id="add_green_btn" mnemonicParsing="false" onAction="#addVictim" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
+                                                    <HBox.margin>
+                                                        <Insets left="6.0" />
+                                                    </HBox.margin>
+                                                </Button>
+                                                <Button fx:id="add_filters" mnemonicParsing="false" onAction="#filter" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
+                                                    <HBox.margin>
+                                                        <Insets left="6.0" top="1.0" />
+                                                    </HBox.margin>
+                                                </Button>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </Pane>
+                            </children>
+                        </Pane>
+                        <Pane id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1475.0" stylesheets="@../css/Table.css">
+                            <styleClass>
+                                <String fx:value="root" />
+                                <String fx:value="Table" />
+                            </styleClass>
+                            <VBox.margin>
+                                <Insets top="30.0" />
+                            </VBox.margin>
+                            <children>
+                                <TableView fx:id="table" editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
+                                    <columns>
+                                        <TableColumn maxWidth="350.0" minWidth="350.0" text="From">
+                                            <columns>
+                                                <TableColumn fx:id="originIdentifierColumn" maxWidth="175.0" minWidth="175.0" text="Name/Identifier" />
+                                                <TableColumn fx:id="originPhoneColumn" maxWidth="175.0" minWidth="175.0" text="Phone Number" />
+                                            </columns>
+                                        </TableColumn>
+                                        <TableColumn maxWidth="350.0" minWidth="350.0" text="To">
+                                            <columns>
+                                                <TableColumn fx:id="destinationIdentifierColumn" maxWidth="175.0" minWidth="175.0" text="Name/Identifier" />
+                                                <TableColumn fx:id="destinationPhoneColumn" maxWidth="175.0" minWidth="175.0" text="Phone Number" />
+                                            </columns>
+                                        </TableColumn>
+                                        <TableColumn fx:id="dateColumn" maxWidth="185.0" minWidth="185.0" text="Date" />
+                                        <TableColumn fx:id="timeColumn" maxWidth="185.0" minWidth="185.0" text="Time" />
+                                        <TableColumn fx:id="typeColumn" maxWidth="185.0" minWidth="185.0" text="Type Of Call" />
+                                        <TableColumn fx:id="durationColumn" maxWidth="185.0" minWidth="185.0" text="Duration" />
+                                    </columns>
+                                    <columnResizePolicy>
+                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                    </columnResizePolicy>
+                                </TableView>
+                                <VBox prefHeight="92.0" prefWidth="1458.0">
+                                    <children>
+                                        <HBox prefHeight="30.0" prefWidth="1458.0" spacing="7.0">
+                                            <children>
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <Button fx:id="save_button" mnemonicParsing="false" onAction="#exportCSV" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                                <Button fx:id="attach_button" mnemonicParsing="false" onAction="#importFile" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                                <Button id="addCall" mnemonicParsing="false" onAction="#addCall" prefHeight="25.0" prefWidth="27.0" styleClass="filter_btn">
+                                                    <HBox.margin>
+                                                        <Insets right="1.0" />
+                                                    </HBox.margin>
+                                                </Button>
+                                                <Button fx:id="delete_button" mnemonicParsing="false" onAction="#deleteCall" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                                <Button fx:id="reload_button" mnemonicParsing="false" onAction="#update" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                            </children>
+                                            <padding>
+                                                <Insets bottom="2.0" left="2.0" right="4.0" top="2.0" />
+                                            </padding>
+                                        </HBox>
+                                        <HBox prefHeight="46.0" prefWidth="1458.0">
+                                            <children>
+                                                <TextField fx:id="searchBar" prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
+                                                <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/Table.css" text="search" textAlignment="CENTER">
+                                                    <font>
+                                                        <Font name="Calibri Bold" size="14.0" />
+                                                    </font>
+                                                </Button>
+                                                <DatePicker fx:id="startDate" onAction="#getStartDate" promptText="Start Date">
+                                                    <HBox.margin>
+                                                        <Insets left="20.0" />
+                                                    </HBox.margin>
+                                                </DatePicker>
+                                                <DatePicker fx:id="endDate" onAction="#getEndDate" promptText="End Date">
+                                                    <HBox.margin>
+                                                        <Insets left="20.0" />
+                                                    </HBox.margin>
+                                                </DatePicker>
+                                            </children>
+                                            <padding>
+                                                <Insets left="45.0" top="8.0" />
+                                            </padding>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                            <opaqueInsets>
+                                <Insets />
+                            </opaqueInsets>
+                        </Pane>
+                    </children>
                 </VBox>
             </children>
         </Pane>
