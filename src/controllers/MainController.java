@@ -765,7 +765,6 @@ public class MainController {
                     filterConstraints.get(i)[1] = "no";
                 }
             }
-            filter();
         } else {
             boolean isOn = false;
             for (int i = 0; i < filterIndex; i++) {
@@ -785,7 +784,6 @@ public class MainController {
                 filterIndex++;
 
             }
-            filter();
         }
     }
 
