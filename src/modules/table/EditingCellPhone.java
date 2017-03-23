@@ -84,7 +84,7 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
                         }
                     }
                 } else {
-                    setStyle(this.getParent().getStyle());
+                    setStyle("");
                 }
             }
             if (isEditing()) {
