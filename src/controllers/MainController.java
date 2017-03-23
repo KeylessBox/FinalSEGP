@@ -567,7 +567,6 @@ public class MainController {
             }
             // Search Listener
             searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
-                //TODO For some reason this gets repeated unnecessarily multiple times
                 search();
             });
 
@@ -714,33 +713,35 @@ public class MainController {
     //TODO Add comments
     @FXML
     public void search() {
-        searchTxt.setText(searchBar.textProperty().get());
-        if (searchTxt.getText().isEmpty()) {
-            for (int i = 0; i < filterIndex; i++) {
-                if (filterConstraints.get(i)[0].equals(searchTxt)) {
-                    System.out.println("Case 1");
-                    filterConstraints.get(i)[1] = "no";
+        if (!searchTxt.getText().equals(searchBar.textProperty().get())) {
+            searchTxt.setText(searchBar.textProperty().get());
+            if (searchTxt.getText().isEmpty()) {
+                for (int i = 0; i < filterIndex; i++) {
+                    if (filterConstraints.get(i)[0].equals(searchTxt)) {
+                        System.out.println("Case 1");
+                        filterConstraints.get(i)[1] = "no";
+                    }
+                }
+            } else {
+                boolean isOn = false;
+                for (int i = 0; i < filterIndex; i++) {
+                    if (filterConstraints.get(i)[0].equals(searchTxt)) {
+                        filterConstraints.get(i)[0] = searchTxt;
+                        filterConstraints.get(i)[1] = "yes";
+                        isOn = true;
+                    }
+                }
+                if (!isOn) {
+                    System.out.println("Case 3");
+                    Object[] temp = new Object[2];
+                    temp[0] = searchTxt;
+                    temp[1] = "yes";
+                    filterConstraints.add(temp);
+                    filterIndex++;
                 }
             }
-        } else {
-            boolean isOn = false;
-            for (int i = 0; i < filterIndex; i++) {
-                if (filterConstraints.get(i)[0].equals(searchTxt)) {
-                    filterConstraints.get(i)[0] = searchTxt;
-                    filterConstraints.get(i)[1] = "yes";
-                    isOn = true;
-                }
-            }
-            if (!isOn) {
-                System.out.println("Case 3");
-                Object[] temp = new Object[2];
-                temp[0] = searchTxt;
-                temp[1] = "yes";
-                filterConstraints.add(temp);
-                filterIndex++;
-            }
+            filter();
         }
-        filter();
     }
 
     /**
