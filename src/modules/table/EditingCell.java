@@ -1,5 +1,6 @@
 package modules.table;
 
+import controllers.MainController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -56,13 +57,14 @@ import javafx.scene.input.KeyEvent;
          * @param item
          * @param empty
          */
-        @Override
+
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
             if (empty) {
                 setText(null);
                 setGraphic(null);
             } else {
+
                 if (isEditing()) {
                     if (textField != null) {
                         textField.setText(getString());
@@ -75,7 +77,6 @@ import javafx.scene.input.KeyEvent;
                 }
             }
         }
-
         /**
          * Create textfield to save changes after
          */

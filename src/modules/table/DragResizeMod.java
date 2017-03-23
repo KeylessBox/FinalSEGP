@@ -15,7 +15,7 @@ import javafx.scene.shape.Rectangle;
  *  ************* How to use ************************
  *
  * Rectangle rectangle = new Rectangle(50, 50);
- * rectangle.setFill(Color.BLACK);
+ * rectangle.setFill(Colors.BLACK);
  * DragResizeMod.makeResizable(rectangle, null);
  *
  * Pane root = new Pane();

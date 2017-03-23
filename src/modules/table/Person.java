@@ -4,8 +4,13 @@ package modules.table;
  * Created by AndreiM on 3/19/2017.
  */
 public class Person {
-    private String identifier;
-    private String phone;
+    protected String identifier;
+    protected String phone;
+
+    public Person() {
+        this.identifier = null;
+        this.phone = null;
+    }
 
     public Person (String identifier) {
         this.identifier = identifier;

@@ -52,8 +52,8 @@ public class MainController {
     private int id = 1;
     private boolean editing = false;
     private char alphabet = 'A';
-    private List<Object[]> filterConstraints = new ArrayList<Object[]>();
-    private int filterIndex = 0;
+    private static List<Object[]> filterConstraints = new ArrayList<Object[]>();
+    private static int filterIndex = 0;
 
 
     @FXML
@@ -205,6 +205,21 @@ public class MainController {
                 setGraphic(cellButton);
             }
         }
+    }
+
+    public static List<Object[]> getPeople() {
+        List<Object[]> people = new ArrayList<Object[]>();
+        for (int i=0; i<filterConstraints.size(); i++) {
+            if (filterConstraints.get(i)[0] != null) {
+                if (filterConstraints.get(i)[0] instanceof Person) {
+                    Object[] temp = new Object[2];
+                    temp[0] = filterConstraints.get(i)[0];
+                    temp[1] =  filterConstraints.get(i)[1];
+                    people.add(temp);
+                }
+            }
+        }
+        return people;
     }
 
     private void toggleControl() {
@@ -827,7 +842,7 @@ public class MainController {
             TextField phoneField = (TextField) temp.getChildren().get(2);
 
 
-            Person victim = new Person(String.valueOf(alphabet));
+            Victim victim = new Victim(String.valueOf(alphabet));
 
             Pane finalVictimNote = victimNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
@@ -873,7 +888,7 @@ public class MainController {
             Button delete = (Button) temp3.getChildren().get(0);
             TextField phoneField = (TextField) temp.getChildren().get(2);
 
-            Person suspect = new Person(String.valueOf(alphabet));
+            Suspect suspect = new Suspect(String.valueOf(alphabet));
 
             Pane finalVictimNote = suspectNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container

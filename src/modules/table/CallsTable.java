@@ -54,7 +54,7 @@ public class CallsTable {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-                return new EditingCell();
+                return new EditingCellPhone();
             }
         };
 
@@ -98,7 +98,7 @@ public class CallsTable {
             @Override
             public TableCell call(TableColumn p) {
 
-                return new EditingCell();
+                return new EditingCellPhone();
             }
         };
         destination.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destination"));
