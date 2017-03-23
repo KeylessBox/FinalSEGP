@@ -55,6 +55,7 @@ public class MainController {
     private List<Object[]> filterConstraints = new ArrayList<Object[]>();
     private int filterIndex = 0;
 
+
     @FXML
     private ScrollPane notes_scroll_pane;
     @FXML
@@ -104,7 +105,7 @@ public class MainController {
     protected HBox filtersBox;
     @FXML
     protected BorderPane root;
-
+    SearchField searchTxt = new SearchField("");
     /**
      * Import functionality.
      */
@@ -220,6 +221,12 @@ public class MainController {
     @FXML
     private void filter() {
         try {
+            for (int i=0; i<filterIndex; i++)  {
+                if (filterConstraints.get(i)[0] != null) {
+                    System.out.println(filterConstraints.get(i)[0].toString());
+                }
+            }
+            System.out.println();
             searchData = filterSearch(filterPhone(filterDates(0)));
             table.setItems(searchData);
         } catch (ParseException e) {
@@ -284,7 +291,7 @@ public class MainController {
         boolean change = false;
 
         for (int i = 0; i < filterIndex; i++) {
-            if (filterConstraints.get(i)[0] instanceof String && filterConstraints.get(i)[1].equals("yes")) {
+            if (filterConstraints.get(i)[0] instanceof SearchField && filterConstraints.get(i)[1].equals("yes")) {
                 ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
                         originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn,
                         dateColumn, timeColumn, typeColumn, durationColumn);
@@ -295,7 +302,7 @@ public class MainController {
                         String cellValue = col.getCellData(test.get(j)).toString();
                         cellValue = cellValue.toLowerCase();
 
-                        if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
+                        if (cellValue.contains(searchBar.textProperty().get ().toLowerCase())) {
                             tableItems.add(test.get(j));
                             break;
                         }
@@ -367,7 +374,10 @@ public class MainController {
     @FXML
     private void getStartDate() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = sdf.parse(startDate.getValue().toString());
+        Date date = null;
+        if (startDate.getValue() != null) {
+            date = sdf.parse(startDate.getValue().toString());
+        }
         boolean isOn = false;
         for (int i = 0; i < filterIndex; i++) {
             if (filterConstraints.get(i)[1].equals("start")) {
@@ -393,7 +403,10 @@ public class MainController {
     @FXML
     private void getEndDate() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = sdf.parse(endDate.getValue().toString());
+        Date date = null;
+        if (startDate.getValue() != null) {
+            date = sdf.parse(startDate.getValue().toString());
+        }
         boolean isOn = false;
         for (int i = 0; i < filterIndex; i++) {
             if (filterConstraints.get(i)[1].equals("end")) {
@@ -554,6 +567,7 @@ public class MainController {
             }
             // Search Listener
             searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+                //TODO For some reason this gets repeated unnecessarily multiple times
                 search();
             });
 
@@ -700,10 +714,8 @@ public class MainController {
     //TODO Add comments
     @FXML
     public void search() {
-
-        String searchTxt = searchBar.textProperty().get();
-
-        if (searchTxt.isEmpty()) {
+        searchTxt.setText(searchBar.textProperty().get());
+        if (searchTxt.getText().isEmpty()) {
             for (int i = 0; i < filterIndex; i++) {
                 if (filterConstraints.get(i)[0].equals(searchTxt)) {
                     System.out.println("Case 1");
@@ -729,7 +741,6 @@ public class MainController {
             }
         }
         filter();
-
     }
 
     /**
