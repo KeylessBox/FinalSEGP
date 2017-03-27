@@ -75,6 +75,7 @@
     -fx-padding: 3;
     -fx-font-size: 14px;
 }
+
 .context-menu {
     -fx-background-color: #42536d;
 }
@@ -82,15 +83,15 @@
 .table-row-cell:selected {
     -fx-background-color: #b8c9ed;
     -fx-background-insets: 0;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: black;
     -fx-background-radius: 1;
     -fx-table-cell-border-color: #42536d;
-    -fx-border-width: 1;
 }
 
 .table-row-cell:selected .text {
     -fx-fill: #000000;
 }
-
 
 .table-view .filler {
     -fx-background-color: #42536d;

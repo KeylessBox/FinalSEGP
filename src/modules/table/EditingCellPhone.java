@@ -79,7 +79,7 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
                             // Reduced to RGB: hex -> "#ff0000"
                             hex = "#" + hex.substring(2, hex.length());
                             setStyle("-fx-background-color: " + hex + ";" +
-                                    "-fx-border-width: 0 0 0 0;" +
+                                    "-fx-border-width: 0 1 1 0;" +
                                     "-fx-border-color: black;" +
                                     " -fx-background-insets: 0;" 
                             );
