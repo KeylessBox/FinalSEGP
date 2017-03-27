@@ -4,15 +4,10 @@ import controllers.MainController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.paint.Color;
 
 import java.util.List;
 
@@ -35,7 +30,7 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
     public void startEdit() {
         super.startEdit();
 
-        if( textField == null ) {
+        if (textField == null) {
             createTextField();
         }
         setText(null);
@@ -71,20 +66,23 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
                             String hex = Integer.toHexString(suspect.getColor().getRGB());
                             // Reduced to RGB: hex -> "#ff0000"
                             hex = "#" + hex.substring(2, hex.length());
-                            setStyle("-fx-background-color: "+ hex + ";" +
+                            setStyle("-fx-background-color: " + hex + ";" +
                                     "-fx-border-width: 0 1 1 0;" +
+                                    " -fx-background-insets: 0;" +
                                     "-fx-border-color: black");
                         }
                     }
-                    if (temp[0] instanceof Victim){
+                    if (temp[0] instanceof Victim) {
                         Victim victim = (Victim) temp[0];
                         if (item.contains(victim.getPhone())) {
                             String hex = Integer.toHexString(victim.getColor().getRGB());
                             // Reduced to RGB: hex -> "#ff0000"
                             hex = "#" + hex.substring(2, hex.length());
-                            setStyle("-fx-background-color: "+ hex + ";" +
-                                    "-fx-border-width: 0 1 1 0;" +
-                                    "-fx-border-color: black");
+                            setStyle("-fx-background-color: " + hex + ";" +
+                                    "-fx-border-width: 0 0 0 0;" +
+                                    "-fx-border-color: black;" +
+                                    " -fx-background-insets: 0;" 
+                            );
                         }
                     }
                 } else {
@@ -103,6 +101,7 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
             }
         }
     }
+
     /**
      * Create textfield to save changes after
      */
@@ -112,7 +111,9 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
-                if (!arg2) { commitEdit(textField.getText()); }
+                if (!arg2) {
+                    commitEdit(textField.getText());
+                }
             }
         });
         textField.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -120,7 +121,11 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
             public void handle(KeyEvent t) {
                 if (t.getCode() == KeyCode.ENTER) {
                     String value = textField.getText();
-                    if (value != null) { commitEdit(value);	} else { commitEdit(null); }
+                    if (value != null) {
+                        commitEdit(value);
+                    } else {
+                        commitEdit(null);
+                    }
                 } else if (t.getCode() == KeyCode.ESCAPE) {
                     cancelEdit();
                 }
@@ -130,6 +135,7 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
 
     /**
      * Return String if not null otherwise empty String
+     *
      * @return
      */
     private String getString() {
