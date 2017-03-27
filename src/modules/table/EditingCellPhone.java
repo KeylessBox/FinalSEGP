@@ -4,10 +4,15 @@ import controllers.MainController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 
 import java.util.List;
 
@@ -54,7 +59,6 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
         if (empty) {
             setText(null);
             setGraphic(null);
-            setStyle(this.getParent().getStyle());
         } else {
 
             List<Object[]> people = MainController.getPeople();

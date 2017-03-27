@@ -106,6 +106,7 @@ public class MainController {
     @FXML
     protected BorderPane root;
     SearchField searchTxt = new SearchField("");
+
     /**
      * Import functionality.
      */
@@ -209,12 +210,12 @@ public class MainController {
 
     public static List<Object[]> getPeople() {
         List<Object[]> people = new ArrayList<Object[]>();
-        for (int i=0; i<filterConstraints.size(); i++) {
+        for (int i = 0; i < filterConstraints.size(); i++) {
             if (filterConstraints.get(i)[0] != null) {
                 if (filterConstraints.get(i)[0] instanceof Person) {
                     Object[] temp = new Object[2];
                     temp[0] = filterConstraints.get(i)[0];
-                    temp[1] =  filterConstraints.get(i)[1];
+                    temp[1] = filterConstraints.get(i)[1];
                     people.add(temp);
                 }
             }
@@ -236,7 +237,7 @@ public class MainController {
     @FXML
     private void filter() {
         try {
-            for (int i=0; i<filterIndex; i++)  {
+            for (int i = 0; i < filterIndex; i++) {
                 if (filterConstraints.get(i)[0] != null) {
                     System.out.println(filterConstraints.get(i)[0].toString());
                 }
@@ -317,7 +318,7 @@ public class MainController {
                         String cellValue = col.getCellData(test.get(j)).toString();
                         cellValue = cellValue.toLowerCase();
 
-                        if (cellValue.contains(searchBar.textProperty().get ().toLowerCase())) {
+                        if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
                             tableItems.add(test.get(j));
                             break;
                         }
@@ -526,6 +527,8 @@ public class MainController {
                 caseStatus.setText("Current");
                 caseStatus.setStyle("-fx-background-color: #22df46;");
                 caseIndicator.setStyle("-fx-background-color: #4dff42;");
+                filterConstraints = new ArrayList<Object[]>();
+                filterIndex = 0;
             });
 
             Pane CaseEditObject = null;
