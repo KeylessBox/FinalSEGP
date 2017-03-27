@@ -83,7 +83,7 @@
 .table-row-cell:selected {
     -fx-background-color: #b8c9ed;
     -fx-background-insets: 0;
-    -fx-border-width: 1 0 1 0;
+    -fx-border-width: 0 0 1 0;
     -fx-border-color: black;
     -fx-background-radius: 1;
     -fx-table-cell-border-color: #42536d;
