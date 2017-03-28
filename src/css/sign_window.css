@@ -1,0 +1,17 @@
+
+.custom_hbox {
+    -fx-background-image: url("../res/login/SignWindow.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 420 580;
+    -fx-pref-size: 420 580;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 1, 0, 0, 0);
+    -fx-opacity: 1;
+}
+/*.custom_hbox:hover {*/
+    /*-fx-opacity: 0.91;*/
+/*}*/
+/*.custom_hbox:pressed {*/
+    /*-fx-opacity: 1;*/
+/*}*/
