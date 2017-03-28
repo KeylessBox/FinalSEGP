@@ -14,8 +14,8 @@
 <!-- Anchor Pane-->
 <!-- -->
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="566.0" prefWidth="417.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <Pane layoutY="-7.0" prefHeight="580.0" prefWidth="417.0" styleClass="custom_hbox" stylesheets="@../css/sign_window.css">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="417.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <Pane layoutY="-7.0" prefHeight="530.0" prefWidth="417.0" styleClass="custom_hbox" stylesheets="@../css/sign_window.css">
       <children>
          <ImageView fitHeight="5.0" fitWidth="49.0" layoutX="47.0" layoutY="51.0">
             <image>
@@ -52,22 +52,17 @@
             <font>
                <Font name="Calibri Light" size="18.0" />
             </font></TextField>
-         <CheckBox layoutX="43.0" layoutY="273.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="168.0" text="Keep me signed in" textFill="#726e6e">
+         <CheckBox layoutX="43.0" layoutY="265.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="168.0" text="Keep me signed in" textFill="#726e6e">
             <font>
                <Font size="16.0" />
             </font></CheckBox>
-         <Button layoutX="42.0" layoutY="364.0" minWidth="317.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="335.0" styleClass="button_sign" text="Sign In" textFill="WHITE">
+         <Button layoutX="42.0" layoutY="317.0" minWidth="317.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="335.0" styleClass="button_sign" text="Sign In" textFill="WHITE">
             <font>
                <Font name="Calibri Bold" size="18.0" />
             </font></Button>
-         <Button alignment="BOTTOM_LEFT" layoutX="29.0" layoutY="409.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="202.0" styleClass="button_forget" text="Forget your password?" textFill="#616161">
+         <Button alignment="BOTTOM_LEFT" layoutX="29.0" layoutY="362.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="202.0" styleClass="button_forget" text="Forget your password?" textFill="#616161">
             <font>
                <Font name="Calibri Bold" size="18.0" />
             </font></Button>
-         <CheckBox layoutX="43.0" layoutY="307.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="168.0" text="Sign in as invisible" textFill="#726e6e">
-            <font>
-               <Font size="16.0" />
-            </font>
-         </CheckBox>
       </children></Pane>
 </Pane>
