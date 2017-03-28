@@ -9,9 +9,81 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 1, 0, 0, 0);
     -fx-opacity: 1;
 }
-/*.custom_hbox:hover {*/
-    /*-fx-opacity: 0.91;*/
-/*}*/
-/*.custom_hbox:pressed {*/
-    /*-fx-opacity: 1;*/
-/*}*/
+
+.button.button_createAccount {
+    -fx-min-height: 10px;
+    -fx-min-width: 135px;
+    -fx-background-size: 125px 9px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-image: url("../res/login/CreateAccount.png");
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-opacity: 0.65;
+}
+
+.button.button_createAccount:hover {
+    -fx-opacity: 0.8;
+}
+
+.button.button_createAccount:pressed {
+    -fx-opacity: 0.5;
+}
+
+.button.button_signin {
+    -fx-min-height: 10px;
+    -fx-min-width: 48px;
+    -fx-background-size: 45px 9px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-image: url("../res/login/SignIn.png");
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-opacity: 0.65;
+}
+
+.button.button_signin:hover {
+    -fx-opacity: 0.8;
+}
+
+.button.button_signin:pressed {
+    -fx-opacity: 0.5;
+}
+
+.button.button_sign {
+    -fx-background-size: 337px 45px;
+    /*-fx-background-repeat: no-repeat;*/
+    /*-fx-background-position: center;*/
+    /*-fx-background-image: url("../res/login/Button.png");*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-border-color: transparent;*/
+    -fx-background-color: #667995;
+    -fx-background-radius: 5;
+}
+
+.button.button_sign:hover {
+    -fx-opacity: 0.9;
+}
+
+.button.button_sign:pressed {
+    -fx-opacity: 0.75;
+}
+
+.button.button_forget {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-opacity: 0.65;
+}
+
+.button.button_forget:hover {
+    -fx-opacity: 0.8;
+}
+
+.button.button_forget:pressed {
+    -fx-opacity: 0.5;
+}
+
+#textfield {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
