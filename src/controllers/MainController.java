@@ -1420,5 +1420,143 @@ public class MainController {
         } catch (Exception e) {
         }
     }
+
+    @FXML
+    public void openComingSoon() {
+        try {
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane finalCaseObject = CaseObject;
+            System.out.println(finalCaseObject);
+            Pane pane = (Pane) CaseObject.getChildren().get(0);
+            Label label = (Label) pane.getChildren().get(1);
+            Button btn = (Button) pane.getChildren().get(0);
+            btn.setOnAction(event -> {
+                root.getChildren().remove(finalCaseObject);
+            });
+            label.setText("Coming Soon");
+            finalCaseObject.setLayoutX(250);
+            finalCaseObject.setLayoutY(100);
+            DragResizeMod.makeResizable(finalCaseObject, null);
+            root.getChildren().add(finalCaseObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void openSubMenu() {
+        try {
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane finalCaseObject = CaseObject;
+            System.out.println(finalCaseObject);
+            Pane pane = (Pane) CaseObject.getChildren().get(0);
+            Label label = (Label) pane.getChildren().get(1);
+            Button btn = (Button) pane.getChildren().get(0);
+            btn.setOnAction(event -> {
+                root.getChildren().remove(finalCaseObject);
+            });
+            label.setText("Manual");
+            finalCaseObject.setLayoutX(250);
+            finalCaseObject.setLayoutY(100);
+            DragResizeMod.makeResizable(finalCaseObject, null);
+            root.getChildren().add(finalCaseObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void openExtra() {
+        try {
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane finalCaseObject = CaseObject;
+            System.out.println(finalCaseObject);
+            Pane pane = (Pane) CaseObject.getChildren().get(0);
+            Label label = (Label) pane.getChildren().get(1);
+            Button btn = (Button) pane.getChildren().get(0);
+            btn.setOnAction(event -> {
+                root.getChildren().remove(finalCaseObject);
+            });
+            label.setText("Extra");
+            finalCaseObject.setLayoutX(250);
+            finalCaseObject.setLayoutY(100);
+            DragResizeMod.makeResizable(finalCaseObject, null);
+            root.getChildren().add(finalCaseObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void openSettings() {
+        try {
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane finalCaseObject = CaseObject;
+            System.out.println(finalCaseObject);
+            Pane pane = (Pane) CaseObject.getChildren().get(0);
+            Label label = (Label) pane.getChildren().get(1);
+            Button btn = (Button) pane.getChildren().get(0);
+            btn.setOnAction(event -> {
+                root.getChildren().remove(finalCaseObject);
+            });
+            label.setText("Settings");
+            finalCaseObject.setLayoutX(250);
+            finalCaseObject.setLayoutY(100);
+            DragResizeMod.makeResizable(finalCaseObject, null);
+            root.getChildren().add(finalCaseObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void openMessages() {
+        try {
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane finalCaseObject = CaseObject;
+            System.out.println(finalCaseObject);
+            Pane pane = (Pane) CaseObject.getChildren().get(0);
+            Label label = (Label) pane.getChildren().get(1);
+            Button btn = (Button) pane.getChildren().get(0);
+            btn.setOnAction(event -> {
+                root.getChildren().remove(finalCaseObject);
+            });
+            label.setText("Messages");
+            finalCaseObject.setLayoutX(250);
+            finalCaseObject.setLayoutY(100);
+            DragResizeMod.makeResizable(finalCaseObject, null);
+            root.getChildren().add(finalCaseObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void notes_settings() {
+        try {
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane finalCaseObject = CaseObject;
+            System.out.println(finalCaseObject);
+            Pane pane = (Pane) CaseObject.getChildren().get(0);
+            Label label = (Label) pane.getChildren().get(1);
+            Button btn = (Button) pane.getChildren().get(0);
+            btn.setOnAction(event -> {
+                root.getChildren().remove(finalCaseObject);
+            });
+            label.setText("Notes");
+            finalCaseObject.setLayoutX(250);
+            finalCaseObject.setLayoutY(100);
+            DragResizeMod.makeResizable(finalCaseObject, null);
+            root.getChildren().add(finalCaseObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void Logoff() {
+        System.out.println("Logoff");
+    }
+
 }
 
