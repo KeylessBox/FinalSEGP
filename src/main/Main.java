@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -41,5 +42,6 @@ public class Main extends Application {
         primaryStage.setMinWidth(1812.0);
 //        primaryStage.setResizable(false);
         primaryStage.show();
+        primaryStage.getIcons().add(new Image("res/icons/logoApp.png"));
     }
 }
