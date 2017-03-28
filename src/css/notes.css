@@ -84,7 +84,7 @@
     -fx-opacity: 1;
 }
 
-#extra_box {
+#note_box {
     -fx-background-image: url("../res/icons/note_pane.png");
     -fx-border-width: 1;
     -fx-border-color: black;
