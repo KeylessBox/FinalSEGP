@@ -25,7 +25,7 @@ public class csvExport {
                 writer.write(searchData.get(i).getDestination().toString() + ",");
                 writer.write(searchData.get(i).getDate().toString() + ",");
                 writer.write(searchData.get(i).getTime().toString() + ",");
-                writer.write(searchData.get(i).getTypeOfCall().toString() + ",");
+                writer.write(searchData.get(i).getCallType().toString() + ",");
                 writer.write(searchData.get(i).getDuration().toString());
 
                 if(i < searchData.size() - 1) {

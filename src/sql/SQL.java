@@ -14,6 +14,9 @@ import javafx.collections.ObservableList;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -67,9 +70,11 @@ public class SQL {
                 } else {
                     destinationName = "";
                 }
+                String switchString = callsRS.getString(5);
+                switchString = changeDateFormat(switchString);
                 data.add(new CallRecord(callsRS.getString(1), callsRS.getString(2), originName,
                         callsRS.getString(3), destinationName,
-                        callsRS.getString(4), callsRS.getString(5), callsRS.getString(6),
+                        callsRS.getString(4), switchString, callsRS.getString(6),
                         callsRS.getString(7), callsRS.getString(8)));
             }
         } catch (Exception ex) {
@@ -325,6 +330,19 @@ public class SQL {
         }
     }
 
+    private String changeDateFormat(String oldDate) {
+        String oldFormat = "yyyy-MM-dd";
+        String newFormat = "dd/MM/yyyy";
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(oldFormat);
+            Date d = sdf.parse(oldDate);
+            sdf.applyPattern(newFormat);
+            return sdf.format(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     /**
      * Inserts default call to database
      */
@@ -333,9 +351,9 @@ public class SQL {
         Connection connection = dbConnection.connect();
 
         try {
-            connection.createStatement().executeUpdate("INSERT INTO calls(caseId, origin, destination, date, time, typeOfCall, duration)\n" +
+            connection.createStatement().executeUpdate("INSERT INTO calls(caseId, origin, destination, date, time, callType, duration)\n" +
                     "VALUES(" + cr.getCaseID() + ",'" + cr.getOrigin() + "','" + cr.getDestination() + "','" +
-                    cr.getDate() + "','" + cr.getTime() + "','" + cr.getTypeOfCall() + "','" + cr.getDuration() + "');");
+                    cr.getDate() + "','" + cr.getTime() + "','" + cr.getCallType() + "','" + cr.getDuration() + "');");
             connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
                     "(' ','" +cr.getOrigin() + "');");
             connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +

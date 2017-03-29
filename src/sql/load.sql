@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS emailAddresses(id INT PRIMARY KEY AUTO_INCREMENT,
     FOREIGN KEY(personID) REFERENCES people(id) ON DELETE CASCADE) ENGINE= InnoDB;
 
 CREATE TABLE IF NOT EXISTS calls(id INT PRIMARY KEY AUTO_INCREMENT,
-    caseId INT, origin VARCHAR(18), destination VARCHAR(18), date DATE, time TIME, typeOfCall VARCHAR(10), duration TIME,
+    caseId INT, origin VARCHAR(18), destination VARCHAR(18), date DATE, time TIME, callType VARCHAR(10), duration TIME,
     FOREIGN KEY(caseId) REFERENCES cases(id) ON DELETE CASCADE) ENGINE= InnoDB;
 
 INSERT INTO `accounts`(`name`, `surname`, `email`, `password`, `privileges`) VALUES
@@ -78,7 +78,7 @@ INSERT INTO phoneNumbers (personName, phoneNumber) VALUES
     ('Mason Berry','077 6052 1169'),
     ('Ben Clark','077 6109 8258');
 
-INSERT INTO calls(caseId, origin, destination, date, time, typeOfCall, duration) VALUES
+INSERT INTO calls(caseId, origin, destination, date, time, callType, duration) VALUES
     (1,'078 0680 1334','077 3628 5886','2016/03/19','10:15','Standard', '20:00'),
     (1,'078 0680 1334','070 0913 6953','2016/05/16','14:25','Standard', '13:00'),
     (1,'078 0680 1334','070 6369 5729','2016/06/01','18:35','Standard', '03:00'),

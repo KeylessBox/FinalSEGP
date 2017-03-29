@@ -303,7 +303,7 @@
                                         </TableColumn>
                                         <TableColumn fx:id="dateColumn" maxWidth="185.0" minWidth="185.0" text="Date" />
                                         <TableColumn fx:id="timeColumn" maxWidth="185.0" minWidth="185.0" text="Time" />
-                                        <TableColumn fx:id="typeColumn" maxWidth="185.0" minWidth="185.0" text="Type Of Call" />
+                                        <TableColumn fx:id="typeColumn" maxWidth="185.0" minWidth="185.0" text="Call Type" />
                                         <TableColumn fx:id="durationColumn" maxWidth="185.0" minWidth="185.0" text="Duration" />
                                     </columns>
                                     <columnResizePolicy>

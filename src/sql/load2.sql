@@ -51,7 +51,7 @@ CREATE TABLE `calls` (
   `destination` varchar(18) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `time` time DEFAULT NULL,
-  `typeOfCall` varchar(10) DEFAULT NULL,
+  `callType` varchar(10) DEFAULT NULL,
   `duration` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -59,7 +59,7 @@ CREATE TABLE `calls` (
 -- Dumping data for table `calls`
 --
 
-INSERT INTO `calls` (`id`, `caseId`, `origin`, `destination`, `date`, `time`, `typeOfCall`, `duration`) VALUES
+INSERT INTO `calls` (`id`, `caseId`, `origin`, `destination`, `date`, `time`, `callType`, `duration`) VALUES
 (1193, 138, 'suka', '0', '1900-01-01', '00:00:00', 'Standard', '00:00:00'),
 (1194, 138, '0', '0', '1900-01-01', '00:00:00', 'Standard', '00:00:00'),
 (1195, 138, '0', '0', '1900-01-01', '00:00:00', 'Standard', '00:00:00'),

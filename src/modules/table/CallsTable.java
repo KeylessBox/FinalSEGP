@@ -1,26 +1,11 @@
 package modules.table;
 
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import sql.SQL;
-import javafx.application.Application;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 /**
  * Created by AndreiM on 2/3/2017.
@@ -97,7 +82,6 @@ public class CallsTable {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-
                 return new EditingCellPhone();
             }
         };
@@ -156,7 +140,7 @@ public class CallsTable {
         });
     }
 
-    public static void createTypeOfCallColumn(TableColumn typeOfCall) {
+    public static void createCallTypeColumn(TableColumn callType) {
 
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
@@ -165,14 +149,14 @@ public class CallsTable {
             }
         };
 
-        typeOfCall.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("typeOfCall"));
-        typeOfCall.setCellFactory(editableFactory);
-        typeOfCall.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        callType.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("callType"));
+        callType.setCellFactory(editableFactory);
+        callType.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setTypeOfCall(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "typeOfCall", t.getNewValue());
+                t.getRowValue().setCallType(t.getNewValue());
+                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "callType", t.getNewValue());
             }
         });
     }

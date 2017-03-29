@@ -33,7 +33,7 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/signin_window.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
 //        primaryStage.setResizable(false);
 //        primaryStage.setTitle("Sign In");
         Scene scene = new Scene(root);
@@ -43,8 +43,8 @@ public class Main extends Application {
 //        primaryStage.setResizable(false);
         primaryStage.show();
         primaryStage.setResizable(false);
-        primaryStage.setWidth(417);
-        primaryStage.setHeight(535);
+//        primaryStage.setWidth(417);
+//        primaryStage.setHeight(535);
         primaryStage.getIcons().add(new Image("res/icons/logoApp.png"));
     }
 }

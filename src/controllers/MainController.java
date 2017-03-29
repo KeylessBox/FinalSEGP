@@ -29,6 +29,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sql.SQL;
+import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.io.*;
 import java.text.ParseException;
@@ -136,7 +137,7 @@ public class MainController {
         columnFactory.createDestinationColumn(destinationPhoneColumn);
         columnFactory.createDateColumn(dateColumn);
         columnFactory.createTimeColumn(timeColumn);
-        columnFactory.createTypeOfCallColumn(typeColumn);
+        columnFactory.createCallTypeColumn(typeColumn);
         columnFactory.createDurationColumn(durationColumn);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setItems(callsData);  // adds the data into the table
@@ -195,7 +196,7 @@ public class MainController {
         List<Object[]> people = new ArrayList<Object[]>();
         for (int i = 0; i < filterConstraints.size(); i++) {
             if (filterConstraints.get(i)[0] != null) {
-                if (filterConstraints.get(i)[0] instanceof Person) {
+                if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
                     Object[] temp = new Object[2];
                     temp[0] = filterConstraints.get(i)[0];
                     temp[1] = filterConstraints.get(i)[1];
@@ -250,7 +251,7 @@ public class MainController {
             }
             if (filterConstraints.get(i)[0] instanceof Date) {
                 Date date = (Date) filterConstraints.get(i)[0];
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 change = true;
                 if (filterConstraints.get(i)[1].equals("start")) {
                     for (CallRecord callRecord : test) {
@@ -403,8 +404,8 @@ public class MainController {
     private void getEndDate() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
-        if (startDate.getValue() != null) {
-            date = sdf.parse(startDate.getValue().toString());
+        if (endDate.getValue() != null) {
+            date = sdf.parse(endDate.getValue().toString());
         }
         boolean isOn = false;
         for (int i = 0; i < filterIndex; i++) {
@@ -1056,7 +1057,7 @@ public class MainController {
                     if (!caseRecord.getTime().equals(callsData.get(i).getTime())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getTypeOfCall().equals(callsData.get(i).getTypeOfCall())) {
+                    if (!caseRecord.getCallType().equals(callsData.get(i).getCallType())) {
                         requireUpdate = true;
                     }
                     if (!caseRecord.getDuration().equals(callsData.get(i++).getDuration())) {
@@ -1212,12 +1213,16 @@ public class MainController {
             int tableHeaderIndex = 0;
             CallRecord cr = new CallRecord();
             int isOnDatabase;
+            boolean exception = false;
             //FIXME Add more aliases. Test with different types of faulty csvs
 //            Takes only the headers of the file and puts them into tableHeader. If there is an unidentified column, an alert pops out and asks the user about
 //            its importance, and have him, maybe, select an existing column to put the information in. (Mismatched column names)
             while ((fileString = shredder.nextValue()) != null && shredder.lastLineNumber() == 1) {
                 if ((isOnDatabase = cr.alias(fileString)) != -1) { // If there is a match with a column in the database, input the new index
                     tableHeader[tableHeaderIndex] = isOnDatabase;
+                    if (fileString.equals("Start date/time") || fileString.equals("UTC Start Time")) {
+                        exception = true;
+                    }
                 } else {      //  else Alert pops out.
                     tableHeader[tableHeaderIndex] = alert(fileString);
                 }
@@ -1251,13 +1256,37 @@ public class MainController {
                 tableHeaderIndex++;         // Go to the next column
                 if (tableHeaderIndex == length - 1) {       // If the end of the row was reached, start next row and put the previously filtered row into the data
                     tableHeaderIndex = 0;
-                    data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1], dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
+                    if (exception) {
+                        String[] dateTime = dataElement[2].split("\\s");
+                        dateTime[0] = changeDateFormat(dateTime[0]);
+                        data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
+                                dateTime[0], dateTime[1], dataElement[4], dataElement[5]));
+                    }else {
+                        dataElement[2] = changeDateFormat(dataElement[2]);
+                        data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
+                                dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
+                    }
+
                 }
             }
             sql.insertCalls(data);  // After getting all data from the file, send it to database
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private String changeDateFormat(String oldDate) {
+        String oldFormat = "dd/MM/yyyy";
+        String newFormat = "yyyy/MM/dd";
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(oldFormat);
+            Date d = sdf.parse(oldDate);
+            sdf.applyPattern(newFormat);
+            return sdf.format(d);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -1275,7 +1304,7 @@ public class MainController {
             Workbook workbook = getWorkbook(fileInputStream, filePath);
             Sheet datatypeSheet = workbook.getSheetAt(0);
             Iterator<Row> iterator = datatypeSheet.iterator();
-
+            boolean exception =false;
             int isOnDatabase;                       // checks if column is recognized by database
             Cell currentCell;                       // cell with current information
             int[] tableHeader = new int[10];           // will hold the preferred order of the recognized headers from file
@@ -1286,8 +1315,12 @@ public class MainController {
                 Iterator<Cell> cellIterator = currentRow.cellIterator();    // Make an iterator for the row (so that you can iterate through it and take the cells)
                 while (cellIterator.hasNext()) {        // As long as there are unverified elements in the row
                     currentCell = cellIterator.next();          // Take cell value
-                    if ((isOnDatabase = cr.alias(String.valueOf(getCellValue(currentCell)))) != -1) {       // if name is recognized by database
+                    String currentString = String.valueOf(getCellValue(currentCell));
+                    if ((isOnDatabase = cr.alias(currentString)) != -1) {       // if name is recognized by database
                         tableHeader[tableHeaderIndex] = isOnDatabase;               // remember order
+                        if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
+                            exception = true;
+                        }
                     } else {      // else Alert pops out.
                         tableHeader[tableHeaderIndex] = alert(String.valueOf(getCellValue(currentCell)));   // keep user decision (to recognize or not)
                     }
@@ -1310,8 +1343,16 @@ public class MainController {
                     tableHeaderIndex++;
                 }
                 tableHeaderIndex = 0;           // After the row is checked go from the beginning
-                data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
-                        dataElement[2], dataElement[3], dataElement[4], dataElement[5])); // The row is added to data
+                if (exception) {
+                    String[] dateTime = dataElement[2].split("\\s");
+                    dateTime[0] = changeDateFormat(dateTime[0]);
+                    data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
+                            dateTime[0], dateTime[1], dataElement[4], dataElement[5]));
+                }else {
+                    dataElement[2] = changeDateFormat(dataElement[2]);
+                    data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
+                            dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
+                }
             }
             sql.insertCalls(data);              // The essential information is sent to database
         } catch (FileNotFoundException e) {

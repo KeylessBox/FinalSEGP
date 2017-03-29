@@ -49,17 +49,18 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
     }
 
     //TODO What happens when 2 filters overlap?
+    @Override
     public void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
         if (empty) {
             setText(null);
             setGraphic(null);
+            setStyle("");
         } else {
-
             List<Object[]> people = MainController.getPeople();
-
+            boolean isFilter = false;
             for (Object[] temp : people) {
-                if (temp[0] != null && temp[1].equals("yes")) {
+                if (temp[1].equals("yes")) {
                     if (temp[0] instanceof Suspect) {
                         Suspect suspect = (Suspect) temp[0];
                         if (item.contains(suspect.getPhone())) {
@@ -70,6 +71,7 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
                                     "-fx-border-width: 0 1 1 0;" +
                                     " -fx-background-insets: 0;" +
                                     "-fx-border-color: black");
+                            isFilter = true;
                         }
                     }
                     if (temp[0] instanceof Victim) {
@@ -81,13 +83,14 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
                             setStyle("-fx-background-color: " + hex + ";" +
                                     "-fx-border-width: 0 1 1 0;" +
                                     "-fx-border-color: black;" +
-                                    " -fx-background-insets: 0;" 
-                            );
+                                    " -fx-background-insets: 0;");
+                            isFilter = true;
                         }
                     }
-                } else {
-                    setStyle("");
                 }
+            }
+            if (!isFilter) {
+                setStyle("");
             }
             if (isEditing()) {
                 if (textField != null) {

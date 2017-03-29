@@ -18,7 +18,7 @@ public class CallRecord {
     private final StringProperty destinationName;
     private final StringProperty date;
     private final StringProperty time;
-    private final StringProperty typeOfCall;
+    private final StringProperty callType;
     private final StringProperty duration;
 
     public CallRecord () {
@@ -30,13 +30,13 @@ public class CallRecord {
         this.destinationName = null;
         this.date = null;
         this.time = null;
-        this.typeOfCall = null;
+        this.callType = null;
         this.duration = null;
     }
 
     public CallRecord(String callID, String caseID, String originName, String origin, String destinationName,
                       String destination, String date, String time,
-                      String typeOfCall, String duration) {
+                      String callType, String duration) {
         this.callID = new SimpleStringProperty(callID);
         this.caseID = new SimpleStringProperty(caseID);
         this.originName = new SimpleStringProperty(originName);
@@ -45,13 +45,13 @@ public class CallRecord {
         this.destination = new SimpleStringProperty(destination);
         this.date = new SimpleStringProperty(date);
         this.time = new SimpleStringProperty(time);
-        this.typeOfCall = new SimpleStringProperty(typeOfCall);
+        this.callType = new SimpleStringProperty(callType);
         this.duration = new SimpleStringProperty(duration);
     }
 
     public CallRecord(String callID, String caseID, String origin,
                       String destination, String date, String time,
-                      String typeOfCall, String duration) {
+                      String callType, String duration) {
         this.callID = new SimpleStringProperty(callID);
         this.caseID = new SimpleStringProperty(caseID);
         originName = new SimpleStringProperty("");
@@ -60,13 +60,13 @@ public class CallRecord {
         this.destination = new SimpleStringProperty(destination);
         this.date = new SimpleStringProperty(date);
         this.time = new SimpleStringProperty(time);
-        this.typeOfCall = new SimpleStringProperty(typeOfCall);
+        this.callType = new SimpleStringProperty(callType);
         this.duration = new SimpleStringProperty(duration);
     }
 
     public CallRecord(String caseID, String origin,
                       String destination, String date, String time,
-                      String typeOfCall, String duration) {
+                      String callType, String duration) {
         callID = null;
         this.caseID = new SimpleStringProperty(caseID);
         originName = new SimpleStringProperty("");
@@ -75,7 +75,7 @@ public class CallRecord {
         this.destination = new SimpleStringProperty(destination);
         this.date = new SimpleStringProperty(date);
         this.time = new SimpleStringProperty(time);
-        this.typeOfCall = new SimpleStringProperty(typeOfCall);
+        this.callType = new SimpleStringProperty(callType);
         this.duration = new SimpleStringProperty(duration);
     }
 
@@ -83,11 +83,13 @@ public class CallRecord {
      * Regex to identify column names. Further inquires to the police are needed to make it as complete as possible
      */
     private String[][] aliases = new String[][] {
-            {"[Cc][Pp][Nn]","[Oo][Rr][Ii][Gg][Ii][Nn]", "[Cc][Aa][Ll][Ll][Ee][Rr]\\s*[Pp][Hh][Oo][Nn][Ee]\\s*[Nn][Uu][Mm][Bb][Ee][Rr]"},
-            {"[Rr][Ee][Cc][Ee][Ii][Vv][Ee][Rr]\\s*[Pp][Hh][Oo][Nn][Ee]\\s*[Nn][Uu][Mm][Bb][Ee][Rr]","[Rr][Pp][Nn]", "[Dd][Ee][Ss][Tt][Ii][Nn][Aa][Tt][Ii][Oo][Nn]"},
-            {"[Dd][Aa][Tt][Ee]"},
-            {"[Tt][Ii][Mm][Ee]"},
-            {"[Tt][Yy][Pp][Ee]\\s*[Oo][Ff]\\s*[Cc][Aa][Ll][Ll]"},
+            {"[Cc][Pp][Nn]","[Oo][Rr][Ii][Gg][Ii][Nn]", "[Cc][Aa][Ll][Ll][Ee][Rr]\\s*[Pp][Hh][Oo][Nn][Ee]\\s*[Nn][Uu][Mm][Bb][Ee][Rr]",
+            "Calling Number","Number making call(A)","Calling Party"},
+            {"[Rr][Ee][Cc][Ee][Ii][Vv][Ee][Rr]\\s*[Pp][Hh][Oo][Nn][Ee]\\s*[Nn][Uu][Mm][Bb][Ee][Rr]","[Rr][Pp][Nn]",
+                    "[Dd][Ee][Ss][Tt][Ii][Nn][Aa][Tt][Ii][Oo][Nn]", "Called Number", "Number receiving call(B)", "Called Party"},
+            {"[Dd][Aa][Tt][Ee]","[Dd]ate\\s*[Oo]f\\s*[Cc]all", "[Ss]tart\\s*[Dd]ate/[Tt]ime","UTC\\s*Start\\s*Time"},
+            {"[Tt][Ii][Mm][Ee]","[Tt]ime\\s*[Oo]f\\s*[Cc]all"},
+            {"[Tt][Yy][Pp][Ee]\\s*[Oo][Ff]\\s*[Cc][Aa][Ll][Ll]", "Call [Tt]ype", "Event"},
             {"[Dd][Uu][Rr][Aa][Tt][Ii][Oo][Nn]", "[Ee][Ss][Tt][Ii][Mm][Aa][Tt][Ee][Dd]\\s*[Tt][Ii][Mm][Ee]", "[Ee][Tt][Aa]"}
     };
 
@@ -152,8 +154,8 @@ public class CallRecord {
             return time.get();
         }
 
-    public String getTypeOfCall() {
-            return typeOfCall.get();
+    public String getCallType() {
+            return callType.get();
         }
 
     public String getDuration() {
@@ -190,8 +192,8 @@ public class CallRecord {
             this.time.set(time);
         }
 
-    public void setTypeOfCall(String typeOfCall) {
-            this.typeOfCall.set(typeOfCall);
+    public void setCallType(String callType) {
+            this.callType.set(callType);
         }
 
     public void setDuration(String duration) {
@@ -232,8 +234,8 @@ public class CallRecord {
             return time;
         }
 
-    public StringProperty typeOfCallProperty() {
-            return typeOfCall;
+    public StringProperty callTypeProperty() {
+            return callType;
         }
 
     public StringProperty durationProperty() {
