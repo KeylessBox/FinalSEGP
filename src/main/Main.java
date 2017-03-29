@@ -42,6 +42,9 @@ public class Main extends Application {
 //        primaryStage.setMinWidth(1812.0);
 //        primaryStage.setResizable(false);
         primaryStage.show();
+        primaryStage.setResizable(false);
+        primaryStage.setWidth(417);
+        primaryStage.setHeight(535);
         primaryStage.getIcons().add(new Image("res/icons/logoApp.png"));
     }
 }

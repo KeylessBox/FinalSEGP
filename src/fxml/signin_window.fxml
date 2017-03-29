@@ -121,11 +121,6 @@
                     <Font name="Calibri Bold" size="18.0" />
                 </font>
             </Button>
-            <ImageView layoutX="201.0" layoutY="269.0">
-                <image>
-                    <Image url="@../res/login/Info.png" />
-                </image>
-            </ImageView>
         </children>
     </Pane>
     <Pane fx:id="movingpart" layoutX="47.0" layoutY="46.0" prefHeight="4.0" prefWidth="49.0" styleClass="custom_moving" stylesheets="@../css/sign_window.css" />

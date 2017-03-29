@@ -10,6 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -21,7 +23,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import modules.file_export.csvExport;
-import modules.manageAccounts.User;
 import modules.table.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -1535,8 +1536,21 @@ public class MainController {
     }
 
     @FXML
-    public void Logoff() {
-        System.out.println("Logoff");
+    public void Logoff(ActionEvent event) {
+        Stage stage = (Stage) root.getScene().getWindow();
+        stage.setResizable(false);
+        stage.setWidth(417);
+        stage.setHeight(535);
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/fxml/signin_window.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
     }
 
 }
