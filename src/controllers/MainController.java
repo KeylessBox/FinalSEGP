@@ -395,6 +395,7 @@ public class MainController {
         filter();
     }
 
+
     /**
      * Retrieves the end date and filters the table
      *
