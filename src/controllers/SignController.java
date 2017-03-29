@@ -114,13 +114,15 @@ public class SignController {
              */
             Node node = (Node) event.getSource();
             Stage stage = (Stage) node.getScene().getWindow();
-            stage.setResizable(true);
-            stage.setWidth(1815);
-            stage.setHeight(1040);
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));/* Exception */
             Scene scene = new Scene(root);
+
             stage.setScene(scene);
+            stage.setWidth(1815);
+            stage.setHeight(1040);
             stage.centerOnScreen();
+            stage.setResizable(true);
+
             stage.show();
         }
     }

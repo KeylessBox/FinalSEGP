@@ -278,7 +278,7 @@
                                 </Pane>
                             </children>
                         </Pane>
-                        <Pane id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1475.0" stylesheets="@../css/Table.css">
+                        <Pane id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1475.0" stylesheets="@../css/table.css">
                             <styleClass>
                                 <String fx:value="root" />
                                 <String fx:value="Table" />
@@ -332,7 +332,7 @@
                                         <HBox prefHeight="46.0" prefWidth="1458.0">
                                             <children>
                                                 <TextField fx:id="searchBar" prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
-                                                <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/Table.css" text="search" textAlignment="CENTER">
+                                                <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
                                                     <font>
                                                         <Font name="Calibri Bold" size="14.0" />
                                                     </font>
