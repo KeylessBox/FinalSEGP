@@ -72,6 +72,11 @@
                     <Image url="@../res/login/users-edit-user-icon.png" />
                 </image>
             </ImageView>
+            <Label fx:id="ErrMessage" layoutX="43.0" layoutY="115.0" prefHeight="36.0" prefWidth="342.0" text="" textFill="RED" visible="false">
+                <font>
+                    <Font name="Calibri" size="18.0" />
+                </font>
+            </Label>
         </children>
     </Pane>
     <Pane fx:id="SignIn" layoutY="-7.0" prefHeight="528.0" prefWidth="417.0" styleClass="custom_signIn" stylesheets="@../css/sign_window.css">
@@ -106,7 +111,7 @@
                     <Font name="Calibri Light" size="18.0" />
                 </font>
             </TextField>
-            <CheckBox layoutX="43.0" layoutY="265.0" mnemonicParsing="false" onAction="#remember" prefHeight="17.0" prefWidth="168.0" text="Keep me signed in" textFill="#726e6e">
+            <CheckBox fx:id="rember" layoutX="43.0" layoutY="265.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="202.0" text="Remeber user details" textFill="#726e6e">
                 <font>
                     <Font size="16.0" />
                 </font>
@@ -116,11 +121,16 @@
                     <Font name="Calibri Bold" size="18.0" />
                 </font>
             </Button>
-            <Button alignment="BOTTOM_LEFT" layoutX="29.0" layoutY="362.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="202.0" styleClass="button_forget" text="Forget your password?" textFill="#616161">
+            <Button alignment="BOTTOM_LEFT" layoutX="29.0" layoutY="362.0" mnemonicParsing="false" onAction="#forget" prefHeight="25.0" prefWidth="202.0" styleClass="button_forget" text="Forget your password?" textFill="#616161">
                 <font>
                     <Font name="Calibri Bold" size="18.0" />
                 </font>
             </Button>
+         <Label fx:id="ErrorMessage" layoutX="43.0" layoutY="115.0" prefHeight="36.0" prefWidth="342.0" text="" textFill="RED" visible="false">
+            <font>
+               <Font name="Calibri" size="18.0" />
+            </font>
+         </Label>
         </children>
     </Pane>
     <Pane fx:id="movingpart" layoutX="47.0" layoutY="46.0" prefHeight="4.0" prefWidth="49.0" styleClass="custom_moving" stylesheets="@../css/sign_window.css" />
