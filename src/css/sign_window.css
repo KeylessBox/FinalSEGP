@@ -87,3 +87,47 @@
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
+
+.check-box:focused {
+    -fx-color: white;
+}
+
+.check-box .box {
+    -fx-background-color:white;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-background-radius: 2, 2, 1, 1;
+    -fx-border-radius: 2, 2, 1, 1;
+    -fx-border-color:#667995 ;
+    -fx-padding: 0.25em; /* 3 -- padding from the outside edge to the mark */
+}
+
+.check-box:focused .box {
+    -fx-background-color: white;
+    -fx-background-insets: -1.4, 0, 1, 2;
+    -fx-background-radius: 3.4, 2, 1, 1;
+}
+
+.check-box:hover .box {
+    -fx-color: #667995;
+}
+
+.check-box:armed .box {
+    -fx-color: #667995;
+}
+
+.check-box .mark {
+    -fx-background-color: transparent;
+    -fx-background-insets: 1 0 -1 0, 0;
+    -fx-padding: 0.333333em; /* 4 -- this is half the size of the mark */
+    -fx-shape: "M0,4H2L3,6L6,0H8L4,8H2Z";
+}
+
+.check-box:indeterminate .mark {
+    -fx-background-color: #667995;
+    -fx-shape: "M0,0H8V2H0Z";
+    -fx-scale-shape: false;
+}
+
+.check-box:selected .mark {
+    -fx-background-color: #667995;
+}

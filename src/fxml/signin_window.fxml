@@ -14,10 +14,10 @@
 <!-- Anchor Pane-->
 <!-- -->
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="523.0" prefWidth="417.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <Pane layoutY="-7.0" prefHeight="530.0" prefWidth="417.0" styleClass="custom_hbox" stylesheets="@../css/sign_window.css">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="417.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <Pane layoutY="-7.0" prefHeight="528.0" prefWidth="417.0" styleClass="custom_hbox" stylesheets="@../css/sign_window.css">
       <children>
-         <ImageView fitHeight="5.0" fitWidth="49.0" layoutX="47.0" layoutY="51.0">
+         <ImageView fitHeight="3.0" fitWidth="49.0" layoutX="47.0" layoutY="54.0">
             <image>
                <Image url="@../res/login/movingPart.png" />
             </image>
@@ -43,7 +43,7 @@
             <font>
                <Font name="Calibri Light" size="18.0" />
             </font></PasswordField>
-         <Button layoutX="309.0" layoutY="204.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" styleClass="button_sign" text="SHOW" textFill="WHITE">
+         <Button layoutX="314.0" layoutY="204.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" styleClass="button_sign" text="SHOW" textFill="WHITE">
             <font>
                <Font name="Calibri" size="12.0" />
             </font>
