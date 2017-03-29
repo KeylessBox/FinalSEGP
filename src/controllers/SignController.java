@@ -6,23 +6,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import modules.login.LoginDB;
 import modules.manageAccounts.CreateAccount;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SignController {
 
+    private boolean remember;
+
     @FXML
     private Pane SignUp;
+
+    @FXML
+    private Label ErrorMessage;
+    @FXML
+    private Label ErrMessage;
 
     @FXML
     private Pane SignIn;
@@ -54,8 +58,24 @@ public class SignController {
     public String user = "";
 
     @FXML
-    void remember(ActionEvent event) {
+    private CheckBox rember;
 
+    @FXML
+    public void initialize() {
+        try (FileReader fileReader = new FileReader(new File("src/res/tmp.txt"));
+             BufferedReader bufferedReader = new BufferedReader(fileReader)) {
+            String user = bufferedReader.readLine();
+            String password = bufferedReader.readLine();
+            if (user != null && !user.equals("")) {
+                username.setText(user);
+            }
+            if (password != null && !password.equals("")) {
+                pw.setText(password);
+                rember.setSelected(true);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -76,54 +96,236 @@ public class SignController {
 
     @FXML
     void signUp(ActionEvent event) throws IOException {
-        CreateAccount.createAccount(name.getText(), surname.getText(), email.getText(), pass.getText(), "user");
-        SignIn.setVisible(true);
-        SignUp.setVisible(false);
-        movingpart.setPrefWidth(49);
-        movingpart.setLayoutX(47);
+
+        if (name.getText().length() < 6) {
+            ErrMessage.setText("First Name is too short");
+            if (name.getText().length() == 0) {
+                ErrMessage.setText("First Name field is empty");
+            }
+            ErrMessage.setVisible(true);
+            Timer animTimer = new Timer();
+            animTimer.scheduleAtFixedRate(new TimerTask() {
+                int i = 0;
+
+                @Override
+                public void run() {
+                    if (i < 100) {
+
+                    } else {
+                        ErrMessage.setVisible(false);
+                        this.cancel();
+                    }
+                    i++;
+                }
+
+            }, 2000, 25);
+        } else if (surname.getText().length() < 6) {
+            ErrMessage.setText("Last Name is too short");
+            if (surname.getText().length() == 0) {
+                ErrMessage.setText("Last Name field is empty");
+            }
+            ErrMessage.setVisible(true);
+            Timer animTimer = new Timer();
+            animTimer.scheduleAtFixedRate(new TimerTask() {
+                int i = 0;
+
+                @Override
+                public void run() {
+                    if (i < 100) {
+
+                    } else {
+                        ErrMessage.setVisible(false);
+                        this.cancel();
+                    }
+                    i++;
+                }
+
+            }, 2000, 25);
+        } else if (email.getText().length() < 6) {
+            ErrMessage.setText("Username is too short");
+            if (email.getText().length() == 0) {
+                ErrMessage.setText("Username field is empty");
+            }
+            ErrMessage.setVisible(true);
+            Timer animTimer = new Timer();
+            animTimer.scheduleAtFixedRate(new TimerTask() {
+                int i = 0;
+
+                @Override
+                public void run() {
+                    if (i < 100) {
+
+                    } else {
+                        ErrMessage.setVisible(false);
+                        this.cancel();
+                    }
+                    i++;
+                }
+
+            }, 2000, 25);
+
+        } else if (pass.getText().length() < 6) {
+            ErrMessage.setText("Password is too short");
+            if (pass.getText().length() == 0) {
+                ErrMessage.setText("Password field is empty");
+            }
+            ErrMessage.setVisible(true);
+            Timer animTimer = new Timer();
+            animTimer.scheduleAtFixedRate(new TimerTask() {
+                int i = 0;
+
+                @Override
+                public void run() {
+                    if (i < 100) {
+
+                    } else {
+                        ErrMessage.setVisible(false);
+                        this.cancel();
+                    }
+                    i++;
+                }
+
+            }, 2000, 25);
+        } else {
+            CreateAccount.createAccount(name.getText(), surname.getText(), email.getText(), pass.getText(), "user");
+            username.setText(email.getText());
+            pw.setText("");
+            rember.setSelected(false);
+            SignIn.setVisible(true);
+            SignUp.setVisible(false);
+            movingpart.setPrefWidth(49);
+            movingpart.setLayoutX(47);
+        }
     }
 
+    @FXML
+    void forget() {
+        ErrorMessage.setText("Your user details send to email");
+        ErrorMessage.setVisible(true);
+        Timer animTimer = new Timer();
+        animTimer.scheduleAtFixedRate(new TimerTask() {
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i < 100) {
+
+                } else {
+                    ErrorMessage.setVisible(false);
+                    this.cancel();
+                }
+                i++;
+            }
+
+        }, 2000, 25);
+    }
 
     @FXML
     void signIn(ActionEvent event) throws IOException {
 
-        if (!LoginDB.checkUserDetails(username.getText(), pw.getText())) {
-            /**
-             * If the account details introduced are wrong
-             * Alert Box is shown
-             */
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Wrong Details");
-            alert.setHeaderText("Wrong Username or Password");
-            alert.setContentText("Please, re-enter your Log In Details.");
+        if (username.getText().length() < 6) {
+            ErrorMessage.setText("Username is too short");
+            if (username.getText().length() == 0) {
+                ErrorMessage.setText("Username field is empty");
+            }
+            ErrorMessage.setVisible(true);
+            Timer animTimer = new Timer();
+            animTimer.scheduleAtFixedRate(new TimerTask() {
+                int i = 0;
 
-            alert.showAndWait();
+                @Override
+                public void run() {
+                    if (i < 100) {
+
+                    } else {
+                        ErrorMessage.setVisible(false);
+                        this.cancel();
+                    }
+                    i++;
+                }
+
+            }, 2000, 25);
+
+        } else if (pw.getText().length() < 6) {
+            ErrorMessage.setText("Password is too short");
+            if (pw.getText().length() == 0) {
+                ErrorMessage.setText("Password field is empty");
+            }
+            ErrorMessage.setVisible(true);
+            Timer animTimer = new Timer();
+            animTimer.scheduleAtFixedRate(new TimerTask() {
+                int i = 0;
+
+                @Override
+                public void run() {
+                    if (i < 100) {
+
+                    } else {
+                        ErrorMessage.setVisible(false);
+                        this.cancel();
+                    }
+                    i++;
+                }
+
+            }, 2000, 25);
 
         } else {
-            /**
-             * If the account details entered are correct,
-             * Program moves to the main Window
-             * It passes the account details to a file (that will be soon deleted).
-             */
-            user = username.getText();
-            FileWriter writer = new FileWriter(new File("src/res/tmp.txt"));
-            writer.write(user);
-            writer.close();
-            /**
-             * The connection to the main app
-             */
-            Node node = (Node) event.getSource();
-            Stage stage = (Stage) node.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));/* Exception */
-            Scene scene = new Scene(root);
 
-            stage.setScene(scene);
-            stage.setWidth(1815);
-            stage.setHeight(1040);
-            stage.centerOnScreen();
-            stage.setResizable(true);
+            if (!LoginDB.checkUserDetails(username.getText(), pw.getText())) {
+                /**
+                 * If the account details introduced are wrong
+                 * Alert Box is shown
+                 */
+                ErrorMessage.setText("Login or password are incorrect!");
+                ErrorMessage.setVisible(true);
+                Timer animTimer = new Timer();
+                animTimer.scheduleAtFixedRate(new TimerTask() {
+                    int i = 0;
 
-            stage.show();
+                    @Override
+                    public void run() {
+                        if (i < 100) {
+
+                        } else {
+                            ErrorMessage.setVisible(false);
+                            this.cancel();
+                        }
+                        i++;
+                    }
+
+                }, 2000, 25);
+
+            } else {
+                /**
+                 * If the account details entered are correct,
+                 * Program moves to the main Window
+                 * It passes the account details to a file (that will be soon deleted).
+                 */
+
+
+                user = username.getText();
+                PrintWriter writer = new PrintWriter(new File("src/res/tmp.txt"));
+                writer.write(user);
+                if (rember.isSelected()) {
+                    writer.write("\n" + pw.getText());
+                }
+                writer.close();
+                /**
+                 * The connection to the main app
+                 */
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));/* Exception */
+                Scene scene = new Scene(root);
+
+                stage.setScene(scene);
+                stage.setWidth(1815);
+                stage.setHeight(1040);
+                stage.centerOnScreen();
+                stage.setResizable(true);
+
+                stage.show();
+            }
         }
     }
 

@@ -14,6 +14,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -51,11 +52,6 @@
                                         <MenuItem mnemonicParsing="false">
                                             <graphic>
                                                 <Pane minHeight="340" minWidth="450" nodeOrientation="LEFT_TO_RIGHT" styleClass="settings_bar" stylesheets="@../css/main_stage.css">
-                                                    <!--<TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0"-->
-                                                    <!--promptText="keyword..."/>-->
-                                                    <!--<Button layoutX="225.0" layoutY="28.0" prefHeight="30.0" prefWidth="61.0"-->
-                                                    <!--text="search">-->
-                                                    <!--</Button>-->
                                                 </Pane>
                                             </graphic>
                                         </MenuItem>
@@ -99,7 +95,6 @@
                                         </MenuItem>
                                     </items>
                                 </Menu>
-
                                 <Menu fx:id="search_btn" mnemonicParsing="false">
                                     <graphic>
                                         <ImageView fitHeight="15.0" fitWidth="15.0">
@@ -113,8 +108,15 @@
                                             <graphic>
                                                 <Pane minHeight="80" minWidth="300" nodeOrientation="LEFT_TO_RIGHT" styleClass="search_bar" stylesheets="@../css/main_stage.css">
                                                     <children>
-                                                        <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0" promptText="keyword..." />
+                                                        <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0" promptText="keyword...">
+                                                            <tooltip>
+                                                                <Tooltip text="This feature will search through entire application (Developing)" />
+                                                            </tooltip>
+                                                        </TextField>
                                                         <Button contentDisplay="CENTER" layoutX="225.0" layoutY="28.0" prefHeight="29.0" prefWidth="61.0" text="search" textAlignment="CENTER">
+                                                            <tooltip>
+                                                                <Tooltip text="Press to search through entire application (Developing)" />
+                                                            </tooltip>
                                                         </Button>
                                                     </children>
                                                 </Pane>
@@ -171,9 +173,9 @@
                                 <Cursor fx:constant="CLOSED_HAND" />
                             </cursor>
                         </MenuBar>
-                        <ImageView fitHeight="36.0" fitWidth="29.0" layoutX="143.0" layoutY="2.0">
+                        <ImageView fitHeight="40.0" fitWidth="43.0" layoutX="136.0" layoutY="1.0">
                             <image>
-                                <Image url="@../res/icons/logo.png" />
+                                <Image url="@../res/icons/logoMain.png" />
                             </image>
                             <effect>
                                 <DropShadow radius="4.875" width="0.5" />
@@ -205,23 +207,36 @@
                 </Pane>
                 <Pane layoutX="20.0" layoutY="20.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
                     <children>
-                        <Button fx:id="test" layoutX="190.0" layoutY="-5.0" onAction="#addCase" stylesheets="@../css/cases.css" />
+                        <Button fx:id="test" layoutX="190.0" layoutY="-5.0" onAction="#addCase" stylesheets="@../css/cases.css">
+                            <tooltip>
+                                <Tooltip text="Press to add new case" />
+                            </tooltip>
+                        </Button>
                         <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
                             <children>
                                 <ToggleButton fx:id="allToggleBtn" prefHeight="25.0" prefWidth="56.0" selected="true" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
                                     <font>
                                         <Font size="10.0" />
                                     </font>
+                                    <tooltip>
+                                        <Tooltip text="Press to show all cases" />
+                                    </tooltip>
                                 </ToggleButton>
                                 <ToggleButton fx:id="newToggleBtn" prefHeight="25.0" prefWidth="67.0" text="New">
                                     <font>
                                         <Font size="10.0" />
                                     </font>
+                                    <tooltip>
+                                        <Tooltip text="Press to show cases that are New" />
+                                    </tooltip>
                                 </ToggleButton>
                                 <ToggleButton fx:id="doneToggleBtn" prefHeight="25.0" prefWidth="67.0" styleClass="last" stylesheets="@../css/cases.css" text="Done">
                                     <font>
                                         <Font size="10.0" />
                                     </font>
+                                    <tooltip>
+                                        <Tooltip text="Press to show cases that are Done" />
+                                    </tooltip>
                                 </ToggleButton>
                             </children>
                         </HBox>
@@ -256,21 +271,30 @@
                                         <HBox fx:id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
                                             <children>
                                                 <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
-                                    <Region prefHeight="10.0" prefWidth="1274.0" />
+                                                <Region prefHeight="10.0" prefWidth="1274.0" />
                                                 <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" onAction="#addSuspect" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" stylesheets="@../css/filters.css">
                                                     <HBox.margin>
                                                         <Insets left="1.0" top="1.0" />
                                                     </HBox.margin>
+                                                    <tooltip>
+                                                        <Tooltip text="Press to add suspect filter" />
+                                                    </tooltip>
                                                 </Button>
                                                 <Button fx:id="add_green_btn" mnemonicParsing="false" onAction="#addVictim" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
                                                     <HBox.margin>
                                                         <Insets left="7.0" top="1.0" />
                                                     </HBox.margin>
+                                                    <tooltip>
+                                                        <Tooltip text="Press to add victim filter" />
+                                                    </tooltip>
                                                 </Button>
                                                 <Button fx:id="add_filters" mnemonicParsing="false" onAction="#filter" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
                                                     <HBox.margin>
                                                         <Insets left="6.0" top="2.0" />
                                                     </HBox.margin>
+                                                    <tooltip>
+                                                        <Tooltip text="Press to apply filters" />
+                                                    </tooltip>
                                                 </Button>
                                             </children>
                                         </HBox>
@@ -315,15 +339,34 @@
                                         <HBox prefHeight="30.0" prefWidth="1458.0" spacing="7.0">
                                             <children>
                                                 <Region HBox.hgrow="ALWAYS" />
-                                                <Button fx:id="save_button" mnemonicParsing="false" onAction="#exportCSV" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                                <Button fx:id="attach_button" mnemonicParsing="false" onAction="#importFile" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                                <Button fx:id="save_button" mnemonicParsing="false" onAction="#exportCSV" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn">
+                                                    <tooltip>
+                                                        <Tooltip text="Press to export the report" />
+                                                    </tooltip>
+                                                </Button>
+                                                <Button fx:id="attach_button" mnemonicParsing="false" onAction="#importFile" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn">
+                                                    <tooltip>
+                                                        <Tooltip text="Press to attach the file" />
+                                                    </tooltip>
+                                                </Button>
                                                 <Button id="addCall" mnemonicParsing="false" onAction="#addCall" prefHeight="25.0" prefWidth="27.0" styleClass="filter_btn">
                                                     <HBox.margin>
                                                         <Insets right="1.0" />
                                                     </HBox.margin>
+                                                    <tooltip>
+                                                        <Tooltip text="Press to add table row / call record" />
+                                                    </tooltip>
                                                 </Button>
-                                                <Button fx:id="delete_button" mnemonicParsing="false" onAction="#deleteCall" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
-                                                <Button fx:id="reload_button" mnemonicParsing="false" onAction="#update" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn" />
+                                                <Button fx:id="delete_button" mnemonicParsing="false" onAction="#deleteCall" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn">
+                                                    <tooltip>
+                                                        <Tooltip text="Press to delete table row / call record" />
+                                                    </tooltip>
+                                                </Button>
+                                                <Button fx:id="reload_button" mnemonicParsing="false" onAction="#update" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn">
+                                                    <tooltip>
+                                                        <Tooltip text="Press to reload the table from the server" />
+                                                    </tooltip>
+                                                </Button>
                                             </children>
                                             <padding>
                                                 <Insets bottom="2.0" left="2.0" right="4.0" top="2.0" />
@@ -336,16 +379,25 @@
                                                     <font>
                                                         <Font name="Calibri Bold" size="14.0" />
                                                     </font>
+                                                    <tooltip>
+                                                        <Tooltip text="Press to search the table" />
+                                                    </tooltip>
                                                 </Button>
                                                 <DatePicker fx:id="startDate" onAction="#getStartDate" promptText="Start Date">
                                                     <HBox.margin>
                                                         <Insets left="20.0" />
                                                     </HBox.margin>
+                                                    <tooltip>
+                                                        <Tooltip text="Press to select the star date to filter results" />
+                                                    </tooltip>
                                                 </DatePicker>
                                                 <DatePicker fx:id="endDate" onAction="#getEndDate" promptText="End Date">
                                                     <HBox.margin>
                                                         <Insets left="20.0" />
                                                     </HBox.margin>
+                                                    <tooltip>
+                                                        <Tooltip text="Press to select the end date to filter results" />
+                                                    </tooltip>
                                                 </DatePicker>
                                             </children>
                                             <padding>
@@ -387,11 +439,17 @@
                                     <HBox.margin>
                                         <Insets bottom="2.0" left="4.0" />
                                     </HBox.margin>
+                                    <tooltip>
+                                        <Tooltip text="Press to add note" />
+                                    </tooltip>
                                 </Button>
                                 <Button fx:id="notes_bar_settings_btn" blendMode="SCREEN" mnemonicParsing="false" onAction="#notes_settings">
                                     <HBox.margin>
                                         <Insets bottom="2.0" left="6.0" />
                                     </HBox.margin>
+                                    <tooltip>
+                                        <Tooltip text="Press to open settings for notes" />
+                                    </tooltip>
                                 </Button>
                             </children>
                             <VBox.margin>

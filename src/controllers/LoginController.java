@@ -12,9 +12,7 @@ import modules.login.LoginDB;
 import javafx.stage.Stage;
 
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Controller for login
@@ -69,9 +67,19 @@ public class LoginController {
              * It passes the account details to a file (that will be soon deleted).
              */
             user = username.getText();
-            FileWriter writer = new FileWriter(new File("src/res/tmp.txt"));
-            writer.write(user);
-            writer.close();
+            PrintWriter writer = new PrintWriter(new File("src/res/tmp.txt"));
+//            FileOutputStream fos = new FileOutputStream(new File("out.txt"));
+//            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+//
+//            for (int i = 0; i < 10; i++) {
+//                bw.write("something");
+//                bw.newLine();
+//            }
+//
+//            bw.close();
+
+
+
             /**
              * The connection to the main app
              */
