@@ -12,6 +12,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.Tooltip?>
 <Pane id="victim_pane" layoutX="3.0" layoutY="3.0" stylesheets="@../css/victim.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox id="victim_box">
@@ -40,6 +41,9 @@
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
+                                    <tooltip>
+                                        <Tooltip text="Press to delete the filter" />
+                                    </tooltip>
                                 </Button>
                             </children>
                         </HBox>

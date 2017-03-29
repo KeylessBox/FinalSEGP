@@ -1,74 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<Pane maxHeight="57.0" prefHeight="42.0" prefWidth="226.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="57.0" prefHeight="42.0" prefWidth="226.0" xmlns="http://javafx.com/javafx/8.0.111"
+      xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <HBox prefHeight="46.0" prefWidth="226.0" spacing="10.0" styleClass="custom_hbox" stylesheets="@../css/case_edit.css">
+        <HBox prefHeight="46.0" prefWidth="226.0" spacing="10.0" styleClass="custom_hbox"
+              stylesheets="@../css/case_edit.css">
             <children>
                 <VBox prefHeight="45.0" prefWidth="176.0">
                     <children>
                         <HBox prefHeight="9.0" prefWidth="160.0" spacing="10.0">
                             <children>
-                                <ToggleButton id="custom" mnemonicParsing="false" prefHeight="4.0" prefWidth="40.0" text="New">
+                                <ToggleButton id="custom" mnemonicParsing="false" prefHeight="4.0" prefWidth="40.0"
+                                              text="New">
                                     <font>
-                                        <Font name="Calibri Bold" size="12.0" />
+                                        <Font name="Calibri Bold" size="12.0"/>
                                     </font>
-                           <padding>
-                              <Insets bottom="2.0" />
-                           </padding>
-                           <HBox.margin>
-                              <Insets left="4.0" top="2.0" />
-                           </HBox.margin>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="custom" />
-                           </toggleGroup>
+                                    <padding>
+                                        <Insets bottom="2.0"/>
+                                    </padding>
+                                    <HBox.margin>
+                                        <Insets left="4.0" top="2.0"/>
+                                    </HBox.margin>
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="custom"/>
+                                    </toggleGroup>
+                                    <tooltip>
+                                        <Tooltip text="Press to change case to New" />
+                                    </tooltip>
                                 </ToggleButton>
-                        <ToggleButton id="custom2" mnemonicParsing="false" prefHeight="4.0" prefWidth="40.0" text="Done">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="custom1" />
-                           </toggleGroup>
-                           <font>
-                              <Font name="Calibri Bold" size="12.0" />
-                           </font>
-                           <padding>
-                              <Insets bottom="2.0" />
-                           </padding>
-                           <HBox.margin>
-                              <Insets top="2.0" />
-                           </HBox.margin>
-                        </ToggleButton>
+                                <ToggleButton id="custom2" mnemonicParsing="false" prefHeight="4.0" prefWidth="40.0"
+                                              text="Done">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="custom1"/>
+                                    </toggleGroup>
+                                    <font>
+                                        <Font name="Calibri Bold" size="12.0"/>
+                                    </font>
+                                    <padding>
+                                        <Insets bottom="2.0"/>
+                                    </padding>
+                                    <HBox.margin>
+                                        <Insets top="2.0"/>
+                                    </HBox.margin>
+                                    <tooltip>
+                                        <Tooltip text="Press to change case to Done"/>
+                                    </tooltip>
+                                </ToggleButton>
                             </children>
                         </HBox>
                         <TextField prefHeight="19.0" prefWidth="112.0">
                             <padding>
-                                <Insets top="2.0" />
+                                <Insets top="2.0"/>
                             </padding>
                             <VBox.margin>
-                                <Insets left="2.0" top="4.0" />
+                                <Insets left="2.0" top="4.0"/>
                             </VBox.margin>
                         </TextField>
                     </children>
                     <padding>
-                        <Insets left="5.0" top="2.0" />
+                        <Insets left="5.0" top="2.0"/>
                     </padding>
                 </VBox>
-                <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="23.0" styleClass="button_ok" stylesheets="@../css/case_edit.css">
+                <Button mnemonicParsing="false" prefHeight="22.0" prefWidth="23.0" styleClass="button_ok"
+                        stylesheets="@../css/case_edit.css">
                     <HBox.margin>
-                        <Insets left="4.0" top="11.0" />
+                        <Insets left="4.0" top="11.0"/>
                     </HBox.margin>
                 </Button>
             </children>
             <opaqueInsets>
-                <Insets />
+                <Insets/>
             </opaqueInsets>
         </HBox>
     </children>

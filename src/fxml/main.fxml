@@ -302,113 +302,108 @@
                                 </Pane>
                             </children>
                         </Pane>
-                        <Pane id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1475.0" stylesheets="@../css/table.css">
+                        <Pane id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1475.0"
+                              stylesheets="@../css/table.css">
                             <styleClass>
-                                <String fx:value="root" />
-                                <String fx:value="Table" />
+                                <String fx:value="root"/>
+                                <String fx:value="Table"/>
                             </styleClass>
                             <VBox.margin>
-                                <Insets top="30.0" />
+                                <Insets top="30.0"/>
                             </VBox.margin>
                             <children>
-                                <TableView fx:id="table" editable="true" layoutX="14.0" layoutY="71.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
+                                <TableView fx:id="table" editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0"
+                                           maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0"
+                                           stylesheets="@../css/table_view.css">
                                     <columns>
                                         <TableColumn maxWidth="350.0" minWidth="350.0" text="From">
                                             <columns>
-                                                <TableColumn fx:id="originIdentifierColumn" maxWidth="175.0" minWidth="175.0" text="Name/Identifier" />
-                                                <TableColumn fx:id="originPhoneColumn" maxWidth="175.0" minWidth="175.0" text="Phone Number" />
+                                                <TableColumn fx:id="originIdentifierColumn" maxWidth="175.0"
+                                                             minWidth="175.0" text="Name/Identifier"/>
+                                                <TableColumn fx:id="originPhoneColumn" maxWidth="175.0" minWidth="175.0"
+                                                             text="Phone Number"/>
                                             </columns>
                                         </TableColumn>
                                         <TableColumn maxWidth="350.0" minWidth="350.0" text="To">
                                             <columns>
-                                                <TableColumn fx:id="destinationIdentifierColumn" maxWidth="175.0" minWidth="175.0" text="Name/Identifier" />
-                                                <TableColumn fx:id="destinationPhoneColumn" maxWidth="175.0" minWidth="175.0" text="Phone Number" />
+                                                <TableColumn fx:id="destinationIdentifierColumn" maxWidth="175.0"
+                                                             minWidth="175.0" text="Name/Identifier"/>
+                                                <TableColumn fx:id="destinationPhoneColumn" maxWidth="175.0"
+                                                             minWidth="175.0" text="Phone Number"/>
                                             </columns>
                                         </TableColumn>
-                                        <TableColumn fx:id="dateColumn" maxWidth="185.0" minWidth="185.0" text="Date" />
-                                        <TableColumn fx:id="timeColumn" maxWidth="185.0" minWidth="185.0" text="Time" />
-                                        <TableColumn fx:id="typeColumn" maxWidth="185.0" minWidth="185.0" text="Call Type" />
-                                        <TableColumn fx:id="durationColumn" maxWidth="185.0" minWidth="185.0" text="Duration" />
+                                        <TableColumn fx:id="dateColumn" maxWidth="185.0" minWidth="185.0" text="Date"/>
+                                        <TableColumn fx:id="timeColumn" maxWidth="185.0" minWidth="185.0" text="Time"/>
+                                        <TableColumn fx:id="typeColumn" maxWidth="185.0" minWidth="185.0"
+                                                     text="Type Of Call"/>
+                                        <TableColumn fx:id="durationColumn" maxWidth="185.0" minWidth="185.0"
+                                                     text="Duration"/>
                                     </columns>
                                     <columnResizePolicy>
-                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                                     </columnResizePolicy>
                                 </TableView>
                                 <VBox prefHeight="92.0" prefWidth="1458.0">
                                     <children>
                                         <HBox prefHeight="30.0" prefWidth="1458.0" spacing="7.0">
                                             <children>
-                                                <Region HBox.hgrow="ALWAYS" />
-                                                <Button fx:id="save_button" mnemonicParsing="false" onAction="#exportCSV" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn">
-                                                    <tooltip>
-                                                        <Tooltip text="Press to export the report" />
-                                                    </tooltip>
-                                                </Button>
-                                                <Button fx:id="attach_button" mnemonicParsing="false" onAction="#importFile" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn">
-                                                    <tooltip>
-                                                        <Tooltip text="Press to attach the file" />
-                                                    </tooltip>
-                                                </Button>
-                                                <Button id="addCall" mnemonicParsing="false" onAction="#addCall" prefHeight="25.0" prefWidth="27.0" styleClass="filter_btn">
+                                                <Region HBox.hgrow="ALWAYS"/>
+                                                <Button fx:id="save_button" mnemonicParsing="false"
+                                                        onAction="#exportCSV" prefHeight="27.0" prefWidth="27.0"
+                                                        styleClass="filter_btn"/>
+                                                <Button fx:id="attach_button" mnemonicParsing="false"
+                                                        onAction="#importFile" prefHeight="27.0" prefWidth="27.0"
+                                                        styleClass="filter_btn"/>
+                                                <Button id="addCall" mnemonicParsing="false" onAction="#addCall"
+                                                        prefHeight="25.0" prefWidth="27.0" styleClass="filter_btn">
                                                     <HBox.margin>
-                                                        <Insets right="1.0" />
+                                                        <Insets right="1.0"/>
                                                     </HBox.margin>
-                                                    <tooltip>
-                                                        <Tooltip text="Press to add table row / call record" />
-                                                    </tooltip>
                                                 </Button>
-                                                <Button fx:id="delete_button" mnemonicParsing="false" onAction="#deleteCall" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn">
-                                                    <tooltip>
-                                                        <Tooltip text="Press to delete table row / call record" />
-                                                    </tooltip>
-                                                </Button>
-                                                <Button fx:id="reload_button" mnemonicParsing="false" onAction="#update" prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn">
-                                                    <tooltip>
-                                                        <Tooltip text="Press to reload the table from the server" />
-                                                    </tooltip>
-                                                </Button>
+                                                <Button fx:id="delete_button" mnemonicParsing="false"
+                                                        onAction="#deleteCall" prefHeight="27.0" prefWidth="27.0"
+                                                        styleClass="filter_btn"/>
+                                                <Button fx:id="reload_button" mnemonicParsing="false" onAction="#update"
+                                                        prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn"/>
                                             </children>
                                             <padding>
-                                                <Insets bottom="2.0" left="2.0" right="4.0" top="2.0" />
+                                                <Insets bottom="2.0" left="2.0" right="4.0" top="2.0"/>
                                             </padding>
                                         </HBox>
                                         <HBox prefHeight="46.0" prefWidth="1458.0">
                                             <children>
-                                                <TextField fx:id="searchBar" prefHeight="30.0" prefWidth="423.0" promptText="keyword..." />
-                                                <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
+                                                <TextField fx:id="searchBar" prefHeight="30.0" prefWidth="423.0"
+                                                           promptText="keyword..."/>
+                                                <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0"
+                                                        prefHeight="29.0" prefWidth="61.0" styleClass="btn"
+                                                        stylesheets="@../css/table.css" text="search"
+                                                        textAlignment="CENTER">
                                                     <font>
-                                                        <Font name="Calibri Bold" size="14.0" />
+                                                        <Font name="Calibri Bold" size="14.0"/>
                                                     </font>
-                                                    <tooltip>
-                                                        <Tooltip text="Press to search the table" />
-                                                    </tooltip>
                                                 </Button>
-                                                <DatePicker fx:id="startDate" onAction="#getStartDate" promptText="Start Date">
+                                                <DatePicker fx:id="startDate" onAction="#getStartDate"
+                                                            promptText="Start Date">
                                                     <HBox.margin>
-                                                        <Insets left="20.0" />
+                                                        <Insets left="20.0"/>
                                                     </HBox.margin>
-                                                    <tooltip>
-                                                        <Tooltip text="Press to select the star date to filter results" />
-                                                    </tooltip>
                                                 </DatePicker>
-                                                <DatePicker fx:id="endDate" onAction="#getEndDate" promptText="End Date">
+                                                <DatePicker fx:id="endDate" onAction="#getEndDate"
+                                                            promptText="End Date">
                                                     <HBox.margin>
-                                                        <Insets left="20.0" />
+                                                        <Insets left="20.0"/>
                                                     </HBox.margin>
-                                                    <tooltip>
-                                                        <Tooltip text="Press to select the end date to filter results" />
-                                                    </tooltip>
                                                 </DatePicker>
                                             </children>
                                             <padding>
-                                                <Insets left="45.0" top="8.0" />
+                                                <Insets left="45.0" top="8.0"/>
                                             </padding>
                                         </HBox>
                                     </children>
                                 </VBox>
                             </children>
                             <opaqueInsets>
-                                <Insets />
+                                <Insets/>
                             </opaqueInsets>
                         </Pane>
                     </children>

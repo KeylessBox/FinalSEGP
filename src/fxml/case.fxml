@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.Tooltip?>
 <HBox prefHeight="38.0" prefWidth="230.0" styleClass="custom_hbox" stylesheets="@../css/case.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Pane prefHeight="38.0" prefWidth="2.0" styleClass="indicator" stylesheets="@../css/case.css">
@@ -62,11 +63,17 @@
                     <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="8.0" />
                     </HBox.margin>
+                    <tooltip>
+                        <Tooltip text="Press to edit the case" />
+                    </tooltip>
                 </Button>
                 <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="20.0" styleClass="button_delete" stylesheets="@../css/case.css">
                     <HBox.margin>
                         <Insets bottom="2.0" left="2.0" right="2.0" top="8.0" />
                     </HBox.margin>
+                    <tooltip>
+                        <Tooltip text="Press to delete the case" />
+                    </tooltip>
                 </Button>
             </children>
             <padding>

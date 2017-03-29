@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Tooltip?>
 <Pane id="note_pane" stylesheets="@../css/notes.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox id="note_box" prefHeight="320.0" prefWidth="200.0" style="-fx-cursor: default">
@@ -17,8 +18,16 @@
                <children>
                   <Label prefHeight="24.0" prefWidth="132.0" text="Note Name Demo" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button id="delete_note" mnemonicParsing="false" style="-fx-cursor: default" />
-                  <Button id="close_note" mnemonicParsing="false" style="-fx-cursor: default" />
+                  <Button id="delete_note" mnemonicParsing="false" style="-fx-cursor: default">
+                     <tooltip>
+                        <Tooltip text="Press to delete note" />
+                     </tooltip>
+                  </Button>
+                  <Button id="close_note" mnemonicParsing="false" style="-fx-cursor: default" >
+                     <tooltip>
+                        <Tooltip text="Press to save changes to the note" />
+                     </tooltip>
+                  </Button>
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
