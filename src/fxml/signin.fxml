@@ -12,7 +12,7 @@
 <!-- Anchor Pane-->
 <!-- -->
 
-<AnchorPane minHeight="400" minWidth="500" opacity="1.0" styleClass="root" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
+<AnchorPane minHeight="400" minWidth="500" opacity="1.0" styleClass="root" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignController">
     <children>
         <!-- Default image for now -->
         <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="200.0" layoutY="106.0" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="106.0">

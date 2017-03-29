@@ -1,5 +1,5 @@
 
-.custom_hbox {
+.custom_signIn {
     -fx-background-image: url("../res/login/SignWindow.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 420 580;
@@ -8,6 +8,20 @@
     -fx-border-color: transparent;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 1, 0, 0, 0);
     -fx-opacity: 1;
+}
+.custom_signUp {
+    -fx-background-image: url("../res/login/SignUpWindow.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 420 580;
+    -fx-pref-size: 420 580;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 1, 0, 0, 0);
+    -fx-opacity: 1;
+}
+
+.custom_moving{
+    -fx-background-color: #8aa8d3;
 }
 
 .button.button_createAccount {

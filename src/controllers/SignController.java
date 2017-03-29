@@ -19,7 +19,15 @@ import java.io.IOException;
 /**
  * Controller for login
  */
-public class LoginController {
+public class SignController {
+
+    
+
+
+
+
+
+
 
 
     @FXML
