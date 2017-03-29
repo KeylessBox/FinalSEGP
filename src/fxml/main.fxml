@@ -1,57 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
-<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
-<BorderPane fx:id="root" minHeight="1000.0" minWidth="1795.0" prefHeight="1000.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+<BorderPane fx:id="root" minHeight="1000.0" minWidth="1795.0" prefHeight="1000.0" styleClass="root"
+            stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
-        <BorderPane fx:id="menubar" prefHeight="42.0" prefWidth="1766.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
+        <BorderPane fx:id="menubar" prefHeight="42.0" prefWidth="1766.0" styleClass="upline"
+                    stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
             <center>
-                <Label fx:id="caseTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="806.0" layoutY="2.0" prefHeight="38.0" prefWidth="300.0" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                <Label fx:id="caseTitle" alignment="CENTER" contentDisplay="CENTER" layoutX="806.0" layoutY="2.0"
+                       prefHeight="38.0" prefWidth="300.0" textAlignment="CENTER" textFill="WHITE"
+                       BorderPane.alignment="CENTER">
                     <font>
-                        <Font size="26.0" />
+                        <Font size="26.0"/>
                     </font>
                 </Label>
             </center>
             <right>
                 <Pane layoutX="1611.0" layoutY="-2.0" prefHeight="43.0" prefWidth="184.0">
                     <children>
-                        <MenuBar depthTest="DISABLE" layoutX="-2.0" layoutY="1.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="135.0">
+                        <MenuBar depthTest="DISABLE" layoutX="-2.0" layoutY="1.0" nodeOrientation="RIGHT_TO_LEFT"
+                                 prefHeight="42.0" prefWidth="135.0">
                             <menus>
                                 <Menu fx:id="settings_btn" mnemonicParsing="false">
                                     <graphic>
                                         <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="1710.0" layoutY="8.0">
                                             <image>
-                                                <Image url="@../res/icons/settings_icon.png" />
+                                                <Image url="@../res/icons/settings_icon.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <items>
                                         <MenuItem mnemonicParsing="false">
                                             <graphic>
-                                                <Pane minHeight="340" minWidth="450" nodeOrientation="LEFT_TO_RIGHT" styleClass="settings_bar" stylesheets="@../css/main_stage.css">
+                                                <Pane minHeight="340" minWidth="450" nodeOrientation="LEFT_TO_RIGHT"
+                                                      styleClass="settings_bar" stylesheets="@../css/main_stage.css">
                                                 </Pane>
                                             </graphic>
                                         </MenuItem>
@@ -61,7 +51,7 @@
                                     <graphic>
                                         <ImageView fitHeight="15.0" fitWidth="15.0">
                                             <image>
-                                                <Image url="@../res/icons/add_icon.png" />
+                                                <Image url="@../res/icons/add_icon.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -70,7 +60,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/coming_soon_sub_menu.png" />
+                                                        <Image url="@../res/icons/coming_soon_sub_menu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -79,7 +69,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/manual_sub_menu.png" />
+                                                        <Image url="@../res/icons/manual_sub_menu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -88,7 +78,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/extra_sub_menu.png" />
+                                                        <Image url="@../res/icons/extra_sub_menu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -99,23 +89,29 @@
                                     <graphic>
                                         <ImageView fitHeight="15.0" fitWidth="15.0">
                                             <image>
-                                                <Image url="@../res/icons/search_icon.png" />
+                                                <Image url="@../res/icons/search_icon.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <items>
                                         <MenuItem mnemonicParsing="false">
                                             <graphic>
-                                                <Pane minHeight="80" minWidth="300" nodeOrientation="LEFT_TO_RIGHT" styleClass="search_bar" stylesheets="@../css/main_stage.css">
+                                                <Pane minHeight="80" minWidth="300" nodeOrientation="LEFT_TO_RIGHT"
+                                                      styleClass="search_bar" stylesheets="@../css/main_stage.css">
                                                     <children>
-                                                        <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0" prefWidth="169.0" promptText="keyword...">
+                                                        <TextField layoutX="56.0" layoutY="28.0" prefHeight="30.0"
+                                                                   prefWidth="169.0" promptText="keyword...">
                                                             <tooltip>
-                                                                <Tooltip text="This feature will search through entire application (Developing)" />
+                                                                <Tooltip
+                                                                        text="This feature will search through entire application (Developing)"/>
                                                             </tooltip>
                                                         </TextField>
-                                                        <Button contentDisplay="CENTER" layoutX="225.0" layoutY="28.0" prefHeight="29.0" prefWidth="61.0" text="search" textAlignment="CENTER">
+                                                        <Button contentDisplay="CENTER" layoutX="225.0" layoutY="28.0"
+                                                                prefHeight="29.0" prefWidth="61.0" text="search"
+                                                                textAlignment="CENTER">
                                                             <tooltip>
-                                                                <Tooltip text="Press to search through entire application (Developing)" />
+                                                                <Tooltip
+                                                                        text="Press to search through entire application (Developing)"/>
                                                             </tooltip>
                                                         </Button>
                                                     </children>
@@ -128,7 +124,7 @@
                                     <graphic>
                                         <ImageView fitHeight="15.0" fitWidth="15.0">
                                             <image>
-                                                <Image url="@../res/icons/user_icon.png" />
+                                                <Image url="@../res/icons/user_icon.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -137,7 +133,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/settins_sub_menu.png" />
+                                                        <Image url="@../res/icons/settins_sub_menu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -146,7 +142,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/messages_sub_menu.png" />
+                                                        <Image url="@../res/icons/messages_sub_menu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -155,7 +151,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/logoff_sub_menu.png" />
+                                                        <Image url="@../res/icons/logoff_sub_menu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -164,21 +160,21 @@
                                 </Menu>
                             </menus>
                             <opaqueInsets>
-                                <Insets />
+                                <Insets/>
                             </opaqueInsets>
                             <padding>
-                                <Insets top="5.0" />
+                                <Insets top="5.0"/>
                             </padding>
                             <cursor>
-                                <Cursor fx:constant="CLOSED_HAND" />
+                                <Cursor fx:constant="CLOSED_HAND"/>
                             </cursor>
                         </MenuBar>
                         <ImageView fitHeight="32.0" fitWidth="34.0" layoutX="140.0" layoutY="6.0">
                             <image>
-                                <Image url="@../res/icons/logoMain.png" />
+                                <Image url="@../res/icons/logoMain.png"/>
                             </image>
                             <effect>
-                                <DropShadow radius="4.875" width="0.5" />
+                                <DropShadow radius="4.875" width="0.5"/>
                             </effect>
                         </ImageView>
                     </children>
@@ -191,7 +187,8 @@
             <children>
                 <Pane layoutX="18.0" layoutY="95.0">
                     <children>
-                        <ScrollPane hbarPolicy="NEVER" layoutX="2.0" layoutY="2.0" maxHeight="840.0" prefWidth="228.0" stylesheets="@../css/cases.css" vbarPolicy="NEVER">
+                        <ScrollPane hbarPolicy="NEVER" layoutX="2.0" layoutY="2.0" maxHeight="840.0" prefWidth="228.0"
+                                    stylesheets="@../css/cases.css" vbarPolicy="NEVER">
                             <content>
                                 <VBox fx:id="casesContainer" prefWidth="228.0" spacing="0">
                                     <children>
@@ -199,43 +196,48 @@
                                 </VBox>
                             </content>
                             <padding>
-                                <Insets top="2.0" />
+                                <Insets top="2.0"/>
 
                             </padding>
                         </ScrollPane>
                     </children>
                 </Pane>
-                <Pane layoutX="20.0" layoutY="20.0" prefHeight="77.0" prefWidth="228.0" styleClass="up" stylesheets="@../css/cases.css">
+                <Pane layoutX="20.0" layoutY="20.0" prefHeight="77.0" prefWidth="228.0" styleClass="up"
+                      stylesheets="@../css/cases.css">
                     <children>
-                        <Button fx:id="test" layoutX="190.0" layoutY="-5.0" onAction="#addCase" stylesheets="@../css/cases.css">
+                        <Button fx:id="test" layoutX="190.0" layoutY="-5.0" onAction="#addCase"
+                                stylesheets="@../css/cases.css">
                             <tooltip>
-                                <Tooltip text="Press to add new case" />
+                                <Tooltip text="Press to add new case"/>
                             </tooltip>
                         </Button>
                         <HBox layoutX="8.0" layoutY="40.0" prefHeight="20.0" prefWidth="180.0">
                             <children>
-                                <ToggleButton fx:id="allToggleBtn" prefHeight="25.0" prefWidth="56.0" selected="true" styleClass="first" stylesheets="@../css/cases.css" text="All" textAlignment="CENTER">
+                                <ToggleButton fx:id="allToggleBtn" prefHeight="25.0" prefWidth="56.0" selected="true"
+                                              styleClass="first" stylesheets="@../css/cases.css" text="All"
+                                              textAlignment="CENTER">
                                     <font>
-                                        <Font size="10.0" />
+                                        <Font size="10.0"/>
                                     </font>
                                     <tooltip>
-                                        <Tooltip text="Press to show all cases" />
+                                        <Tooltip text="Press to show all cases"/>
                                     </tooltip>
                                 </ToggleButton>
                                 <ToggleButton fx:id="newToggleBtn" prefHeight="25.0" prefWidth="67.0" text="New">
                                     <font>
-                                        <Font size="10.0" />
+                                        <Font size="10.0"/>
                                     </font>
                                     <tooltip>
-                                        <Tooltip text="Press to show cases that are New" />
+                                        <Tooltip text="Press to show cases that are New"/>
                                     </tooltip>
                                 </ToggleButton>
-                                <ToggleButton fx:id="doneToggleBtn" prefHeight="25.0" prefWidth="67.0" styleClass="last" stylesheets="@../css/cases.css" text="Done">
+                                <ToggleButton fx:id="doneToggleBtn" prefHeight="25.0" prefWidth="67.0" styleClass="last"
+                                              stylesheets="@../css/cases.css" text="Done">
                                     <font>
-                                        <Font size="10.0" />
+                                        <Font size="10.0"/>
                                     </font>
                                     <tooltip>
-                                        <Tooltip text="Press to show cases that are Done" />
+                                        <Tooltip text="Press to show cases that are Done"/>
                                     </tooltip>
                                 </ToggleButton>
                             </children>
@@ -248,52 +250,61 @@
     <center>
         <Pane maxWidth="1470.0" prefHeight="958.0" prefWidth="1450.0" BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets left="15.0" top="20.0" />
+                <Insets left="15.0" top="20.0"/>
             </BorderPane.margin>
             <children>
                 <VBox fillWidth="false" layoutX="9.0" minWidth="1444.0" prefHeight="958.0" prefWidth="1444.0">
                     <children>
-                        <Pane fx:id="filters_box" maxWidth="1678.0" minWidth="1481.0" prefHeight="170.0" prefWidth="1481.0" stylesheets="@../css/filters.css">
+                        <Pane fx:id="filters_box" maxWidth="1678.0" minWidth="1481.0" prefHeight="170.0"
+                              prefWidth="1481.0" stylesheets="@../css/filters.css">
                             <children>
-                                <ScrollPane fx:id="filters_scroll" layoutY="30.0" maxWidth="1458.0" minWidth="1458.0" prefHeight="125.0" prefWidth="1458.0">
+                                <ScrollPane fx:id="filters_scroll" layoutY="30.0" maxWidth="1458.0" minWidth="1458.0"
+                                            prefHeight="125.0" prefWidth="1458.0">
                                     <content>
                                         <HBox fx:id="filtersBox" spacing="20.0">
                                             <children>
                                             </children>
                                             <padding>
-                                                <Insets left="28.0" right="20.0" top="13.0" />
+                                                <Insets left="28.0" right="20.0" top="13.0"/>
                                             </padding>
                                         </HBox>
                                     </content>
                                 </ScrollPane>
                                 <Pane>
                                     <children>
-                                        <HBox fx:id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0" prefWidth="1458.0" spacing="2.0">
+                                        <HBox fx:id="filters_bar" maxWidth="1458.0" minHeight="30.0" minWidth="1458.0"
+                                              prefWidth="1458.0" spacing="2.0">
                                             <children>
-                                                <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
-                                                <Region prefHeight="10.0" prefWidth="1274.0" />
-                                                <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false" onAction="#addSuspect" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn" stylesheets="@../css/filters.css">
+                                                <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0"
+                                                      prefWidth="76.0"/>
+                                                <Region prefHeight="10.0" prefWidth="1274.0"/>
+                                                <Button fx:id="add_red_btn" minWidth="0.0" mnemonicParsing="false"
+                                                        onAction="#addSuspect" prefHeight="25.0" prefWidth="25.0"
+                                                        styleClass="filter_btn" stylesheets="@../css/filters.css">
                                                     <HBox.margin>
-                                                        <Insets left="1.0" top="1.0" />
+                                                        <Insets left="1.0" top="1.0"/>
                                                     </HBox.margin>
                                                     <tooltip>
-                                                        <Tooltip text="Press to add suspect filter" />
+                                                        <Tooltip text="Press to add suspect filter"/>
                                                     </tooltip>
                                                 </Button>
-                                                <Button fx:id="add_green_btn" mnemonicParsing="false" onAction="#addVictim" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
+                                                <Button fx:id="add_green_btn" mnemonicParsing="false"
+                                                        onAction="#addVictim" prefHeight="25.0" prefWidth="25.0"
+                                                        styleClass="filter_btn">
                                                     <HBox.margin>
-                                                        <Insets left="7.0" top="1.0" />
+                                                        <Insets left="7.0" top="1.0"/>
                                                     </HBox.margin>
                                                     <tooltip>
-                                                        <Tooltip text="Press to add victim filter" />
+                                                        <Tooltip text="Press to add victim filter"/>
                                                     </tooltip>
                                                 </Button>
-                                                <Button fx:id="add_filters" mnemonicParsing="false" onAction="#filter" prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
+                                                <Button fx:id="add_filters" mnemonicParsing="false" onAction="#filter"
+                                                        prefHeight="25.0" prefWidth="25.0" styleClass="filter_btn">
                                                     <HBox.margin>
-                                                        <Insets left="6.0" top="2.0" />
+                                                        <Insets left="6.0" top="2.0"/>
                                                     </HBox.margin>
                                                     <tooltip>
-                                                        <Tooltip text="Press to apply filters" />
+                                                        <Tooltip text="Press to apply filters"/>
                                                     </tooltip>
                                                 </Button>
                                             </children>
@@ -350,21 +361,40 @@
                                                 <Region HBox.hgrow="ALWAYS"/>
                                                 <Button fx:id="save_button" mnemonicParsing="false"
                                                         onAction="#exportCSV" prefHeight="27.0" prefWidth="27.0"
-                                                        styleClass="filter_btn"/>
+                                                        styleClass="filter_btn">
+                                                    <tooltip>
+                                                        <Tooltip text="Press to export the report"/>
+                                                    </tooltip>
+                                                </Button>
                                                 <Button fx:id="attach_button" mnemonicParsing="false"
                                                         onAction="#importFile" prefHeight="27.0" prefWidth="27.0"
-                                                        styleClass="filter_btn"/>
+                                                        styleClass="filter_btn">
+                                                    <tooltip>
+                                                        <Tooltip text="Press to attach the file"/>
+                                                    </tooltip>
+                                                </Button>
                                                 <Button id="addCall" mnemonicParsing="false" onAction="#addCall"
                                                         prefHeight="25.0" prefWidth="27.0" styleClass="filter_btn">
                                                     <HBox.margin>
                                                         <Insets right="1.0"/>
                                                     </HBox.margin>
+                                                    <tooltip>
+                                                        <Tooltip text="Press to add table row / call record"/>
+                                                    </tooltip>
                                                 </Button>
                                                 <Button fx:id="delete_button" mnemonicParsing="false"
                                                         onAction="#deleteCall" prefHeight="27.0" prefWidth="27.0"
-                                                        styleClass="filter_btn"/>
+                                                        styleClass="filter_btn">
+                                                    <tooltip>
+                                                        <Tooltip text="Press to delete table row / call record"/>
+                                                    </tooltip>
+                                                </Button>
                                                 <Button fx:id="reload_button" mnemonicParsing="false" onAction="#update"
-                                                        prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn"/>
+                                                        prefHeight="27.0" prefWidth="27.0" styleClass="filter_btn">
+                                                    <tooltip>
+                                                        <Tooltip text="Press to reload the table from the server"/>
+                                                    </tooltip>
+                                                </Button>
                                             </children>
                                             <padding>
                                                 <Insets bottom="2.0" left="2.0" right="4.0" top="2.0"/>
@@ -374,25 +404,29 @@
                                             <children>
                                                 <TextField fx:id="searchBar" prefHeight="30.0" prefWidth="423.0"
                                                            promptText="keyword..."/>
-                                                <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0"
-                                                        prefHeight="29.0" prefWidth="61.0" styleClass="btn"
-                                                        stylesheets="@../css/table.css" text="search"
-                                                        textAlignment="CENTER">
+                                                <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="29.0" prefWidth="61.0" styleClass="btn" stylesheets="@../css/table.css" text="search" textAlignment="CENTER">
                                                     <font>
-                                                        <Font name="Calibri Bold" size="14.0"/>
+                                                        <Font name="Calibri Bold" size="14.0" />
                                                     </font>
+                                                    <tooltip>
+                                                        <Tooltip text="Press to search the table" />
+                                                    </tooltip>
                                                 </Button>
-                                                <DatePicker fx:id="startDate" onAction="#getStartDate"
-                                                            promptText="Start Date">
+                                                <DatePicker fx:id="startDate" onAction="#getStartDate" promptText="Start Date">
                                                     <HBox.margin>
-                                                        <Insets left="20.0"/>
+                                                        <Insets left="20.0" />
                                                     </HBox.margin>
+                                                    <tooltip>
+                                                        <Tooltip text="Press to select the star date to filter results" />
+                                                    </tooltip>
                                                 </DatePicker>
-                                                <DatePicker fx:id="endDate" onAction="#getEndDate"
-                                                            promptText="End Date">
+                                                <DatePicker fx:id="endDate" onAction="#getEndDate" promptText="End Date">
                                                     <HBox.margin>
-                                                        <Insets left="20.0"/>
+                                                        <Insets left="20.0" />
                                                     </HBox.margin>
+                                                    <tooltip>
+                                                        <Tooltip text="Press to select the end date to filter results" />
+                                                    </tooltip>
                                                 </DatePicker>
                                             </children>
                                             <padding>
@@ -412,17 +446,20 @@
         </Pane>
     </center>
     <right>
-        <Pane maxWidth="50.0" prefHeight="934.0" prefWidth="50.0" stylesheets="@../css/notes.css" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+        <Pane maxWidth="50.0" prefHeight="934.0" prefWidth="50.0" stylesheets="@../css/notes.css"
+              BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8.0.111"
+              xmlns:fx="http://javafx.com/fxml/1">
             <children>
                 <VBox fx:id="notes_vbox" prefHeight="938.0" prefWidth="50.0">
                     <children>
-                        <ScrollPane fx:id="notes_scroll_pane" hbarPolicy="NEVER" prefHeight="912.0" prefWidth="50.0" vbarPolicy="NEVER">
+                        <ScrollPane fx:id="notes_scroll_pane" hbarPolicy="NEVER" prefHeight="912.0" prefWidth="50.0"
+                                    vbarPolicy="NEVER">
                             <content>
                                 <VBox fx:id="notes_box" prefWidth="50.0" spacing="10.0">
                                     <children>
                                     </children>
                                     <padding>
-                                        <Insets left="10.0" top="10.0" />
+                                        <Insets left="10.0" top="10.0"/>
                                     </padding>
                                 </VBox>
                             </content>
@@ -430,35 +467,37 @@
                         <HBox fx:id="notes_settings_bar" prefHeight="25.0" prefWidth="50.0">
                             <children>
 
-                                <Button fx:id="notes_add_btn" blendMode="SRC_ATOP" mnemonicParsing="false" onAction="#addNote">
+                                <Button fx:id="notes_add_btn" blendMode="SRC_ATOP" mnemonicParsing="false"
+                                        onAction="#addNote">
                                     <HBox.margin>
-                                        <Insets bottom="2.0" left="4.0" />
+                                        <Insets bottom="2.0" left="4.0"/>
                                     </HBox.margin>
                                     <tooltip>
-                                        <Tooltip text="Press to add note" />
+                                        <Tooltip text="Press to add note"/>
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="notes_bar_settings_btn" blendMode="SCREEN" mnemonicParsing="false" onAction="#notes_settings">
+                                <Button fx:id="notes_bar_settings_btn" blendMode="SCREEN" mnemonicParsing="false"
+                                        onAction="#notes_settings">
                                     <HBox.margin>
-                                        <Insets bottom="2.0" left="6.0" />
+                                        <Insets bottom="2.0" left="6.0"/>
                                     </HBox.margin>
                                     <tooltip>
-                                        <Tooltip text="Press to open settings for notes" />
+                                        <Tooltip text="Press to open settings for notes"/>
                                     </tooltip>
                                 </Button>
                             </children>
                             <VBox.margin>
-                                <Insets />
+                                <Insets/>
                             </VBox.margin>
                             <padding>
-                                <Insets top="3.0" />
+                                <Insets top="3.0"/>
                             </padding>
                         </HBox>
                     </children>
                 </VBox>
             </children>
             <BorderPane.margin>
-                <Insets />
+                <Insets/>
             </BorderPane.margin>
         </Pane>
     </right>
