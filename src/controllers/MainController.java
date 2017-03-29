@@ -123,24 +123,6 @@ public class MainController {
     }
 
     /**
-     * Reads user details from the file created after log in
-     */
-    @FXML
-    public void setUserLabel() {
-        try {
-            BufferedReader read = new BufferedReader(new FileReader(new File("src/res/tmp.txt")));
-            String rd = read.readLine();
-            rd = User.userGetName(rd);
-            rd = rd.replace(" ", "\n");
-            userLabel.setText(rd);
-            read.close();
-        } catch (IOException e) {
-        } finally {
-            new File("src/res/tmp.txt").delete();
-        }
-    }
-
-    /**
      * Loads the table with data from database
      *
      * @param caseID the case id whose data is to be shown
@@ -1127,7 +1109,6 @@ public class MainController {
             loadTable(caseID);
             loadFiles(caseID);
         });
-        setUserLabel();
         loadCases();
     }
 

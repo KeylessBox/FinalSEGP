@@ -26,14 +26,8 @@ public class LoginController {
     private TextField username;
     @FXML
     private TextField pw;
-
     public String user = "";
-    public MainController main = new MainController();
-    /**
-     * The sign up process
-     *
-     * @param event
-     */
+
     @FXML
     protected void signUp(ActionEvent event)throws IOException{
 
