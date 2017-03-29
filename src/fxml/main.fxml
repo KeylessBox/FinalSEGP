@@ -40,7 +40,7 @@
                     <children>
                         <MenuBar depthTest="DISABLE" layoutX="-2.0" layoutY="1.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="135.0">
                             <menus>
-                                <Menu id="settings_btn" mnemonicParsing="false">
+                                <Menu fx:id="settings_btn" mnemonicParsing="false">
                                     <graphic>
                                         <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="1710.0" layoutY="8.0">
                                             <image>
@@ -173,7 +173,7 @@
                                 <Cursor fx:constant="CLOSED_HAND" />
                             </cursor>
                         </MenuBar>
-                        <ImageView fitHeight="40.0" fitWidth="43.0" layoutX="136.0" layoutY="1.0">
+                        <ImageView fitHeight="32.0" fitWidth="34.0" layoutX="140.0" layoutY="6.0">
                             <image>
                                 <Image url="@../res/icons/logoMain.png" />
                             </image>
@@ -311,7 +311,7 @@
                                 <Insets top="30.0" />
                             </VBox.margin>
                             <children>
-                                <TableView fx:id="table" editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
+                                <TableView fx:id="table" editable="true" layoutX="14.0" layoutY="71.0" maxHeight="800.0" maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0" stylesheets="@../css/table_view.css">
                                     <columns>
                                         <TableColumn maxWidth="350.0" minWidth="350.0" text="From">
                                             <columns>
