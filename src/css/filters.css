@@ -117,3 +117,6 @@
 .hide-thumb .scroll-bar:horizontal .thumb {
     -fx-background-color: transparent;
 }
+.context-menu {
+    -fx-background-color: #8cafda;
+}

@@ -71,4 +71,7 @@
 .button.button_delete:pressed{
 	-fx-opacity: 0.5;
 }
+.context-menu {
+	-fx-background-color: #8cafda;
+}
 
