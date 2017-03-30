@@ -232,6 +232,7 @@ public class MainController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        update();
     }
 
     /**
