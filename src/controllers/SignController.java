@@ -270,13 +270,64 @@ public class SignController {
             }, 2000, 25);
 
         } else {
+            try {
+                if (!LoginDB.checkUserDetails(username.getText(), pw.getText())) {
+                    /**
+                     * If the account details introduced are wrong
+                     * Alert Box is shown
+                     */
+                    ErrorMessage.setText("Login or password are incorrect!");
+                    ErrorMessage.setVisible(true);
+                    Timer animTimer = new Timer();
+                    animTimer.scheduleAtFixedRate(new TimerTask() {
+                        int i = 0;
 
-            if (!LoginDB.checkUserDetails(username.getText(), pw.getText())) {
-                /**
-                 * If the account details introduced are wrong
-                 * Alert Box is shown
-                 */
-                ErrorMessage.setText("Login or password are incorrect!");
+                        @Override
+                        public void run() {
+                            if (i < 100) {
+
+                            } else {
+                                ErrorMessage.setVisible(false);
+                                this.cancel();
+                            }
+                            i++;
+                        }
+
+                    }, 2000, 25);
+
+                } else {
+                    /**
+                     * If the account details entered are correct,
+                     * Program moves to the main Window
+                     * It passes the account details to a file (that will be soon deleted).
+                     */
+
+
+                    user = username.getText();
+                    PrintWriter writer = new PrintWriter(new File("src/res/tmp.txt"));
+                    writer.write(user);
+                    if (rember.isSelected()) {
+                        writer.write("\n" + pw.getText());
+                    }
+                    writer.close();
+                    /**
+                     * The connection to the main app
+                     */
+                    Node node = (Node) event.getSource();
+                    Stage stage = (Stage) node.getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));/* Exception */
+                    Scene scene = new Scene(root);
+
+                    stage.setScene(scene);
+                    stage.setWidth(1815);
+                    stage.setHeight(1040);
+                    stage.centerOnScreen();
+                    stage.setResizable(true);
+
+                    stage.show();
+                }
+            }catch (Exception e){
+                ErrorMessage.setText("Database connection failed!");
                 ErrorMessage.setVisible(true);
                 Timer animTimer = new Timer();
                 animTimer.scheduleAtFixedRate(new TimerTask() {
@@ -294,37 +345,6 @@ public class SignController {
                     }
 
                 }, 2000, 25);
-
-            } else {
-                /**
-                 * If the account details entered are correct,
-                 * Program moves to the main Window
-                 * It passes the account details to a file (that will be soon deleted).
-                 */
-
-
-                user = username.getText();
-                PrintWriter writer = new PrintWriter(new File("src/res/tmp.txt"));
-                writer.write(user);
-                if (rember.isSelected()) {
-                    writer.write("\n" + pw.getText());
-                }
-                writer.close();
-                /**
-                 * The connection to the main app
-                 */
-                Node node = (Node) event.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
-                Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));/* Exception */
-                Scene scene = new Scene(root);
-
-                stage.setScene(scene);
-                stage.setWidth(1815);
-                stage.setHeight(1040);
-                stage.centerOnScreen();
-                stage.setResizable(true);
-
-                stage.show();
             }
         }
     }
