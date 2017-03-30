@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
@@ -29,7 +30,6 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sql.SQL;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.io.*;
 import java.text.ParseException;
@@ -1262,7 +1262,7 @@ public class MainController {
                         dateTime[0] = changeDateFormat(dateTime[0]);
                         data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
                                 dateTime[0], dateTime[1], dataElement[4], dataElement[5]));
-                    }else {
+                    } else {
                         dataElement[2] = changeDateFormat(dataElement[2]);
                         data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
                                 dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
@@ -1305,7 +1305,7 @@ public class MainController {
             Workbook workbook = getWorkbook(fileInputStream, filePath);
             Sheet datatypeSheet = workbook.getSheetAt(0);
             Iterator<Row> iterator = datatypeSheet.iterator();
-            boolean exception =false;
+            boolean exception = false;
             int isOnDatabase;                       // checks if column is recognized by database
             Cell currentCell;                       // cell with current information
             int[] tableHeader = new int[10];           // will hold the preferred order of the recognized headers from file
@@ -1349,7 +1349,7 @@ public class MainController {
                     dateTime[0] = changeDateFormat(dateTime[0]);
                     data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
                             dateTime[0], dateTime[1], dataElement[4], dataElement[5]));
-                }else {
+                } else {
                     dataElement[2] = changeDateFormat(dataElement[2]);
                     data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
                             dataElement[2], dataElement[3], dataElement[4], dataElement[5]));

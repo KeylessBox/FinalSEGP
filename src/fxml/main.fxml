@@ -31,7 +31,7 @@
                             <menus>
                                 <Menu fx:id="settings_btn" mnemonicParsing="false">
                                     <graphic>
-                                        <ImageView fitHeight="15.0" fitWidth="15.0" layoutX="1710.0" layoutY="8.0">
+                                        <ImageView fx:id="settings_view" fitHeight="15.0" fitWidth="15.0" layoutX="1710.0" layoutY="8.0">
                                             <image>
                                                 <Image url="@../res/icons/settings_icon.png"/>
                                             </image>
@@ -49,7 +49,7 @@
                                 </Menu>
                                 <Menu fx:id="add_btn" mnemonicParsing="false">
                                     <graphic>
-                                        <ImageView fitHeight="15.0" fitWidth="15.0">
+                                        <ImageView fx:id="add_view" fitHeight="15.0" fitWidth="15.0">
                                             <image>
                                                 <Image url="@../res/icons/add_icon.png"/>
                                             </image>
@@ -87,7 +87,7 @@
                                 </Menu>
                                 <Menu fx:id="search_btn" mnemonicParsing="false">
                                     <graphic>
-                                        <ImageView fitHeight="15.0" fitWidth="15.0">
+                                        <ImageView fx:id="search_view" fitHeight="15.0" fitWidth="15.0">
                                             <image>
                                                 <Image url="@../res/icons/search_icon.png"/>
                                             </image>
@@ -122,7 +122,7 @@
                                 </Menu>
                                 <Menu fx:id="user_btn" mnemonicParsing="false">
                                     <graphic>
-                                        <ImageView fitHeight="15.0" fitWidth="15.0">
+                                        <ImageView fx:id="user_view" fitHeight="15.0" fitWidth="15.0">
                                             <image>
                                                 <Image url="@../res/icons/user_icon.png"/>
                                             </image>
