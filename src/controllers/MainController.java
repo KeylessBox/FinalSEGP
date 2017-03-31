@@ -132,6 +132,7 @@ public class MainController {
      */
     public void loadTable(int caseID) {
         callsData = sql.loadCalls(caseID);  // takes the data from the database and puts it into an observable list
+        searchData = callsData;             // search data gets the default table items from callsData (usefull for export CSV/PDF)
         columnFactory.createOriginNameColumn(originIdentifierColumn); // builds the columns, without data
         columnFactory.createOriginColumn(originPhoneColumn);
         columnFactory.createDestinationNameColumn(destinationIdentifierColumn);
