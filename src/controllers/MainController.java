@@ -24,6 +24,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import modules.file_export.csvExport;
+import modules.file_export.pdfExport;
 import modules.table.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -1420,9 +1421,12 @@ public class MainController {
         }
     }
 
-    public void exportCSV() {
+    public void exportReport() {
 
-        csvExport bla = new csvExport();
+        csvExport csvExp = new csvExport();
+        pdfExport pdfExp = new pdfExport();
+
+
         File exports = new File(System.getProperty("user.dir"), "./reports");
         if (!exports.exists()) {
             exports.mkdirs();
@@ -1432,16 +1436,25 @@ public class MainController {
 
         //Set extension filter
         FileChooser.ExtensionFilter extFilterCSV = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+        fileChooser.getExtensionFilters().add(extFilterPDF);
         fileChooser.getExtensionFilters().add(extFilterCSV);
         fileChooser.setInitialFileName(caseTitle.getText().toString());
         fileChooser.setInitialDirectory(exports);
-
         //Show save file dialog
         try {
             File file = fileChooser.showSaveDialog(new Stage());
             String filePath = file.getPath();
+            if(filePath.endsWith(".csv")) {
 
-            bla.csvOut(filePath, searchData);
+                csvExp.csvOut(filePath, searchData);
+
+            }
+            else if(filePath.endsWith(".pdf")){
+
+                pdfExp.pdfOut(filePath,caseTitle.getText().toString() , searchData);
+
+            }
         } catch (Exception e) {
         }
     }
