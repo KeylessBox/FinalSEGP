@@ -360,7 +360,7 @@
                                             <children>
                                                 <Region HBox.hgrow="ALWAYS"/>
                                                 <Button fx:id="save_button" mnemonicParsing="false"
-                                                        onAction="#exportCSV" prefHeight="27.0" prefWidth="27.0"
+                                                        onAction="#exportReport" prefHeight="27.0" prefWidth="27.0"
                                                         styleClass="filter_btn">
                                                     <tooltip>
                                                         <Tooltip text="Press to export the report"/>

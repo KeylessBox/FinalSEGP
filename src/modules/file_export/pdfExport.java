@@ -17,7 +17,7 @@ import java.io.FileOutputStream;
 public class pdfExport {
     public static void pdfOut(String path, String caseName, ObservableList<CallRecord> searchData){
         Document document = new Document();
-        Rectangle rectangle = new Rectangle(PageSize.A4);
+        Rectangle rectangle = new Rectangle(PageSize.A4.rotate());
         document.setPageSize(rectangle);
         
         try {
