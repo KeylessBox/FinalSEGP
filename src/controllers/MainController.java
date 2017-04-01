@@ -13,6 +13,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -32,11 +37,15 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import sql.SQL;
 
+import java.awt.*;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by AndreiM on 2/1/2017.
@@ -1463,7 +1472,7 @@ public class MainController {
     @FXML
     public void openComingSoon() {
         try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/comingsoon.fxml"));
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
@@ -1506,6 +1515,7 @@ public class MainController {
 
     @FXML
     public void openExtra() {
+        /*
         try {
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
             Pane finalCaseObject = CaseObject;
@@ -1523,6 +1533,14 @@ public class MainController {
             root.getChildren().add(finalCaseObject);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        */
+        try {
+            Desktop.getDesktop().browse(new URI("http://www.bradford.ac.uk/business/"));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } catch (URISyntaxException e1) {
+            e1.printStackTrace();
         }
     }
 
@@ -1550,6 +1568,7 @@ public class MainController {
 
     @FXML
     public void openMessages() {
+        /*
         try {
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
             Pane finalCaseObject = CaseObject;
@@ -1567,7 +1586,15 @@ public class MainController {
             root.getChildren().add(finalCaseObject);
         } catch (IOException e) {
             e.printStackTrace();
+        }        */
+        try {
+            Desktop.getDesktop().browse(new URI("https://www.google.com/gmail/"));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } catch (URISyntaxException e1) {
+            e1.printStackTrace();
         }
+
     }
 
     @FXML
