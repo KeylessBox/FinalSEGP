@@ -42,7 +42,7 @@
                                         <Insets />
                                     </HBox.margin>
                                     <tooltip>
-                                        <Tooltip text="Press to delete the filter" />
+                                        <Tooltip text="Close the filter" />
                                     </tooltip>
                                 </Button>
                             </children>

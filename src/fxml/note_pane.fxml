@@ -20,12 +20,12 @@
                   <Region HBox.hgrow="ALWAYS" />
                   <Button id="delete_note" mnemonicParsing="false" style="-fx-cursor: default">
                      <tooltip>
-                        <Tooltip text="Press to delete note" />
+                        <Tooltip text="Delete note" />
                      </tooltip>
                   </Button>
                   <Button id="close_note" mnemonicParsing="false" style="-fx-cursor: default" >
                      <tooltip>
-                        <Tooltip text="Press to save changes to the note" />
+                        <Tooltip text="Save changes and close the note" />
                      </tooltip>
                   </Button>
                </children>

@@ -17,7 +17,7 @@
             <children>
                 <Button fx:id="closeExtra" layoutX="1236.0" layoutY="39.0" stylesheets="@../css/cases.css">
                     <tooltip>
-                        <Tooltip text="Press to close" />
+                        <Tooltip text="Close" />
                     </tooltip>
                 </Button>
             <Label contentDisplay="CENTER" layoutX="646.0" layoutY="38.0" prefHeight="28.0" prefWidth="171.0" text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true">

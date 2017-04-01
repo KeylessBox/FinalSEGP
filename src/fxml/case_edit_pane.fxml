@@ -29,7 +29,7 @@
                                         <ToggleGroup fx:id="custom" />
                                     </toggleGroup>
                                     <tooltip>
-                                        <Tooltip text="Press to change case to New" />
+                                        <Tooltip text="Change case status to New" />
                                     </tooltip>
                                 </ToggleButton>
                                 <ToggleButton id="custom2" mnemonicParsing="false" prefHeight="4.0" prefWidth="40.0" text="Done">
@@ -46,7 +46,7 @@
                                         <Insets top="2.0" />
                                     </HBox.margin>
                                     <tooltip>
-                                        <Tooltip text="Press to change case to Done" />
+                                        <Tooltip text="Change case status to Done" />
                                     </tooltip>
                                 </ToggleButton>
                             </children>
