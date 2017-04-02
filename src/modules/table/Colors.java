@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
  */
 public enum Colors {
     LIGHTRED (255, 204, 204),
-    LIGHTGREEN (230,255,230);
+    LIGHTGREEN (173,247,174);
 
     private final int r;
     private final int g;

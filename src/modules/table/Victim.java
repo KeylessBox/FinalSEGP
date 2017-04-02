@@ -13,6 +13,11 @@ public class Victim extends Person{
         super.phone = null;
     }
 
+    public Victim (String identifier, String id) {
+        super.identifier = identifier;
+        super.phone = null;
+        super.id = id;
+    }
     public Color getColor() {
         return color;
     }
