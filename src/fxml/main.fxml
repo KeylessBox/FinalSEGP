@@ -105,7 +105,7 @@
                                                 </ImageView>
                                             </graphic>
                                         </MenuItem>
-                                        <MenuItem mnemonicParsing="false" onAction="#openSubMenu">
+                                        <MenuItem mnemonicParsing="false" onAction="#openManual">
                                             <graphic>
                                                 <ImageView>
                                                     <image>

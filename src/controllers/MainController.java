@@ -1607,8 +1607,8 @@ public class MainController {
     }
 
     @FXML
-    public void openSubMenu() {
-        try {
+    public void openManual() {
+      /*  try {
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
@@ -1625,6 +1625,19 @@ public class MainController {
             root.getChildren().add(finalCaseObject);
         } catch (IOException e) {
             e.printStackTrace();
+        } */
+        File exports = new File(System.getProperty("user.dir"), "./reports");
+        String test = System.getProperty("user.dir");
+        System.out.println(test);
+        String manLoc = test + "\\Manual\\Manual.pdf";
+
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File(manLoc);
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
