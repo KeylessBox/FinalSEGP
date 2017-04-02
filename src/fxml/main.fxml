@@ -399,10 +399,13 @@
                                                         <Tooltip text="Select the ending date to filter results" />
                                                     </tooltip>
                                                 </DatePicker>
-                                    <Label fx:id="occurrences" alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="513.0" text="Occurrences: 0">
+                                    <Label fx:id="numOfRows" alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="210.0" text="Number of rows:">
                                        <font>
-                                          <Font size="15.0" />
+                                          <Font name="Calibri Light" size="18.0" />
                                        </font>
+                                       <HBox.margin>
+                                          <Insets left="303.0" />
+                                       </HBox.margin>
                                     </Label>
                                             </children>
                                             <padding>

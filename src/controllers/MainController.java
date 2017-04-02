@@ -18,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
@@ -118,7 +117,7 @@ public class MainController {
     @FXML
     protected BorderPane root;
     @FXML
-    protected Label occurrences;
+    protected Label numOfRows;
     SearchField searchTxt = new SearchField("");
 
     /**
@@ -134,12 +133,6 @@ public class MainController {
             filePath = filePath.replace("\\", "\\\\");
             importFile(filePath);
         }
-    }
-
-    //Updates the "occurrences" label
-    private void occurrUpdate(){
-        //occurrences label shows the size of the displayed table
-        occurrences.setText("Occurrences: " + table.getItems().size());
     }
 
     /**
@@ -162,8 +155,8 @@ public class MainController {
         table.setItems(callsData);  // adds the data into the table
         table.setEditable(true);
 
-        //updates the occurrences label to show the size of the displayed table
-        occurrUpdate();
+        //numOfRows label shows the size of the displayed table
+        numOfRows.setText("Number of rows: " + table.getItems().size());
     }
 
     public void createDeleteColumn(TableColumn deleteColumn) {
@@ -252,13 +245,11 @@ public class MainController {
             searchData = filterSearch(filterPhone(filterDates(0)));
             table.setItems(searchData);
 
-            //updates the occurrences label to show the size of the displayed table
-            occurrUpdate();
-
+            //numOfRows label shows the size of the displayed table
+            numOfRows.setText("Number of rows: " + table.getItems().size());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-      //  update();
     }
 
     /**
@@ -587,7 +578,6 @@ public class MainController {
                 sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                 casesContainer.getChildren().remove(finalCaseObj);
                 loadCases();
-
             });
             if (caseRecord.getStatus().equals("New")) {
                 caseStatus.setText("New");
@@ -786,10 +776,6 @@ public class MainController {
             if (record != null) {   // Checking if it's something there
                 sql.removeCall(Integer.parseInt(record.getCallID()));   // Delete from database part
                 callsData.remove(table.getSelectionModel().getSelectedItem());  // Remove from table part
-
-                //updates the occurrences label to show the size of the displayed table
-                occurrUpdate();
-                
                 System.out.println("DELETE: call " + record.getCallID());
             }
         }
@@ -947,10 +933,6 @@ public class MainController {
         System.out.println("ADD: call");
         table.scrollTo(cr);
         table.getSelectionModel().select(cr);
-
-        //updates the occurrences label to show the size of the displayed table
-        occurrUpdate();
-        
     }
 
     /**
@@ -1479,14 +1461,13 @@ public class MainController {
         try {
             File file = fileChooser.showSaveDialog(new Stage());
             String filePath = file.getPath();
-            if(filePath.endsWith(".csv")) {
+            if (filePath.endsWith(".csv")) {
 
                 csvExp.csvOut(filePath, searchData);
 
-            }
-            else if(filePath.endsWith(".pdf")){
+            } else if (filePath.endsWith(".pdf")) {
 
-                pdfExp.pdfOut(filePath,caseTitle.getText().toString() , searchData);
+                pdfExp.pdfOut(filePath, caseTitle.getText().toString(), searchData);
 
             }
         } catch (Exception e) {
@@ -1592,7 +1573,7 @@ public class MainController {
 
     @FXML
     public void openMessages() {
-        /*
+
         try {
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
             Pane finalCaseObject = CaseObject;
@@ -1603,21 +1584,15 @@ public class MainController {
             btn.setOnAction(event -> {
                 root.getChildren().remove(finalCaseObject);
             });
-            label.setText("Messages");
+            label.setText("Admin Pane");
             finalCaseObject.setLayoutX(250);
             finalCaseObject.setLayoutY(100);
             DragResizeMod.makeResizable(finalCaseObject, null);
             root.getChildren().add(finalCaseObject);
         } catch (IOException e) {
             e.printStackTrace();
-        }        */
-        try {
-            Desktop.getDesktop().browse(new URI("https://www.google.com/gmail/"));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } catch (URISyntaxException e1) {
-            e1.printStackTrace();
         }
+
 
     }
 
