@@ -136,6 +136,12 @@ public class MainController {
         }
     }
 
+    //Updates the "occurrences" label
+    private void occurrUpdate(){
+        //occurrences label shows the size of the displayed table
+        occurrences.setText("Occurrences: " + table.getItems().size());
+    }
+
     /**
      * Loads the table with data from database
      *
@@ -156,8 +162,8 @@ public class MainController {
         table.setItems(callsData);  // adds the data into the table
         table.setEditable(true);
 
-        //occurrences label shows the size of the displayed table
-        occurrences.setText("Occurrences: " + table.getItems().size());
+        //updates the occurrences label to show the size of the displayed table
+        occurrUpdate();
     }
 
     public void createDeleteColumn(TableColumn deleteColumn) {
@@ -246,8 +252,9 @@ public class MainController {
             searchData = filterSearch(filterPhone(filterDates(0)));
             table.setItems(searchData);
 
-            //occurrences label shows the size of the displayed table
-            occurrences.setText("Occurrences: " + table.getItems().size());
+            //updates the occurrences label to show the size of the displayed table
+            occurrUpdate();
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -580,6 +587,7 @@ public class MainController {
                 sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
                 casesContainer.getChildren().remove(finalCaseObj);
                 loadCases();
+
             });
             if (caseRecord.getStatus().equals("New")) {
                 caseStatus.setText("New");
@@ -778,6 +786,10 @@ public class MainController {
             if (record != null) {   // Checking if it's something there
                 sql.removeCall(Integer.parseInt(record.getCallID()));   // Delete from database part
                 callsData.remove(table.getSelectionModel().getSelectedItem());  // Remove from table part
+
+                //updates the occurrences label to show the size of the displayed table
+                occurrUpdate();
+                
                 System.out.println("DELETE: call " + record.getCallID());
             }
         }
@@ -935,6 +947,10 @@ public class MainController {
         System.out.println("ADD: call");
         table.scrollTo(cr);
         table.getSelectionModel().select(cr);
+
+        //updates the occurrences label to show the size of the displayed table
+        occurrUpdate();
+        
     }
 
     /**

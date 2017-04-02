@@ -19,9 +19,9 @@ public class csvExport {
             int i;
 
             for (i = 0; i < searchData.size(); i++)    {
-                //writer.write(searchData.get(i).getOriginName().toString() + ",");
+                writer.write(searchData.get(i).getOriginName().toString() + ",");
                 writer.write(searchData.get(i).getOrigin().toString() + ",");
-                //writer.write(searchData.get(i).getDestinationName().toString() + ",");
+                writer.write(searchData.get(i).getDestinationName().toString() + ",");
                 writer.write(searchData.get(i).getDestination().toString() + ",");
                 writer.write(searchData.get(i).getDate().toString() + ",");
                 writer.write(searchData.get(i).getTime().toString() + ",");

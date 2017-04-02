@@ -399,7 +399,7 @@
                                                         <Tooltip text="Select the ending date to filter results" />
                                                     </tooltip>
                                                 </DatePicker>
-                                    <Label fx:id="occurrences" alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="513.0" text="Occurrences:">
+                                    <Label fx:id="occurrences" alignment="CENTER_RIGHT" prefHeight="29.0" prefWidth="513.0" text="Occurrences: 0">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
