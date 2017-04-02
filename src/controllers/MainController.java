@@ -1636,5 +1636,45 @@ public class MainController {
         stage.show();
     }
 
+    @FXML
+    public void a() {
+        root.setStyle("-fx-background-image: url(\"../res/icons/1.jpg\");");
+    }
+    @FXML
+    public void b() {
+        root.setStyle("-fx-background-image: url(\"../res/icons/2.jpg\");");
+    }
+    @FXML
+    public void c() {
+        root.setStyle("-fx-background-image: url(\"../res/icons/3.jpg\");");
+    }
+    @FXML
+    public void d() {
+        root.setStyle("-fx-background-image: url(\"../res/icons/4.jpg\");");
+    }
+    @FXML
+    public void e() {
+        root.setStyle("-fx-background-image: url(\"../res/icons/5.jpg\");");
+    }
+    @FXML
+    public void f() {
+        root.setStyle("-fx-background-image: url(\"../res/icons/6.jpg\");");
+    }
+    @FXML
+    public void g() {
+        root.setStyle("-fx-background-image: url(\"../res/icons/7.jpg\");");
+    }
+    @FXML
+    public void h() {
+        root.setStyle("-fx-background-image: url(\"../res/icons/8.jpg\");");
+    }
+    @FXML
+    public void i() {
+        root.setStyle("-fx-background-image: url(\"../res/icons/9.jpg\");");
+    }
+    @FXML
+    public void j() {
+        root.setStyle("-fx-background-image: url(\"../res/icons/pattern.jpg\");");
+    }
 }
 

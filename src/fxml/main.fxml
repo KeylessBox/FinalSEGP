@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -25,7 +33,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="root" minHeight="1000.0" minWidth="1795.0" prefHeight="1000.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<BorderPane fx:id="root" minHeight="1000.0" minWidth="1795.0" prefHeight="1000.0" styleClass="root" stylesheets="@../css/main_stage.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
     <top>
         <BorderPane fx:id="menubar" prefHeight="42.0" prefWidth="1766.0" styleClass="upline" stylesheets="@../css/main_stage.css" BorderPane.alignment="CENTER">
             <center>
@@ -50,10 +58,32 @@
                                     </graphic>
                                     <items>
                                         <MenuItem mnemonicParsing="false">
-                                            <graphic>
+                                 <graphic>
                                                 <Pane minHeight="340" minWidth="450" nodeOrientation="LEFT_TO_RIGHT" styleClass="settings_bar" stylesheets="@../css/main_stage.css">
-                                                </Pane>
-                                            </graphic>
+                                       <children>
+                                          <HBox layoutX="16.0" layoutY="171.0" prefHeight="45.0" prefWidth="400.0" spacing="8.0" stylesheets="@../css/ThemeB.css">
+                                             <children>
+                                                <Button mnemonicParsing="false" onAction="#a" prefHeight="31.0" prefWidth="31.0" styleClass="button1" />
+                                                <Button mnemonicParsing="false" onAction="#b" prefHeight="31.0" prefWidth="31.0" styleClass="button2" />
+                                                <Button mnemonicParsing="false" onAction="#c" prefHeight="31.0" prefWidth="31.0" styleClass="button3" />
+                                                <Button mnemonicParsing="false" onAction="#d" prefHeight="31.0" prefWidth="31.0" styleClass="button4" />
+                                                <Button mnemonicParsing="false" onAction="#e" prefHeight="31.0" prefWidth="31.0" styleClass="button5" />
+                                                <Button mnemonicParsing="false" onAction="#f" prefHeight="31.0" prefWidth="31.0" styleClass="button6" />
+                                                <Button mnemonicParsing="false" onAction="#g" prefHeight="31.0" prefWidth="31.0" styleClass="button7" />
+                                                <Button mnemonicParsing="false" onAction="#h" prefHeight="31.0" prefWidth="31.0" styleClass="button8" />
+                                                <Button mnemonicParsing="false" onAction="#i" prefHeight="31.0" prefWidth="31.0" styleClass="button9" />
+                                                <Button mnemonicParsing="false" onAction="#j" prefHeight="31.0" prefWidth="31.0" styleClass="button10" />
+                                             </children>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                             <padding>
+                                                <Insets left="5.0" top="7.0" />
+                                             </padding>
+                                          </HBox>
+                                       </children>
+                                    </Pane>
+                                 </graphic>
                                         </MenuItem>
                                     </items>
                                 </Menu>
