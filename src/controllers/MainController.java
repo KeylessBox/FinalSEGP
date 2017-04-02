@@ -237,7 +237,11 @@ public class MainController {
     private void filter() {
         try {
             // Retrieves the filtered data
-            searchData = filterSearch(filterPhone(filterDates(0)));
+            if (filtersBox.getChildren().size() == 2) {
+                searchData = filterSearch(filter(0));
+            } else {
+                searchData = filterSearch(filterPhone(filterDates(0)));
+            }
             // Writing the number of occurrences for each filter
             Pane filterPane;
             // Takes all filters
@@ -260,6 +264,9 @@ public class MainController {
                     }
                 }
             }
+            for (int i = 0; i < filterIndex; i++) {
+                System.out.println(filterConstraints.get(i)[0]);
+            }
             // Puts info into the table
             table.setItems(searchData);
 
@@ -267,6 +274,65 @@ public class MainController {
             numOfRows.setText("Number of rows: " + table.getItems().size());
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    private ObservableList<CallRecord> filter(int i) throws ParseException {
+        if (i < filterIndex) {
+            ObservableList<CallRecord> test = filter(i + 1);
+            ObservableList<CallRecord> test2 = FXCollections.observableArrayList();
+            boolean change = false;
+            if (filterConstraints.get(i)[1].equals("no")) {
+                return filter(i + 1);
+            }
+            if (filterConstraints.get(i)[0] instanceof Date) {
+                Date date = (Date) filterConstraints.get(i)[0];
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                change = true;
+                if (filterConstraints.get(i)[1].equals("start")) {
+                    for (CallRecord callRecord : test) {
+                        Date callDate = sdf.parse(callRecord.getDate());
+                        if (callDate.compareTo(date) >= 0) {
+                            test2.add(callRecord);
+                        }
+                    }
+                } else {
+                    for (CallRecord callRecord : test) {
+                        Date callDate = sdf.parse(callRecord.getDate());
+                        if (callDate.compareTo(date) <= 0) {
+                            test2.add(callRecord);
+                        }
+                    }
+                }
+            } else if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
+                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
+                        originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn,
+                        timeColumn, typeColumn, durationColumn);
+                change = true;
+                int sum = 0;
+                for (int k = 0; k < test.size(); k++) {
+                    for (int j = 1; j < 4; j += 2) {
+                        TableColumn col = cols.get(j);
+                        String cellValue = col.getCellData(test.get(k)).toString();
+                        cellValue = cellValue.toLowerCase();
+                        Person person = (Person) filterConstraints.get(i)[0];
+                        if (cellValue.contains(person.getPhone())) {
+                            test2.add(test.get(k));
+                            sum++;
+                            break;
+                        }
+                    }
+                }
+                filterConstraints.get(i)[2] = sum;
+            }
+            if (change) {
+                return test2;
+            } else {
+                return test;
+            }
+
+        } else {
+            return callsData;
         }
     }
 
@@ -305,6 +371,7 @@ public class MainController {
                     }
                 }
             }
+
             if (change) {
                 return test2;
             } else {
@@ -817,6 +884,7 @@ public class MainController {
         if (phoneField.textProperty().get().isEmpty()) {
             for (int i = 0; i < filterIndex; i++) {
                 if (filterConstraints.get(i)[0].equals(person)) {
+                    filterConstraints.get(i)[0] = null;
                     filterConstraints.get(i)[1] = "no";
                 }
             }
