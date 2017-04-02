@@ -1680,43 +1680,54 @@ public class MainController {
 
     @FXML
     public void a() {
-        root.setStyle("-fx-background-image: url(\"../res/icons/1.jpg\");");
+        String image = MainController.class.getResource("../res/icons/1.jpg").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "');");
+
     }
     @FXML
     public void b() {
-        root.setStyle("-fx-background-image: url(\"../res/icons/2.jpg\");");
+        String image = MainController.class.getResource("../res/icons/2.jpg").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "');");
     }
     @FXML
     public void c() {
-        root.setStyle("-fx-background-image: url(\"../res/icons/3.jpg\");");
+        String image = MainController.class.getResource("../res/icons/3.jpg").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "');");
     }
     @FXML
     public void d() {
-        root.setStyle("-fx-background-image: url(\"../res/icons/4.jpg\");");
+        String image = MainController.class.getResource("../res/icons/4.jpg").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "');");
     }
     @FXML
     public void e() {
-        root.setStyle("-fx-background-image: url(\"../res/icons/5.jpg\");");
+        String image = MainController.class.getResource("../res/icons/5.jpg").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "');");
     }
     @FXML
     public void f() {
-        root.setStyle("-fx-background-image: url(\"../res/icons/6.jpg\");");
+        String image = MainController.class.getResource("../res/icons/6.jpg").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "');");
     }
     @FXML
     public void g() {
-        root.setStyle("-fx-background-image: url(\"../res/icons/7.jpg\");");
+        String image = MainController.class.getResource("../res/icons/7.jpg").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "');");
     }
     @FXML
     public void h() {
-        root.setStyle("-fx-background-image: url(\"../res/icons/8.jpg\");");
+        String image = MainController.class.getResource("../res/icons/8.jpg").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "');");
     }
     @FXML
     public void i() {
-        root.setStyle("-fx-background-image: url(\"../res/icons/9.jpg\");");
+        String image = MainController.class.getResource("../res/icons/9.jpg").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "');");
     }
     @FXML
     public void j() {
-        root.setStyle("-fx-background-image: url(\"../res/icons/pattern.jpg\");");
+        String image = MainController.class.getResource("../res/icons/pattern.png").toExternalForm();
+        root.setStyle("-fx-background-image: url('" + image + "');");
     }
 }
 
