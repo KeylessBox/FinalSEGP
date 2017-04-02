@@ -117,6 +117,8 @@ public class MainController {
     protected HBox filtersBox;
     @FXML
     protected BorderPane root;
+    @FXML
+    protected Label occurrences;
     SearchField searchTxt = new SearchField("");
 
     /**
@@ -153,6 +155,9 @@ public class MainController {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setItems(callsData);  // adds the data into the table
         table.setEditable(true);
+
+        //occurrences label shows the size of the displayed table
+        occurrences.setText("Occurrences: " + table.getItems().size());
     }
 
     public void createDeleteColumn(TableColumn deleteColumn) {
@@ -240,6 +245,9 @@ public class MainController {
             System.out.println();
             searchData = filterSearch(filterPhone(filterDates(0)));
             table.setItems(searchData);
+
+            //occurrences label shows the size of the displayed table
+            occurrences.setText("Occurrences: " + table.getItems().size());
         } catch (ParseException e) {
             e.printStackTrace();
         }
