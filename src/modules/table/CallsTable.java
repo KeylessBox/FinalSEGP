@@ -1,11 +1,17 @@
 package modules.table;
 
+import controllers.MainController;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 import sql.SQL;
+
+import java.io.IOException;
 
 /**
  * Created by AndreiM on 2/3/2017.
@@ -72,7 +78,13 @@ public class CallsTable {
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
                 t.getRowValue().setDestinationName(t.getNewValue());
-                sql.editCellName(t.getRowValue().getDestination(), t.getNewValue());
+                if (t.getNewValue().length() < 5) {
+                    sql.editCellName(t.getRowValue().getDestination(), t.getNewValue());
+                } else {
+                    MainController mc = new MainController();
+//                    mc.showError("Identification/Name is too big");
+                    t.getRowValue().setDestinationName(t.getOldValue());
+                }
             }
         });
     }
@@ -103,7 +115,6 @@ public class CallsTable {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-
                 return new EditingCell();
             }
         };

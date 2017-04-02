@@ -188,4 +188,8 @@
     #FFFFFF;
 }
 
+#validationError {
+    -fx-fill: #ff0000;
+}
+
 
