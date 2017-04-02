@@ -2,9 +2,11 @@
 #root {
     -fx-background-image: url("../res/icons/pattern.png");
     -fx-opacity: 1;
-    /*-fx-background-size: 1920, 1080;*/
+   /* -fx-background-size: 1920, 1080; */
     -fx-cursor: default;
 }
+
+
 
 .upline {
     -fx-background-image: url("../res/new_images/upline_background.jpg");

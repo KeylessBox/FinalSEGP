@@ -1,0 +1,40 @@
+.button1{
+-fx-background-image: url("../res/icons/1.jpg");
+-fx-background-size: 31, 31;
+}
+.button2{
+-fx-background-image: url("../res/icons/2.jpg");
+-fx-background-size: 31, 31;
+}
+.button3{
+-fx-background-image: url("../res/icons/3.jpg");
+-fx-background-size: 31, 31;
+}
+.button4{
+-fx-background-image: url("../res/icons/4.jpg");
+-fx-background-size: 31, 31;
+}
+.button5{
+-fx-background-image: url("../res/icons/5.jpg");
+-fx-background-size: 31, 31;
+}
+.button6{
+-fx-background-image: url("../res/icons/6.jpg");
+-fx-background-size: 31, 31;
+}
+.button7{
+-fx-background-image: url("../res/icons/7.jpg");
+-fx-background-size: 31, 31;
+}
+.button8{
+-fx-background-image: url("../res/icons/8.jpg");
+-fx-background-size: 31, 31;
+}
+.button9{
+-fx-background-image: url("../res/icons/9.jpg");
+-fx-background-size: 31, 31;
+}
+.button10{
+-fx-background-image: url("../res/icons/pattern.png");
+-fx-background-size: 31, 31;
+}
