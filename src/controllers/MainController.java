@@ -18,7 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
@@ -118,7 +117,7 @@ public class MainController {
     @FXML
     protected BorderPane root;
     @FXML
-    protected Label occurrences;
+    protected Label numOfRows;
     SearchField searchTxt = new SearchField("");
 
     /**
@@ -156,8 +155,8 @@ public class MainController {
         table.setItems(callsData);  // adds the data into the table
         table.setEditable(true);
 
-        //occurrences label shows the size of the displayed table
-        occurrences.setText("Occurrences: " + table.getItems().size());
+        //numOfRows label shows the size of the displayed table
+        numOfRows.setText("Number of rows: " + table.getItems().size());
     }
 
     public void createDeleteColumn(TableColumn deleteColumn) {
@@ -246,12 +245,11 @@ public class MainController {
             searchData = filterSearch(filterPhone(filterDates(0)));
             table.setItems(searchData);
 
-            //occurrences label shows the size of the displayed table
-            occurrences.setText("Occurrences: " + table.getItems().size());
+            //numOfRows label shows the size of the displayed table
+            numOfRows.setText("Number of rows: " + table.getItems().size());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-      //  update();
     }
 
     /**
@@ -1463,14 +1461,13 @@ public class MainController {
         try {
             File file = fileChooser.showSaveDialog(new Stage());
             String filePath = file.getPath();
-            if(filePath.endsWith(".csv")) {
+            if (filePath.endsWith(".csv")) {
 
                 csvExp.csvOut(filePath, searchData);
 
-            }
-            else if(filePath.endsWith(".pdf")){
+            } else if (filePath.endsWith(".pdf")) {
 
-                pdfExp.pdfOut(filePath,caseTitle.getText().toString() , searchData);
+                pdfExp.pdfOut(filePath, caseTitle.getText().toString(), searchData);
 
             }
         } catch (Exception e) {
@@ -1576,7 +1573,7 @@ public class MainController {
 
     @FXML
     public void openMessages() {
-        /*
+
         try {
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
             Pane finalCaseObject = CaseObject;
@@ -1587,21 +1584,15 @@ public class MainController {
             btn.setOnAction(event -> {
                 root.getChildren().remove(finalCaseObject);
             });
-            label.setText("Messages");
+            label.setText("Admin Pane");
             finalCaseObject.setLayoutX(250);
             finalCaseObject.setLayoutY(100);
             DragResizeMod.makeResizable(finalCaseObject, null);
             root.getChildren().add(finalCaseObject);
         } catch (IOException e) {
             e.printStackTrace();
-        }        */
-        try {
-            Desktop.getDesktop().browse(new URI("https://www.google.com/gmail/"));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } catch (URISyntaxException e1) {
-            e1.printStackTrace();
         }
+
 
     }
 
