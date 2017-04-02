@@ -301,8 +301,7 @@ public class SignController {
                      * Program moves to the main Window
                      * It passes the account details to a file (that will be soon deleted).
                      */
-
-
+                
                     user = username.getText();
                     PrintWriter writer = new PrintWriter(new File("src/res/tmp.txt"));
                     writer.write(user);
