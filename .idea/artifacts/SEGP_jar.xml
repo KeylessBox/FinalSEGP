@@ -5,6 +5,8 @@
       <element id="module-output" name="SEGP" />
       <element id="extracted-dir" path="$PROJECT_DIR$/src/libs/mysql-connector-java-5.1.40-bin.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/src/libs/ostermillerutils-1.08.02.jar" path-in-jar="/" />
+      <element id="library" level="project" name="commons-collections4-4.1" />
+      <element id="file-copy" path="$PROJECT_DIR$/src/libs/mysql-connector-java-5.1.40-bin.jar" />
     </root>
   </artifact>
 </component>

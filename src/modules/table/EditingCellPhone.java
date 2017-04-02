@@ -80,7 +80,8 @@ public class EditingCellPhone extends TableCell<CallRecord, String> {
                             String hex = Integer.toHexString(victim.getColor().getRGB());
                             // Reduced to RGB: hex -> "#ff0000"
                             hex = "#" + hex.substring(2, hex.length());
-                            setStyle("-fx-background-color: " + hex + ";" +
+              //              setStyle("-fx-background-color: " + hex + ";" +
+                            setStyle("-fx-background-color: #adf7ae;" +    //Darker Green than the one used before (easier to see)
                                     "-fx-border-width: 0 1 1 0;" +
                                     "-fx-border-color: black;" +
                                     " -fx-background-insets: 0;");

@@ -1,6 +1,7 @@
 package modules.table;
 
 import javafx.scene.paint.Color;
+import org.apache.poi.hssf.util.HSSFColor;
 
 /**
  * Created by AndreiM on 3/23/2017.
