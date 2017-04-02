@@ -236,13 +236,31 @@ public class MainController {
     @FXML
     private void filter() {
         try {
-            for (int i = 0; i < filterIndex; i++) {
-                if (filterConstraints.get(i)[0] != null) {
-                    System.out.println(filterConstraints.get(i)[0].toString());
+            // Retrieves the filtered data
+            searchData = filterSearch(filterPhone(filterDates(0)));
+            // Writing the number of occurrences for each filter
+            Pane filterPane;
+            // Takes all filters
+            for (int j=0; j<filtersBox.getChildren().size(); j++) {
+
+                filterPane = (Pane)filtersBox.getChildren().get(j);
+                Pane temp = (Pane) filterPane.getChildren().get(0);
+                Pane temp2 = (Pane) temp.getChildren().get(0);
+                Label filterLabel = (Label) temp2.getChildren().get(2);
+                TextField phoneField = (TextField) temp.getChildren().get(2);
+                Label letter = (Label) temp2.getChildren().get(0);
+
+                // Identifies the filter used
+                for (int i = 0; i < filterIndex; i++) {
+                    Person person = (Person) filterConstraints.get(i)[0];
+                    if (person.getId().equals(filterPane.getId()) && filterConstraints.get(i)[1].equals("yes")&&
+                            person.getIdentifier().equals(letter.getText())) {
+                        // Puts the number into the designated place
+                        filterLabel.setText(String.valueOf(filterConstraints.get(i)[2]));
+                    }
                 }
             }
-            System.out.println();
-            searchData = filterSearch(filterPhone(filterDates(0)));
+            // Puts info into the table
             table.setItems(searchData);
 
             //numOfRows label shows the size of the displayed table
@@ -346,12 +364,14 @@ public class MainController {
     public ObservableList<CallRecord> filterPhone(ObservableList<CallRecord> test) {
         ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
         boolean change = false;
+
         for (int i = 0; i < filterIndex; i++) {
             if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
                 ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
                         originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn,
                         timeColumn, typeColumn, durationColumn);
                 change = true;
+                int sum = 0;
                 for (int k = 0; k < test.size(); k++) {
                     for (int j = 1; j < 4; j += 2) {
                         TableColumn col = cols.get(j);
@@ -360,10 +380,12 @@ public class MainController {
                         Person person = (Person) filterConstraints.get(i)[0];
                         if (cellValue.contains(person.getPhone())) {
                             tableItems.add(test.get(k));
+                            sum++;
                             break;
                         }
                     }
                 }
+                filterConstraints.get(i)[2] = sum;
             }
         }
         if (change) {
@@ -805,17 +827,18 @@ public class MainController {
                     person.setPhone(phoneField.getText());
                     filterConstraints.get(i)[0] = person;
                     filterConstraints.get(i)[1] = "yes";
+                    filterConstraints.get(i)[2] = 0;
                     isOn = true;
                 }
             }
             if (!isOn) {
                 person.setPhone(phoneField.getText());
-                Object[] temp = new Object[2];
+                Object[] temp = new Object[3];
                 temp[0] = person;
                 temp[1] = "yes";
+                temp[2] = 0;
                 filterConstraints.add(temp);
                 filterIndex++;
-
             }
         }
     }
@@ -848,7 +871,7 @@ public class MainController {
             TextField phoneField = (TextField) temp.getChildren().get(2);
 
 
-            Victim victim = new Victim(String.valueOf(alphabet));
+            Victim victim = new Victim(String.valueOf(alphabet), victimNote.getId());
 
             Pane finalVictimNote = victimNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
@@ -865,6 +888,15 @@ public class MainController {
 
             phoneField.textProperty().addListener((observable, oldValue, newValue) -> {
                 checkPhone(phoneField, victim);
+            });
+            nameField.textProperty().addListener((observable, oldValue, newValue) -> {
+                for (int i = 0; i < filterIndex; i++) {
+                    if (filterConstraints.get(i)[0].equals(victim)) {
+                        Suspect newSuspect = (Suspect) filterConstraints.get(i)[0];
+                        newSuspect.setIdentifier(nameField.getText());
+                        filterConstraints.get(i)[0] = newSuspect;
+                    }
+                }
             });
             letter.setText(String.valueOf(alphabet));
             filtersBox.getChildren().add(victimNote);
@@ -893,8 +925,8 @@ public class MainController {
             Pane temp3 = (Pane) temp2.getChildren().get(4);
             Button delete = (Button) temp3.getChildren().get(0);
             TextField phoneField = (TextField) temp.getChildren().get(2);
-
-            Suspect suspect = new Suspect(String.valueOf(alphabet));
+            TextField nameField = (TextField) temp.getChildren().get(1);
+            Suspect suspect = new Suspect(String.valueOf(alphabet), suspectNote.getId());
 
             Pane finalVictimNote = suspectNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
@@ -911,6 +943,16 @@ public class MainController {
 
             phoneField.textProperty().addListener((observable, oldValue, newValue) -> {
                 checkPhone(phoneField, suspect);
+            });
+
+            nameField.textProperty().addListener((observable, oldValue, newValue) -> {
+                for (int i = 0; i < filterIndex; i++) {
+                    if (filterConstraints.get(i)[0].equals(suspect)) {
+                        Suspect newSuspect = (Suspect) filterConstraints.get(i)[0];
+                        newSuspect.setIdentifier(nameField.getText());
+                        filterConstraints.get(i)[0] = newSuspect;
+                    }
+                }
             });
             letter.setText(String.valueOf(alphabet));
             alphabet++;

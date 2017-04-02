@@ -13,6 +13,12 @@ public class Suspect extends Person{
         super.phone = null;
     }
 
+    public Suspect (String identifier, String id) {
+        super.identifier = identifier;
+        super.phone = null;
+        super.id = id;
+    }
+
     public Color getColor() {
         return color;
     }
