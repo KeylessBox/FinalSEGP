@@ -14,9 +14,11 @@ public class Suspect extends Person{
     }
 
     public Suspect (String identifier, String id) {
+        super.previousIdentifier = super.identifier;
         super.identifier = identifier;
         super.phone = null;
         super.id = id;
+
     }
 
     public Color getColor() {

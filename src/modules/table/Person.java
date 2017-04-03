@@ -7,20 +7,24 @@ public class Person {
     protected String identifier;
     protected String phone;
     protected String id;
+    protected String previousIdentifier;
 
     public Person() {
         this.identifier = null;
         this.phone = null;
         this.id = null;
+        this.previousIdentifier = null;
     }
 
     public Person (String identifier) {
+        this.previousIdentifier = this.getIdentifier();
         this.identifier = identifier;
         this.phone = null;
         this.id = null;
     }
 
     public Person (String identifier, String id) {
+        this.previousIdentifier = this.getIdentifier();
         this.identifier = identifier;
         this.phone = null;
         this.id = id;
@@ -28,6 +32,10 @@ public class Person {
 
     public String getIdentifier() {
         return identifier;
+    }
+
+    public String getPreviousIdentifier() {
+        return previousIdentifier;
     }
 
     public String getPhone() {
@@ -39,8 +47,11 @@ public class Person {
     }
 
     public void setIdentifier(String identifier) {
+        this.previousIdentifier = this.getIdentifier();
         this.identifier = identifier;
     }
+
+
 
     public void setPhone(String phone) {
         this.phone = phone;
