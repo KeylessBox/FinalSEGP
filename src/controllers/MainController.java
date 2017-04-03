@@ -631,10 +631,11 @@ public class MainController {
                 e1.printStackTrace();
             }
             Pane finalCaseEditObject = CaseEditObject;
-            TextField t3 = (TextField) finalCaseEditObject.getChildren().get(2);
-            ToggleButton t35 = (ToggleButton) finalCaseEditObject.getChildren().get(0);
-            ToggleButton t36 = (ToggleButton) finalCaseEditObject.getChildren().get(1);
-            Button t4 = (Button) finalCaseEditObject.getChildren().get(3);
+            Pane temp3 = (Pane) finalCaseEditObject.getChildren().get(0);
+            TextField t3 = (TextField) temp3.getChildren().get(2);
+            ToggleButton t35 = (ToggleButton) temp3.getChildren().get(0);
+            ToggleButton t36 = (ToggleButton) temp3.getChildren().get(1);
+            Button t4 = (Button) temp3.getChildren().get(3);
 
 
             editBtn.setOnAction(event -> {
