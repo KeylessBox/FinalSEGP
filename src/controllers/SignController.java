@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import main.Main;
 import modules.login.LoginDB;
 import modules.manageAccounts.CreateAccount;
 
@@ -316,7 +317,6 @@ public class SignController {
                     Stage stage = (Stage) node.getScene().getWindow();
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));/* Exception */
                     Scene scene = new Scene(root);
-
                     stage.setScene(scene);
                     stage.setWidth(1815);
                     stage.setHeight(1040);

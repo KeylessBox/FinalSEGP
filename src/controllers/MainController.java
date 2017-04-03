@@ -121,18 +121,6 @@ public class MainController {
     @FXML
     protected Label numOfRows;
 
-    @FXML
-    protected TableColumn nameColumn;
-    @FXML
-    protected TableColumn surnameColumn;
-    @FXML
-    protected TableColumn emailColumn;
-    @FXML
-    protected TableColumn passwordColumnColumn;
-    @FXML
-    protected TableColumn privelegeColumn;
-    @FXML
-    protected TableView usersTable;
 
     SearchField searchTxt = new SearchField("");
 
@@ -178,19 +166,7 @@ public class MainController {
     }
 
     public void loadUsersTable() {
-        usersData = sql.getUsers();  // takes the data from the database and puts it into an observable list
 
-        columnFactoryUsers.createNameColumn(nameColumn);
-        columnFactoryUsers.createSurnameColumn(surnameColumn);
-        columnFactoryUsers.createEmailColumn(emailColumn);
-        columnFactoryUsers.createPasswordColumn(passwordColumnColumn);
-        columnFactoryUsers.createPrivilegeColumn(privelegeColumn);
-        usersTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        usersTable.setItems(usersData);  // adds the data into the table
-        usersTable.setEditable(true);
-
-        //numOfRows label shows the size of the displayed table
-        numOfRows.setText("Number of rows: " + usersTable.getItems().size());
     }
 
     public void createDeleteColumn(TableColumn deleteColumn) {
@@ -1768,10 +1744,36 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-            loadUsersTable();
+        usersData = sql.getUsers();  // takes the data from the database and puts it into an observable list
+
+
+
+//            loadUsersTable();
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
+            
+            TableView usersTable = (TableView) pane.getChildren().get(3);
+
+        ObservableList<TableColumn> userColumns = usersTable.getColumns();
+        TableColumn nameColumn = userColumns.get(0);
+        TableColumn surnameColumn = userColumns.get(1);
+        TableColumn emailColumn = userColumns.get(2);
+        TableColumn passwordColumnColumn = userColumns.get(3);
+        TableColumn privelegeColumn = userColumns.get(4);
+
+        columnFactoryUsers.createNameColumn(nameColumn);
+        columnFactoryUsers.createSurnameColumn(surnameColumn);
+        columnFactoryUsers.createEmailColumn(emailColumn);
+        columnFactoryUsers.createPasswordColumn(passwordColumnColumn);
+        columnFactoryUsers.createPrivilegeColumn(privelegeColumn);
+        usersTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        usersTable.setItems(usersData);  // adds the data into the table
+        usersTable.setEditable(true);
+
+        //numOfRows label shows the size of the displayed table
+        numOfRows.setText("Number of rows: " + usersTable.getItems().size());
+
             Button btn = (Button) pane.getChildren().get(1);
             Button btn2 = (Button) pane.getChildren().get(4);
             Button btn3 = (Button) pane.getChildren().get(5);

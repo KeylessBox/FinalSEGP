@@ -22,7 +22,6 @@ public class UsersTable {
                 return new EdititingUserCell();
             }
         };
-        System.out.println(" HEK" + name.toString());
         name.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("name"));
         name.setCellFactory(editableFactory);
         name.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserRecord, String>>() {
