@@ -66,7 +66,6 @@ public class MainController {
     private static List<Object[]> filterConstraints = new ArrayList<Object[]>();
     private static int filterIndex = 0;
 
-
     @FXML
     private ScrollPane notes_scroll_pane;
     @FXML
@@ -99,6 +98,7 @@ public class MainController {
     protected ToggleButton newToggleBtn;
     @FXML
     protected ToggleButton doneToggleBtn;
+
     final ToggleGroup casesToggleGroup = new ToggleGroup();
     @FXML
     protected DatePicker startDate;
@@ -1604,7 +1604,7 @@ public class MainController {
     @FXML
     public void openManual() {
       /*  try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
@@ -1640,7 +1640,7 @@ public class MainController {
     public void openExtra() {
         /*
         try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
@@ -1691,7 +1691,7 @@ public class MainController {
     public void openMessages() {
 
         try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);

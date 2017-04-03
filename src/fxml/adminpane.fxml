@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<Pane id="extraPane" prefHeight="0.0" prefWidth="1300.0" styleClass="background" stylesheets="@../css/extra.css"
+      xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Pane id="extra_box" layoutX="-29.0" layoutY="16.0" prefHeight="760.0" prefWidth="1274.0"
+              style="-fx-cursor: default">
+            <children>
+                <Button fx:id="closeExtra" layoutX="1236.0" layoutY="39.0" stylesheets="@../css/cases.css">
+                    <tooltip>
+                        <Tooltip text="Close"/>
+                    </tooltip>
+                </Button>
+                <Label contentDisplay="CENTER" layoutX="646.0" layoutY="38.0" prefHeight="28.0" prefWidth="171.0"
+                       text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="Calibri Bold" size="20.0"/>
+                    </font>
+                </Label>
+                <TableView fx:id="table" editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0"
+                           maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0"
+                           stylesheets="@../css/table_view.css">
+                    <columns>
+                        <TableColumn maxWidth="350.0" minWidth="350.0" text="From">
+                            <columns>
+                                <TableColumn fx:id="originIdentifierColumn" maxWidth="175.0"
+                                             minWidth="175.0" text="Name/Identifier"/>
+                                <TableColumn fx:id="originPhoneColumn" maxWidth="175.0" minWidth="175.0"
+                                             text="Phone Number"/>
+                            </columns>
+                        </TableColumn>
+                        <TableColumn maxWidth="350.0" minWidth="350.0" text="To">
+                            <columns>
+                                <TableColumn fx:id="destinationIdentifierColumn" maxWidth="175.0"
+                                             minWidth="175.0" text="Name/Identifier"/>
+                                <TableColumn fx:id="destinationPhoneColumn" maxWidth="175.0"
+                                             minWidth="175.0" text="Phone Number"/>
+                            </columns>
+                        </TableColumn>
+                        <TableColumn fx:id="dateColumn" maxWidth="185.0" minWidth="185.0" text="Date"/>
+                        <TableColumn fx:id="timeColumn" maxWidth="185.0" minWidth="185.0" text="Time"/>
+                        <TableColumn fx:id="typeColumn" maxWidth="185.0" minWidth="185.0"
+                                     text="Type Of Call"/>
+                        <TableColumn fx:id="durationColumn" maxWidth="185.0" minWidth="185.0"
+                                     text="Duration"/>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                </TableView>
+            </children>
+        </Pane>
+    </children>
+</Pane>

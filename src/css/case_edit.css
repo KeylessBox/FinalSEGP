@@ -89,7 +89,8 @@
     -fx-background-size: 125px 9px;
     -fx-background-repeat: no-repeat;
     -fx-background-color: transparent;
-    -fx-border-color: transparent;
+    -fx-border-color: black;
+    -fx-border-radius: 3;
     -fx-opacity: 0.65;
 }
 
