@@ -358,8 +358,8 @@ public class SQL {
                     "(' ','" +cr.getOrigin() + "');");
             connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
                     "(' ','" +cr.getDestination() + "');");
-            connection.createStatement().executeUpdate("DELETE n1 FROM phoneNumbers n1, phoneNumbers n2 " +
-                    "WHERE n1.id > n2.id AND n1.phoneNumber = n2.phoneNumber");
+//            connection.createStatement().executeUpdate("DELETE n1 FROM phoneNumbers n1, phoneNumbers n2 " +
+//                    "WHERE n1.id > n2.id AND n1.phoneNumber = n2.phoneNumber");
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
