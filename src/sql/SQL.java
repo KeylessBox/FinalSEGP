@@ -4,10 +4,7 @@ package sql;
  * Created by AndreiM on 2/3/2017.
  */
 
-import modules.table.CallRecord;
-import modules.table.CaseRecord;
-import modules.table.DBConnection;
-import modules.table.FileRecord;
+import modules.table.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -111,6 +108,29 @@ public class SQL {
             connection.close();
         }catch (SQLException e ){
 
+        }
+        return data;
+    }
+
+    public ObservableList<UserRecord> getUsers() {
+        Connection connection = dbConnection.connect();
+        ObservableList<UserRecord> data = FXCollections.observableArrayList();
+
+        try {
+            //execute query and store result in a result SET:
+            ResultSet usersRS = connection.createStatement().executeQuery("SELECT * FROM accounts;");
+
+            while (usersRS.next()) {
+                data.add(new UserRecord(usersRS.getString(1), usersRS.getString(2),
+                        usersRS.getString(3),
+                        usersRS.getString(4), usersRS.getString(5), usersRS.getString(6)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try {
+            connection.close();
+        } catch (SQLException e) {
         }
         return data;
     }
@@ -430,6 +450,16 @@ public class SQL {
         try {
             connection.createStatement().executeUpdate("UPDATE phoneNumbers SET personName= '" + change +
                     "' WHERE phoneNumber='" + phoneNumber + "';");
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void editUserCell(int id, String columnName, String change) {
+        Connection connection = dbConnection.connect();
+        try {
+            connection.createStatement().executeUpdate("UPDATE accounts SET " + columnName + "= '" + change + "' WHERE id =" + id);
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();

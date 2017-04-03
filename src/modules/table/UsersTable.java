@@ -19,18 +19,18 @@ public class UsersTable {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-                return new EditingCell();
+                return new EdititingUserCell();
             }
         };
-
-        name.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("originName"));
+        System.out.println(" HEK" + name.toString());
+        name.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("name"));
         name.setCellFactory(editableFactory);
-        name.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        name.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserRecord, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
+            public void handle(TableColumn.CellEditEvent<UserRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setOriginName(t.getNewValue());
-                sql.editCellName(t.getRowValue().getOrigin(), t.getNewValue());
+                t.getRowValue().setUserName(t.getNewValue());
+                sql.editUserCell(Integer.parseInt(t.getRowValue().getUserID()), "name", t.getNewValue());
             }
         });
     }
@@ -40,19 +40,18 @@ public class UsersTable {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-                return new EditingCellPhone();
+                return new EdititingUserCell();
             }
         };
 
-        surname.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("origin"));
+        surname.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("surname"));
         surname.setCellFactory(editableFactory);
-        surname.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        surname.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserRecord, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
+            public void handle(TableColumn.CellEditEvent<UserRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setOrigin(t.getNewValue());
-                sql.editCellNumber(t.getOldValue(), t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "origin", t.getNewValue());
+                t.getRowValue().setUserSurname(t.getNewValue());
+                sql.editUserCell(Integer.parseInt(t.getRowValue().getUserID()), "surname", t.getNewValue());
             }
         });
     }
@@ -63,23 +62,17 @@ public class UsersTable {
             @Override
             public TableCell call(TableColumn p) {
 
-                return new EditingCell();
+                return new EdititingUserCell();
             }
         };
-        email.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destinationName"));
+        email.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("email"));
         email.setCellFactory(editableFactory);
-        email.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        email.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserRecord, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
+            public void handle(TableColumn.CellEditEvent<UserRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setDestinationName(t.getNewValue());
-                if (t.getNewValue().length() < 5) {
-                    sql.editCellName(t.getRowValue().getDestination(), t.getNewValue());
-                } else {
-                    MainController mc = new MainController();
-//                    mc.showError("Identification/Name is too big");
-                    t.getRowValue().setDestinationName(t.getOldValue());
-                }
+                t.getRowValue().setUserEmail(t.getNewValue());
+                sql.editUserCell(Integer.parseInt(t.getRowValue().getUserID()), "email", t.getNewValue());
             }
         });
     }
@@ -89,18 +82,17 @@ public class UsersTable {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-                return new EditingCellPhone();
+                return new EdititingUserCell();
             }
         };
-        password.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destination"));
+        password.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("password"));
         password.setCellFactory(editableFactory);
-        password.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        password.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserRecord, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
+            public void handle(TableColumn.CellEditEvent<UserRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setDestination(t.getNewValue());
-                sql.editCellNumber(t.getOldValue(), t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "destination", t.getNewValue());
+                t.getRowValue().setUserPassword(t.getNewValue());
+                sql.editUserCell(Integer.parseInt(t.getRowValue().getUserID()), "password", t.getNewValue());
             }
         });
     }
@@ -110,18 +102,18 @@ public class UsersTable {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-                return new EditingCell();
+                return new EdititingUserCell();
             }
         };
 
-        privilege.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("date"));
+        privilege.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("privelege"));
         privilege.setCellFactory(editableFactory);
-        privilege.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        privilege.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserRecord, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
+            public void handle(TableColumn.CellEditEvent<UserRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setDate(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "date", t.getNewValue());
+                t.getRowValue().setUserPrivelege(t.getNewValue());
+                sql.editUserCell(Integer.parseInt(t.getRowValue().getUserID()), "privileges", t.getNewValue());
             }
         });
     }
