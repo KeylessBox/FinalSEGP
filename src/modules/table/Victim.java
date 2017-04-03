@@ -14,6 +14,7 @@ public class Victim extends Person{
     }
 
     public Victim (String identifier, String id) {
+        super.previousIdentifier = super.identifier;
         super.identifier = identifier;
         super.phone = null;
         super.id = id;

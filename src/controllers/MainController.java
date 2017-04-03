@@ -308,8 +308,8 @@ public class MainController {
                 ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
                         originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn,
                         timeColumn, typeColumn, durationColumn);
-                change = true;
                 int sum = 0;
+                change = true;
                 for (int k = 0; k < test.size(); k++) {
                     for (int j = 1; j < 4; j += 2) {
                         TableColumn col = cols.get(j);
@@ -317,7 +317,13 @@ public class MainController {
                         cellValue = cellValue.toLowerCase();
                         Person person = (Person) filterConstraints.get(i)[0];
                         if (cellValue.contains(person.getPhone())) {
-                            test2.add(test.get(k));
+                            CallRecord data = test.get(k);
+                            if (j ==1 ){
+                                data.setOriginName(person.getIdentifier());
+                            } else if (j==3){
+                                data.setDestinationName(person.getIdentifier());
+                            }
+                            test2.add(data);
                             sum++;
                             break;
                         }
@@ -446,7 +452,13 @@ public class MainController {
                         cellValue = cellValue.toLowerCase();
                         Person person = (Person) filterConstraints.get(i)[0];
                         if (cellValue.contains(person.getPhone())) {
-                            tableItems.add(test.get(k));
+                            CallRecord data = test.get(k);
+                            if (j ==1 ){
+                                data.setOriginName(person.getIdentifier());
+                            } else if (j==3){
+                                data.setDestinationName(person.getIdentifier());
+                            }
+                            tableItems.add(data);
                             sum++;
                             break;
                         }
@@ -585,6 +597,7 @@ public class MainController {
             Label caseName = (Label) temp2.getChildren().get(1);
             caseName.setText(caseRecord.getName());
             Label caseDate = (Label) temp.getChildren().get(1);
+
 
             try {
                 caseDate.setText(new SimpleDateFormat("yy-MM-dd  [HH:mm]").format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(caseRecord.getDate())));
@@ -944,6 +957,17 @@ public class MainController {
                         filterConstraints.get(i)[1] = "no";
                     }
                 }
+                ObservableList<CallRecord> test = FXCollections.observableArrayList();
+                for (CallRecord cr: searchData) {
+                    if (cr.getOriginName().equals(victim.getIdentifier())) {
+                        cr.setOriginName(" ");
+                    }
+                    if (cr.getDestinationName().equals(victim.getIdentifier())) {
+                        cr.setDestinationName(" ");
+                    }
+                    test.add(cr);
+                }
+                searchData = test;
                 filter();
                 System.out.println("DELETE VICTIM");
             });
@@ -999,6 +1023,17 @@ public class MainController {
                         filterConstraints.get(i)[1] = "no";
                     }
                 }
+                ObservableList<CallRecord> test = FXCollections.observableArrayList();
+                for (CallRecord cr: searchData) {
+                    if (cr.getOriginName().equals(suspect.getIdentifier())) {
+                        cr.setOriginName(" ");
+                    }
+                    if (cr.getDestinationName().equals(suspect.getIdentifier())) {
+                        cr.setDestinationName(" ");
+                    }
+                    test.add(cr);
+                }
+                searchData = test;
                 filter();
                 System.out.println("DELETE SUSPECT");
             });
