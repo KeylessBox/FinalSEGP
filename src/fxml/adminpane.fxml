@@ -19,7 +19,7 @@
                         <Tooltip text="Close" />
                     </tooltip>
                 </Button>
-                <Label contentDisplay="CENTER" layoutX="646.0" layoutY="38.0" prefHeight="28.0" prefWidth="171.0" text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                <Label contentDisplay="CENTER" layoutX="646.0" layoutY="38.0" prefHeight="28.0" prefWidth="171.0" text="Admin Pane" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                     <font>
                         <Font name="Calibri Bold" size="20.0" />
                     </font>

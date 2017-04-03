@@ -1731,9 +1731,21 @@ public class MainController {
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
             Button btn = (Button) pane.getChildren().get(1);
+            Button btn2 = (Button) pane.getChildren().get(4);
+            Button btn3 = (Button) pane.getChildren().get(5);
+
             btn.setOnAction(event -> {
                 root.getChildren().remove(finalCaseObject);
             });
+
+            btn2.setOnAction(event -> {
+                System.out.println("ADD");
+            });
+
+            btn3.setOnAction(event -> {
+                System.out.println("DELETE");
+            });
+
             finalCaseObject.setLayoutX(250);
             finalCaseObject.setLayoutY(100);
             DragResizeMod.makeResizable(finalCaseObject, null);
