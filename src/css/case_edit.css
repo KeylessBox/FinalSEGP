@@ -1,7 +1,8 @@
 
 .custom_hbox {
-    -fx-background-color: #f0f0f0;
+    -fx-background-color: transparent;
     -fx-border-color: transparent;
+    -fx-background-image: url("../res/icons/case_edit_pane.png");
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 2, 0, 0, 0);
     -fx-opacity: 1;
 }
@@ -30,7 +31,7 @@
     -fx-background-size: 15px 15px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-image: url("../res/icons/ok_icon.png");
+    -fx-background-image: url("../res/icons/ok_icon_white.png");
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-opacity: 0.8;
@@ -87,4 +88,22 @@
     -fx-border-color:#43546e ;
     -fx-text-fill: #43546e;
     -fx-background-color: white;
+}
+
+.button.button_createAccount {
+    -fx-min-height: 10px;
+    -fx-min-width: 135px;
+    -fx-background-size: 125px 9px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-opacity: 0.65;
+}
+
+.button.button_createAccount:hover {
+    -fx-opacity: 0.8;
+}
+
+.button.button_createAccount:pressed {
+    -fx-opacity: 0.5;
 }

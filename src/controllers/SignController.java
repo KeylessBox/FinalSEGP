@@ -326,6 +326,7 @@ public class SignController {
                     stage.show();
                 }
             }catch (Exception e){
+                e.printStackTrace();
                 ErrorMessage.setText("Database connection failed!");
                 ErrorMessage.setVisible(true);
                 Timer animTimer = new Timer();

@@ -626,23 +626,20 @@ public class MainController {
             Pane CaseEditObject = null;
             try {
                 CaseEditObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/case_edit_pane.fxml")); // Case object loads the fxml, with its nodes
+                DragResizeMod.makeResizable(CaseEditObject, null);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
             Pane finalCaseEditObject = CaseEditObject;
-            HBox t1 = (HBox) finalCaseEditObject.getChildren().get(0);
-            VBox t2 = (VBox) t1.getChildren().get(0);
-            TextField t3 = (TextField) t2.getChildren().get(1);
-            HBox t34 = (HBox) t2.getChildren().get(0);
-            ToggleButton t35 = (ToggleButton) t34.getChildren().get(0);
-            ToggleButton t36 = (ToggleButton) t34.getChildren().get(1);
-
-            Button t4 = (Button) t1.getChildren().get(1);
+            TextField t3 = (TextField) finalCaseEditObject.getChildren().get(2);
+            ToggleButton t35 = (ToggleButton) finalCaseEditObject.getChildren().get(0);
+            ToggleButton t36 = (ToggleButton) finalCaseEditObject.getChildren().get(1);
+            Button t4 = (Button) finalCaseEditObject.getChildren().get(3);
 
 
             editBtn.setOnAction(event -> {
-                finalCaseEditObject.setLayoutX(21);
-                finalCaseEditObject.setLayoutY(92);
+                finalCaseEditObject.setLayoutX(250);
+                finalCaseEditObject.setLayoutY(100);
                 t3.setText(caseName.getText());
                 root.getChildren().add(finalCaseEditObject);
             });
@@ -1722,7 +1719,7 @@ public class MainController {
     @FXML
     public void notes_settings() {
         try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_settings_pane.fxml"));
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
@@ -1732,8 +1729,8 @@ public class MainController {
                 root.getChildren().remove(finalCaseObject);
             });
             label.setText("Notes");
-            finalCaseObject.setLayoutX(250);
-            finalCaseObject.setLayoutY(100);
+            finalCaseObject.setLayoutX(1000);
+            finalCaseObject.setLayoutY(1000);
             DragResizeMod.makeResizable(finalCaseObject, null);
             root.getChildren().add(finalCaseObject);
         } catch (IOException e) {
