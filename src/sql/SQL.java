@@ -50,11 +50,11 @@ public class SQL {
 
             while (callsRS.next()) {
                 ResultSet originRS = connection.createStatement().executeQuery("SELECT personName FROM phoneNumbers WHERE phoneNumber= '"
-                         + callsRS.getString(3) + "';");
+                        + callsRS.getString(3) + "';");
 
                 ResultSet destinationRS = connection.createStatement().executeQuery
                         ("SELECT personName FROM phoneNumbers WHERE phoneNumber= '" +
-                        callsRS.getString(4) + "';");
+                                callsRS.getString(4) + "';");
                 if (Integer.parseInt(callsRS.getString(1)) > maxIDCall) {
                     maxIDCall = Integer.parseInt(callsRS.getString(1));
                 }
@@ -480,4 +480,14 @@ public class SQL {
         }
     }
 
+    public void removeNotes(int caseID) {
+        Connection connection = dbConnection.connect();
+
+        try {
+            connection.createStatement().executeUpdate("DELETE FROM `notes` WHERE caseID = " + caseID + ";");
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

@@ -631,15 +631,15 @@ public class MainController {
                 e1.printStackTrace();
             }
             Pane finalCaseEditObject = CaseEditObject;
-            TextField t3 = (TextField) finalCaseEditObject.getChildren().get(2);
-            ToggleButton t35 = (ToggleButton) finalCaseEditObject.getChildren().get(0);
-            ToggleButton t36 = (ToggleButton) finalCaseEditObject.getChildren().get(1);
-            Button t4 = (Button) finalCaseEditObject.getChildren().get(3);
+            Pane t1 = (Pane) finalCaseEditObject.getChildren().get(0);
+            TextField t3 = (TextField) t1.getChildren().get(2);
+            ToggleButton t35 = (ToggleButton) t1.getChildren().get(0);
+            Button t4 = (Button) t1.getChildren().get(3);
 
 
             editBtn.setOnAction(event -> {
-                finalCaseEditObject.setLayoutX(250);
-                finalCaseEditObject.setLayoutY(100);
+                finalCaseEditObject.setLayoutX(260);
+                finalCaseEditObject.setLayoutY(110);
                 t3.setText(caseName.getText());
                 root.getChildren().add(finalCaseEditObject);
             });
@@ -1718,19 +1718,25 @@ public class MainController {
 
     @FXML
     public void notes_settings() {
+        System.out.println("HREER");
         try {
+
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_settings_pane.fxml"));
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
-            Label label = (Label) pane.getChildren().get(1);
             Button btn = (Button) pane.getChildren().get(0);
+            Button btn2 = (Button) pane.getChildren().get(1);
             btn.setOnAction(event -> {
                 root.getChildren().remove(finalCaseObject);
             });
-            label.setText("Notes");
-            finalCaseObject.setLayoutX(1000);
-            finalCaseObject.setLayoutY(1000);
+            btn2.setOnAction(event -> {
+                notes_box.getChildren().clear();
+                sql.removeNotes(caseID);
+                root.getChildren().remove(finalCaseObject);
+            });
+            finalCaseObject.setLayoutX(1540);
+            finalCaseObject.setLayoutY(870);
             DragResizeMod.makeResizable(finalCaseObject, null);
             root.getChildren().add(finalCaseObject);
         } catch (IOException e) {
