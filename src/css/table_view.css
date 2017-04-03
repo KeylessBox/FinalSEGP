@@ -207,5 +207,25 @@
 }
 
 
+.button {
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-background-color: #334259,
+    #43546e;
+    -fx-border-color: transparent;
+    -fx-border-radius: 3;
+    -fx-opacity: 0.9;
+}
+
+.button:hover {
+    -fx-opacity: 1;
+}
+
+.button:focused {
+    -fx-opacity: 1;
+    -fx-text-alignment: center;
+}
+
+
 
 

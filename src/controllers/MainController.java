@@ -1730,12 +1730,10 @@ public class MainController {
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
-            Label label = (Label) pane.getChildren().get(1);
-            Button btn = (Button) pane.getChildren().get(0);
+            Button btn = (Button) pane.getChildren().get(1);
             btn.setOnAction(event -> {
                 root.getChildren().remove(finalCaseObject);
             });
-            label.setText("Admin Pane");
             finalCaseObject.setLayoutX(250);
             finalCaseObject.setLayoutY(100);
             DragResizeMod.makeResizable(finalCaseObject, null);
