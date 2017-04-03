@@ -573,7 +573,6 @@ public class MainController {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-
             // Initialise elements from Case object:
             HBox hb = (HBox) CaseObject.getChildren().get(2);
             Button deleteBtn = (Button) hb.getChildren().get(1);
@@ -586,7 +585,6 @@ public class MainController {
             Label caseName = (Label) temp2.getChildren().get(1);
             caseName.setText(caseRecord.getName());
             Label caseDate = (Label) temp.getChildren().get(1);
-
 
             try {
                 caseDate.setText(new SimpleDateFormat("yy-MM-dd  [HH:mm]").format(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(caseRecord.getDate())));
