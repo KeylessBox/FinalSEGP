@@ -1670,16 +1670,14 @@ public class MainController {
     @FXML
     public void openSettings() {
         try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/extrapane.fxml"));
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
-            Label label = (Label) pane.getChildren().get(1);
-            Button btn = (Button) pane.getChildren().get(0);
+            Button btn = (Button) pane.getChildren().get(3);
             btn.setOnAction(event -> {
                 root.getChildren().remove(finalCaseObject);
             });
-            label.setText("Settings");
             finalCaseObject.setLayoutX(250);
             finalCaseObject.setLayoutY(100);
             DragResizeMod.makeResizable(finalCaseObject, null);
@@ -1716,7 +1714,6 @@ public class MainController {
 
     @FXML
     public void notes_settings() {
-        System.out.println("HREER");
         try {
 
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_settings_pane.fxml"));
