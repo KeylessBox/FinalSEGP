@@ -14,7 +14,7 @@ import sql.SQL;
 public class UsersTable {
     private static SQL sql = new SQL();
 
-    public static void createOriginNameColumn(TableColumn originName) {
+    public static void createNameColumn(TableColumn name) {
 
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
@@ -23,9 +23,9 @@ public class UsersTable {
             }
         };
 
-        originName.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("originName"));
-        originName.setCellFactory(editableFactory);
-        originName.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        name.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("originName"));
+        name.setCellFactory(editableFactory);
+        name.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
@@ -35,7 +35,7 @@ public class UsersTable {
         });
     }
 
-    public static void createOriginColumn(TableColumn origin) {
+    public static void createSurnameColumn(TableColumn surname) {
 
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
@@ -44,9 +44,9 @@ public class UsersTable {
             }
         };
 
-        origin.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("origin"));
-        origin.setCellFactory(editableFactory);
-        origin.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        surname.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("origin"));
+        surname.setCellFactory(editableFactory);
+        surname.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
@@ -57,7 +57,7 @@ public class UsersTable {
         });
     }
 
-    public static void createDestinationNameColumn(TableColumn destinationName) {
+    public static void createEmailColumn(TableColumn email) {
 
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
@@ -66,9 +66,9 @@ public class UsersTable {
                 return new EditingCell();
             }
         };
-        destinationName.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destinationName"));
-        destinationName.setCellFactory(editableFactory);
-        destinationName.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        email.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destinationName"));
+        email.setCellFactory(editableFactory);
+        email.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
@@ -84,7 +84,7 @@ public class UsersTable {
         });
     }
 
-    public static void createDestinationColumn(TableColumn destination) {
+    public static void createPasswordColumn(TableColumn password) {
 
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
@@ -92,9 +92,9 @@ public class UsersTable {
                 return new EditingCellPhone();
             }
         };
-        destination.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destination"));
-        destination.setCellFactory(editableFactory);
-        destination.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        password.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destination"));
+        password.setCellFactory(editableFactory);
+        password.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
@@ -105,7 +105,7 @@ public class UsersTable {
         });
     }
 
-    public static void createDateColumn(TableColumn date) {
+    public static void createPrivilegeColumn(TableColumn privilege) {
 
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
@@ -114,9 +114,9 @@ public class UsersTable {
             }
         };
 
-        date.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("date"));
-        date.setCellFactory(editableFactory);
-        date.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
+        privilege.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("date"));
+        privilege.setCellFactory(editableFactory);
+        privilege.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
                 System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
@@ -126,65 +126,4 @@ public class UsersTable {
         });
     }
 
-    public static void createTimeColumn(TableColumn time) {
-
-        Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
-            @Override
-            public TableCell call(TableColumn p) {
-                return new EditingCell();
-            }
-        };
-        time.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("time"));
-        time.setCellFactory(editableFactory);
-        time.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
-                System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setTime(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "time", t.getNewValue());
-            }
-        });
-    }
-
-    public static void createCallTypeColumn(TableColumn callType) {
-
-        Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
-            @Override
-            public TableCell call(TableColumn p) {
-                return new EditingCell();
-            }
-        };
-
-        callType.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("callType"));
-        callType.setCellFactory(editableFactory);
-        callType.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
-                System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setCallType(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "callType", t.getNewValue());
-            }
-        });
-    }
-
-    public static void createDurationColumn(TableColumn duration) {
-
-        Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
-            @Override
-            public TableCell call(TableColumn p) {
-                return new EditingCell();
-            }
-        };
-        duration.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("duration"));
-        duration.setCellFactory(editableFactory);
-        duration.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<CallRecord, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<CallRecord, String> t) {
-                System.out.println("CHANGE  Previous: " + t.getOldValue() + "   New: " + t.getNewValue());
-                t.getRowValue().setDuration(t.getNewValue());
-                sql.editCell(Integer.parseInt(t.getRowValue().getCallID()), "duration", t.getNewValue());
-            }
-        });
-
-    }
 }

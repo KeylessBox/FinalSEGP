@@ -59,6 +59,7 @@ public class MainController {
     private ObservableList<CallRecord> callsData;   //the calls from the database
     private ObservableList<CaseRecord> casesData;   // the cases from the database
     private ObservableList<FileRecord> filesData;   // the case files from the database
+    private ObservableList<UserRecord> usersData;   // the users from the database
     private int caseID = 1;
     private int id = 1;
     private boolean editing = false;
@@ -120,6 +121,9 @@ public class MainController {
     protected Label numOfRows;
     SearchField searchTxt = new SearchField("");
 
+    UsersTable columnfactory2 = new UsersTable();
+
+
     /**
      * Import functionality.
      */
@@ -144,6 +148,24 @@ public class MainController {
         callsData = sql.loadCalls(caseID);  // takes the data from the database and puts it into an observable list
         searchData = callsData;             // search data gets the default table items from callsData (usefull for export CSV/PDF)
         columnFactory.createOriginNameColumn(originIdentifierColumn); // builds the columns, without data
+        columnFactory.createOriginColumn(originPhoneColumn);
+        columnFactory.createDestinationNameColumn(destinationIdentifierColumn);
+        columnFactory.createDestinationColumn(destinationPhoneColumn);
+        columnFactory.createDateColumn(dateColumn);
+        columnFactory.createTimeColumn(timeColumn);
+        columnFactory.createCallTypeColumn(typeColumn);
+        columnFactory.createDurationColumn(durationColumn);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setItems(callsData);  // adds the data into the table
+        table.setEditable(true);
+
+        //numOfRows label shows the size of the displayed table
+        numOfRows.setText("Number of rows: " + table.getItems().size());
+    }
+
+    public void loadUsersTable() {
+        usersData = sql.loadUsers();  // takes the data from the database and puts it into an observable list
+        columnFactory2.
         columnFactory.createOriginColumn(originPhoneColumn);
         columnFactory.createDestinationNameColumn(destinationIdentifierColumn);
         columnFactory.createDestinationColumn(destinationPhoneColumn);
