@@ -1736,6 +1736,7 @@ public class MainController {
                 root.getChildren().remove(finalCaseObject);
             });
             finalCaseObject.setLayoutX(1540);
+            
             finalCaseObject.setLayoutY(870);
             DragResizeMod.makeResizable(finalCaseObject, null);
             root.getChildren().add(finalCaseObject);
