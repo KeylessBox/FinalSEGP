@@ -22,7 +22,7 @@ public class UsersTable {
                 return new EdititingUserCell();
             }
         };
-        name.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("name"));
+        name.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("userName"));
         name.setCellFactory(editableFactory);
         name.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserRecord, String>>() {
             @Override
@@ -43,7 +43,7 @@ public class UsersTable {
             }
         };
 
-        surname.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("surname"));
+        surname.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("userSurname"));
         surname.setCellFactory(editableFactory);
         surname.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserRecord, String>>() {
             @Override
@@ -64,7 +64,7 @@ public class UsersTable {
                 return new EdititingUserCell();
             }
         };
-        email.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("email"));
+        email.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("userEmail"));
         email.setCellFactory(editableFactory);
         email.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserRecord, String>>() {
             @Override
@@ -84,7 +84,7 @@ public class UsersTable {
                 return new EdititingUserCell();
             }
         };
-        password.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("password"));
+        password.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("userPassword"));
         password.setCellFactory(editableFactory);
         password.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserRecord, String>>() {
             @Override
@@ -105,7 +105,7 @@ public class UsersTable {
             }
         };
 
-        privilege.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("privelege"));
+        privilege.setCellValueFactory(new PropertyValueFactory<UserRecord, String>("userPrivelege"));
         privilege.setCellFactory(editableFactory);
         privilege.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<UserRecord, String>>() {
             @Override

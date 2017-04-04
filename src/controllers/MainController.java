@@ -55,7 +55,6 @@ public class MainController {
 
     SQL sql = new SQL();    //  sql functionality
     CallsTable columnFactory = new CallsTable();    // building the columns of the table
-    UsersTable columnFactoryUsers = new UsersTable();    // building the columns of the table
     private ObservableList<CallRecord> searchData;
     private ObservableList<CallRecord> callsData;   //the calls from the database
     private ObservableList<CaseRecord> casesData;   // the cases from the database
@@ -120,10 +119,9 @@ public class MainController {
     protected BorderPane root;
     @FXML
     protected Label numOfRows;
-
-
     SearchField searchTxt = new SearchField("");
 
+    UsersTable columnfactory2 = new UsersTable();
 
 
     /**
@@ -165,10 +163,6 @@ public class MainController {
         numOfRows.setText("Number of rows: " + table.getItems().size());
     }
 
-    public void loadUsersTable() {
-
-    }
-
     public void createDeleteColumn(TableColumn deleteColumn) {
 
         deleteColumn.setCellValueFactory(
@@ -188,8 +182,10 @@ public class MainController {
                     public TableCell<CallRecord, Boolean> call(TableColumn<CallRecord, Boolean> p) {
                         return new ButtonCell();
                     }
+
                 });
         deleteColumn.setSortable(false);
+
     }
 
     private class ButtonCell extends TableCell<CallRecord, Boolean> {
@@ -244,9 +240,6 @@ public class MainController {
     @FXML
     private void filter() {
         try {
-            if (filtersBox.getChildren().size() == 0 ) {
-                searchData = filterSearch(filterDates(0));
-            } else
             // Retrieves the filtered data
             if (filtersBox.getChildren().size() == 2) {
                 searchData = filterSearch(filter(0));
@@ -468,9 +461,6 @@ public class MainController {
                                 data.setOriginName(person.getIdentifier());
                             } else if (j==3){
                                 data.setDestinationName(person.getIdentifier());
-                            }
-                            if (data.getOriginName().equals(person.getPreviousIdentifier()) &&
-                                    data.getDestinationName().equals(person.getPreviousIdentifier())) {
                             }
                             tableItems.add(data);
                             sum++;
@@ -1738,62 +1728,26 @@ public class MainController {
 
     @FXML
     public void openMessages() {
-        Pane CaseObject = null;
+
         try {
-            CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        usersData = sql.getUsers();  // takes the data from the database and puts it into an observable list
-
-
-
-//            loadUsersTable();
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
-            
-            TableView usersTable = (TableView) pane.getChildren().get(3);
-
-        ObservableList<TableColumn> userColumns = usersTable.getColumns();
-        TableColumn nameColumn = userColumns.get(0);
-        TableColumn surnameColumn = userColumns.get(1);
-        TableColumn emailColumn = userColumns.get(2);
-        TableColumn passwordColumnColumn = userColumns.get(3);
-        TableColumn privelegeColumn = userColumns.get(4);
-
-        columnFactoryUsers.createNameColumn(nameColumn);
-        columnFactoryUsers.createSurnameColumn(surnameColumn);
-        columnFactoryUsers.createEmailColumn(emailColumn);
-        columnFactoryUsers.createPasswordColumn(passwordColumnColumn);
-        columnFactoryUsers.createPrivilegeColumn(privelegeColumn);
-        usersTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        usersTable.setItems(usersData);  // adds the data into the table
-        usersTable.setEditable(true);
-
-        //numOfRows label shows the size of the displayed table
-        numOfRows.setText("Number of rows: " + usersTable.getItems().size());
-
             Button btn = (Button) pane.getChildren().get(1);
-            Button btn2 = (Button) pane.getChildren().get(4);
-            Button btn3 = (Button) pane.getChildren().get(5);
 
             btn.setOnAction(event -> {
                 root.getChildren().remove(finalCaseObject);
-            });
-
-            btn2.setOnAction(event -> {
-                System.out.println("ADD");
-            });
-
-            btn3.setOnAction(event -> {
-                System.out.println("DELETE");
             });
 
             finalCaseObject.setLayoutX(250);
             finalCaseObject.setLayoutY(100);
             DragResizeMod.makeResizable(finalCaseObject, null);
             root.getChildren().add(finalCaseObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

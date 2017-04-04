@@ -1,10 +1,12 @@
 package modules.table;
 
-import controllers.MainController;
+/**
+ * Created by Aleksandr on 4/3/2017.
+ */
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -34,7 +36,7 @@ public class EdititingUserCell extends TableCell<UserRecord, String> {
     public void startEdit() {
         super.startEdit();
 
-        if( textField == null ) {
+        if (textField == null) {
             createTextField();
         }
         setText(null);
@@ -64,7 +66,6 @@ public class EdititingUserCell extends TableCell<UserRecord, String> {
             setText(null);
             setGraphic(null);
         } else {
-
             if (isEditing()) {
                 if (textField != null) {
                     textField.setText(getString());
@@ -77,6 +78,7 @@ public class EdititingUserCell extends TableCell<UserRecord, String> {
             }
         }
     }
+
     /**
      * Create textfield to save changes after
      */
@@ -86,7 +88,9 @@ public class EdititingUserCell extends TableCell<UserRecord, String> {
         textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
-                if (!arg2) { commitEdit(textField.getText()); }
+                if (!arg2) {
+                    commitEdit(textField.getText());
+                }
             }
         });
         textField.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -94,7 +98,11 @@ public class EdititingUserCell extends TableCell<UserRecord, String> {
             public void handle(KeyEvent t) {
                 if (t.getCode() == KeyCode.ENTER) {
                     String value = textField.getText();
-                    if (value != null) { commitEdit(value);	} else { commitEdit(null); }
+                    if (value != null) {
+                        commitEdit(value);
+                    } else {
+                        commitEdit(null);
+                    }
                 } else if (t.getCode() == KeyCode.ESCAPE) {
                     cancelEdit();
                 }

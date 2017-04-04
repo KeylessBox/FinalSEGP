@@ -4,9 +4,9 @@ package sql;
  * Created by AndreiM on 2/3/2017.
  */
 
-import modules.table.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import modules.table.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -24,6 +24,7 @@ public class SQL {
     int maxIDCall = 1;
     int maxIDNote = 1;
     int maxIDCase = 1;
+    int maxUserID = 1;
 
     /**
      * Connection with MYSQL database
@@ -99,31 +100,7 @@ public class SQL {
                 if (Integer.parseInt(caseRS.getString(1)) > maxIDCall) {
                     maxIDCase = Integer.parseInt(caseRS.getString(1));
                 }
-                data.add(new CaseRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4),caseRS.getString(5)));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        try {
-            connection.close();
-        }catch (SQLException e ){
-
-        }
-        return data;
-    }
-
-    public ObservableList<UserRecord> getUsers() {
-        Connection connection = dbConnection.connect();
-        ObservableList<UserRecord> data = FXCollections.observableArrayList();
-
-        try {
-            //execute query and store result in a result SET:
-            ResultSet usersRS = connection.createStatement().executeQuery("SELECT * FROM accounts;");
-
-            while (usersRS.next()) {
-                data.add(new UserRecord(usersRS.getString(1), usersRS.getString(2),
-                        usersRS.getString(3),
-                        usersRS.getString(4), usersRS.getString(5), usersRS.getString(6)));
+                data.add(new CaseRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4), caseRS.getString(5)));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -131,6 +108,7 @@ public class SQL {
         try {
             connection.close();
         } catch (SQLException e) {
+
         }
         return data;
     }
@@ -363,6 +341,7 @@ public class SQL {
         }
         return null;
     }
+
     /**
      * Inserts default call to database
      */
@@ -375,9 +354,9 @@ public class SQL {
                     "VALUES(" + cr.getCaseID() + ",'" + cr.getOrigin() + "','" + cr.getDestination() + "','" +
                     cr.getDate() + "','" + cr.getTime() + "','" + cr.getCallType() + "','" + cr.getDuration() + "');");
             connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
-                    "(' ','" +cr.getOrigin() + "');");
+                    "(' ','" + cr.getOrigin() + "');");
             connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
-                    "(' ','" +cr.getDestination() + "');");
+                    "(' ','" + cr.getDestination() + "');");
 //            connection.createStatement().executeUpdate("DELETE n1 FROM phoneNumbers n1, phoneNumbers n2 " +
 //                    "WHERE n1.id > n2.id AND n1.phoneNumber = n2.phoneNumber");
             connection.close();
@@ -456,16 +435,6 @@ public class SQL {
         }
     }
 
-    public void editUserCell(int id, String columnName, String change) {
-        Connection connection = dbConnection.connect();
-        try {
-            connection.createStatement().executeUpdate("UPDATE accounts SET " + columnName + "= '" + change + "' WHERE id =" + id);
-            connection.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
 
     public void updateCaseName(int caseId, String change) {
         Connection connection = dbConnection.connect();
@@ -499,7 +468,7 @@ public class SQL {
         }
     }
 
-    public void updateDate(int id, String change){
+    public void updateDate(int id, String change) {
         Connection connection = dbConnection.connect();
 
         try {
@@ -519,5 +488,71 @@ public class SQL {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public ObservableList<UserRecord> loadUsers() {
+        Connection connection = dbConnection.connect();
+        ObservableList<UserRecord> data = FXCollections.observableArrayList();
+
+        try {
+            //execute query and store result in a result SET:
+            ResultSet usersRS = connection.createStatement().executeQuery("SELECT * FROM accounts;");
+
+            while (usersRS.next()) {
+                if (Integer.parseInt(usersRS.getString(1)) > maxUserID) {
+                    maxUserID = Integer.parseInt(usersRS.getString(1));
+                    System.out.println(maxUserID);
+                }
+                data.add(new UserRecord(usersRS.getString(1), usersRS.getString(2),
+                        usersRS.getString(3),
+                        usersRS.getString(4), usersRS.getString(5), usersRS.getString(6)));
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        try {
+            connection.close();
+        } catch (SQLException e) {
+        }
+        return data;
+    }
+
+    public void editUserCell(int id, String columnName, String change) {
+        Connection connection = dbConnection.connect();
+        try {
+            connection.createStatement().executeUpdate("UPDATE accounts SET " + columnName + "= '" + change + "' WHERE id =" + id);
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void removeUser(int id) {
+        Connection connection = dbConnection.connect();
+
+        try {
+            connection.createStatement().executeUpdate("DELETE FROM `accounts` WHERE id = " + id);
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void addUser(UserRecord cr) {
+        Connection connection = dbConnection.connect();
+
+        try {
+            connection.createStatement().executeUpdate("INSERT INTO accounts(id,name, surname, email, password, privileges)\n" +
+                    "VALUES('" + cr.getUserID() + "','" + cr.getUserName() + "','" + cr.getUserSurname() + "','" +
+                    cr.getUserEmail() + "','" + cr.getUserPassword() + "','" + cr.getUserPrivelege() + "');");
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public int getMaxUserID() {
+        maxUserID++;
+        return maxUserID;
     }
 }
