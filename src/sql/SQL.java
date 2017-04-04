@@ -398,7 +398,7 @@ public class SQL {
     }
 
     /**
-     * Edits the database when the user edits a cell in the table
+     * Edits the database when the user edits a cell in the callsTable
      *
      * @param id         CallID (unique paramater of the calls) so that there aren't any duplicates
      * @param columnName Where in the specific row the change is made

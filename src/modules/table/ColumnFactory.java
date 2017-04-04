@@ -11,7 +11,7 @@ import sql.SQL;
 /**
  * Created by AndreiM on 2/3/2017.
  */
-public class CallsTable {
+public class ColumnFactory {
     private static SQL sql = new SQL();
 
     public static void createOriginNameColumn(TableColumn originName) {

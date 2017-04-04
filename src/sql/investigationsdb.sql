@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accounts`
+-- Table structure for callsTable `accounts`
 --
 
 CREATE TABLE `accounts` (
@@ -35,7 +35,7 @@ CREATE TABLE `accounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `accounts`
+-- Dumping data for callsTable `accounts`
 --
 
 INSERT INTO `accounts` (`Name`, `Surname`, `Email`, `Password`, `Privileges`) VALUES
@@ -46,7 +46,7 @@ INSERT INTO `accounts` (`Name`, `Surname`, `Email`, `Password`, `Privileges`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `calls`
+-- Table structure for callsTable `calls`
 --
 
 CREATE TABLE `calls` (
@@ -61,7 +61,7 @@ CREATE TABLE `calls` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `calls`
+-- Dumping data for callsTable `calls`
 --
 
 INSERT INTO `calls` (`Id`, `CaseId`, `CallerPhoneNumber`, `ReceiverPhoneNumber`, `Date`, `Time`, `TypeOfCall`, `Duration`) VALUES
@@ -80,7 +80,7 @@ INSERT INTO `calls` (`Id`, `CaseId`, `CallerPhoneNumber`, `ReceiverPhoneNumber`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cases`
+-- Table structure for callsTable `cases`
 --
 
 CREATE TABLE `cases` (
@@ -91,7 +91,7 @@ CREATE TABLE `cases` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `cases`
+-- Dumping data for callsTable `cases`
 --
 
 INSERT INTO `cases` (`Id`, `Name`, `Details`, `Status`) VALUES
@@ -101,7 +101,7 @@ INSERT INTO `cases` (`Id`, `Name`, `Details`, `Status`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `emailaddresses`
+-- Table structure for callsTable `emailaddresses`
 --
 
 CREATE TABLE `emailaddresses` (
@@ -113,7 +113,7 @@ CREATE TABLE `emailaddresses` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `houseaddresses`
+-- Table structure for callsTable `houseaddresses`
 --
 
 CREATE TABLE `houseaddresses` (
@@ -128,7 +128,7 @@ CREATE TABLE `houseaddresses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `houseaddresses`
+-- Dumping data for callsTable `houseaddresses`
 --
 
 INSERT INTO `houseaddresses` (`Id`, `PersonID`, `HouseNumber`, `StreetName`, `Town`, `County`, `PostCode`, `Country`) VALUES
@@ -142,7 +142,7 @@ INSERT INTO `houseaddresses` (`Id`, `PersonID`, `HouseNumber`, `StreetName`, `To
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notes`
+-- Table structure for callsTable `notes`
 --
 
 CREATE TABLE `notes` (
@@ -157,7 +157,7 @@ CREATE TABLE `notes` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `people`
+-- Table structure for callsTable `people`
 --
 
 CREATE TABLE `people` (
@@ -172,7 +172,7 @@ CREATE TABLE `people` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `people`
+-- Dumping data for callsTable `people`
 --
 
 INSERT INTO `people` (`Id`, `FirstName`, `LastName`, `Gender`, `DayOfBirth`, `MonthOfBirth`, `YearOfBirth`, `DateOfBirth`) VALUES
@@ -186,7 +186,7 @@ INSERT INTO `people` (`Id`, `FirstName`, `LastName`, `Gender`, `DayOfBirth`, `Mo
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phonenumbers`
+-- Table structure for callsTable `phonenumbers`
 --
 
 CREATE TABLE `phonenumbers` (
@@ -196,7 +196,7 @@ CREATE TABLE `phonenumbers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `phonenumbers`
+-- Dumping data for callsTable `phonenumbers`
 --
 
 INSERT INTO `phonenumbers` (`Id`, `PersonID`, `PhoneNumber`) VALUES
@@ -210,7 +210,7 @@ INSERT INTO `phonenumbers` (`Id`, `PersonID`, `PhoneNumber`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for callsTable `users`
 --
 
 CREATE TABLE `users` (
@@ -219,7 +219,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `users`
+-- Dumping data for callsTable `users`
 --
 
 INSERT INTO `users` (`Id`, `Name`) VALUES
@@ -230,14 +230,14 @@ INSERT INTO `users` (`Id`, `Name`) VALUES
 --
 
 --
--- Indexes for table `calls`
+-- Indexes for callsTable `calls`
 --
 ALTER TABLE `calls`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `CaseId` (`CaseId`);
 
 --
--- Indexes for table `cases`
+-- Indexes for callsTable `cases`
 --
 ALTER TABLE `cases`
   ADD PRIMARY KEY (`Id`);
@@ -247,7 +247,7 @@ ALTER TABLE `cases`
 --
 
 --
--- AUTO_INCREMENT for table `cases`
+-- AUTO_INCREMENT for callsTable `cases`
 --
 ALTER TABLE `cases`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;

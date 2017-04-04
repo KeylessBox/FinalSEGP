@@ -53,7 +53,7 @@ public class UsersController {
         loadUsersTable();
         add.setOnAction(event -> {
             UserRecord cr = new UserRecord(String.valueOf(sql.getMaxUserID()), "user", "username", "email", "password", "user");
-            usersData.add(cr);  // Add to table (visually) part
+            usersData.add(cr);  // Add to callsTable (visually) part
             sql.addUser(cr);        // Add to database part
             System.out.println("ADD: user " + cr.getUserID() );
             table2.scrollTo(cr);
@@ -65,7 +65,7 @@ public class UsersController {
                 UserRecord user = (UserRecord) table2.getSelectionModel().getSelectedItem();   //   Getting the data
                 if (user != null) {   // Checking if it's something there
                     sql.removeUser(Integer.parseInt(user.getUserID()));   // Delete from database part
-                    usersData.remove(table2.getSelectionModel().getSelectedItem());  // Remove from table part
+                    usersData.remove(table2.getSelectionModel().getSelectedItem());  // Remove from callsTable part
                     System.out.println("DELETE: user " + user.getUserID());
                 }
             }

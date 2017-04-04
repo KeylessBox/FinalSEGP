@@ -28,7 +28,7 @@ public class EditingOriginNameCell extends TableCell<CallRecord, String>{
         }
 
         /**
-         * Start editing table cell
+         * Start editing callsTable cell
          */
         @Override
         public void startEdit() {
@@ -43,7 +43,7 @@ public class EditingOriginNameCell extends TableCell<CallRecord, String>{
         }
 
         /**
-         * Cancel editing table cell
+         * Cancel editing callsTable cell
          */
         @Override
         public void cancelEdit() {

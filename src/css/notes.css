@@ -2,23 +2,23 @@
 
 }
 
-#notes_scroll_pane {
+#notesSPane {
     -fx-height: 50px;
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
 
-#notes_scroll_pane > .viewport {
+#notesSPane > .viewport {
     -fx-border-color: grey;
     -fx-background-color: #bfbfbf;
     -fx-border-width: 0 0 0 1;
 }
 
-#notes_scroll_pane:focused {
+#notesSPane:focused {
     -fx-background-insets: 0;
 }
 
-#notes_scroll_pane.corner {
+#notesSPane.corner {
     -fx-background-insets: 0;
 }
 

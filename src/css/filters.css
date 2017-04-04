@@ -79,20 +79,20 @@
     -fx-min-width: 25px;
     -fx-min-height: 25px;
 }
-#filters_scroll {
+#filtersSPane {
     -fx-min-height: 150px;
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
-#filters_scroll > .viewport{
+#filtersSPane > .viewport{
     -fx-background-image: url("../res/images/background.jpg");
     -fx-padding: 10px;
 }
-#filters_scroll:focused{
+#filtersSPane:focused{
     -fx-background-insets: 0;
 
 }
-#filters_scroll .corner{
+#filtersSPane .corner{
     -fx-background-insets: 0;
 }
 

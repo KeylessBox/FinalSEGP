@@ -25,7 +25,7 @@ USE `investigationsdb`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `accounts`
+-- Table structure for callsTable `accounts`
 --
 
 CREATE TABLE `accounts` (
@@ -37,7 +37,7 @@ CREATE TABLE `accounts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `accounts`
+-- Dumping data for callsTable `accounts`
 --
 
 INSERT INTO `accounts` (`Name`, `Surname`, `Email`, `Password`, `Privileges`) VALUES
@@ -47,7 +47,7 @@ INSERT INTO `accounts` (`Name`, `Surname`, `Email`, `Password`, `Privileges`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `calls`
+-- Table structure for callsTable `calls`
 --
 
 CREATE TABLE `calls` (
@@ -62,7 +62,7 @@ CREATE TABLE `calls` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `calls`
+-- Dumping data for callsTable `calls`
 --
 
 INSERT INTO `calls` (`Id`, `CaseId`, `CallerPhoneNumber`, `ReceiverPhoneNumber`, `Date`, `Time`, `TypeOfCall`, `Duration`) VALUES
@@ -80,7 +80,7 @@ INSERT INTO `calls` (`Id`, `CaseId`, `CallerPhoneNumber`, `ReceiverPhoneNumber`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cases`
+-- Table structure for callsTable `cases`
 --
 
 CREATE TABLE `cases` (
@@ -91,7 +91,7 @@ CREATE TABLE `cases` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `cases`
+-- Dumping data for callsTable `cases`
 --
 INSERT INTO Cases(Name, Details, Status) VALUES('Cheeky Scar', 'A mass murderer in Essex terrorizes peaceful people','Investigating');
 INSERT INTO Cases(Name, Details, Status) VALUES('Little Rabbit', 'A girl found dead with her rabbit close by','Solved');
@@ -99,7 +99,7 @@ INSERT INTO Cases(Name, Details, Status) VALUES('Little Rabbit', 'A girl found d
 -- --------------------------------------------------------
 
 --
--- Table structure for table `emailaddresses`
+-- Table structure for callsTable `emailaddresses`
 --
 
 CREATE TABLE `emailaddresses` (
@@ -111,7 +111,7 @@ CREATE TABLE `emailaddresses` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `houseaddresses`
+-- Table structure for callsTable `houseaddresses`
 --
 
 CREATE TABLE `houseaddresses` (
@@ -126,7 +126,7 @@ CREATE TABLE `houseaddresses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `houseaddresses`
+-- Dumping data for callsTable `houseaddresses`
 --
 
 INSERT INTO `houseaddresses` (`Id`, `PersonID`, `HouseNumber`, `StreetName`, `Town`, `County`, `PostCode`, `Country`) VALUES
@@ -140,7 +140,7 @@ INSERT INTO `houseaddresses` (`Id`, `PersonID`, `HouseNumber`, `StreetName`, `To
 -- --------------------------------------------------------
 
 --
--- Table structure for table `notes`
+-- Table structure for callsTable `notes`
 --
 
 CREATE TABLE `notes` (
@@ -155,7 +155,7 @@ CREATE TABLE `notes` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `people`
+-- Table structure for callsTable `people`
 --
 
 CREATE TABLE `people` (
@@ -170,7 +170,7 @@ CREATE TABLE `people` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `people`
+-- Dumping data for callsTable `people`
 --
 
 INSERT INTO `people` (`Id`, `FirstName`, `LastName`, `Gender`, `DayOfBirth`, `MonthOfBirth`, `YearOfBirth`, `DateOfBirth`) VALUES
@@ -184,7 +184,7 @@ INSERT INTO `people` (`Id`, `FirstName`, `LastName`, `Gender`, `DayOfBirth`, `Mo
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phonenumbers`
+-- Table structure for callsTable `phonenumbers`
 --
 
 CREATE TABLE `phonenumbers` (
@@ -194,7 +194,7 @@ CREATE TABLE `phonenumbers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `phonenumbers`
+-- Dumping data for callsTable `phonenumbers`
 --
 
 INSERT INTO `phonenumbers` (`Id`, `PersonID`, `PhoneNumber`) VALUES
@@ -208,7 +208,7 @@ INSERT INTO `phonenumbers` (`Id`, `PersonID`, `PhoneNumber`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for callsTable `users`
 --
 
 CREATE TABLE `users` (
@@ -217,7 +217,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `users`
+-- Dumping data for callsTable `users`
 --
 
 INSERT INTO `users` (`Id`, `Name`) VALUES
@@ -228,34 +228,34 @@ INSERT INTO `users` (`Id`, `Name`) VALUES
 --
 
 --
--- Indexes for table `calls`
+-- Indexes for callsTable `calls`
 --
 ALTER TABLE `calls`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `CaseId` (`CaseId`);
 
 --
--- Indexes for table `cases`
+-- Indexes for callsTable `cases`
 --
 ALTER TABLE `cases`
   ADD PRIMARY KEY (`Id`);
 
 --
--- Indexes for table `emailaddresses`
+-- Indexes for callsTable `emailaddresses`
 --
 ALTER TABLE `emailaddresses`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `PersonID` (`PersonID`);
 
 --
--- Indexes for table `houseaddresses`
+-- Indexes for callsTable `houseaddresses`
 --
 ALTER TABLE `houseaddresses`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `PersonID` (`PersonID`);
 
 --
--- Indexes for table `notes`
+-- Indexes for callsTable `notes`
 --
 ALTER TABLE `notes`
   ADD PRIMARY KEY (`Id`),
@@ -263,20 +263,20 @@ ALTER TABLE `notes`
   ADD KEY `CaseId` (`CaseId`);
 
 --
--- Indexes for table `people`
+-- Indexes for callsTable `people`
 --
 ALTER TABLE `people`
   ADD PRIMARY KEY (`Id`);
 
 --
--- Indexes for table `phonenumbers`
+-- Indexes for callsTable `phonenumbers`
 --
 ALTER TABLE `phonenumbers`
   ADD PRIMARY KEY (`Id`),
   ADD KEY `PersonID` (`PersonID`);
 
 --
--- Indexes for table `users`
+-- Indexes for callsTable `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`Id`);
@@ -286,42 +286,42 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `calls`
+-- AUTO_INCREMENT for callsTable `calls`
 --
 ALTER TABLE `calls`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
--- AUTO_INCREMENT for table `cases`
+-- AUTO_INCREMENT for callsTable `cases`
 --
 ALTER TABLE `cases`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `emailaddresses`
+-- AUTO_INCREMENT for callsTable `emailaddresses`
 --
 ALTER TABLE `emailaddresses`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `houseaddresses`
+-- AUTO_INCREMENT for callsTable `houseaddresses`
 --
 ALTER TABLE `houseaddresses`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT for table `notes`
+-- AUTO_INCREMENT for callsTable `notes`
 --
 ALTER TABLE `notes`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `people`
+-- AUTO_INCREMENT for callsTable `people`
 --
 ALTER TABLE `people`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT for table `phonenumbers`
+-- AUTO_INCREMENT for callsTable `phonenumbers`
 --
 ALTER TABLE `phonenumbers`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT for callsTable `users`
 --
 ALTER TABLE `users`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
@@ -330,32 +330,32 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `calls`
+-- Constraints for callsTable `calls`
 --
 ALTER TABLE `calls`
   ADD CONSTRAINT `calls_ibfk_1` FOREIGN KEY (`CaseId`) REFERENCES `cases` (`Id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `emailaddresses`
+-- Constraints for callsTable `emailaddresses`
 --
 ALTER TABLE `emailaddresses`
   ADD CONSTRAINT `emailaddresses_ibfk_1` FOREIGN KEY (`PersonID`) REFERENCES `people` (`Id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `houseaddresses`
+-- Constraints for callsTable `houseaddresses`
 --
 ALTER TABLE `houseaddresses`
   ADD CONSTRAINT `houseaddresses_ibfk_1` FOREIGN KEY (`PersonID`) REFERENCES `people` (`Id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `notes`
+-- Constraints for callsTable `notes`
 --
 ALTER TABLE `notes`
   ADD CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `users` (`Id`) ON DELETE CASCADE,
   ADD CONSTRAINT `notes_ibfk_2` FOREIGN KEY (`CaseId`) REFERENCES `cases` (`Id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `phonenumbers`
+-- Constraints for callsTable `phonenumbers`
 --
 ALTER TABLE `phonenumbers`
   ADD CONSTRAINT `phonenumbers_ibfk_1` FOREIGN KEY (`PersonID`) REFERENCES `people` (`Id`) ON DELETE CASCADE;
@@ -368,7 +368,7 @@ USE `phpmyadmin`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__bookmark`
+-- Table structure for callsTable `pma__bookmark`
 --
 
 CREATE TABLE `pma__bookmark` (
@@ -382,7 +382,7 @@ CREATE TABLE `pma__bookmark` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__central_columns`
+-- Table structure for callsTable `pma__central_columns`
 --
 
 CREATE TABLE `pma__central_columns` (
@@ -399,7 +399,7 @@ CREATE TABLE `pma__central_columns` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__column_info`
+-- Table structure for callsTable `pma__column_info`
 --
 
 CREATE TABLE `pma__column_info` (
@@ -418,7 +418,7 @@ CREATE TABLE `pma__column_info` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__designer_settings`
+-- Table structure for callsTable `pma__designer_settings`
 --
 
 CREATE TABLE `pma__designer_settings` (
@@ -429,7 +429,7 @@ CREATE TABLE `pma__designer_settings` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__export_templates`
+-- Table structure for callsTable `pma__export_templates`
 --
 
 CREATE TABLE `pma__export_templates` (
@@ -443,7 +443,7 @@ CREATE TABLE `pma__export_templates` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__favorite`
+-- Table structure for callsTable `pma__favorite`
 --
 
 CREATE TABLE `pma__favorite` (
@@ -454,7 +454,7 @@ CREATE TABLE `pma__favorite` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__history`
+-- Table structure for callsTable `pma__history`
 --
 
 CREATE TABLE `pma__history` (
@@ -469,7 +469,7 @@ CREATE TABLE `pma__history` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__navigationhiding`
+-- Table structure for callsTable `pma__navigationhiding`
 --
 
 CREATE TABLE `pma__navigationhiding` (
@@ -483,7 +483,7 @@ CREATE TABLE `pma__navigationhiding` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__pdf_pages`
+-- Table structure for callsTable `pma__pdf_pages`
 --
 
 CREATE TABLE `pma__pdf_pages` (
@@ -495,7 +495,7 @@ CREATE TABLE `pma__pdf_pages` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__recent`
+-- Table structure for callsTable `pma__recent`
 --
 
 CREATE TABLE `pma__recent` (
@@ -504,7 +504,7 @@ CREATE TABLE `pma__recent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Recently accessed tables';
 
 --
--- Dumping data for table `pma__recent`
+-- Dumping data for callsTable `pma__recent`
 --
 
 INSERT INTO `pma__recent` (`username`, `tables`) VALUES
@@ -513,7 +513,7 @@ INSERT INTO `pma__recent` (`username`, `tables`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__relation`
+-- Table structure for callsTable `pma__relation`
 --
 
 CREATE TABLE `pma__relation` (
@@ -528,7 +528,7 @@ CREATE TABLE `pma__relation` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__savedsearches`
+-- Table structure for callsTable `pma__savedsearches`
 --
 
 CREATE TABLE `pma__savedsearches` (
@@ -542,7 +542,7 @@ CREATE TABLE `pma__savedsearches` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__table_coords`
+-- Table structure for callsTable `pma__table_coords`
 --
 
 CREATE TABLE `pma__table_coords` (
@@ -556,7 +556,7 @@ CREATE TABLE `pma__table_coords` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__table_info`
+-- Table structure for callsTable `pma__table_info`
 --
 
 CREATE TABLE `pma__table_info` (
@@ -568,7 +568,7 @@ CREATE TABLE `pma__table_info` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__table_uiprefs`
+-- Table structure for callsTable `pma__table_uiprefs`
 --
 
 CREATE TABLE `pma__table_uiprefs` (
@@ -580,7 +580,7 @@ CREATE TABLE `pma__table_uiprefs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='Tables'' UI preferences';
 
 --
--- Dumping data for table `pma__table_uiprefs`
+-- Dumping data for callsTable `pma__table_uiprefs`
 --
 
 INSERT INTO `pma__table_uiprefs` (`username`, `db_name`, `table_name`, `prefs`, `last_update`) VALUES
@@ -589,7 +589,7 @@ INSERT INTO `pma__table_uiprefs` (`username`, `db_name`, `table_name`, `prefs`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__tracking`
+-- Table structure for callsTable `pma__tracking`
 --
 
 CREATE TABLE `pma__tracking` (
@@ -608,7 +608,7 @@ CREATE TABLE `pma__tracking` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__userconfig`
+-- Table structure for callsTable `pma__userconfig`
 --
 
 CREATE TABLE `pma__userconfig` (
@@ -618,7 +618,7 @@ CREATE TABLE `pma__userconfig` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='User preferences storage for phpMyAdmin';
 
 --
--- Dumping data for table `pma__userconfig`
+-- Dumping data for callsTable `pma__userconfig`
 --
 
 INSERT INTO `pma__userconfig` (`username`, `timevalue`, `config_data`) VALUES
@@ -627,7 +627,7 @@ INSERT INTO `pma__userconfig` (`username`, `timevalue`, `config_data`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__usergroups`
+-- Table structure for callsTable `pma__usergroups`
 --
 
 CREATE TABLE `pma__usergroups` (
@@ -639,7 +639,7 @@ CREATE TABLE `pma__usergroups` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pma__users`
+-- Table structure for callsTable `pma__users`
 --
 
 CREATE TABLE `pma__users` (
@@ -652,121 +652,121 @@ CREATE TABLE `pma__users` (
 --
 
 --
--- Indexes for table `pma__bookmark`
+-- Indexes for callsTable `pma__bookmark`
 --
 ALTER TABLE `pma__bookmark`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pma__central_columns`
+-- Indexes for callsTable `pma__central_columns`
 --
 ALTER TABLE `pma__central_columns`
   ADD PRIMARY KEY (`db_name`,`col_name`);
 
 --
--- Indexes for table `pma__column_info`
+-- Indexes for callsTable `pma__column_info`
 --
 ALTER TABLE `pma__column_info`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `db_name` (`db_name`,`table_name`,`column_name`);
 
 --
--- Indexes for table `pma__designer_settings`
+-- Indexes for callsTable `pma__designer_settings`
 --
 ALTER TABLE `pma__designer_settings`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `pma__export_templates`
+-- Indexes for callsTable `pma__export_templates`
 --
 ALTER TABLE `pma__export_templates`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `u_user_type_template` (`username`,`export_type`,`template_name`);
 
 --
--- Indexes for table `pma__favorite`
+-- Indexes for callsTable `pma__favorite`
 --
 ALTER TABLE `pma__favorite`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `pma__history`
+-- Indexes for callsTable `pma__history`
 --
 ALTER TABLE `pma__history`
   ADD PRIMARY KEY (`id`),
   ADD KEY `username` (`username`,`db`,`table`,`timevalue`);
 
 --
--- Indexes for table `pma__navigationhiding`
+-- Indexes for callsTable `pma__navigationhiding`
 --
 ALTER TABLE `pma__navigationhiding`
   ADD PRIMARY KEY (`username`,`item_name`,`item_type`,`db_name`,`table_name`);
 
 --
--- Indexes for table `pma__pdf_pages`
+-- Indexes for callsTable `pma__pdf_pages`
 --
 ALTER TABLE `pma__pdf_pages`
   ADD PRIMARY KEY (`page_nr`),
   ADD KEY `db_name` (`db_name`);
 
 --
--- Indexes for table `pma__recent`
+-- Indexes for callsTable `pma__recent`
 --
 ALTER TABLE `pma__recent`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `pma__relation`
+-- Indexes for callsTable `pma__relation`
 --
 ALTER TABLE `pma__relation`
   ADD PRIMARY KEY (`master_db`,`master_table`,`master_field`),
   ADD KEY `foreign_field` (`foreign_db`,`foreign_table`);
 
 --
--- Indexes for table `pma__savedsearches`
+-- Indexes for callsTable `pma__savedsearches`
 --
 ALTER TABLE `pma__savedsearches`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `u_savedsearches_username_dbname` (`username`,`db_name`,`search_name`);
 
 --
--- Indexes for table `pma__table_coords`
+-- Indexes for callsTable `pma__table_coords`
 --
 ALTER TABLE `pma__table_coords`
   ADD PRIMARY KEY (`db_name`,`table_name`,`pdf_page_number`);
 
 --
--- Indexes for table `pma__table_info`
+-- Indexes for callsTable `pma__table_info`
 --
 ALTER TABLE `pma__table_info`
   ADD PRIMARY KEY (`db_name`,`table_name`);
 
 --
--- Indexes for table `pma__table_uiprefs`
+-- Indexes for callsTable `pma__table_uiprefs`
 --
 ALTER TABLE `pma__table_uiprefs`
   ADD PRIMARY KEY (`username`,`db_name`,`table_name`);
 
 --
--- Indexes for table `pma__tracking`
+-- Indexes for callsTable `pma__tracking`
 --
 ALTER TABLE `pma__tracking`
   ADD PRIMARY KEY (`db_name`,`table_name`,`version`);
 
 --
--- Indexes for table `pma__userconfig`
+-- Indexes for callsTable `pma__userconfig`
 --
 ALTER TABLE `pma__userconfig`
   ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `pma__usergroups`
+-- Indexes for callsTable `pma__usergroups`
 --
 ALTER TABLE `pma__usergroups`
   ADD PRIMARY KEY (`usergroup`,`tab`,`allowed`);
 
 --
--- Indexes for table `pma__users`
+-- Indexes for callsTable `pma__users`
 --
 ALTER TABLE `pma__users`
   ADD PRIMARY KEY (`username`,`usergroup`);
@@ -776,32 +776,32 @@ ALTER TABLE `pma__users`
 --
 
 --
--- AUTO_INCREMENT for table `pma__bookmark`
+-- AUTO_INCREMENT for callsTable `pma__bookmark`
 --
 ALTER TABLE `pma__bookmark`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `pma__column_info`
+-- AUTO_INCREMENT for callsTable `pma__column_info`
 --
 ALTER TABLE `pma__column_info`
   MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `pma__export_templates`
+-- AUTO_INCREMENT for callsTable `pma__export_templates`
 --
 ALTER TABLE `pma__export_templates`
   MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `pma__history`
+-- AUTO_INCREMENT for callsTable `pma__history`
 --
 ALTER TABLE `pma__history`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `pma__pdf_pages`
+-- AUTO_INCREMENT for callsTable `pma__pdf_pages`
 --
 ALTER TABLE `pma__pdf_pages`
   MODIFY `page_nr` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `pma__savedsearches`
+-- AUTO_INCREMENT for callsTable `pma__savedsearches`
 --
 ALTER TABLE `pma__savedsearches`
   MODIFY `id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;--
@@ -818,7 +818,7 @@ USE `tutorgroups`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `courses`
+-- Table structure for callsTable `courses`
 --
 
 CREATE TABLE `courses` (
@@ -827,7 +827,7 @@ CREATE TABLE `courses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `courses`
+-- Dumping data for callsTable `courses`
 --
 
 INSERT INTO `courses` (`courseID`, `courseName`) VALUES
@@ -867,7 +867,7 @@ CREATE TABLE `studentattached` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `students`
+-- Table structure for callsTable `students`
 --
 
 CREATE TABLE `students` (
@@ -881,7 +881,7 @@ CREATE TABLE `students` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `students`
+-- Dumping data for callsTable `students`
 --
 
 INSERT INTO `students` (`studentID`, `studentName`, `studentUB`, `courseID`, `yearOfStudy`, `email`, `tutorID`) VALUES
@@ -921,7 +921,7 @@ INSERT INTO `students` (`studentID`, `studentName`, `studentUB`, `courseID`, `ye
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tutors`
+-- Table structure for callsTable `tutors`
 --
 
 CREATE TABLE `tutors` (
@@ -932,7 +932,7 @@ CREATE TABLE `tutors` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='tutors table';
 
 --
--- Dumping data for table `tutors`
+-- Dumping data for callsTable `tutors`
 --
 
 INSERT INTO `tutors` (`tutorID`, `tutorName`, `tutorUB`, `email`) VALUES
@@ -963,19 +963,19 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
--- Indexes for table `courses`
+-- Indexes for callsTable `courses`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`courseID`);
 
 --
--- Indexes for table `students`
+-- Indexes for callsTable `students`
 --
 ALTER TABLE `students`
   ADD PRIMARY KEY (`studentID`);
 
 --
--- Indexes for table `tutors`
+-- Indexes for callsTable `tutors`
 --
 ALTER TABLE `tutors`
   ADD PRIMARY KEY (`tutorID`),
@@ -986,17 +986,17 @@ ALTER TABLE `tutors`
 --
 
 --
--- AUTO_INCREMENT for table `courses`
+-- AUTO_INCREMENT for callsTable `courses`
 --
 ALTER TABLE `courses`
   MODIFY `courseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT for table `students`
+-- AUTO_INCREMENT for callsTable `students`
 --
 ALTER TABLE `students`
   MODIFY `studentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 --
--- AUTO_INCREMENT for table `tutors`
+-- AUTO_INCREMENT for callsTable `tutors`
 --
 ALTER TABLE `tutors`
   MODIFY `tutorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=233;

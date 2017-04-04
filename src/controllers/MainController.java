@@ -53,30 +53,47 @@ import java.util.List;
 
 public class MainController {
 
-    SQL sql = new SQL();    //  sql functionality
-    CallsTable columnFactory = new CallsTable();    // building the columns of the table
+    //dynamic data storage:
     private ObservableList<CallRecord> searchData;
-    private ObservableList<CallRecord> callsData;   //the calls from the database
-    private ObservableList<CaseRecord> casesData;   // the cases from the database
-    private ObservableList<FileRecord> filesData;   // the case files from the database
-    private ObservableList<UserRecord> usersData;   // the users from the database
-    private int caseID = 1;
-    private int id = 1;
-    private boolean editing = false;
-    private char alphabet = 'A';
-    private static List<Object[]> filterConstraints = new ArrayList<Object[]>();
-    private static int filterIndex = 0;
+    private ObservableList<CallRecord> callsData;
+    private ObservableList<CaseRecord> casesData;
+    private ObservableList<FileRecord> notesData;
+    private static List<Object[]> filterConstraints = new ArrayList<>();
 
+    //counters:
+    private int caseID = 1;
+    private char filterLetterID = 'A';
+    private static int filterID = 0;
+
+    //extra:
+    private ToggleGroup casesToggleGroup = new ToggleGroup();
+    private SearchField searchField = new SearchField("");
+    private ColumnFactory columnFactory = new ColumnFactory();
+    private SQL sql = new SQL();
+
+    //fxml elements:
     @FXML
-    private ScrollPane notes_scroll_pane;
+    protected BorderPane root;
     @FXML
-    protected TableColumn originIdentifierColumn;
+    protected VBox notesBox;
     @FXML
-    protected TableColumn originPhoneColumn;
+    protected VBox casesBox;
     @FXML
-    protected TableColumn destinationIdentifierColumn;
+    protected HBox filtersBox;
     @FXML
-    protected TableColumn destinationPhoneColumn;
+    protected ScrollPane notesSPane;
+    @FXML
+    protected ScrollPane filtersSPane;
+    @FXML
+    protected TableView callsTable;
+    @FXML
+    protected TableColumn fromIDColumn;
+    @FXML
+    protected TableColumn fromPhoneColumn;
+    @FXML
+    protected TableColumn toIDColumn;
+    @FXML
+    protected TableColumn toPhoneColumn;
     @FXML
     protected TableColumn dateColumn;
     @FXML
@@ -88,40 +105,23 @@ public class MainController {
     @FXML
     protected TableColumn deleteColumn;
     @FXML
-    protected TableView table;
-    @FXML
-    protected TextField searchBar;
-    @FXML
-    protected Label userLabel;
-    @FXML
     protected ToggleButton allToggleBtn;
     @FXML
     protected ToggleButton newToggleBtn;
     @FXML
     protected ToggleButton doneToggleBtn;
-
-    final ToggleGroup casesToggleGroup = new ToggleGroup();
     @FXML
     protected DatePicker startDate;
     @FXML
     protected DatePicker endDate;
     @FXML
-    protected VBox casesContainer;
+    protected TextField searchBar;
     @FXML
-    protected ScrollPane filters_scroll;
-    @FXML
-    private VBox notes_box;
+    protected Label userLabel;
     @FXML
     protected Label caseTitle;
     @FXML
-    protected HBox filtersBox;
-    @FXML
-    protected BorderPane root;
-    @FXML
     protected Label numOfRows;
-    SearchField searchTxt = new SearchField("");
-
-    UsersTable columnfactory2 = new UsersTable();
 
 
     /**
@@ -140,27 +140,27 @@ public class MainController {
     }
 
     /**
-     * Loads the table with data from database
+     * Loads the callsTable with data from database
      *
      * @param caseID the case id whose data is to be shown
      */
     public void loadTable(int caseID) {
         callsData = sql.loadCalls(caseID);  // takes the data from the database and puts it into an observable list
-        searchData = callsData;             // search data gets the default table items from callsData (usefull for export CSV/PDF)
-        columnFactory.createOriginNameColumn(originIdentifierColumn); // builds the columns, without data
-        columnFactory.createOriginColumn(originPhoneColumn);
-        columnFactory.createDestinationNameColumn(destinationIdentifierColumn);
-        columnFactory.createDestinationColumn(destinationPhoneColumn);
+        searchData = callsData;             // search data gets the default callsTable items from callsData (usefull for export CSV/PDF)
+        columnFactory.createOriginNameColumn(fromIDColumn); // builds the columns, without data
+        columnFactory.createOriginColumn(fromPhoneColumn);
+        columnFactory.createDestinationNameColumn(toIDColumn);
+        columnFactory.createDestinationColumn(toPhoneColumn);
         columnFactory.createDateColumn(dateColumn);
         columnFactory.createTimeColumn(timeColumn);
         columnFactory.createCallTypeColumn(typeColumn);
         columnFactory.createDurationColumn(durationColumn);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        table.setItems(callsData);  // adds the data into the table
-        table.setEditable(true);
+        callsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        callsTable.setItems(callsData);  // adds the data into the callsTable
+        callsTable.setEditable(true);
 
-        //numOfRows label shows the size of the displayed table
-        numOfRows.setText("Number of rows: " + table.getItems().size());
+        //numOfRows label shows the size of the displayed callsTable
+        numOfRows.setText("Number of rows: " + callsTable.getItems().size());
     }
 
     public void createDeleteColumn(TableColumn deleteColumn) {
@@ -233,7 +233,7 @@ public class MainController {
     }
 
     /**
-     * Filters table by date (at the moment)
+     * Filters callsTable by date (at the moment)
      *
      * @throws ParseException
      */
@@ -249,9 +249,9 @@ public class MainController {
             // Writing the number of occurrences for each filter
             Pane filterPane;
             // Takes all filters
-            for (int j=0; j<filtersBox.getChildren().size(); j++) {
+            for (int j = 0; j < filtersBox.getChildren().size(); j++) {
 
-                filterPane = (Pane)filtersBox.getChildren().get(j);
+                filterPane = (Pane) filtersBox.getChildren().get(j);
                 Pane temp = (Pane) filterPane.getChildren().get(0);
                 Pane temp2 = (Pane) temp.getChildren().get(0);
                 Label filterLabel = (Label) temp2.getChildren().get(2);
@@ -259,30 +259,30 @@ public class MainController {
                 Label letter = (Label) temp2.getChildren().get(0);
 
                 // Identifies the filter used
-                for (int i = 0; i < filterIndex; i++) {
+                for (int i = 0; i < filterID; i++) {
                     Person person = (Person) filterConstraints.get(i)[0];
-                    if (person.getId().equals(filterPane.getId()) && filterConstraints.get(i)[1].equals("yes")&&
+                    if (person.getId().equals(filterPane.getId()) && filterConstraints.get(i)[1].equals("yes") &&
                             person.getIdentifier().equals(letter.getText())) {
                         // Puts the number into the designated place
                         filterLabel.setText(String.valueOf(filterConstraints.get(i)[2]));
                     }
                 }
             }
-            for (int i = 0; i < filterIndex; i++) {
+            for (int i = 0; i < filterID; i++) {
                 System.out.println(filterConstraints.get(i)[0]);
             }
-            // Puts info into the table
-            table.setItems(searchData);
+            // Puts info into the callsTable
+            callsTable.setItems(searchData);
 
-            //numOfRows label shows the size of the displayed table
-            numOfRows.setText("Number of rows: " + table.getItems().size());
+            //numOfRows label shows the size of the displayed callsTable
+            numOfRows.setText("Number of rows: " + callsTable.getItems().size());
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
 
     private ObservableList<CallRecord> filter(int i) throws ParseException {
-        if (i < filterIndex) {
+        if (i < filterID) {
             ObservableList<CallRecord> test = filter(i + 1);
             ObservableList<CallRecord> test2 = FXCollections.observableArrayList();
             boolean change = false;
@@ -309,8 +309,8 @@ public class MainController {
                     }
                 }
             } else if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
-                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
-                        originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn,
+                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(fromIDColumn,
+                        fromPhoneColumn, toIDColumn, toPhoneColumn, dateColumn,
                         timeColumn, typeColumn, durationColumn);
                 int sum = 0;
                 change = true;
@@ -322,9 +322,9 @@ public class MainController {
                         Person person = (Person) filterConstraints.get(i)[0];
                         if (cellValue.contains(person.getPhone())) {
                             CallRecord data = test.get(k);
-                            if (j ==1 ){
+                            if (j == 1) {
                                 data.setOriginName(person.getIdentifier());
-                            } else if (j==3){
+                            } else if (j == 3) {
                                 data.setDestinationName(person.getIdentifier());
                             }
                             test2.add(data);
@@ -347,14 +347,14 @@ public class MainController {
     }
 
     /**
-     * Recursive call for filtering the table
+     * Recursive call for filtering the callsTable
      *
      * @param i index of constraint in the filterConstraint array
      * @return filtered data
      * @throws ParseException
      */
     private ObservableList<CallRecord> filterDates(int i) throws ParseException {
-        if (i < filterIndex) {
+        if (i < filterID) {
             ObservableList<CallRecord> test = filterDates(i + 1);
             ObservableList<CallRecord> test2 = FXCollections.observableArrayList();
             boolean change = false;
@@ -392,21 +392,14 @@ public class MainController {
         }
     }
 
-  /*  private ObservableList<CallRecord> search (ObservableList<CallRecord> test) {
-
-        return tableItems;
-
-        return tableItems;
-    }*/
-
     public ObservableList<CallRecord> filterSearch(ObservableList<CallRecord> test) {
         ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
         boolean change = false;
 
-        for (int i = 0; i < filterIndex; i++) {
+        for (int i = 0; i < filterID; i++) {
             if (filterConstraints.get(i)[0] instanceof SearchField && filterConstraints.get(i)[1].equals("yes")) {
-                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
-                        originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn,
+                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(fromIDColumn,
+                        fromPhoneColumn, toIDColumn, toPhoneColumn,
                         dateColumn, timeColumn, typeColumn, durationColumn);
                 change = true;
                 for (int j = 0; j < test.size(); j++) {
@@ -442,10 +435,10 @@ public class MainController {
         ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
         boolean change = false;
 
-        for (int i = 0; i < filterIndex; i++) {
+        for (int i = 0; i < filterID; i++) {
             if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
-                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(originIdentifierColumn,
-                        originPhoneColumn, destinationIdentifierColumn, destinationPhoneColumn, dateColumn,
+                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(fromIDColumn,
+                        fromPhoneColumn, toIDColumn, toPhoneColumn, dateColumn,
                         timeColumn, typeColumn, durationColumn);
                 change = true;
                 int sum = 0;
@@ -457,9 +450,9 @@ public class MainController {
                         Person person = (Person) filterConstraints.get(i)[0];
                         if (cellValue.contains(person.getPhone())) {
                             CallRecord data = test.get(k);
-                            if (j ==1 ){
+                            if (j == 1) {
                                 data.setOriginName(person.getIdentifier());
-                            } else if (j==3){
+                            } else if (j == 3) {
                                 data.setDestinationName(person.getIdentifier());
                             }
                             tableItems.add(data);
@@ -484,13 +477,8 @@ public class MainController {
         } else return test;
     }
 
-   /* private void setSearchBarEmpty() {
-        searchBar.textProperty().set("");
-    }
-*/
-
     /**
-     * Retrieves the start date and filters the table
+     * Retrieves the start date and filters the callsTable
      *
      * @throws ParseException
      */
@@ -502,7 +490,7 @@ public class MainController {
             date = sdf.parse(startDate.getValue().toString());
         }
         boolean isOn = false;
-        for (int i = 0; i < filterIndex; i++) {
+        for (int i = 0; i < filterID; i++) {
             if (filterConstraints.get(i)[1].equals("start")) {
                 filterConstraints.get(i)[0] = date;
                 isOn = true;
@@ -513,14 +501,13 @@ public class MainController {
             temp[0] = date;
             temp[1] = "start";
             filterConstraints.add(temp);
-            filterIndex++;
+            filterID++;
         }
         filter();
     }
 
-
     /**
-     * Retrieves the end date and filters the table
+     * Retrieves the end date and filters the callsTable
      *
      * @throws ParseException
      */
@@ -532,7 +519,7 @@ public class MainController {
             date = sdf.parse(endDate.getValue().toString());
         }
         boolean isOn = false;
-        for (int i = 0; i < filterIndex; i++) {
+        for (int i = 0; i < filterID; i++) {
             if (filterConstraints.get(i)[1].equals("end")) {
                 filterConstraints.get(i)[0] = date;
                 isOn = true;
@@ -543,7 +530,7 @@ public class MainController {
             temp[0] = date;
             temp[1] = "end";
             filterConstraints.add(temp);
-            filterIndex++;
+            filterID++;
         }
         filter();
     }
@@ -557,7 +544,7 @@ public class MainController {
         casesData = sql.loadCases();    //  Load Cases List from database:
         toggleControl();
         String status = "All";
-        casesContainer.getChildren().clear();
+        casesBox.getChildren().clear();
         if (casesToggleGroup.getSelectedToggle() == newToggleBtn) {
             status = "New";
         } else if (casesToggleGroup.getSelectedToggle() == doneToggleBtn) {
@@ -568,7 +555,7 @@ public class MainController {
             @Override
             public void changed(ObservableValue<? extends Toggle> observable, Toggle toggle, Toggle newToggle) {
                 String status = "All";
-                casesContainer.getChildren().clear();
+                casesBox.getChildren().clear();
                 if (newToggle == newToggleBtn) {
                     status = "New";
                 } else if (newToggle == doneToggleBtn) {
@@ -577,7 +564,7 @@ public class MainController {
                 loadTest(status);
             }
         });
-        //Every row of the Case table (thus, every case that exists in the database) has a status attribute (Investigating, Solved or Preliminary)
+        //Every row of the Case callsTable (thus, every case that exists in the database) has a status attribute (Investigating, Solved or Preliminary)
         //The for loop takes each case and checks what status it has, and then assigns the CaseObj position in the tab
     }
 
@@ -626,7 +613,7 @@ public class MainController {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                alphabet = 'A' - 1;
+                filterLetterID = 'A' - 1;
                 filtersBox.getChildren().clear();
                 searchBar.clear();
                 System.out.println(caseStatus.getText());
@@ -635,7 +622,7 @@ public class MainController {
                 caseStatus.setStyle("-fx-background-color: #22df46;");
                 caseIndicator.setStyle("-fx-background-color: #4dff42;");
                 filterConstraints = new ArrayList<Object[]>();
-                filterIndex = 0;
+                filterID = 0;
             });
 
             Pane CaseEditObject = null;
@@ -677,7 +664,7 @@ public class MainController {
 
             deleteBtn.setOnAction(event -> {
                 sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
-                casesContainer.getChildren().remove(finalCaseObj);
+                casesBox.getChildren().remove(finalCaseObj);
                 loadCases();
             });
             if (caseRecord.getStatus().equals("New")) {
@@ -693,12 +680,12 @@ public class MainController {
             });
 
             if (status.equals("New") && caseRecord.getStatus().equals("New")) {
-                casesContainer.getChildren().add(finalCaseObj);
+                casesBox.getChildren().add(finalCaseObj);
             } else if (status.equals("Done") && caseRecord.getStatus().equals("Done")) {
-                casesContainer.getChildren().add(finalCaseObj);
+                casesBox.getChildren().add(finalCaseObj);
             }
             if (status.equals("All")) {
-                casesContainer.getChildren().add(finalCaseObj);
+                casesBox.getChildren().add(finalCaseObj);
             }
 
         }
@@ -779,7 +766,7 @@ public class MainController {
             try {
                 while ((noteIcon = (Pane) notesBox.getChildren().get(i)) != null) {
                     if (noteIcon.getId().equals(note.getId())) {
-                        notes_box.getChildren().remove(noteIcon);
+                        this.notesBox.getChildren().remove(noteIcon);
                         root.getChildren().remove(note);
                         sql.removeNote(Integer.valueOf(note.getId()));
                     }
@@ -797,10 +784,10 @@ public class MainController {
      * @param caseID
      */
     private void loadFiles(int caseID) {
-        filesData = sql.loadFiles(caseID);  // Getting the data from the database part
+        notesData = sql.loadFiles(caseID);  // Getting the data from the database part
         NoteIcon CaseFile = null;   //  Clearing the cases already shown
-        notes_box.getChildren().clear();
-        for (FileRecord element : filesData) {  // For every case file from the database, checks which one is on the given case, and loads them all into the app
+        notesBox.getChildren().clear();
+        for (FileRecord element : notesData) {  // For every case file from the database, checks which one is on the given case, and loads them all into the app
             if (Integer.parseInt(element.getCaseID()) == caseID) {
                 try {
                     CaseFile = (NoteIcon) FXMLLoader.load(getClass().getResource("/fxml/note.fxml")); // Case file template
@@ -827,7 +814,7 @@ public class MainController {
 //
 //
 //
-                notes_box.getChildren().add(CaseFile);     // the case files get loaded to the app
+                notesBox.getChildren().add(CaseFile);     // the case files get loaded to the app
             }
         }
     }
@@ -835,20 +822,20 @@ public class MainController {
     //TODO Add comments
     @FXML
     public void search() {
-        if (!searchTxt.getText().equals(searchBar.textProperty().get())) {
-            searchTxt.setText(searchBar.textProperty().get());
-            if (searchTxt.getText().isEmpty()) {
-                for (int i = 0; i < filterIndex; i++) {
-                    if (filterConstraints.get(i)[0].equals(searchTxt)) {
+        if (!searchField.getText().equals(searchBar.textProperty().get())) {
+            searchField.setText(searchBar.textProperty().get());
+            if (searchField.getText().isEmpty()) {
+                for (int i = 0; i < filterID; i++) {
+                    if (filterConstraints.get(i)[0].equals(searchField)) {
                         System.out.println("Case 1");
                         filterConstraints.get(i)[1] = "no";
                     }
                 }
             } else {
                 boolean isOn = false;
-                for (int i = 0; i < filterIndex; i++) {
-                    if (filterConstraints.get(i)[0].equals(searchTxt)) {
-                        filterConstraints.get(i)[0] = searchTxt;
+                for (int i = 0; i < filterID; i++) {
+                    if (filterConstraints.get(i)[0].equals(searchField)) {
+                        filterConstraints.get(i)[0] = searchField;
                         filterConstraints.get(i)[1] = "yes";
                         isOn = true;
                     }
@@ -856,10 +843,10 @@ public class MainController {
                 if (!isOn) {
                     System.out.println("Case 3");
                     Object[] temp = new Object[2];
-                    temp[0] = searchTxt;
+                    temp[0] = searchField;
                     temp[1] = "yes";
                     filterConstraints.add(temp);
-                    filterIndex++;
+                    filterID++;
                 }
             }
             filter();
@@ -869,14 +856,14 @@ public class MainController {
     /**
      * Controller for "Delete call" button. Same as above, a user should not be able to delete a call because this data is the kind you usually let it be.
      * Adding this functionality is just for it to be there in the case such action is wanted.
-     * Deletes the call both from the table and the database.
+     * Deletes the call both from the callsTable and the database.
      */
     public void deleteCall() {
-        if (table.getSelectionModel().getSelectedItem() != null) {   // A row must be selected for it to work
-            CallRecord record = (CallRecord) table.getSelectionModel().getSelectedItem();   //   Getting the data
+        if (callsTable.getSelectionModel().getSelectedItem() != null) {   // A row must be selected for it to work
+            CallRecord record = (CallRecord) callsTable.getSelectionModel().getSelectedItem();   //   Getting the data
             if (record != null) {   // Checking if it's something there
                 sql.removeCall(Integer.parseInt(record.getCallID()));   // Delete from database part
-                callsData.remove(table.getSelectionModel().getSelectedItem());  // Remove from table part
+                callsData.remove(callsTable.getSelectionModel().getSelectedItem());  // Remove from callsTable part
                 System.out.println("DELETE: call " + record.getCallID());
             }
         }
@@ -894,7 +881,7 @@ public class MainController {
      */
     public void checkPhone(TextField phoneField, Person person) {
         if (phoneField.textProperty().get().isEmpty()) {
-            for (int i = 0; i < filterIndex; i++) {
+            for (int i = 0; i < filterID; i++) {
                 if (filterConstraints.get(i)[0].equals(person)) {
                     filterConstraints.get(i)[0] = null;
                     filterConstraints.get(i)[1] = "no";
@@ -902,7 +889,7 @@ public class MainController {
             }
         } else {
             boolean isOn = false;
-            for (int i = 0; i < filterIndex; i++) {
+            for (int i = 0; i < filterID; i++) {
                 if (filterConstraints.get(i)[0].equals(person)) {
                     person.setPhone(phoneField.getText());
                     filterConstraints.get(i)[0] = person;
@@ -918,7 +905,7 @@ public class MainController {
                 temp[1] = "yes";
                 temp[2] = 0;
                 filterConstraints.add(temp);
-                filterIndex++;
+                filterID++;
             }
         }
     }
@@ -928,14 +915,14 @@ public class MainController {
      */
     public void addVictim() {
 
-        //TODO add counting A B C D for filters and table view when searching
+        //TODO add counting A B C D for filters and callsTable view when searching
 
         if (filtersBox.getChildren().size() == 0) {
-            alphabet = 'A';
+            filterLetterID = 'A';
         }
 
-        if (alphabet <= 'Z') {
-            System.out.println("ADD VICTIM " + alphabet);
+        if (filterLetterID <= 'Z') {
+            System.out.println("ADD VICTIM " + filterLetterID);
             Pane victimNote = null;
             try {
                 victimNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/victim.fxml"));   // Prepares the template
@@ -951,18 +938,18 @@ public class MainController {
             TextField phoneField = (TextField) temp.getChildren().get(2);
 
 
-            Victim victim = new Victim(String.valueOf(alphabet), victimNote.getId());
+            Victim victim = new Victim(String.valueOf(filterLetterID), victimNote.getId());
 
             Pane finalVictimNote = victimNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
                 filtersBox.getChildren().remove(finalVictimNote);
-                for (int i = 0; i < filterIndex; i++) {
+                for (int i = 0; i < filterID; i++) {
                     if (filterConstraints.get(i)[0].equals(victim)) {
                         filterConstraints.get(i)[1] = "no";
                     }
                 }
                 ObservableList<CallRecord> test = FXCollections.observableArrayList();
-                for (CallRecord cr: searchData) {
+                for (CallRecord cr : searchData) {
                     if (cr.getOriginName().equals(victim.getIdentifier())) {
                         cr.setOriginName(" ");
                     }
@@ -981,7 +968,7 @@ public class MainController {
                 checkPhone(phoneField, victim);
             });
             nameField.textProperty().addListener((observable, oldValue, newValue) -> {
-                for (int i = 0; i < filterIndex; i++) {
+                for (int i = 0; i < filterID; i++) {
                     if (filterConstraints.get(i)[0].equals(victim)) {
                         Suspect newSuspect = (Suspect) filterConstraints.get(i)[0];
                         newSuspect.setIdentifier(nameField.getText());
@@ -989,9 +976,9 @@ public class MainController {
                     }
                 }
             });
-            letter.setText(String.valueOf(alphabet));
+            letter.setText(String.valueOf(filterLetterID));
             filtersBox.getChildren().add(victimNote);
-            alphabet++;
+            filterLetterID++;
         }
     }
 
@@ -999,11 +986,11 @@ public class MainController {
     public void addSuspect() {
 
         if (filtersBox.getChildren().size() == 0) {
-            alphabet = 'A';
+            filterLetterID = 'A';
         }
 
-        if (alphabet <= 'Z') {
-            System.out.println("ADD SUSPECT " + alphabet);
+        if (filterLetterID <= 'Z') {
+            System.out.println("ADD SUSPECT " + filterLetterID);
             Pane suspectNote = null;
             try {
                 suspectNote = (Pane) FXMLLoader.load(getClass().getResource("/fxml/suspect.fxml"));   // Prepares the template
@@ -1017,18 +1004,18 @@ public class MainController {
             Button delete = (Button) temp3.getChildren().get(0);
             TextField phoneField = (TextField) temp.getChildren().get(2);
             TextField nameField = (TextField) temp.getChildren().get(1);
-            Suspect suspect = new Suspect(String.valueOf(alphabet), suspectNote.getId());
+            Suspect suspect = new Suspect(String.valueOf(filterLetterID), suspectNote.getId());
 
             Pane finalVictimNote = suspectNote;
             delete.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
                 filtersBox.getChildren().remove(finalVictimNote);
-                for (int i = 0; i < filterIndex; i++) {
+                for (int i = 0; i < filterID; i++) {
                     if (filterConstraints.get(i)[0].equals(suspect)) {
                         filterConstraints.get(i)[1] = "no";
                     }
                 }
                 ObservableList<CallRecord> test = FXCollections.observableArrayList();
-                for (CallRecord cr: searchData) {
+                for (CallRecord cr : searchData) {
                     if (cr.getOriginName().equals(suspect.getIdentifier())) {
                         cr.setOriginName(" ");
                     }
@@ -1048,7 +1035,7 @@ public class MainController {
             });
 
             nameField.textProperty().addListener((observable, oldValue, newValue) -> {
-                for (int i = 0; i < filterIndex; i++) {
+                for (int i = 0; i < filterID; i++) {
                     if (filterConstraints.get(i)[0].equals(suspect)) {
                         Suspect newSuspect = (Suspect) filterConstraints.get(i)[0];
                         newSuspect.setIdentifier(nameField.getText());
@@ -1056,8 +1043,8 @@ public class MainController {
                     }
                 }
             });
-            letter.setText(String.valueOf(alphabet));
-            alphabet++;
+            letter.setText(String.valueOf(filterLetterID));
+            filterLetterID++;
             filtersBox.getChildren().addAll(suspectNote);
         }
     }
@@ -1066,17 +1053,17 @@ public class MainController {
      * Controller for "Add call" button. No one is supposed to add a call, because you already have it in the database, or any excel, csv file, so a user should
      * not be able to add a call in my opinion, but let's say he wants to, his choice.
      * Default values, that if left unattended clearly show that they are fake.
-     * The method changes the table and the database at the same time.
+     * The method changes the callsTable and the database at the same time.
      */
     public void addCall() {
         // Data manipulation part (the default data is ready to be used)
         CallRecord cr = new CallRecord(String.valueOf(sql.getMaxCallID() + 1), "\"" + caseID + "\"",
                 "1", "1", "1900/01/01", "00:00", "Standard", "00:00");
-        callsData.add(cr);  // Add to table (visually) part
+        callsData.add(cr);  // Add to callsTable (visually) part
         sql.addCall(cr);        // Add to database part
         System.out.println("ADD: call");
-        table.scrollTo(cr);
-        table.getSelectionModel().select(cr);
+        callsTable.scrollTo(cr);
+        callsTable.getSelectionModel().select(cr);
     }
 
     /**
@@ -1086,7 +1073,7 @@ public class MainController {
      */
     public void addCase(ActionEvent actionEvent) {
 
-        CaseRecord callRecord = new CaseRecord(String.valueOf(0), "case" + id++, "Description", "New", currentTime());
+        CaseRecord callRecord = new CaseRecord(String.valueOf(0), "case", "Description", "New", currentTime());
         sql.addCase(callRecord);
         loadCases();
     }
@@ -1152,30 +1139,30 @@ public class MainController {
 
         try {
 
-            if (temp2.size() != filesData.size()) {
+            if (temp2.size() != notesData.size()) {
                 return true;
             }
 
             for (FileRecord fileRecord : temp2) {
 
-                if (i <= (filesData.size() - 1)) {
+                if (i <= (notesData.size() - 1)) {
 
-                    if (!fileRecord.getCaseID().equals(filesData.get(i).getCaseID())) {
+                    if (!fileRecord.getCaseID().equals(notesData.get(i).getCaseID())) {
                         requireUpdate = true;
                     }
-                    if (!fileRecord.getDate().equals(filesData.get(i).getDate())) {
+                    if (!fileRecord.getDate().equals(notesData.get(i).getDate())) {
                         requireUpdate = true;
                     }
-                    if (!fileRecord.getNoteID().equals(filesData.get(i).getNoteID())) {
+                    if (!fileRecord.getNoteID().equals(notesData.get(i).getNoteID())) {
                         requireUpdate = true;
                     }
-                    if (!fileRecord.getName().equals(filesData.get(i).getName())) {
+                    if (!fileRecord.getName().equals(notesData.get(i).getName())) {
                         requireUpdate = true;
                     }
-                    if (!fileRecord.getData().equals(filesData.get(i).getData())) {
+                    if (!fileRecord.getData().equals(notesData.get(i).getData())) {
                         requireUpdate = true;
                     }
-                    if (!fileRecord.getUserID().equals(filesData.get(i++).getUserID())) {
+                    if (!fileRecord.getUserID().equals(notesData.get(i++).getUserID())) {
                         requireUpdate = true;
                     }
                 }
@@ -1237,11 +1224,11 @@ public class MainController {
     @FXML
     public void initialize() {
 
-        filters_scroll.setPannable(true);
-        filters_scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        filters_scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        notes_scroll_pane.setPannable(true);
-        notes_scroll_pane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        filtersSPane.setPannable(true);
+        filtersSPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        filtersSPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        notesSPane.setPannable(true);
+        notesSPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         //TODO Is this the drag/drop functionality? Let's find another place for it
         root.setOnDragOver(event1 -> {
             Dragboard db = event1.getDragboard();
@@ -1278,39 +1265,32 @@ public class MainController {
     }
 
     public void update() {
-        loadTable(caseID);
-        loadFiles(caseID);
-//        if (!editing) {
-//            System.out.println("UPDATE");
-//            if (casesUpdate()) {
-//                System.out.println("EXTERNAL CHANGE IN CASES");
-//                loadCases();
-//                for (CaseRecord temp : casesData) {
-//                    if (Integer.valueOf(temp.getCaseID()) == caseID) {
-//                        caseTitle.setText(temp.getName());
-//                    }
-//                }
-//            }
-//            if (filesUpdate()) {
-//                System.out.println("EXTERNAL CHANGE IN FILES");
-//                loadFiles(caseID);
-//            }
-//            if (callsUpdate()) {
-//                System.out.println("EXTERNAL CHANGE IN TABLE");
-//                loadTable(caseID);
-//            }
-//        }
+        String updateMessage = "UPDATE IN (";
+        if (casesUpdate()) {
+            updateMessage += " CASES";
+            loadCases();
+        }
+        if (filesUpdate()) {
+            updateMessage += " NOTES";
+            loadFiles(caseID);
+        }
+        if (callsUpdate()) {
+            updateMessage += " CALLS";
+            loadTable(caseID);
+        }
+        updateMessage += " )";
+        System.out.println(updateMessage);
     }
 
     /**
-     * Getter for column names of the main table
+     * Getter for column names of the main callsTable
      *
      * @return
      */
     public List<String> getColumnNames() {
         List nameOfColumns = new ArrayList(6);
-        nameOfColumns.add(originPhoneColumn.getText());
-        nameOfColumns.add(destinationPhoneColumn.getText());
+        nameOfColumns.add(fromPhoneColumn.getText());
+        nameOfColumns.add(toPhoneColumn.getText());
         nameOfColumns.add(dateColumn.getText());
         nameOfColumns.add(timeColumn.getText());
         nameOfColumns.add(typeColumn.getText());
@@ -1372,7 +1352,7 @@ public class MainController {
             shredder.setEscapes("nrtf", "\n\r\t\f");
 
             String fileString;          // fileString is going to hold every single value from file, one at a time
-            int[] tableHeader = new int[10];    // tableHeader will contain the order of table columns that are in the csv file
+            int[] tableHeader = new int[10];    // tableHeader will contain the order of callsTable columns that are in the csv file
             int tableHeaderIndex = 0;
             CallRecord cr = new CallRecord();
             int isOnDatabase;
@@ -1561,7 +1541,7 @@ public class MainController {
             List<String> choices = new ArrayList<>();
             choices.addAll(getColumnNames());
 
-            ChoiceDialog<String> dialog = new ChoiceDialog<>(originPhoneColumn.getText(), choices);
+            ChoiceDialog<String> dialog = new ChoiceDialog<>(fromPhoneColumn.getText(), choices);
             dialog.setTitle("Choose Column");
             dialog.setHeaderText("Choose fr0m the following columns.");
             dialog.setHeaderText("If the column is not there, contact University of Bradford");
@@ -1585,9 +1565,8 @@ public class MainController {
 
         csvExport csvExp = new csvExport();
         pdfExport pdfExp = new pdfExport();
-
-
         File exports = new File(System.getProperty("user.dir"), "./reports");
+
         if (!exports.exists()) {
             exports.mkdirs();
         }
@@ -1642,24 +1621,6 @@ public class MainController {
 
     @FXML
     public void openManual() {
-      /*  try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
-            Pane finalCaseObject = CaseObject;
-            System.out.println(finalCaseObject);
-            Pane pane = (Pane) CaseObject.getChildren().get(0);
-            Label label = (Label) pane.getChildren().get(1);
-            Button btn = (Button) pane.getChildren().get(0);
-            btn.setOnAction(event -> {
-                root.getChildren().remove(finalCaseObject);
-            });
-            label.setText("Manual");
-            finalCaseObject.setLayoutX(250);
-            finalCaseObject.setLayoutY(100);
-            DragResizeMod.makeResizable(finalCaseObject, null);
-            root.getChildren().add(finalCaseObject);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } */
         File exports = new File(System.getProperty("user.dir"), "./reports");
         String test = System.getProperty("user.dir");
         System.out.println(test);
@@ -1677,26 +1638,6 @@ public class MainController {
 
     @FXML
     public void openExtra() {
-        /*
-        try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
-            Pane finalCaseObject = CaseObject;
-            System.out.println(finalCaseObject);
-            Pane pane = (Pane) CaseObject.getChildren().get(0);
-            Label label = (Label) pane.getChildren().get(1);
-            Button btn = (Button) pane.getChildren().get(0);
-            btn.setOnAction(event -> {
-                root.getChildren().remove(finalCaseObject);
-            });
-            label.setText("Extra");
-            finalCaseObject.setLayoutX(250);
-            finalCaseObject.setLayoutY(100);
-            DragResizeMod.makeResizable(finalCaseObject, null);
-            root.getChildren().add(finalCaseObject);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
         try {
             Desktop.getDesktop().browse(new URI("http://www.bradford.ac.uk/business/"));
         } catch (IOException e1) {
@@ -1765,12 +1706,12 @@ public class MainController {
                 root.getChildren().remove(finalCaseObject);
             });
             btn2.setOnAction(event -> {
-                notes_box.getChildren().clear();
+                notesBox.getChildren().clear();
                 sql.removeNotes(caseID);
                 root.getChildren().remove(finalCaseObject);
             });
             finalCaseObject.setLayoutX(1540);
-            
+
             finalCaseObject.setLayoutY(870);
             DragResizeMod.makeResizable(finalCaseObject, null);
             root.getChildren().add(finalCaseObject);
@@ -1803,46 +1744,55 @@ public class MainController {
         root.setStyle("-fx-background-image: url('" + image + "');");
 
     }
+
     @FXML
     public void b() {
         String image = MainController.class.getResource("../res/icons/2.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
+
     @FXML
     public void c() {
         String image = MainController.class.getResource("../res/icons/3.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
+
     @FXML
     public void d() {
         String image = MainController.class.getResource("../res/icons/4.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
+
     @FXML
     public void e() {
         String image = MainController.class.getResource("../res/icons/5.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
+
     @FXML
     public void f() {
         String image = MainController.class.getResource("../res/icons/6.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
+
     @FXML
     public void g() {
         String image = MainController.class.getResource("../res/icons/7.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
+
     @FXML
     public void h() {
         String image = MainController.class.getResource("../res/icons/8.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
+
     @FXML
     public void i() {
         String image = MainController.class.getResource("../res/icons/9.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
+
     @FXML
     public void j() {
         String image = MainController.class.getResource("../res/icons/pattern.png").toExternalForm();
