@@ -10,7 +10,7 @@
 <?import javafx.scene.text.*?>
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0"
       prefWidth="417.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controllers.SignController">
+      fx:controller="controllers.SignInController">
     <Pane fx:id="SignUp" layoutY="-7.0" prefHeight="528.0" prefWidth="417.0" styleClass="custom_signUp"
           stylesheets="@../css/sign_window.css">
         <children>
@@ -22,12 +22,12 @@
             </Label>
             <ImageView layoutX="60.0" layoutY="254.0">
                 <image>
-                    <Image url="@../res/login/ID.png"/>
+                    <Image url="@../res/images/id_label.png"/>
                 </image>
             </ImageView>
             <ImageView layoutX="60.0" layoutY="292.0">
                 <image>
-                    <Image url="@../res/login/Password.png"/>
+                    <Image url="@../res/images/password_label.png"/>
                 </image>
             </ImageView>
             <PasswordField id="textfield" fx:id="pass" layoutX="95.0" layoutY="285.0" prefHeight="34.0"
@@ -75,12 +75,12 @@
             </TextField>
             <ImageView layoutX="60.0" layoutY="207.0">
                 <image>
-                    <Image url="@../res/login/users-edit-user-icon.png"/>
+                    <Image url="@../res/images/user_label.png"/>
                 </image>
             </ImageView>
             <ImageView layoutX="60.0" layoutY="165.0">
                 <image>
-                    <Image url="@../res/login/users-edit-user-icon.png"/>
+                    <Image url="@../res/images/user_label.png"/>
                 </image>
             </ImageView>
             <Label fx:id="ErrMessage" layoutX="43.0" layoutY="115.0" prefHeight="36.0" prefWidth="342.0" text=""
@@ -102,12 +102,12 @@
             </Label>
             <ImageView layoutX="59.0" layoutY="167.0">
                 <image>
-                    <Image url="@../res/login/ID.png"/>
+                    <Image url="@../res/images/id_label.png"/>
                 </image>
             </ImageView>
             <ImageView layoutX="59.0" layoutY="207.0">
                 <image>
-                    <Image url="@../res/login/Password.png"/>
+                    <Image url="@../res/images/password_label.png"/>
                 </image>
             </ImageView>
             <PasswordField id="textfield" fx:id="pw" layoutX="81.0" layoutY="200.0" prefHeight="34.0" prefWidth="219.0"

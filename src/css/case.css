@@ -1,6 +1,6 @@
 
 .custom_hbox {
-    -fx-background-image: url("../res/icons/case_frame.png");
+    -fx-background-image: url("../res/images/case_frame.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 229 40;
     -fx-pref-size: 229 40;
@@ -70,7 +70,7 @@
     -fx-background-size: 11px 11px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-image: url("../res/icons/edit_case_icon.png");
+    -fx-background-image: url("../res/images/edit_case_button.png");
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-opacity: 0.8;
@@ -83,7 +83,7 @@
     -fx-background-size: 11px 11px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-image: url("../res/icons/close_case_icon.png");
+    -fx-background-image: url("../res/images/close_case_button.png");
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-opacity: 0.8;
@@ -113,7 +113,7 @@
     -fx-background-size: 15px 15px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-image: url("../res/icons/ok_icon.png");
+    -fx-background-image: url("../res/images/ok_button.png");
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-opacity: 0.8;

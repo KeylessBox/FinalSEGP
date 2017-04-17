@@ -1,6 +1,6 @@
 
 #root {
-    -fx-background-image: url("../res/icons/pattern.png");
+    -fx-background-image: url("../res/images/background10.png");
     -fx-opacity: 1;
    /* -fx-background-size: 1920, 1080; */
     -fx-cursor: default;
@@ -9,7 +9,7 @@
 
 
 .upline {
-    -fx-background-image: url("../res/new_images/upline_background.jpg");
+    -fx-background-image: url("../res/images/upline_background_pane.jpg");
     -fx-cursor: default;
 }
 
@@ -78,13 +78,13 @@
 .search_bar {
     -fx-background-repeat: stretch;
     -fx-background-size: 300 80;
-    -fx-background-image: url("../res/icons/search_bar.png");
+    -fx-background-image: url("../res/images/search_bar.png");
 }
 
 .settings_bar {
     -fx-background-repeat: stretch;
     -fx-background-size: 450 340;
-    -fx-background-image: url("../res/icons/settings_bar.png");
+    -fx-background-image: url("../res/images/settings_pane.png");
 }
 
 #settings_btn.menu:hover {
@@ -146,7 +146,7 @@
     -fx-background-size: 11px 11px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-image: url("../res/icons/close_case_icon.png");
+    -fx-background-image: url("../res/images/close_case_button.png");
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-opacity: 0.8;

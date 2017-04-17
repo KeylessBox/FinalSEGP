@@ -1,0 +1,205 @@
+
+.Table {
+    -fx-background-image: url("../res/images/table_pane.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 1458 793;
+    -fx-pref-size: 1458 793;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, 0);
+    -fx-opacity: 1;
+}
+
+#setting_button {
+    -fx-background-image: url("../res/images/settings_button.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#setting_button:hover {
+    -fx-opacity: 1;
+}
+
+#setting_button:pressed {
+    -fx-opacity: 0.8;
+}
+
+#addCall {
+    -fx-background-image: url("../res/images/add_button.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#addCall:hover {
+    -fx-opacity: 1;
+}
+
+#addCall:pressed {
+    -fx-opacity: 0.8;
+}
+
+#reload_button {
+    -fx-background-image: url("../res/images/reload_button.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 17 17;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#reload_button:hover {
+    -fx-opacity: 1;
+}
+
+#reload_button:pressed {
+    -fx-opacity: 0.8;
+}
+
+#attach_button {
+    -fx-background-image: url("../res/images/attach_button.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 15 15;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#attach_button:hover {
+    -fx-opacity: 1;
+}
+
+#attach_button:pressed {
+    -fx-opacity: 0.8;
+}
+
+#save_button {
+    -fx-background-image: url("../res/images/save_report_button.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 20 20;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#save_button:hover {
+    -fx-opacity: 1;
+}
+
+#save_button:pressed {
+    -fx-opacity: 0.8;
+}
+
+#delete_button {
+    -fx-background-image: url("../res/images/delete_button.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 18 18;
+    -fx-background-position: center center;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0 0;
+    -fx-min-width: 25px;
+    -fx-min-height: 25px;
+    -fx-opacity: 0.8;
+}
+
+#delete_button:hover {
+    -fx-opacity: 1;
+}
+
+#delete_button:pressed {
+    -fx-opacity: 0.8;
+}
+
+.button.btn {
+    -fx-background-image: url("../res/images/search_forward_button.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 19 19;
+    -fx-background-position: center center;
+    -fx-text-fill: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 0 3 3 0;
+    -fx-background-radius: 0 3 3 0;
+    -fx-text-alignment: center;
+    -fx-background-color: #334259,
+    #43546e;
+    -fx-opacity: 0.9;
+    -fx-focus-color: transparent;
+    -fx-pref-height: 29;
+}
+
+.button.btn:hover {
+    -fx-opacity: 1;
+}
+
+.button.btn:pressed {
+    -fx-opacity: 0.5;
+}
+
+.button.btn:focused {
+    -fx-pref-height: 30;
+}
+
+.tableview .tablecolumn .tablecolumn-background {
+    -fx-opacity: 0;
+}
+
+.tableview {
+    -fx-tab-min-width: 90px;
+}
+
+.tablecolumn {
+    -fx-background-insets: 0 1 0 1, 0, 0;
+}
+
+.tab-pane .tab {
+    -fx-background-color: #e6e6e6;
+
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #3c3c3c;
+}
+
+.tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #828282;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #96b946;
+}
+
+.context-menu {
+    -fx-background-color: #8cafda;
+}
+
+
+
+
+
+
+
+

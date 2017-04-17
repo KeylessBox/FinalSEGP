@@ -854,7 +854,7 @@ public class MainController {
     }
 
     /**
-     * Controller for "Delete call" button. Same as above, a user should not be able to delete a call because this data is the kind you usually let it be.
+     * Controller for "Delete call" button. Same as above, a users should not be able to delete a call because this data is the kind you usually let it be.
      * Adding this functionality is just for it to be there in the case such action is wanted.
      * Deletes the call both from the callsTable and the database.
      */
@@ -1050,7 +1050,7 @@ public class MainController {
     }
 
     /**
-     * Controller for "Add call" button. No one is supposed to add a call, because you already have it in the database, or any excel, csv file, so a user should
+     * Controller for "Add call" button. No one is supposed to add a call, because you already have it in the database, or any excel, csv file, so a users should
      * not be able to add a call in my opinion, but let's say he wants to, his choice.
      * Default values, that if left unattended clearly show that they are fake.
      * The method changes the callsTable and the database at the same time.
@@ -1358,7 +1358,7 @@ public class MainController {
             int isOnDatabase;
             boolean exception = false;
             //FIXME Add more aliases. Test with different types of faulty csvs
-//            Takes only the headers of the file and puts them into tableHeader. If there is an unidentified column, an alert pops out and asks the user about
+//            Takes only the headers of the file and puts them into tableHeader. If there is an unidentified column, an alert pops out and asks the users about
 //            its importance, and have him, maybe, select an existing column to put the information in. (Mismatched column names)
             while ((fileString = shredder.nextValue()) != null && shredder.lastLineNumber() == 1) {
                 if ((isOnDatabase = cr.alias(fileString)) != -1) { // If there is a match with a column in the database, input the new index
@@ -1373,8 +1373,8 @@ public class MainController {
             }
             /*
              * At this moment the columns are set in place.
-             * How? Check if a file column resembles a database column(using regex). The ones that are unrecognized are sent to the user for future actions
-             * To implement something that spares the user these questions is a bit more difficult.
+             * How? Check if a file column resembles a database column(using regex). The ones that are unrecognized are sent to the users for future actions
+             * To implement something that spares the users these questions is a bit more difficult.
              * During this checking, all file columns are put in the correct order (database order, or the order on which this method is made)
              * The discarded columns, get -1 value.
              * Next step is getting the data from the file
@@ -1465,7 +1465,7 @@ public class MainController {
                             exception = true;
                         }
                     } else {      // else Alert pops out.
-                        tableHeader[tableHeaderIndex] = alert(String.valueOf(getCellValue(currentCell)));   // keep user decision (to recognize or not)
+                        tableHeader[tableHeaderIndex] = alert(String.valueOf(getCellValue(currentCell)));   // keep users decision (to recognize or not)
                     }
                     tableHeaderIndex++;
                 }
@@ -1521,10 +1521,10 @@ public class MainController {
     }
 
     /**
-     * Alert box that asks the user for the importance of some unrecognized columns in the database
+     * Alert box that asks the users for the importance of some unrecognized columns in the database
      *
      * @param fileString The unrecognized column
-     * @return If it returns a number the user decided to use it as an existing column in the database
+     * @return If it returns a number the users decided to use it as an existing column in the database
      */
     public int alert(String fileString) {
         CallRecord cr = new CallRecord();           // Alias method
@@ -1537,7 +1537,7 @@ public class MainController {
         ButtonType buttonTypeCancel = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
         alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeCancel);
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeYes) {     // If user selects "Yes" button, a new pop-up asks him the correct column that should be used (if any)
+        if (result.get() == buttonTypeYes) {     // If users selects "Yes" button, a new pop-up asks him the correct column that should be used (if any)
             List<String> choices = new ArrayList<>();
             choices.addAll(getColumnNames());
 
@@ -1565,7 +1565,7 @@ public class MainController {
 
         csvExport csvExp = new csvExport();
         pdfExport pdfExp = new pdfExport();
-        File exports = new File(System.getProperty("user.dir"), "./reports");
+        File exports = new File(System.getProperty("users.dir"), "./reports");
 
         if (!exports.exists()) {
             exports.mkdirs();
@@ -1621,8 +1621,8 @@ public class MainController {
 
     @FXML
     public void openManual() {
-        File exports = new File(System.getProperty("user.dir"), "./reports");
-        String test = System.getProperty("user.dir");
+        File exports = new File(System.getProperty("users.dir"), "./reports");
+        String test = System.getProperty("users.dir");
         System.out.println(test);
         String manLoc = test + "\\Manual\\Manual.pdf";
 
@@ -1740,62 +1740,62 @@ public class MainController {
 
     @FXML
     public void a() {
-        String image = MainController.class.getResource("../res/icons/1.jpg").toExternalForm();
+        String image = MainController.class.getResource("../res/images/background1.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
 
     }
 
     @FXML
     public void b() {
-        String image = MainController.class.getResource("../res/icons/2.jpg").toExternalForm();
+        String image = MainController.class.getResource("../res/images/background2.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
 
     @FXML
     public void c() {
-        String image = MainController.class.getResource("../res/icons/3.jpg").toExternalForm();
+        String image = MainController.class.getResource("../res/images/background3.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
 
     @FXML
     public void d() {
-        String image = MainController.class.getResource("../res/icons/4.jpg").toExternalForm();
+        String image = MainController.class.getResource("../res/images/background4.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
 
     @FXML
     public void e() {
-        String image = MainController.class.getResource("../res/icons/5.jpg").toExternalForm();
+        String image = MainController.class.getResource("../res/images/background5.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
 
     @FXML
     public void f() {
-        String image = MainController.class.getResource("../res/icons/6.jpg").toExternalForm();
+        String image = MainController.class.getResource("../res/images/background6.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
 
     @FXML
     public void g() {
-        String image = MainController.class.getResource("../res/icons/7.jpg").toExternalForm();
+        String image = MainController.class.getResource("../res/images/background7.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
 
     @FXML
     public void h() {
-        String image = MainController.class.getResource("../res/icons/8.jpg").toExternalForm();
+        String image = MainController.class.getResource("../res/images/background8.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
 
     @FXML
     public void i() {
-        String image = MainController.class.getResource("../res/icons/9.jpg").toExternalForm();
+        String image = MainController.class.getResource("../res/images/background9.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
 
     @FXML
     public void j() {
-        String image = MainController.class.getResource("../res/icons/pattern.png").toExternalForm();
+        String image = MainController.class.getResource("../res/images/background10.png").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
 }

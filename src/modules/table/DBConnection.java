@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class DBConnection {
 
     /**
-     * Connect to database. For now, only 1 user
+     * Connect to database. For now, only 1 users
      *  //TODO Build it so it can support multiple users
      * @return Connection
      */

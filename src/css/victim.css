@@ -41,7 +41,7 @@
 	-fx-background-size: 11px 11px;
 	-fx-background-repeat: no-repeat;
 	-fx-background-position: center;
-	-fx-background-image: url("../res/icons/edit_case_icon.png");
+	-fx-background-image: url("../res/images/edit_case_button.png");
 	-fx-background-color: transparent;
 	-fx-border-color: transparent;
 	-fx-opacity: 0.8;
@@ -53,7 +53,7 @@
 	-fx-background-size: 11px 11px;
 	-fx-background-repeat: no-repeat;
 	-fx-background-position: center;
-	-fx-background-image: url("../res/icons/close_case_icon.png");
+	-fx-background-image: url("../res/images/close_case_button.png");
 	-fx-background-color: transparent;
 	-fx-border-color: transparent;
 	-fx-opacity: 0.8;

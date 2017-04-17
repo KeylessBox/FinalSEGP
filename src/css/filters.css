@@ -5,7 +5,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 #filters_bar {
-    -fx-background-image: url("../res/icons/filters_top_bar.png");
+    -fx-background-image: url("../res/images/filters_top_bar.png");
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-margin: 10px;
@@ -14,7 +14,7 @@
     -fx-text-fill: #ffffff;
 }
 #add_green_btn {
-    -fx-background-image: url("../res/icons/green_add_icon.png");
+    -fx-background-image: url("../res/images/green_add_button.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
@@ -22,7 +22,7 @@
     -fx-border-color: transparent;
 }
 #add_red_btn {
-    -fx-background-image: url("../res/icons/red_add_icon.png");
+    -fx-background-image: url("../res/images/red_add_button.png");
     -fx-background-repeat: stretch;
      -fx-border-color: transparent;
     -fx-background-size: 15 15;
@@ -35,7 +35,7 @@
     -fx-padding: 0;
 }
 #add_filters {
-    -fx-background-image: url("../res/icons/filter.png");
+    -fx-background-image: url("../res/images/filter_button.png");
     -fx-background-repeat: stretch;
     -fx-border-color: transparent;
     -fx-background-size: 15 15;
@@ -70,7 +70,7 @@
 }
 
 #setting_btn {
-    -fx-background-image: url("../res/icons/settings_icon.png");
+    -fx-background-image: url("../res/images/settings_button.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
@@ -85,7 +85,7 @@
     -fx-padding: 0;
 }
 #filtersSPane > .viewport{
-    -fx-background-image: url("../res/images/background.jpg");
+    -fx-background-image: url("../res/images/filters_background.jpg");
     -fx-padding: 10px;
 }
 #filtersSPane:focused{

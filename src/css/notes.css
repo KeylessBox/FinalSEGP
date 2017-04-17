@@ -23,13 +23,13 @@
 }
 
 #notes_settings_bar {
-    -fx-background-image: url("../res/icons/note_settings_bar.png");
+    -fx-background-image: url("../res/images/note_settings_bar.png");
     -fx-background-repeat: stretch;
     -fx-background-size: cover;
 }
 
 #notes_bar_settings_btn {
-    -fx-background-image: url("../res/icons/settings_icon.png");
+    -fx-background-image: url("../res/images/settings_button.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 10 10;
     -fx-background-position: center center;
@@ -45,7 +45,7 @@
     -fx-background-size: 10px 10px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-image: url("../res/icons/add_icon.png");
+    -fx-background-image: url("../res/images/add_button.png");
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-opacity: 0.7;
@@ -75,7 +75,7 @@
 }
 
 #note_icon {
-    -fx-background-image: url("../res/icons/note_icon.png");
+    -fx-background-image: url("../res/images/note_button.png");
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.3), 10, 0, 0, 0);
     -fx-opacity: 0.8;
 }
@@ -85,13 +85,13 @@
 }
 
 #note_box {
-    -fx-background-image: url("../res/icons/note_pane.png");
+    -fx-background-image: url("../res/images/note_pane.png");
     -fx-border-width: 1;
     -fx-border-color: black;
 }
 
 #edit_name {
-    -fx-background-image: url("../res/icons/note_icon.png");
+    -fx-background-image: url("../res/images/note_button.png");
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
     -fx-background-color: transparent;
@@ -99,7 +99,7 @@
 }
 
 #delete_note {
-    -fx-background-image: url("../res/icons/delete_note_icon.png");
+    -fx-background-image: url("../res/images/delete_note_button.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;
@@ -108,7 +108,7 @@
 }
 
 #close_note {
-    -fx-background-image: url("../res/icons/ok_icon.png");
+    -fx-background-image: url("../res/images/ok_button.png");
     -fx-background-repeat: stretch;
     -fx-background-size: 15 15;
     -fx-background-position: center center;

@@ -2,7 +2,7 @@
     -fx-background-repeat: stretch;
     -fx-background-size: 228 77;
     -fx-background-color: transparent;
-    -fx-background-image: url("../res/icons/cases_menu_bar.png");
+    -fx-background-image: url("../res/images/cases_menu_bar.png");
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 3, 0, 0, -1);
 }
 
@@ -12,7 +12,7 @@
     -fx-background-size: 16px 16px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-image: url("../res/icons/add_icon.png");
+    -fx-background-image: url("../res/images/add_button.png");
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-opacity: 0.5;

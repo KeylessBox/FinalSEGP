@@ -34,7 +34,7 @@
                                         <ImageView fx:id="settings_view" fitHeight="15.0" fitWidth="15.0"
                                                    layoutX="1710.0" layoutY="8.0">
                                             <image>
-                                                <Image url="@../res/icons/settings_icon.png"/>
+                                                <Image url="@../res/images/settings_button.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -96,7 +96,7 @@
                                     <graphic>
                                         <ImageView fx:id="add_view" fitHeight="15.0" fitWidth="15.0">
                                             <image>
-                                                <Image url="@../res/icons/add_icon.png"/>
+                                                <Image url="@../res/images/add_button.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -105,7 +105,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/coming_soon_sub_menu.png"/>
+                                                        <Image url="@../res/images/coming_soon_submenu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -114,7 +114,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/manual_sub_menu.png"/>
+                                                        <Image url="@../res/images/manual_sub_menu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -123,7 +123,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/extra_sub_menu.png"/>
+                                                        <Image url="@../res/images/extra_sub_menu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -134,7 +134,7 @@
                                     <graphic>
                                         <ImageView fx:id="search_view" fitHeight="15.0" fitWidth="15.0">
                                             <image>
-                                                <Image url="@../res/icons/search_icon.png"/>
+                                                <Image url="@../res/images/search_button.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -169,7 +169,7 @@
                                     <graphic>
                                         <ImageView fx:id="user_view" fitHeight="15.0" fitWidth="15.0">
                                             <image>
-                                                <Image url="@../res/icons/user_icon.png"/>
+                                                <Image url="@../res/images/user_button.png"/>
                                             </image>
                                         </ImageView>
                                     </graphic>
@@ -178,7 +178,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/settins_sub_menu.png"/>
+                                                        <Image url="@../res/images/settins_sub_menu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -187,7 +187,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/messages_sub_menu.png"/>
+                                                        <Image url="@../res/images/admin_sub_menu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -196,7 +196,7 @@
                                             <graphic>
                                                 <ImageView>
                                                     <image>
-                                                        <Image url="@../res/icons/logoff_sub_menu.png"/>
+                                                        <Image url="@../res/images/logoff_sub_menu.png"/>
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -216,7 +216,7 @@
                         </MenuBar>
                         <ImageView fitHeight="32.0" fitWidth="34.0" layoutX="140.0" layoutY="6.0">
                             <image>
-                                <Image url="@../res/icons/logoMain.png"/>
+                                <Image url="@../res/images/main_logo.png"/>
                             </image>
                             <effect>
                                 <DropShadow radius="4.875" width="0.5"/>
@@ -358,7 +358,7 @@
                             </children>
                         </Pane>
                         <Pane id="Table" minWidth="1458.0" prefHeight="717.0" prefWidth="1475.0"
-                              stylesheets="@../css/table.css">
+                              stylesheets="@../css/table_area.css">
                             <styleClass>
                                 <String fx:value="root"/>
                                 <String fx:value="Table"/>
@@ -450,7 +450,7 @@
                                                            promptText="keyword..."/>
                                                 <Button alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0"
                                                         prefHeight="29.0" prefWidth="61.0" styleClass="btn"
-                                                        stylesheets="@../css/table.css" text="search"
+                                                        stylesheets="@../css/table_area.css" text="search"
                                                         textAlignment="CENTER">
                                                     <font>
                                                         <Font name="Calibri Bold" size="14.0"/>

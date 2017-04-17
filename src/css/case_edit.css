@@ -23,7 +23,7 @@
     -fx-background-size: 15px 15px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-image: url("../res/icons/ok_icon_white.png");
+    -fx-background-image: url("../res/images/ok_button_white.png");
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-opacity: 0.8;
@@ -103,7 +103,7 @@
 }
 
 #extra_box {
-    -fx-background-image: url("../res/icons/case_edit_pane.png");
+    -fx-background-image: url("../res/images/case_edit_pane.png");
     -fx-border-width: 1;
     -fx-border-color: transparent;
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 1), 3, 0, 0, 0);
@@ -111,7 +111,7 @@
 /*.custom_hbox {*/
     /*-fx-background-color: transparent;*/
     /*-fx-border-color: transparent;*/
-    /*-fx-background-image: url("../res/icons/case_edit_pane.png");*/
+    /*-fx-background-image: url("../res/images/case_edit_pane.png");*/
     /*-fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 2, 0, 0, 0);*/
     /*-fx-opacity: 1;*/
 /*}*/

@@ -74,7 +74,7 @@ saveAsPane {
 }
 
 .saveAsB {
-	-fx-background-image: url("../res/images/button.png");
+	-fx-background-image: url("../res/images/signin_button.png");
 	-fx-background-size: 35, 35;
 	-fx-background-color: white;
 }

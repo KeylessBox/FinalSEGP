@@ -24,12 +24,12 @@
             </Label>
             <ImageView fitHeight="520.0" fitWidth="609.0" layoutX="145.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../res/icons/search.jpg" />
+                  <Image url="@../res/images/search_feature_frame.jpg" />
                </image>
             </ImageView>
             <ImageView fitHeight="593.0" fitWidth="495.0" layoutX="759.0" layoutY="129.0">
                <image>
-                  <Image url="@../res/icons/search_text.png" />
+                  <Image url="@../res/images/search_text.png" />
                </image>
             </ImageView>
             </children>
