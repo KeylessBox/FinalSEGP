@@ -62,7 +62,7 @@ public class SignInController {
 
     @FXML
     public void initialize() {
-        try (FileReader fileReader = new FileReader(new File("src/res/users/Account.dat"));
+        try (FileReader fileReader = new FileReader(new File("res/users/Account.dat"));
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String user = bufferedReader.readLine();
             String password = bufferedReader.readLine();
@@ -301,9 +301,14 @@ public class SignInController {
                      * Program moves to the main Window
                      * It passes the account details to a file (that will be soon deleted).
                      */
-                
+
                     user = username.getText();
-                    PrintWriter writer = new PrintWriter(new File("src/res/users/Account.dat"));
+                    //PrintWriter writer = new PrintWriter(new File("src/res/users/Account.dat"));
+                    File dir = new File(System.getProperty("user.dir"), "./res/users");
+                    if (!dir.exists()){
+                        dir.mkdirs();
+                    }
+                    PrintWriter writer = new PrintWriter(new File("res/users/Account.dat"));
                     writer.write(user);
                     if (rember.isSelected()) {
                         writer.write("\n" + pw.getText());
