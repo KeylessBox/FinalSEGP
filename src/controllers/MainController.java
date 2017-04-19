@@ -54,10 +54,10 @@ import java.util.List;
 public class MainController {
 
     //dynamic data storage:
-    private ObservableList<CallRecord> searchData;
-    private ObservableList<CallRecord> callsData;
-    private ObservableList<CaseRecord> casesData;
-    private ObservableList<FileRecord> notesData;
+    private ObservableList<CallRecord> filteredData;
+    private ObservableList<CallRecord> databaseCallsData;
+    private ObservableList<CaseRecord> databaseCasesData;
+    private ObservableList<FileRecord> databaseNotesData;
     private static List<Object[]> filterConstraints = new ArrayList<>();
 
     //counters:
@@ -125,19 +125,225 @@ public class MainController {
 
 
     /**
-     * Import functionality.
+     * Opens a window and prompts the user to choose the file whose data is to be imported
      */
     @FXML
     protected void importFile() {
-        FileChooser fileChooser = new FileChooser();    // New window, where you choose what file to import
+        // New window, where you choose what file to import
+        FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        File file = fileChooser.showOpenDialog(new Stage());
-        if (file != null) { // If there is a file selected then the data from that file is transmitted to the database
-            String filePath = file.getPath();
+        File importedFile = fileChooser.showOpenDialog(new Stage());
+        // If there is a file selected then the data from that file is transmitted to the database
+        if (importedFile != null) {
+            String filePath = importedFile.getPath();
             filePath = filePath.replace("\\", "\\\\");
             importFile(filePath);
         }
     }
+
+    /**
+     * Redirects to methods that support importing files with csv, xls or xlsx extension
+     *
+     * @param filePath full path of file
+     */
+    public void importFile(String filePath) {
+        if (filePath.endsWith("csv")) {
+            importCSV(filePath);
+            System.out.println("IMPORT FROM CSV");
+        } else {
+            importExcel(filePath);
+            System.out.println("IMPORT FROM EXCEL");
+        }
+    }
+
+    /**
+     * Imports data from csv file
+     * Takes headers from file and reorders them in the database order. Keeps only the wanted columns
+     * Takes the rest of data and puts it under their respective columns
+     * Sends it to database
+     * Works only with columns that are already in the database.
+     *
+     * @param filePath full path of file to be imported
+     */
+    public void importCSV(String filePath) {
+        InputStream is;
+        try {
+            is = new FileInputStream(filePath);
+            // Takes the csv file and deconstructs it
+            CSVParser shredderOfData = new CSVParser(is);
+            shredderOfData.setCommentStart("#;!");
+            shredderOfData.setEscapes("nrtf", "\n\r\t\f");
+
+            String currentString;          // currentString is going to hold every single value from file, one at a time
+            int[] tableHeader = new int[10];    // tableHeader will contain the order of callsTable columns that are in the csv file
+            int tableHeaderIndex = 0;
+            // used for the alias method
+            CallRecord cr = new CallRecord();
+            // databaseColumnIndex holds the index of column in the database
+            int databaseColumnIndex;
+            // If file contains a predetermined column, under which the time and date are both put,
+            // an exception to the normal flow is acknowledged
+            boolean dateColumnNameException = false;
+            // Takes the headers(from the first line of the file) and puts them into the correct order of the database into tableHeader.
+            // If there is an unidentified column, an alert pops out and asks the users about its importance,
+            // and have them select an existing column to put the information in. (Mismatched column names)
+            while ((currentString = shredderOfData.nextValue()) != null && shredderOfData.lastLineNumber() == 1) {
+                // If there is a match with a column in the database, input the new index
+                if ((databaseColumnIndex = cr.alias(currentString)) != -1) {
+                    tableHeader[tableHeaderIndex] = databaseColumnIndex;
+                    if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
+                        dateColumnNameException = true;
+                    }
+                } else {      //  else Alert pops out.
+                    tableHeader[tableHeaderIndex] = alert(currentString);
+                }
+                tableHeaderIndex++;
+            }
+            /*
+             * At this moment the columns are set in place.
+             * How? Check if a file column resembles a database column(using regex).
+             * The ones that are unrecognized are sent to the users for future actions
+             * During the checking, all file columns are put in the correct order (database order, or the order on which this method is made)
+             * The discarded columns, get -1 value.
+             * Next step is getting the data from the file
+             * length = the number of file columns
+             * dataCorrectOrder = data from file, put in the correct order
+             * The principle: Iterate thorough the rows of the file, take only the data under the approved columns, and put it in the database
+             */
+            ObservableList<CallRecord> dataToDatabase = FXCollections.observableArrayList();
+            int length = tableHeaderIndex + 1;
+            tableHeaderIndex = 0;
+            String[] dataCorrectOrder = new String[length];
+            while (tableHeader[tableHeaderIndex] == -1) {
+                tableHeaderIndex++;
+                currentString = shredderOfData.nextValue();
+            }
+            dataCorrectOrder[tableHeader[tableHeaderIndex]] = currentString;
+            tableHeaderIndex++;
+            while ((currentString = shredderOfData.nextValue()) != null) {       // As long as there is data left in the file
+                // If the current column is approved then the data goes into the correct place
+                if (tableHeader[tableHeaderIndex] != -1) {
+                    dataCorrectOrder[tableHeader[tableHeaderIndex]] = currentString;
+                }
+                tableHeaderIndex++;         // Go to the next column
+                // If the end of the row was reached, start next row and put the found data into dataToDatabase
+                if (tableHeaderIndex == length - 1) {
+                    tableHeaderIndex = 0;
+                    if (dateColumnNameException) {
+                        String[] dateTime = dataCorrectOrder[2].split("\\s");
+                        dateTime[0] = changeDateFormat(dateTime[0]);
+                        dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataCorrectOrder[0], dataCorrectOrder[1],
+                                dateTime[0], dateTime[1], dataCorrectOrder[4], dataCorrectOrder[5]));
+                    } else {
+                        dataCorrectOrder[2] = changeDateFormat(dataCorrectOrder[2]);
+                        dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataCorrectOrder[0], dataCorrectOrder[1],
+                                dataCorrectOrder[2], dataCorrectOrder[3], dataCorrectOrder[4], dataCorrectOrder[5]));
+                    }
+
+                }
+            }
+            sql.insertCalls(dataToDatabase);  // After getting all data from the file, send it to database
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Import data from excel file
+     * Takes headers from file and reorders them in the database order. Keeps only the wanted columns of information
+     * Takes the rest of data and puts it under their respective columns
+     * Sends it to database
+     * Works only with columns that are already in the database.
+     *
+     * @param filePath full path of file to be imported
+     */
+    public void importExcel(String filePath) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(new File(filePath)); // Prepares tools to take data from excel
+            Workbook excelWorkbook = getWorkbook(fileInputStream, filePath); // Different versions of Excel require different tools
+            Sheet datatypeSheet = excelWorkbook.getSheetAt(0);
+            Iterator<Row> rowIterator = datatypeSheet.iterator();
+            boolean dateColumnNameException = false;
+            int databaseColumnIndex;                       // checks if column is recognized by database
+            Cell currentCell;                       // cell with current information
+            int[] tableHeader = new int[10];           // will hold the preferred order of the recognized headers from file
+            int tableHeaderIndex = 0;               // index of tableHeader
+            CallRecord cr = new CallRecord();           // used to call the alias method to recognize headers
+            if (rowIterator.hasNext()) {               // If there is at least 1 row (header row)
+                Row currentRow = rowIterator.next();
+                // Makes an iterator for the row (so that you can iterate through it and take the cells)
+                Iterator<Cell> cellIterator = currentRow.cellIterator();
+                while (cellIterator.hasNext()) {        // As long as there are unverified elements in the row
+                    currentCell = cellIterator.next();          // Take cell value
+                    String currentString = String.valueOf(getCellValue(currentCell));
+                    if ((databaseColumnIndex = cr.alias(currentString)) != -1) {       // if name is recognized by database
+                        tableHeader[tableHeaderIndex] = databaseColumnIndex;               // remember order
+                        if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
+                            dateColumnNameException = true;
+                        }
+                    } else {      // else Alert pops out.
+                        tableHeader[tableHeaderIndex] = alert(String.valueOf(getCellValue(currentCell)));
+                    }
+                    tableHeaderIndex++;
+                }
+            }
+            // stores the data that will be sent to database
+            ObservableList<CallRecord> dataToDatabase = FXCollections.observableArrayList();
+            int length = tableHeaderIndex + 1;                      // number of recognized columns
+            tableHeaderIndex = 0;
+            String[] dataElement = new String[length];              // row that goes into data variable
+
+            while (rowIterator.hasNext()) {                        // As long as there are rows to check
+                Row currentRow = rowIterator.next();                       // Take every single row
+                Iterator<Cell> cellIterator = currentRow.cellIterator();        // Make an iterator for it
+                while (cellIterator.hasNext()) {        // Check for every value in the row
+                    currentCell = cellIterator.next();
+                    if (tableHeader[tableHeaderIndex] != -1) {      // If recognized column then store it into dataElement
+                        dataElement[tableHeader[tableHeaderIndex]] = String.valueOf(getCellValue(currentCell));
+                    }
+                    tableHeaderIndex++;
+                }
+                tableHeaderIndex = 0;           // Start next row
+                if (dateColumnNameException) {
+                    String[] dateTime = dataElement[2].split("\\s");
+                    dateTime[0] = changeDateFormat(dateTime[0]);
+                    dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
+                            dateTime[0], dateTime[1], dataElement[4], dataElement[5]));
+                } else {
+                    dataElement[2] = changeDateFormat(dataElement[2]);
+                    dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
+                            dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
+                }
+            }
+            sql.insertCalls(dataToDatabase);              // The essential information is sent to database
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Identifies the version of Microsoft Excel used for the file, or specifies that the file is not supported
+     * @return the tailored workbook for the file
+     */
+    private Workbook getWorkbook(FileInputStream inputStream, String filePath)
+            throws IOException {
+        Workbook excelWorkbook = null;
+        if (filePath.endsWith("xlsx")) {
+            excelWorkbook = new XSSFWorkbook(inputStream);
+        } else if (filePath.endsWith("xls")) {
+            excelWorkbook = new HSSFWorkbook(inputStream);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("File not recognized");
+            alert.setHeaderText("Unsupported file format");
+            alert.setContentText("The file you want to import is not supported by the application");
+            alert.showAndWait();
+        }
+        return excelWorkbook;
+    }
+
 
     /**
      * Loads the callsTable with data from database
@@ -145,8 +351,8 @@ public class MainController {
      * @param caseID the case id whose data is to be shown
      */
     public void loadTable(int caseID) {
-        callsData = sql.loadCalls(caseID);  // takes the data from the database and puts it into an observable list
-        searchData = callsData;             // search data gets the default callsTable items from callsData (usefull for export CSV/PDF)
+        databaseCallsData = sql.loadCalls(caseID);  // takes the data from the database and puts it into an observable list
+        filteredData = databaseCallsData;             // search data gets the default callsTable items from databaseCallsData (usefull for export CSV/PDF)
         columnFactory.createOriginNameColumn(fromIDColumn); // builds the columns, without data
         columnFactory.createOriginColumn(fromPhoneColumn);
         columnFactory.createDestinationNameColumn(toIDColumn);
@@ -156,7 +362,7 @@ public class MainController {
         columnFactory.createCallTypeColumn(typeColumn);
         columnFactory.createDurationColumn(durationColumn);
         callsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        callsTable.setItems(callsData);  // adds the data into the callsTable
+        callsTable.setItems(databaseCallsData);  // adds the data into the callsTable
         callsTable.setEditable(true);
 
         //numOfRows label shows the size of the displayed callsTable
@@ -233,24 +439,23 @@ public class MainController {
     }
 
     /**
-     * Filters callsTable by date (at the moment)
+     * Filters the data from the table
+     * If there are only 2 filters applied, the table will show only data that contains both of those filters
+     * Else the table will display any kind of data that contains at least one of the filters, without duplicates
      *
      * @throws ParseException
      */
     @FXML
     private void filter() {
         try {
-            // Retrieves the filtered data
             if (filtersBox.getChildren().size() == 2) {
-                searchData = filterSearch(filter(0));
+                filteredData = filterSearch(filter(0));
             } else {
-                searchData = filterSearch(filterPhone(filterDates(0)));
+                filteredData = filterSearch(filterPhone(filterDates(0)));
             }
-            // Writing the number of occurrences for each filter
+            // Writes the number of occurrences for each filter
             Pane filterPane;
-            // Takes all filters
             for (int j = 0; j < filtersBox.getChildren().size(); j++) {
-
                 filterPane = (Pane) filtersBox.getChildren().get(j);
                 Pane temp = (Pane) filterPane.getChildren().get(0);
                 Pane temp2 = (Pane) temp.getChildren().get(0);
@@ -272,7 +477,7 @@ public class MainController {
                 System.out.println(filterConstraints.get(i)[0]);
             }
             // Puts info into the callsTable
-            callsTable.setItems(searchData);
+            callsTable.setItems(filteredData);
 
             //numOfRows label shows the size of the displayed callsTable
             numOfRows.setText("Number of rows: " + callsTable.getItems().size());
@@ -281,73 +486,79 @@ public class MainController {
         }
     }
 
+    /**
+     * Filters the data by the date and filters
+     * @param i variable used recursively, default should be 0
+     * @return the filtered data
+     * @throws ParseException
+     */
     private ObservableList<CallRecord> filter(int i) throws ParseException {
         if (i < filterID) {
-            ObservableList<CallRecord> test = filter(i + 1);
-            ObservableList<CallRecord> test2 = FXCollections.observableArrayList();
-            boolean change = false;
+            ObservableList<CallRecord> filteredData = filter(i + 1);
+            ObservableList<CallRecord> newData = FXCollections.observableArrayList();
+            boolean isDifferent = false;
             if (filterConstraints.get(i)[1].equals("no")) {
                 return filter(i + 1);
             }
             if (filterConstraints.get(i)[0] instanceof Date) {
                 Date date = (Date) filterConstraints.get(i)[0];
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                change = true;
+                isDifferent = true;
                 if (filterConstraints.get(i)[1].equals("start")) {
-                    for (CallRecord callRecord : test) {
+                    for (CallRecord callRecord : filteredData) {
                         Date callDate = sdf.parse(callRecord.getDate());
                         if (callDate.compareTo(date) >= 0) {
-                            test2.add(callRecord);
+                            newData.add(callRecord);
                         }
                     }
                 } else {
-                    for (CallRecord callRecord : test) {
+                    for (CallRecord callRecord : filteredData) {
                         Date callDate = sdf.parse(callRecord.getDate());
                         if (callDate.compareTo(date) <= 0) {
-                            test2.add(callRecord);
+                            newData.add(callRecord);
                         }
                     }
                 }
             } else if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
-                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(fromIDColumn,
+                ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
                         fromPhoneColumn, toIDColumn, toPhoneColumn, dateColumn,
                         timeColumn, typeColumn, durationColumn);
-                int sum = 0;
-                change = true;
-                for (int k = 0; k < test.size(); k++) {
+                int sumOfCalls = 0;
+                isDifferent = true;
+                for (int k = 0; k < filteredData.size(); k++) {
                     for (int j = 1; j < 4; j += 2) {
-                        TableColumn col = cols.get(j);
-                        String cellValue = col.getCellData(test.get(k)).toString();
+                        TableColumn currentColumn = columns.get(j);
+                        String cellValue = currentColumn.getCellData(filteredData.get(k)).toString();
                         cellValue = cellValue.toLowerCase();
-                        Person person = (Person) filterConstraints.get(i)[0];
-                        if (cellValue.contains(person.getPhone())) {
-                            CallRecord data = test.get(k);
+                        Person currentFilter = (Person) filterConstraints.get(i)[0];
+                        if (cellValue.contains(currentFilter.getPhone())) {
+                            CallRecord call = filteredData.get(k);
                             if (j == 1) {
-                                data.setOriginName(person.getIdentifier());
+                                call.setOriginName(currentFilter.getIdentifier());
                             } else if (j == 3) {
-                                data.setDestinationName(person.getIdentifier());
+                                call.setDestinationName(currentFilter.getIdentifier());
                             }
-                            test2.add(data);
-                            sum++;
+                            newData.add(call);
+                            sumOfCalls++;
                             break;
                         }
                     }
                 }
-                filterConstraints.get(i)[2] = sum;
+                filterConstraints.get(i)[2] = sumOfCalls;
             }
-            if (change) {
-                return test2;
+            if (isDifferent) {
+                return newData;
             } else {
-                return test;
+                return filteredData;
             }
 
         } else {
-            return callsData;
+            return databaseCallsData;
         }
     }
 
     /**
-     * Recursive call for filtering the callsTable
+     * Recursive call for filtering the callsTable using the dates
      *
      * @param i index of constraint in the filterConstraint array
      * @return filtered data
@@ -388,28 +599,33 @@ public class MainController {
                 return test;
             }
         } else {
-            return callsData;
+            return databaseCallsData;
         }
     }
 
-    public ObservableList<CallRecord> filterSearch(ObservableList<CallRecord> test) {
-        ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-        boolean change = false;
+    /**
+     * Filters the list, using constraints from the search bar
+     * @param filteredData data to be filtered
+     * @return new filtered data
+     */
+    public ObservableList<CallRecord> filterSearch(ObservableList<CallRecord> filteredData) {
+        ObservableList<CallRecord> currentFilteredData = FXCollections.observableArrayList();
+        boolean isDifferent = false;
 
         for (int i = 0; i < filterID; i++) {
             if (filterConstraints.get(i)[0] instanceof SearchField && filterConstraints.get(i)[1].equals("yes")) {
-                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(fromIDColumn,
+                ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
                         fromPhoneColumn, toIDColumn, toPhoneColumn,
                         dateColumn, timeColumn, typeColumn, durationColumn);
-                change = true;
-                for (int j = 0; j < test.size(); j++) {
+                isDifferent = true;
+                for (int j = 0; j < filteredData.size(); j++) {
                     for (int k = 0; k < 8; k++) {
-                        TableColumn col = cols.get(k);
-                        String cellValue = col.getCellData(test.get(j)).toString();
+                        TableColumn currentColumn = columns.get(k);
+                        String cellValue = currentColumn.getCellData(filteredData.get(j)).toString();
                         cellValue = cellValue.toLowerCase();
 
                         if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
-                            tableItems.add(test.get(j));
+                            currentFilteredData.add(filteredData.get(j));
                             break;
                         }
                     }
@@ -418,44 +634,49 @@ public class MainController {
         }
         // Duplicates Removal (I don't know why, search gives duplicates)
         //TODO Find a way to make search unique. Only 1 entry in the filterConstraints
-        if (change) {
-            ObservableList<CallRecord> result = FXCollections.observableArrayList();
-            HashSet<CallRecord> set = new HashSet<>();
-            for (CallRecord item : tableItems) {
-                if (!set.contains(item)) {
-                    result.add(item);
-                    set.add(item);
+        if (isDifferent) {
+            ObservableList<CallRecord> newFilteredData = FXCollections.observableArrayList();
+            HashSet<CallRecord> setOfCalls = new HashSet<>();
+            for (CallRecord currentCall : currentFilteredData) {
+                if (!setOfCalls.contains(currentCall)) {
+                    newFilteredData.add(currentCall);
+                    setOfCalls.add(currentCall);
                 }
             }
-            return result;
-        } else return test;
+            return newFilteredData;
+        } else return filteredData;
     }
 
-    public ObservableList<CallRecord> filterPhone(ObservableList<CallRecord> test) {
-        ObservableList<CallRecord> tableItems = FXCollections.observableArrayList();
-        boolean change = false;
+    /**
+     * Filters the list using the filter boxes
+     * @param filteredData data to filter
+     * @return the new filtered data
+     */
+    public ObservableList<CallRecord> filterPhone(ObservableList<CallRecord> filteredData) {
+        ObservableList<CallRecord> currentFilteredData = FXCollections.observableArrayList();
+        boolean isDifferent = false;
 
         for (int i = 0; i < filterID; i++) {
             if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
-                ObservableList<TableColumn<CallRecord, ?>> cols = FXCollections.observableArrayList(fromIDColumn,
+                ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
                         fromPhoneColumn, toIDColumn, toPhoneColumn, dateColumn,
                         timeColumn, typeColumn, durationColumn);
-                change = true;
+                isDifferent = true;
                 int sum = 0;
-                for (int k = 0; k < test.size(); k++) {
+                for (int k = 0; k < filteredData.size(); k++) {
                     for (int j = 1; j < 4; j += 2) {
-                        TableColumn col = cols.get(j);
-                        String cellValue = col.getCellData(test.get(k)).toString();
+                        TableColumn currentColumn = columns.get(j);
+                        String cellValue = currentColumn.getCellData(filteredData.get(k)).toString();
                         cellValue = cellValue.toLowerCase();
                         Person person = (Person) filterConstraints.get(i)[0];
                         if (cellValue.contains(person.getPhone())) {
-                            CallRecord data = test.get(k);
+                            CallRecord call = filteredData.get(k);
                             if (j == 1) {
-                                data.setOriginName(person.getIdentifier());
+                                call.setOriginName(person.getIdentifier());
                             } else if (j == 3) {
-                                data.setDestinationName(person.getIdentifier());
+                                call.setDestinationName(person.getIdentifier());
                             }
-                            tableItems.add(data);
+                            currentFilteredData.add(call);
                             sum++;
                             break;
                         }
@@ -464,21 +685,21 @@ public class MainController {
                 filterConstraints.get(i)[2] = sum;
             }
         }
-        if (change) {
+        if (isDifferent) {
             ObservableList<CallRecord> result = FXCollections.observableArrayList();
             HashSet<CallRecord> set = new HashSet<>();
-            for (CallRecord item : tableItems) {
+            for (CallRecord item : currentFilteredData) {
                 if (!set.contains(item)) {
                     result.add(item);
                     set.add(item);
                 }
             }
             return result;
-        } else return test;
+        } else return filteredData;
     }
 
     /**
-     * Retrieves the start date and filters the callsTable
+     * Retrieves the start date
      *
      * @throws ParseException
      */
@@ -507,7 +728,7 @@ public class MainController {
     }
 
     /**
-     * Retrieves the end date and filters the callsTable
+     * Retrieves the end date
      *
      * @throws ParseException
      */
@@ -541,7 +762,7 @@ public class MainController {
     private void loadCases() {
 
         //  CaseObj is considered as one of the case entries on the pane (with its image,labels and buttons)
-        casesData = sql.loadCases();    //  Load Cases List from database:
+        databaseCasesData = sql.loadCases();    //  Load Cases List from database:
         toggleControl();
         String status = "All";
         casesBox.getChildren().clear();
@@ -570,7 +791,7 @@ public class MainController {
 
     private void loadTest(String status) {
         HBox CaseObject = null;
-        for (CaseRecord caseRecord : casesData) {
+        for (CaseRecord caseRecord : databaseCasesData) {
             try {
                 CaseObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/case.fxml")); // Case object loads the fxml, with its nodes
             } catch (IOException e1) {
@@ -784,10 +1005,10 @@ public class MainController {
      * @param caseID
      */
     private void loadFiles(int caseID) {
-        notesData = sql.loadFiles(caseID);  // Getting the data from the database part
+        databaseNotesData = sql.loadFiles(caseID);  // Getting the data from the database part
         NoteIcon CaseFile = null;   //  Clearing the cases already shown
         notesBox.getChildren().clear();
-        for (FileRecord element : notesData) {  // For every case file from the database, checks which one is on the given case, and loads them all into the app
+        for (FileRecord element : databaseNotesData) {  // For every case file from the database, checks which one is on the given case, and loads them all into the app
             if (Integer.parseInt(element.getCaseID()) == caseID) {
                 try {
                     CaseFile = (NoteIcon) FXMLLoader.load(getClass().getResource("/fxml/note.fxml")); // Case file template
@@ -863,7 +1084,7 @@ public class MainController {
             CallRecord record = (CallRecord) callsTable.getSelectionModel().getSelectedItem();   //   Getting the data
             if (record != null) {   // Checking if it's something there
                 sql.removeCall(Integer.parseInt(record.getCallID()));   // Delete from database part
-                callsData.remove(callsTable.getSelectionModel().getSelectedItem());  // Remove from callsTable part
+                databaseCallsData.remove(callsTable.getSelectionModel().getSelectedItem());  // Remove from callsTable part
                 System.out.println("DELETE: call " + record.getCallID());
             }
         }
@@ -949,7 +1170,7 @@ public class MainController {
                     }
                 }
                 ObservableList<CallRecord> test = FXCollections.observableArrayList();
-                for (CallRecord cr : searchData) {
+                for (CallRecord cr : filteredData) {
                     if (cr.getOriginName().equals(victim.getIdentifier())) {
                         cr.setOriginName(" ");
                     }
@@ -958,7 +1179,7 @@ public class MainController {
                     }
                     test.add(cr);
                 }
-                searchData = test;
+                filteredData = test;
                 filter();
                 System.out.println("DELETE VICTIM");
             });
@@ -1015,7 +1236,7 @@ public class MainController {
                     }
                 }
                 ObservableList<CallRecord> test = FXCollections.observableArrayList();
-                for (CallRecord cr : searchData) {
+                for (CallRecord cr : filteredData) {
                     if (cr.getOriginName().equals(suspect.getIdentifier())) {
                         cr.setOriginName(" ");
                     }
@@ -1024,7 +1245,7 @@ public class MainController {
                     }
                     test.add(cr);
                 }
-                searchData = test;
+                filteredData = test;
                 filter();
                 System.out.println("DELETE SUSPECT");
             });
@@ -1059,7 +1280,7 @@ public class MainController {
         // Data manipulation part (the default data is ready to be used)
         CallRecord cr = new CallRecord(String.valueOf(sql.getMaxCallID() + 1), "\"" + caseID + "\"",
                 "1", "1", "1900/01/01", "00:00", "Standard", "00:00");
-        callsData.add(cr);  // Add to callsTable (visually) part
+        databaseCallsData.add(cr);  // Add to callsTable (visually) part
         sql.addCall(cr);        // Add to database part
         System.out.println("ADD: call");
         callsTable.scrollTo(cr);
@@ -1101,26 +1322,26 @@ public class MainController {
         int i = 0;
 
         try {
-            if (temp2.size() != casesData.size()) {
+            if (temp2.size() != databaseCasesData.size()) {
                 return true;
             }
             for (CaseRecord caseRecord : temp2) {
 
-                if (i <= (casesData.size() - 1)) {
+                if (i <= (databaseCasesData.size() - 1)) {
 
-                    if (!caseRecord.getCaseID().equals(casesData.get(i).getCaseID())) {
+                    if (!caseRecord.getCaseID().equals(databaseCasesData.get(i).getCaseID())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getDate().equals(casesData.get(i).getDate())) {
+                    if (!caseRecord.getDate().equals(databaseCasesData.get(i).getDate())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getName().equals(casesData.get(i).getName())) {
+                    if (!caseRecord.getName().equals(databaseCasesData.get(i).getName())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getStatus().equals(casesData.get(i).getStatus())) {
+                    if (!caseRecord.getStatus().equals(databaseCasesData.get(i).getStatus())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getDetails().equals(casesData.get(i++).getDetails())) {
+                    if (!caseRecord.getDetails().equals(databaseCasesData.get(i++).getDetails())) {
                         requireUpdate = true;
                     }
                 }
@@ -1139,30 +1360,30 @@ public class MainController {
 
         try {
 
-            if (temp2.size() != notesData.size()) {
+            if (temp2.size() != databaseNotesData.size()) {
                 return true;
             }
 
             for (FileRecord fileRecord : temp2) {
 
-                if (i <= (notesData.size() - 1)) {
+                if (i <= (databaseNotesData.size() - 1)) {
 
-                    if (!fileRecord.getCaseID().equals(notesData.get(i).getCaseID())) {
+                    if (!fileRecord.getCaseID().equals(databaseNotesData.get(i).getCaseID())) {
                         requireUpdate = true;
                     }
-                    if (!fileRecord.getDate().equals(notesData.get(i).getDate())) {
+                    if (!fileRecord.getDate().equals(databaseNotesData.get(i).getDate())) {
                         requireUpdate = true;
                     }
-                    if (!fileRecord.getNoteID().equals(notesData.get(i).getNoteID())) {
+                    if (!fileRecord.getNoteID().equals(databaseNotesData.get(i).getNoteID())) {
                         requireUpdate = true;
                     }
-                    if (!fileRecord.getName().equals(notesData.get(i).getName())) {
+                    if (!fileRecord.getName().equals(databaseNotesData.get(i).getName())) {
                         requireUpdate = true;
                     }
-                    if (!fileRecord.getData().equals(notesData.get(i).getData())) {
+                    if (!fileRecord.getData().equals(databaseNotesData.get(i).getData())) {
                         requireUpdate = true;
                     }
-                    if (!fileRecord.getUserID().equals(notesData.get(i++).getUserID())) {
+                    if (!fileRecord.getUserID().equals(databaseNotesData.get(i++).getUserID())) {
                         requireUpdate = true;
                     }
                 }
@@ -1181,36 +1402,36 @@ public class MainController {
         int i = 0;
 
         try {
-            if (temp2.size() != callsData.size()) {
+            if (temp2.size() != databaseCallsData.size()) {
                 return true;
             }
 
             for (CallRecord caseRecord : temp2) {
 
-                if (i <= (callsData.size() - 1)) {
+                if (i <= (databaseCallsData.size() - 1)) {
 
-                    if (!caseRecord.getCallID().equals(callsData.get(i).getCallID())) {
+                    if (!caseRecord.getCallID().equals(databaseCallsData.get(i).getCallID())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getCaseID().equals(callsData.get(i).getCaseID())) {
+                    if (!caseRecord.getCaseID().equals(databaseCallsData.get(i).getCaseID())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getOrigin().equals(callsData.get(i).getOrigin())) {
+                    if (!caseRecord.getOrigin().equals(databaseCallsData.get(i).getOrigin())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getDestination().equals(callsData.get(i).getDestination())) {
+                    if (!caseRecord.getDestination().equals(databaseCallsData.get(i).getDestination())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getDate().equals(callsData.get(i).getDate())) {
+                    if (!caseRecord.getDate().equals(databaseCallsData.get(i).getDate())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getTime().equals(callsData.get(i).getTime())) {
+                    if (!caseRecord.getTime().equals(databaseCallsData.get(i).getTime())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getCallType().equals(callsData.get(i).getCallType())) {
+                    if (!caseRecord.getCallType().equals(databaseCallsData.get(i).getCallType())) {
                         requireUpdate = true;
                     }
-                    if (!caseRecord.getDuration().equals(callsData.get(i++).getDuration())) {
+                    if (!caseRecord.getDuration().equals(databaseCallsData.get(i++).getDuration())) {
                         requireUpdate = true;
                     }
                 }
@@ -1221,6 +1442,9 @@ public class MainController {
         }
     }
 
+    /**
+     * Controller initialization method. The controller runs this method first.
+     */
     @FXML
     public void initialize() {
 
@@ -1283,140 +1507,25 @@ public class MainController {
     }
 
     /**
-     * Getter for column names of the main callsTable
+     * Accessor for column names of the app table
      *
-     * @return
+     * @return list of column names
      */
     public List<String> getColumnNames() {
-        List nameOfColumns = new ArrayList(6);
-        nameOfColumns.add(fromPhoneColumn.getText());
-        nameOfColumns.add(toPhoneColumn.getText());
-        nameOfColumns.add(dateColumn.getText());
-        nameOfColumns.add(timeColumn.getText());
-        nameOfColumns.add(typeColumn.getText());
-        nameOfColumns.add(durationColumn.getText());
+        List columnNames = new ArrayList(6);
+        columnNames.add(fromPhoneColumn.getText());
+        columnNames.add(toPhoneColumn.getText());
+        columnNames.add(dateColumn.getText());
+        columnNames.add(timeColumn.getText());
+        columnNames.add(typeColumn.getText());
+        columnNames.add(durationColumn.getText());
 
-        return nameOfColumns;
+        return columnNames;
     }
 
-    /**
-     * Makes the difference between excel files from 2003 and excel files after 2007
-     */
-    private Workbook getWorkbook(FileInputStream inputStream, String filePath)
-            throws IOException {
-        Workbook workbook = null;
-        if (filePath.endsWith("xlsx")) {
-            workbook = new XSSFWorkbook(inputStream);
-        } else if (filePath.endsWith("xls")) {
-            workbook = new HSSFWorkbook(inputStream);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("File not recognized");
-            alert.setHeaderText("Unsupported file format");
-            alert.setContentText("The file you want to import is not supported by the application");
-            alert.showAndWait();
-        }
-        return workbook;
-    }
 
-    /**
-     * Imports the data from a file. It must be csv, xls, xlsx
-     *
-     * @param filePath full path of file
-     */
-    public void importFile(String filePath) {
-        if (filePath.endsWith("csv")) {
-            importCSV(filePath);
-            System.out.println("IMPORT FROM CSV");
-        } else {
-            importExcel(filePath);
-            System.out.println("IMPORT FROM EXCEL");
-        }
-    }
 
-    /**
-     * Import from csv file
-     * Takes headers from file and reorders them in the database order. Keeps only the wanted columns of information
-     * Takes the rest of data and puts it under their respective columns
-     * Sends it to database
-     * Works only with columns that are already in the database.
-     *
-     * @param filePath full path of file to be imported
-     */
-    public void importCSV(String filePath) {
-        InputStream is;
-        try {
-            is = new FileInputStream(filePath); // Takes the csv file and deconstructs it
-            CSVParser shredder = new CSVParser(is);
-            shredder.setCommentStart("#;!");
-            shredder.setEscapes("nrtf", "\n\r\t\f");
 
-            String fileString;          // fileString is going to hold every single value from file, one at a time
-            int[] tableHeader = new int[10];    // tableHeader will contain the order of callsTable columns that are in the csv file
-            int tableHeaderIndex = 0;
-            CallRecord cr = new CallRecord();
-            int isOnDatabase;
-            boolean exception = false;
-            //FIXME Add more aliases. Test with different types of faulty csvs
-//            Takes only the headers of the file and puts them into tableHeader. If there is an unidentified column, an alert pops out and asks the users about
-//            its importance, and have him, maybe, select an existing column to put the information in. (Mismatched column names)
-            while ((fileString = shredder.nextValue()) != null && shredder.lastLineNumber() == 1) {
-                if ((isOnDatabase = cr.alias(fileString)) != -1) { // If there is a match with a column in the database, input the new index
-                    tableHeader[tableHeaderIndex] = isOnDatabase;
-                    if (fileString.equals("Start date/time") || fileString.equals("UTC Start Time")) {
-                        exception = true;
-                    }
-                } else {      //  else Alert pops out.
-                    tableHeader[tableHeaderIndex] = alert(fileString);
-                }
-                tableHeaderIndex++;
-            }
-            /*
-             * At this moment the columns are set in place.
-             * How? Check if a file column resembles a database column(using regex). The ones that are unrecognized are sent to the users for future actions
-             * To implement something that spares the users these questions is a bit more difficult.
-             * During this checking, all file columns are put in the correct order (database order, or the order on which this method is made)
-             * The discarded columns, get -1 value.
-             * Next step is getting the data from the file
-             * length = the number of file columns
-             * dataElement = data from file, put in the correct spot
-             * The principle: Iterate thorough the rows of the file, take only the data under the approved columns, and put it in the database
-             */
-            ObservableList<CallRecord> data = FXCollections.observableArrayList();
-            int length = tableHeaderIndex + 1;
-            tableHeaderIndex = 0;
-            String[] dataElement = new String[length];
-            while (tableHeader[tableHeaderIndex] == -1) {       // The 1st dataElement has to be taken individually.
-                tableHeaderIndex++;
-                fileString = shredder.nextValue();
-            }
-            dataElement[tableHeader[tableHeaderIndex]] = fileString;
-            tableHeaderIndex++;
-            while ((fileString = shredder.nextValue()) != null) {       // As long as there is data left in the file
-                if (tableHeader[tableHeaderIndex] != -1) {              // If the current column is approved then the data goes into the correct place
-                    dataElement[tableHeader[tableHeaderIndex]] = fileString;
-                }
-                tableHeaderIndex++;         // Go to the next column
-                if (tableHeaderIndex == length - 1) {       // If the end of the row was reached, start next row and put the previously filtered row into the data
-                    tableHeaderIndex = 0;
-                    if (exception) {
-                        String[] dateTime = dataElement[2].split("\\s");
-                        dateTime[0] = changeDateFormat(dateTime[0]);
-                        data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
-                                dateTime[0], dateTime[1], dataElement[4], dataElement[5]));
-                    } else {
-                        dataElement[2] = changeDateFormat(dataElement[2]);
-                        data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
-                                dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
-                    }
-
-                }
-            }
-            sql.insertCalls(data);  // After getting all data from the file, send it to database
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private String changeDateFormat(String oldDate) {
         String oldFormat = "dd/MM/yyyy";
@@ -1432,78 +1541,6 @@ public class MainController {
         return null;
     }
 
-    /**
-     * Import from excel file
-     * Takes headers from file and reorders them in the database order. Keeps only the wanted columns of information
-     * Takes the rest of data and puts it under their respective columns
-     * Sends it to database
-     * Works only with columns that are already in the database.
-     *
-     * @param filePath full path of file to be imported
-     */
-    public void importExcel(String filePath) {
-        try {
-            FileInputStream fileInputStream = new FileInputStream(new File(filePath)); // Prepares tools to take data from excel
-            Workbook workbook = getWorkbook(fileInputStream, filePath);
-            Sheet datatypeSheet = workbook.getSheetAt(0);
-            Iterator<Row> iterator = datatypeSheet.iterator();
-            boolean exception = false;
-            int isOnDatabase;                       // checks if column is recognized by database
-            Cell currentCell;                       // cell with current information
-            int[] tableHeader = new int[10];           // will hold the preferred order of the recognized headers from file
-            int tableHeaderIndex = 0;               // index of tableHeader
-            CallRecord cr = new CallRecord();           // used to call the alias method to recognize headers
-            if (iterator.hasNext()) {               // If there is at least 1 row (header row)
-                Row currentRow = iterator.next();       // Take it
-                Iterator<Cell> cellIterator = currentRow.cellIterator();    // Make an iterator for the row (so that you can iterate through it and take the cells)
-                while (cellIterator.hasNext()) {        // As long as there are unverified elements in the row
-                    currentCell = cellIterator.next();          // Take cell value
-                    String currentString = String.valueOf(getCellValue(currentCell));
-                    if ((isOnDatabase = cr.alias(currentString)) != -1) {       // if name is recognized by database
-                        tableHeader[tableHeaderIndex] = isOnDatabase;               // remember order
-                        if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
-                            exception = true;
-                        }
-                    } else {      // else Alert pops out.
-                        tableHeader[tableHeaderIndex] = alert(String.valueOf(getCellValue(currentCell)));   // keep users decision (to recognize or not)
-                    }
-                    tableHeaderIndex++;
-                }
-            }
-            ObservableList<CallRecord> data = FXCollections.observableArrayList();        // stores the data that will be sent to database
-            int length = tableHeaderIndex + 1;                      // number of recognized columns
-            tableHeaderIndex = 0;
-            String[] dataElement = new String[length];              // row that goes into data variable
-
-            while (iterator.hasNext()) {                        // As long as there are rows to check
-                Row currentRow = iterator.next();                       // Take every single row
-                Iterator<Cell> cellIterator = currentRow.cellIterator();        // Make an iterator for it
-                while (cellIterator.hasNext()) {        // Check for every value in the row
-                    currentCell = cellIterator.next();
-                    if (tableHeader[tableHeaderIndex] != -1) {      // If recognized column then store it into dataElement
-                        dataElement[tableHeader[tableHeaderIndex]] = String.valueOf(getCellValue(currentCell));
-                    }
-                    tableHeaderIndex++;
-                }
-                tableHeaderIndex = 0;           // After the row is checked go from the beginning
-                if (exception) {
-                    String[] dateTime = dataElement[2].split("\\s");
-                    dateTime[0] = changeDateFormat(dateTime[0]);
-                    data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
-                            dateTime[0], dateTime[1], dataElement[4], dataElement[5]));
-                } else {
-                    dataElement[2] = changeDateFormat(dataElement[2]);
-                    data.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
-                            dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
-                }
-            }
-            sql.insertCalls(data);              // The essential information is sent to database
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Cells are considered objects. To get the data on them the following way has to be done.
@@ -1593,11 +1630,11 @@ public class MainController {
             //checks if the extension selected is csv, if it is, calls csvOut method from csvExport class
             if (filePath.endsWith(".csv")) {
 
-                csvExp.csvOut(filePath, searchData);
+                csvExp.csvOut(filePath, filteredData);
             //otherwise it checks if the selected extension is pdf, if it is, calls pdfOut method from pdfExport class
             } else if (filePath.endsWith(".pdf")) {
 
-                pdfExp.pdfOut(filePath, caseTitle.getText().toString(), searchData);
+                pdfExp.pdfOut(filePath, caseTitle.getText().toString(), filteredData);
 
             }
         } catch (Exception e) {
