@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tooltip?>
@@ -7,31 +6,34 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
-<Pane id="extraPane" prefHeight="0.0" prefWidth="1300.0" styleClass="background" stylesheets="@../css/extra.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<Pane id="extraPane" prefHeight="0.0" prefWidth="1300.0" styleClass="background" stylesheets="@../css/extra.css"
+      xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane id="extra_box" layoutX="-29.0" layoutY="16.0" prefHeight="760.0" prefWidth="1274.0" style="-fx-cursor: default;">
+        <Pane id="extra_box" layoutX="-29.0" layoutY="16.0" prefHeight="760.0" prefWidth="1274.0"
+              style="-fx-cursor: default;">
             <children>
                 <Button fx:id="closeExtra" layoutX="1236.0" layoutY="39.0" stylesheets="@../css/cases.css">
                     <tooltip>
-                        <Tooltip text="Close" />
+                        <Tooltip text="Close"/>
                     </tooltip>
                 </Button>
-            <Label contentDisplay="CENTER" layoutX="646.0" layoutY="38.0" prefHeight="28.0" prefWidth="171.0" text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="Calibri Bold" size="20.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="520.0" fitWidth="609.0" layoutX="145.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../res/images/search_feature_frame.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="593.0" fitWidth="495.0" layoutX="759.0" layoutY="129.0">
-               <image>
-                  <Image url="@../res/images/search_text.png" />
-               </image>
-            </ImageView>
+                <Label contentDisplay="CENTER" layoutX="646.0" layoutY="38.0" prefHeight="28.0" prefWidth="171.0"
+                       text="Label" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="Calibri Bold" size="20.0"/>
+                    </font>
+                </Label>
+                <ImageView fitHeight="520.0" fitWidth="609.0" layoutX="145.0" layoutY="91.0" pickOnBounds="true"
+                           preserveRatio="true">
+                    <image>
+                        <Image url="@../res/images/search_feature_frame.jpg"/>
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="593.0" fitWidth="495.0" layoutX="759.0" layoutY="129.0">
+                    <image>
+                        <Image url="@../res/images/search_text.png"/>
+                    </image>
+                </ImageView>
             </children>
         </Pane>
     </children>

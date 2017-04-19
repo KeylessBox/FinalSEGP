@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- Sign In scene, the design for the sign in functionality -->
-<!-- Anchor Pane-->
-<!-- -->
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.Pane?>

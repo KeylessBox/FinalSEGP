@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
@@ -367,7 +366,8 @@
                                 <Insets top="30.0"/>
                             </VBox.margin>
                             <children>
-                                <TableView fx:id="callsTable" editable="true" layoutX="10.0" layoutY="76.0" maxHeight="800.0"
+                                <TableView fx:id="callsTable" editable="true" layoutX="10.0" layoutY="76.0"
+                                           maxHeight="800.0"
                                            maxWidth="1438.0" minHeight="490.0" prefHeight="632.0" prefWidth="1438.0"
                                            stylesheets="@../css/table_view.css">
                                     <columns>
