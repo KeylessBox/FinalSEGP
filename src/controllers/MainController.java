@@ -1561,10 +1561,15 @@ public class MainController {
         }
     }
 
+    //exportReport method is used for saving in a csv or a pdf file, the filtered/unfiltered information shown in the table
+    //it works just when there are elements in the table
+    @FXML
     public void exportReport() {
 
         csvExport csvExp = new csvExport();
         pdfExport pdfExp = new pdfExport();
+
+        //gets the program path and checks if there is a "reports" folder, if not, it will create one
         File exports = new File(System.getProperty("users.dir"), "./reports");
 
         if (!exports.exists()) {
@@ -1584,10 +1589,12 @@ public class MainController {
         try {
             File file = fileChooser.showSaveDialog(new Stage());
             String filePath = file.getPath();
+
+            //checks if the extension selected is csv, if it is, calls csvOut method from csvExport class
             if (filePath.endsWith(".csv")) {
 
                 csvExp.csvOut(filePath, searchData);
-
+            //otherwise it checks if the selected extension is pdf, if it is, calls pdfOut method from pdfExport class
             } else if (filePath.endsWith(".pdf")) {
 
                 pdfExp.pdfOut(filePath, caseTitle.getText().toString(), searchData);
@@ -1619,16 +1626,14 @@ public class MainController {
         }
     }
 
+    //this method is used for opening the manual pdf that is located in the "Manual" folder
+    //it uses the default installed pdf reader program on the used computer
     @FXML
     public void openManual() {
-        File exports = new File(System.getProperty("users.dir"), "./reports");
-        String test = System.getProperty("users.dir");
-        System.out.println(test);
-        String manLoc = test + "\\Manual\\Manual.pdf";
-
+        String manualLocation = System.getProperty("user.dir") + "\\Manual\\Manual.pdf";
         if (Desktop.isDesktopSupported()) {
             try {
-                File myFile = new File(manLoc);
+                File myFile = new File(manualLocation);
                 Desktop.getDesktop().open(myFile);
             } catch (IOException ex) {
                 ex.printStackTrace();
