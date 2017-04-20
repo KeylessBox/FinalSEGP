@@ -1,4 +1,4 @@
-package modules.table;
+package modules.factory;
 
 import controllers.MainController;
 import javafx.event.EventHandler;
@@ -6,12 +6,15 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import modules.record_structures.CallRecord;
+import modules.table.EditingCell;
+import modules.table.EditingPhoneCell;
 import sql.SQL;
 
 /**
  * Created by AndreiM on 2/3/2017.
  */
-public class ColumnFactory {
+public class MainTableFactory {
     private static SQL sql = new SQL();
 
     public static void createOriginNameColumn(TableColumn originName) {
@@ -40,7 +43,7 @@ public class ColumnFactory {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-                return new EditingCellPhone();
+                return new EditingPhoneCell();
             }
         };
 
@@ -89,7 +92,7 @@ public class ColumnFactory {
         Callback<TableColumn, TableCell> editableFactory = new Callback<TableColumn, TableCell>() {
             @Override
             public TableCell call(TableColumn p) {
-                return new EditingCellPhone();
+                return new EditingPhoneCell();
             }
         };
         destination.setCellValueFactory(new PropertyValueFactory<CallRecord, String>("destination"));

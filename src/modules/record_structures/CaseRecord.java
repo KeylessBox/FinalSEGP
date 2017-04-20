@@ -1,15 +1,14 @@
-package modules.table;
+package modules.record_structures;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
  * Created by AndreiM on 2/3/2017.
+ * Data Structure for accessing and modifying Case records from Database and TableView
  */
 public class CaseRecord {
-    /**
-     * DataStructure for accessing and modifying Case records from DataBase and TableView
-     */
+
     private final StringProperty caseID;
     private final StringProperty name;
     private final StringProperty details;

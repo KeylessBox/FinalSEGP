@@ -1,19 +1,18 @@
-package modules.login;
+package sql;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import modules.table.DBConnection;
 
+/**
+ * Database connectivity class
+ */
 public class LoginDB {
 
     public static Boolean checkUserDetails(String userID, String password) {
         DBConnection dbConnection = new DBConnection();
-
         Connection connection = dbConnection.connect();
-
-
         Boolean check = false;
 
         try {
@@ -31,7 +30,6 @@ public class LoginDB {
                if(rs.getString("Password").equals(password))
                    check = true;
             }
-
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -39,7 +37,7 @@ public class LoginDB {
         try {
             connection.close();
         } catch (SQLException e) {
-
+            e.printStackTrace();
         }
         return check;    }
     

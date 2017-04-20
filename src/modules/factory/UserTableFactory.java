@@ -1,17 +1,19 @@
-package modules.table;
+package modules.factory;
 
-import controllers.MainController;
 import javafx.event.EventHandler;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import modules.record_structures.UserRecord;
+import modules.table.EdititingUserCell;
 import sql.SQL;
 
 /**
  * Created by AndreiM on 2/3/2017.
+ * Column factories used for the users table
  */
-public class UsersTable {
+public class UserTableFactory {
     private static SQL sql = new SQL();
 
     public static void createNameColumn(TableColumn name) {

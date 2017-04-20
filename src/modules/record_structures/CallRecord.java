@@ -1,15 +1,14 @@
-package modules.table;
+package modules.record_structures;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
  * Created by AndreiM on 2/3/2017.
+ * Data Structure for accessing and modifying Call records from Database and TableView.
  */
 public class CallRecord {
-    /**
-     * DataStructure for accessing and modifying Call records from DataBase and TableView
-     */
+
     private final StringProperty callID;
     private final StringProperty caseID;
     private final StringProperty origin;
@@ -34,14 +33,14 @@ public class CallRecord {
         this.duration = null;
     }
 
-    public CallRecord(String callID, String caseID, String originName, String origin, String destinationName,
+    public CallRecord(String caseID, String origin,
                       String destination, String date, String time,
                       String callType, String duration) {
-        this.callID = new SimpleStringProperty(callID);
+        callID = null;
         this.caseID = new SimpleStringProperty(caseID);
-        this.originName = new SimpleStringProperty(originName);
+        originName = new SimpleStringProperty("");
         this.origin = new SimpleStringProperty(origin);
-        this.destinationName = new SimpleStringProperty(destinationName);
+        destinationName = new SimpleStringProperty("");
         this.destination = new SimpleStringProperty(destination);
         this.date = new SimpleStringProperty(date);
         this.time = new SimpleStringProperty(time);
@@ -64,14 +63,14 @@ public class CallRecord {
         this.duration = new SimpleStringProperty(duration);
     }
 
-    public CallRecord(String caseID, String origin,
+    public CallRecord(String callID, String caseID, String originName, String origin, String destinationName,
                       String destination, String date, String time,
                       String callType, String duration) {
-        callID = null;
+        this.callID = new SimpleStringProperty(callID);
         this.caseID = new SimpleStringProperty(caseID);
-        originName = new SimpleStringProperty("");
+        this.originName = new SimpleStringProperty(originName);
         this.origin = new SimpleStringProperty(origin);
-        destinationName = new SimpleStringProperty("");
+        this.destinationName = new SimpleStringProperty(destinationName);
         this.destination = new SimpleStringProperty(destination);
         this.date = new SimpleStringProperty(date);
         this.time = new SimpleStringProperty(time);
@@ -80,7 +79,7 @@ public class CallRecord {
     }
 
     /**
-     * Regex to identify column names. Further inquires to the police are needed to make it as complete as possible
+     * Regex to identify column names. Works only for the known telephone providers templates of data
      */
     private String[][] aliases = new String[][] {
             {"[Cc][Pp][Nn]","[Oo][Rr][Ii][Gg][Ii][Nn]", "[Cc][Aa][Ll][Ll][Ee][Rr]\\s*[Pp][Hh][Oo][Nn][Ee]\\s*[Nn][Uu][Mm][Bb][Ee][Rr]",
@@ -95,23 +94,20 @@ public class CallRecord {
 
     /**
      * Takes a column from the csv file. Checks if it resembles anything in the database.
-     * @param header
+     * @param columnName
      * @return  the index of the equivalent database column
      * @return  -1 if there aren't any matches
      */
-    public int alias(String header) {
-
+    public int alias(String columnName) {
         for (int i=0; i<aliases.length; i++) {
             for (int j=0; j<aliases[i].length; j++ ) {
-                if (header.matches(aliases[i][j])) {
+                if (columnName.matches(aliases[i][j])) {
                     return i;
                 }
             }
         }
         return -1;
     }
-
-
 
     //Getter:
     /**

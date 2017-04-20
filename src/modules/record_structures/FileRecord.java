@@ -1,16 +1,14 @@
-package modules.table;
+package modules.record_structures;
 
 /**
  * Created by AndreiM on 2/11/2017.
+ * Data Structure for accessing and modifying Note(Case files) records from Database and TableView
  */
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class FileRecord {
-    /**
-     * DataStructure for accessing and modifying Note(Case files) records from DataBase and TableView
-     */
     private final StringProperty noteID;
     private final StringProperty userID;
     private final StringProperty caseID;

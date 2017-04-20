@@ -1,10 +1,11 @@
-package modules.table;
+package modules.record_structures;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
  * Created by Aleksandr on 4/3/2017.
+ * Data Structure for accessing and modifying User records from Database and TableView
  */
 public class UserRecord {
 

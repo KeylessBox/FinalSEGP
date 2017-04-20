@@ -1,7 +1,7 @@
 package modules.file_export;
 
 import javafx.collections.ObservableList;
-import modules.table.CallRecord;
+import modules.record_structures.CallRecord;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;

@@ -27,9 +27,18 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import modules.factory.MainTableFactory;
 import modules.file_export.csvExport;
 import modules.file_export.pdfExport;
-import modules.table.*;
+import modules.filter.Person;
+import modules.filter.SearchField;
+import modules.filter.Suspect;
+import modules.filter.Victim;
+import modules.note.DragResizeMod;
+import modules.note.NoteIcon;
+import modules.record_structures.CallRecord;
+import modules.record_structures.CaseRecord;
+import modules.record_structures.FileRecord;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.*;
@@ -68,7 +77,7 @@ public class MainController {
     //extra:
     private ToggleGroup casesToggleGroup = new ToggleGroup();
     private SearchField searchField = new SearchField("");
-    private ColumnFactory columnFactory = new ColumnFactory();
+    private MainTableFactory mainTableFactory = new MainTableFactory();
     private SQL sql = new SQL();
 
     //fxml elements:
@@ -353,14 +362,14 @@ public class MainController {
     public void loadTable(int caseID) {
         databaseCallsData = sql.loadCalls(caseID);  // takes the data from the database and puts it into an observable list
         filteredData = databaseCallsData;             // search data gets the default callsTable items from databaseCallsData (usefull for export CSV/PDF)
-        columnFactory.createOriginNameColumn(fromIDColumn); // builds the columns, without data
-        columnFactory.createOriginColumn(fromPhoneColumn);
-        columnFactory.createDestinationNameColumn(toIDColumn);
-        columnFactory.createDestinationColumn(toPhoneColumn);
-        columnFactory.createDateColumn(dateColumn);
-        columnFactory.createTimeColumn(timeColumn);
-        columnFactory.createCallTypeColumn(typeColumn);
-        columnFactory.createDurationColumn(durationColumn);
+        mainTableFactory.createOriginNameColumn(fromIDColumn); // builds the columns, without data
+        mainTableFactory.createOriginColumn(fromPhoneColumn);
+        mainTableFactory.createDestinationNameColumn(toIDColumn);
+        mainTableFactory.createDestinationColumn(toPhoneColumn);
+        mainTableFactory.createDateColumn(dateColumn);
+        mainTableFactory.createTimeColumn(timeColumn);
+        mainTableFactory.createCallTypeColumn(typeColumn);
+        mainTableFactory.createDurationColumn(durationColumn);
         callsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         callsTable.setItems(databaseCallsData);  // adds the data into the callsTable
         callsTable.setEditable(true);

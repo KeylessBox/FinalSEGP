@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import modules.table.UserRecord;
-import modules.table.UsersTable;
+import modules.record_structures.UserRecord;
+import modules.factory.UserTableFactory;
 import sql.SQL;
 
 /**
@@ -32,7 +32,7 @@ public class UsersController {
     
     private ObservableList<UserRecord> usersData;
 
-    private UsersTable columnFactoryUsers = new UsersTable();
+    private UserTableFactory columnFactoryUsers = new UserTableFactory();
 
     SQL sql = new SQL();    //  sql functionality
 

@@ -6,7 +6,7 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.ObservableList;
-import modules.table.CallRecord;
+import modules.record_structures.CallRecord;
 
 import java.io.FileOutputStream;
 

@@ -11,13 +11,14 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import modules.record_structures.UserRecord;
 
 /**
  * Created by AndreiM on 2/3/2017.
  */
 
 /**
- * EditingCell class allows to edit and save TableView cells
+ * Allows to edit and save TableView cells in the Administrator area (for users)
  */
 public class EdititingUserCell extends TableCell<UserRecord, String> {
 

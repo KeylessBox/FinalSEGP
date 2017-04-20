@@ -1,26 +1,19 @@
 package modules.table;
 
-import controllers.MainController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import modules.record_structures.CallRecord;
 
 /**
- * Created by AndreiM on 2/3/2017.
- */
-
-    /**
-     * EditingCell class allows to edit and save TableView cells
+     * Allows to edit and save TableView cells
      */
     public class EditingCell extends TableCell<CallRecord, String> {
-
-        private TextField textField;
-
+        private TextField cellTextField;
         /**
          * Empty constructor
          */
@@ -34,12 +27,12 @@ import javafx.scene.input.KeyEvent;
         public void startEdit() {
             super.startEdit();
 
-            if( textField == null ) {
+            if( cellTextField == null ) {
                 createTextField();
             }
             setText(null);
-            setGraphic(textField);
-            textField.selectAll();
+            setGraphic(cellTextField);
+            cellTextField.selectAll();
         }
 
         /**
@@ -57,7 +50,6 @@ import javafx.scene.input.KeyEvent;
          * @param item
          * @param empty
          */
-
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
             if (empty) {
@@ -66,34 +58,35 @@ import javafx.scene.input.KeyEvent;
             } else {
 
                 if (isEditing()) {
-                    if (textField != null) {
-                        textField.setText(getString());
+                    if (cellTextField != null) {
+                        cellTextField.setText(getString());
                     }
                     setText(null);
-                    setGraphic(textField);
+                    setGraphic(cellTextField);
                 } else {
                     setText(getString());
                     setGraphic(null);
                 }
             }
         }
+
         /**
          * Create textfield to save changes after
          */
         private void createTextField() {
-            textField = new TextField(getString());
-            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
-            textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            cellTextField = new TextField(getString());
+            cellTextField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+            cellTextField.focusedProperty().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
-                    if (!arg2) { commitEdit(textField.getText()); }
+                    if (!arg2) { commitEdit(cellTextField.getText()); }
                 }
             });
-            textField.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            cellTextField.setOnKeyReleased(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent t) {
                     if (t.getCode() == KeyCode.ENTER) {
-                        String value = textField.getText();
+                        String value = cellTextField.getText();
                         if (value != null) { commitEdit(value);	} else { commitEdit(null); }
                     } else if (t.getCode() == KeyCode.ESCAPE) {
                         cancelEdit();

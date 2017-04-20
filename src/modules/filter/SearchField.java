@@ -1,7 +1,8 @@
-package modules.table;
+package modules.filter;
 
 /**
  * Created by AndreiM on 3/23/2017.
+ * Search bar object
  */
 public class SearchField {
     private String text;

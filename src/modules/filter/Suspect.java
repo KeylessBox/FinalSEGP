@@ -1,11 +1,12 @@
-package modules.table;
+package modules.filter;
 
 import java.awt.*;
 
 /**
  * Created by AndreiM on 3/23/2017.
+ * The suspect is the red coloured filter
  */
-public class Suspect extends Person{
+public class Suspect extends Person {
     private Color color = new Color(Colors.LIGHTRED.getRed(),Colors.LIGHTRED.getGreen(),Colors.LIGHTRED.getBlue());
 
     public Suspect (String identifier) {
@@ -18,7 +19,6 @@ public class Suspect extends Person{
         super.identifier = identifier;
         super.phone = null;
         super.id = id;
-
     }
 
     public Color getColor() {

@@ -1,7 +1,8 @@
-package modules.table;
+package modules.filter;
 
 /**
  * Created by AndreiM on 3/19/2017.
+ * A filter is considered a person
  */
 public class Person {
     protected String identifier;
@@ -50,8 +51,6 @@ public class Person {
         this.previousIdentifier = this.getIdentifier();
         this.identifier = identifier;
     }
-
-
 
     public void setPhone(String phone) {
         this.phone = phone;

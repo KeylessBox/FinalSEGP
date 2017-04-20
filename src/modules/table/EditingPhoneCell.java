@@ -8,27 +8,27 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import modules.filter.Suspect;
+import modules.filter.Victim;
+import modules.record_structures.CallRecord;
 
 import java.util.List;
 
 /**
- * Created by AndreiM on 4/3/2017.
+ * Created by AndreiM on 3/23/2017.
+ * Used for the columns that hold phone numbers
  */
-public class EditingDestNameCell extends TableCell<CallRecord, String>{
-
-    /**
-     * Created by AndreiM on 3/23/2017.
-     */
+public class EditingPhoneCell extends TableCell<CallRecord, String> {
     private TextField textField;
 
     /**
      * Empty constructor
      */
-    public EditingDestNameCell() {
+    public EditingPhoneCell() {
     }
 
     /**
-     * Start editing callsTable cell
+     * Start editing table cell
      */
     @Override
     public void startEdit() {
@@ -43,7 +43,7 @@ public class EditingDestNameCell extends TableCell<CallRecord, String>{
     }
 
     /**
-     * Cancel editing callsTable cell
+     * Cancel editing table cell
      */
     @Override
     public void cancelEdit() {
@@ -61,18 +61,35 @@ public class EditingDestNameCell extends TableCell<CallRecord, String>{
             setGraphic(null);
             setStyle("");
         } else {
+            // Get filters from app
             List<Object[]> people = MainController.getPeople();
             boolean isFilter = false;
-            for (Object[] temp : people) {
-                if (temp[1].equals("yes")) {
-                    Person person = (Person) temp[0];
-                    CallRecord listObject = (CallRecord) getTableRow().getItem();
-                    if (listObject != null) {
-                        if (listObject.getDestination().contains(person.getPhone())) {
-                            System.out.println("B " + person.getIdentifier());
-                            setText(person.getIdentifier());
-
-                            System.out.println("TRUE");
+            // Iterates through filters and based on the nature of the object, it colours the cell in a specific colour
+            for (Object[] person : people) {
+                if (person[1].equals("yes")) {
+                    if (person[0] instanceof Suspect) {
+                        Suspect suspect = (Suspect) person[0];
+                        if (item.contains(suspect.getPhone())) {
+                            String hex = Integer.toHexString(suspect.getColor().getRGB());
+                            // Reduced to RGB: hex -> "#ff0000"
+                            hex = "#" + hex.substring(2, hex.length());
+                            setStyle("-fx-background-color: " + hex + ";" +
+                                    "-fx-border-width: 0 1 1 0;" +
+                                    " -fx-background-insets: 0;" +
+                                    "-fx-border-color: black");
+                            isFilter = true;
+                        }
+                    }
+                    if (person[0] instanceof Victim) {
+                        Victim victim = (Victim) person[0];
+                        if (item.contains(victim.getPhone())) {
+                            String hex = Integer.toHexString(victim.getColor().getRGB());
+                            // Reduced to RGB: hex -> "#ff0000"
+                            hex = "#" + hex.substring(2, hex.length());
+                            setStyle("-fx-background-color: " + hex + ";" +
+                                    "-fx-border-width: 0 1 1 0;" +
+                                    "-fx-border-color: black;" +
+                                    " -fx-background-insets: 0;");
                             isFilter = true;
                         }
                     }
@@ -133,5 +150,4 @@ public class EditingDestNameCell extends TableCell<CallRecord, String>{
     private String getString() {
         return getItem() == null ? "" : getItem().toString();
     }
-
 }

@@ -1,4 +1,4 @@
-package modules.table;
+package sql;
 
 /**
  * Created by AndreiM on 2/3/2017.

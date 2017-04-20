@@ -9,8 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import modules.login.LoginDB;
-import modules.manage_accounts.CreateAccount;
+import sql.LoginDB;
+import sql.Account;
 
 import java.io.*;
 import java.util.Timer;
@@ -187,7 +187,7 @@ public class SignInController {
 
             }, 2000, 25);
         } else {
-            CreateAccount.createAccount(name.getText(), surname.getText(), email.getText(), pass.getText(), "users");
+            Account.createAccount(name.getText(), surname.getText(), email.getText(), pass.getText(), "users");
             username.setText(email.getText());
             pw.setText("");
             rember.setSelected(false);

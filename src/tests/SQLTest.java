@@ -1,8 +1,8 @@
 package tests;
 
 import javafx.collections.ObservableList;
-import modules.table.CallRecord;
-import modules.table.CaseRecord;
+import modules.record_structures.CallRecord;
+import modules.record_structures.CaseRecord;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

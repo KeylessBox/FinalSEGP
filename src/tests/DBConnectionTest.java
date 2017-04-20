@@ -1,6 +1,6 @@
 package tests;
 
-import modules.table.DBConnection;
+import sql.DBConnection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

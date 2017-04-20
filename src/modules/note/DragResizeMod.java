@@ -1,4 +1,4 @@
-package modules.table;
+package modules.note;
 
 /**
  * Taken from: https://github.com/varren/JavaFX-Resizable-Draggable-Node/blob/master/src/sample/DragResizeMod.java

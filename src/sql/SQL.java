@@ -6,7 +6,10 @@ package sql;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import modules.table.*;
+import modules.record_structures.CallRecord;
+import modules.record_structures.CaseRecord;
+import modules.record_structures.FileRecord;
+import modules.record_structures.UserRecord;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
