@@ -9,57 +9,51 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import sql.LoginDB;
 import sql.Account;
+import sql.LoginDB;
 
 import java.io.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Created by Aleksandr Stserbatski on 12/3/2017.
+ * Controller for Users Admin Pane
+ */
 public class SignInController {
 
-    private boolean remember;
-
     @FXML
-    private Pane SignUp;
-
+    private Pane signUpPane;
     @FXML
-    private Label ErrorMessage;
+    private Pane signInPane;
     @FXML
-    private Label ErrMessage;
-
+    private Pane movingPart;
     @FXML
-    private Pane SignIn;
-
+    private Label errorMessage;
     @FXML
-    private PasswordField pass;
-
+    private Label errorMessage2;
     @FXML
-    private TextField email;
-
+    private PasswordField passwordField;
+    @FXML
+    private PasswordField passwordField2;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private TextField surnameField;
+    @FXML
+    private TextField usernameField;
     @FXML
     private Button signUp;
-
     @FXML
-    private TextField name;
-
-    @FXML
-    private TextField surname;
-
-    @FXML
-    private PasswordField pw;
-
-    @FXML
-    private TextField username;
-
-    @FXML
-    private Pane movingpart;
+    private CheckBox remember;
 
     public String user = "";
 
-    @FXML
-    private CheckBox rember;
-
+    /**
+     * Intilialize the SignIn controller
+     */
     @FXML
     public void initialize() {
         try (FileReader fileReader = new FileReader(new File("res/users/Account.dat"));
@@ -67,233 +61,141 @@ public class SignInController {
             String user = bufferedReader.readLine();
             String password = bufferedReader.readLine();
             if (user != null && !user.equals("")) {
-                username.setText(user);
+                usernameField.setText(user);
             }
             if (password != null && !password.equals("")) {
-                pw.setText(password);
-                rember.setSelected(true);
+                passwordField2.setText(password);
+                remember.setSelected(true);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Problem with signin initialize");
         }
     }
 
+    /**
+     * Switch to SignUp Tab
+     * @param event
+     */
     @FXML
     void changeToSignUp(ActionEvent event) {
-        SignIn.setVisible(true);
-        SignUp.setVisible(false);
-        movingpart.setPrefWidth(49);
-        movingpart.setLayoutX(47);
+        signInPane.setVisible(true);
+        signUpPane.setVisible(false);
+        movingPart.setPrefWidth(49);
+        movingPart.setLayoutX(47);
     }
 
+    /**
+     * Switch to SignIn Tab
+     * @param event
+     */
     @FXML
     void changeToSignIn(ActionEvent event) {
-        SignIn.setVisible(false);
-        SignUp.setVisible(true);
-        movingpart.setPrefWidth(125);
-        movingpart.setLayoutX(151);
+        signInPane.setVisible(false);
+        signUpPane.setVisible(true);
+        movingPart.setPrefWidth(125);
+        movingPart.setLayoutX(151);
     }
 
+    /**
+     * Create new user account
+     * Includes input validations
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void signUp(ActionEvent event) throws IOException {
 
-        if (name.getText().length() < 6) {
-            ErrMessage.setText("First Name is too short");
-            if (name.getText().length() == 0) {
-                ErrMessage.setText("First Name field is empty");
+        // Validations
+        if (nameField.getText().length() < 6) {
+
+            if (nameField.getText().length() == 0) {
+                showErrorMessage2("First Name field is empty");
+            } else {
+                showErrorMessage2("First Name is too short");
             }
-            ErrMessage.setVisible(true);
-            Timer animTimer = new Timer();
-            animTimer.scheduleAtFixedRate(new TimerTask() {
-                int i = 0;
 
-                @Override
-                public void run() {
-                    if (i < 100) {
+        } else if (surnameField.getText().length() < 6) {
 
-                    } else {
-                        ErrMessage.setVisible(false);
-                        this.cancel();
-                    }
-                    i++;
-                }
-
-            }, 2000, 25);
-        } else if (surname.getText().length() < 6) {
-            ErrMessage.setText("Last Name is too short");
-            if (surname.getText().length() == 0) {
-                ErrMessage.setText("Last Name field is empty");
+            if (surnameField.getText().length() == 0) {
+                showErrorMessage2("Last Name field is empty");
+            } else {
+                showErrorMessage2("Last Name is too short");
             }
-            ErrMessage.setVisible(true);
-            Timer animTimer = new Timer();
-            animTimer.scheduleAtFixedRate(new TimerTask() {
-                int i = 0;
 
-                @Override
-                public void run() {
-                    if (i < 100) {
+        } else if (emailField.getText().length() < 6) {
 
-                    } else {
-                        ErrMessage.setVisible(false);
-                        this.cancel();
-                    }
-                    i++;
-                }
-
-            }, 2000, 25);
-        } else if (email.getText().length() < 6) {
-            ErrMessage.setText("Username is too short");
-            if (email.getText().length() == 0) {
-                ErrMessage.setText("Username field is empty");
+            if (emailField.getText().length() == 0) {
+                showErrorMessage2("Username field is empty");
+            } else {
+                showErrorMessage2("Username is too short");
             }
-            ErrMessage.setVisible(true);
-            Timer animTimer = new Timer();
-            animTimer.scheduleAtFixedRate(new TimerTask() {
-                int i = 0;
 
-                @Override
-                public void run() {
-                    if (i < 100) {
+        } else if (passwordField.getText().length() < 6) {
 
-                    } else {
-                        ErrMessage.setVisible(false);
-                        this.cancel();
-                    }
-                    i++;
-                }
-
-            }, 2000, 25);
-
-        } else if (pass.getText().length() < 6) {
-            ErrMessage.setText("Password is too short");
-            if (pass.getText().length() == 0) {
-                ErrMessage.setText("Password field is empty");
+            if (passwordField.getText().length() == 0) {
+                showErrorMessage2("Password field is empty");
+            } else {
+                showErrorMessage2("Password is too short");
             }
-            ErrMessage.setVisible(true);
-            Timer animTimer = new Timer();
-            animTimer.scheduleAtFixedRate(new TimerTask() {
-                int i = 0;
 
-                @Override
-                public void run() {
-                    if (i < 100) {
-
-                    } else {
-                        ErrMessage.setVisible(false);
-                        this.cancel();
-                    }
-                    i++;
-                }
-
-            }, 2000, 25);
         } else {
-            Account.createAccount(name.getText(), surname.getText(), email.getText(), pass.getText(), "users");
-            username.setText(email.getText());
-            pw.setText("");
-            rember.setSelected(false);
-            SignIn.setVisible(true);
-            SignUp.setVisible(false);
-            movingpart.setPrefWidth(49);
-            movingpart.setLayoutX(47);
+            /**
+             * Only if all data input is correct create a new account
+             */
+            Account.createAccount(nameField.getText(), surnameField.getText(), emailField.getText(), passwordField.getText(), "users");
+            usernameField.setText(emailField.getText());
+            passwordField2.setText("");
+            remember.setSelected(false);
+            signInPane.setVisible(true);
+            signUpPane.setVisible(false);
+            movingPart.setPrefWidth(49);
+            movingPart.setLayoutX(47);
         }
     }
 
+    /**
+     * Forget the user details
+     */
     @FXML
     void forget() {
-        ErrorMessage.setText("Your users details send to email");
-        ErrorMessage.setVisible(true);
-        Timer animTimer = new Timer();
-        animTimer.scheduleAtFixedRate(new TimerTask() {
-            int i = 0;
-
-            @Override
-            public void run() {
-                if (i < 100) {
-
-                } else {
-                    ErrorMessage.setVisible(false);
-                    this.cancel();
-                }
-                i++;
-            }
-
-        }, 2000, 25);
+        showErrorMessage("Your users details send to emailField");
     }
 
+    /**
+     * Sign In controller
+     * Includes input validations
+     * Saving user option
+     * @param event
+     * @throws IOException
+     */
     @FXML
     void signIn(ActionEvent event) throws IOException {
 
-        if (username.getText().length() < 6) {
-            ErrorMessage.setText("Username is too short");
-            if (username.getText().length() == 0) {
-                ErrorMessage.setText("Username field is empty");
+        // validations for signIn
+        if (usernameField.getText().length() < 6) {
+
+            if (usernameField.getText().length() == 0) {
+                showErrorMessage("Username field is empty");
+            } else {
+                showErrorMessage("Username is too short");
             }
-            ErrorMessage.setVisible(true);
-            Timer animTimer = new Timer();
-            animTimer.scheduleAtFixedRate(new TimerTask() {
-                int i = 0;
 
-                @Override
-                public void run() {
-                    if (i < 100) {
+        } else if (passwordField2.getText().length() < 6) {
 
-                    } else {
-                        ErrorMessage.setVisible(false);
-                        this.cancel();
-                    }
-                    i++;
-                }
-
-            }, 2000, 25);
-
-        } else if (pw.getText().length() < 6) {
-            ErrorMessage.setText("Password is too short");
-            if (pw.getText().length() == 0) {
-                ErrorMessage.setText("Password field is empty");
+            if (passwordField2.getText().length() == 0) {
+                showErrorMessage("Password field is empty");
+            } else {
+                showErrorMessage("Password is too short");
             }
-            ErrorMessage.setVisible(true);
-            Timer animTimer = new Timer();
-            animTimer.scheduleAtFixedRate(new TimerTask() {
-                int i = 0;
-
-                @Override
-                public void run() {
-                    if (i < 100) {
-
-                    } else {
-                        ErrorMessage.setVisible(false);
-                        this.cancel();
-                    }
-                    i++;
-                }
-
-            }, 2000, 25);
 
         } else {
             try {
-                if (!LoginDB.checkUserDetails(username.getText(), pw.getText())) {
+                if (!LoginDB.checkUserDetails(usernameField.getText(), passwordField2.getText())) {
                     /**
                      * If the account details introduced are wrong
                      * Alert Box is shown
                      */
-                    ErrorMessage.setText("Login or password are incorrect!");
-                    ErrorMessage.setVisible(true);
-                    Timer animTimer = new Timer();
-                    animTimer.scheduleAtFixedRate(new TimerTask() {
-                        int i = 0;
-
-                        @Override
-                        public void run() {
-                            if (i < 100) {
-
-                            } else {
-                                ErrorMessage.setVisible(false);
-                                this.cancel();
-                            }
-                            i++;
-                        }
-
-                    }, 2000, 25);
+                    showErrorMessage("Login or password are incorrect!");
 
                 } else {
                     /**
@@ -301,17 +203,16 @@ public class SignInController {
                      * Program moves to the main Window
                      * It passes the account details to a file (that will be soon deleted).
                      */
+                    user = usernameField.getText();
 
-                    user = username.getText();
-                    //PrintWriter writer = new PrintWriter(new File("src/res/users/Account.dat"));
-                    File dir = new File(System.getProperty("user.dir"), "./res/users");
-                    if (!dir.exists()){
-                        dir.mkdirs();
+                    File directory = new File(System.getProperty("user.dir"), "./res/users");
+                    if (!directory.exists()) {
+                        directory.mkdirs();
                     }
                     PrintWriter writer = new PrintWriter(new File("res/users/Account.dat"));
                     writer.write(user);
-                    if (rember.isSelected()) {
-                        writer.write("\n" + pw.getText());
+                    if (remember.isSelected()) {
+                        writer.write("\n" + passwordField2.getText());
                     }
                     writer.close();
                     /**
@@ -326,31 +227,60 @@ public class SignInController {
                     stage.setHeight(1040);
                     stage.centerOnScreen();
                     stage.setResizable(true);
-
                     stage.show();
                 }
-            }catch (Exception e){
-                e.printStackTrace();
-                ErrorMessage.setText("Database connection failed!");
-                ErrorMessage.setVisible(true);
-                Timer animTimer = new Timer();
-                animTimer.scheduleAtFixedRate(new TimerTask() {
-                    int i = 0;
-
-                    @Override
-                    public void run() {
-                        if (i < 100) {
-
-                        } else {
-                            ErrorMessage.setVisible(false);
-                            this.cancel();
-                        }
-                        i++;
-                    }
-
-                }, 2000, 25);
+            } catch (Exception e) {
+                System.out.println("Database connection failed");
+                showErrorMessage("Database connection failed!");
             }
         }
+    }
+
+    /**
+     * Show Error Message for several seconds
+     * @param message
+     */
+    public void showErrorMessage(String message) {
+        errorMessage.setText(message);
+        errorMessage.setVisible(true);
+        Timer animTimer = new Timer();
+        animTimer.scheduleAtFixedRate(new TimerTask() {
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i < 100) {
+                } else {
+                    errorMessage.setVisible(false);
+                    this.cancel();
+                }
+                i++;
+            }
+        }, 2000, 25);
+    }
+
+    /**
+     * Show Error Message 2 for several seconds
+     * @param message
+     */
+    public void showErrorMessage2(String message) {
+        errorMessage2.setText(message);
+        errorMessage2.setVisible(true);
+        Timer animTimer = new Timer();
+        animTimer.scheduleAtFixedRate(new TimerTask() {
+            int i = 0;
+
+            @Override
+            public void run() {
+                if (i < 100) {
+
+                } else {
+                    errorMessage2.setVisible(false);
+                    this.cancel();
+                }
+                i++;
+            }
+        }, 2000, 25);
     }
 
 }

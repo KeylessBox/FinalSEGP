@@ -10,11 +10,13 @@ import modules.factory.UserTableFactory;
 import sql.SQL;
 
 /**
- * Controller for login
+ * Created by Aleksandr Stserbatski on 6/2/2017.
+ * Controller for Users Admin Pane
  */
 public class UsersController {
+
     @FXML
-    protected TableView table2;
+    protected TableView usersTable;
     @FXML
     private TableColumn nameColumn;
     @FXML
@@ -24,53 +26,60 @@ public class UsersController {
     @FXML
     private TableColumn passwordColumn;
     @FXML
-    private TableColumn privelegeColumn;
+    private TableColumn privilegeColumn;
     @FXML
-    private Button add;
+    private Button addButton;
     @FXML
-    private Button delete;
-    
+    private Button deleteButton;
+
+    // dynamic data storage:
     private ObservableList<UserRecord> usersData;
-
     private UserTableFactory columnFactoryUsers = new UserTableFactory();
+    SQL sql = new SQL();
 
-    SQL sql = new SQL();    //  sql functionality
-
+    /**
+     * Load users table from database
+     */
     public void loadUsersTable() {
         usersData = sql.loadUsers();
         columnFactoryUsers.createNameColumn(nameColumn);
         columnFactoryUsers.createSurnameColumn(surnameColumn);
         columnFactoryUsers.createEmailColumn(emailColumn);
         columnFactoryUsers.createPasswordColumn(passwordColumn);
-        columnFactoryUsers.createPrivilegeColumn(privelegeColumn);
-        table2.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        table2.setItems(usersData);
-        table2.setEditable(true);
+        columnFactoryUsers.createPrivilegeColumn(privilegeColumn);
+        usersTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        usersTable.setItems(usersData);
+        usersTable.setEditable(true);
     }
 
+    /**
+     * Initialise a content inside Admin Pane
+      */
     @FXML
     public void initialize() {
-        loadUsersTable();
-        add.setOnAction(event -> {
-            UserRecord cr = new UserRecord(String.valueOf(sql.getMaxUserID()), "users", "username", "email", "password", "users");
-            usersData.add(cr);  // Add to callsTable (visually) part
-            sql.addUser(cr);        // Add to database part
-            System.out.println("ADD: users " + cr.getUserID() );
-            table2.scrollTo(cr);
-            table2.getSelectionModel().select(cr);
 
+        loadUsersTable();
+
+        // event listener for Add button
+        addButton.setOnAction(event -> {
+            UserRecord user = new UserRecord(String.valueOf(sql.getMaxUserID()), "users", "username", "email", "password", "users");
+            usersData.add(user);
+            sql.addUser(user);
+            usersTable.scrollTo(user);
+            usersTable.getSelectionModel().select(user);
+            System.out.println("ADD: users " + user.getUserID() );
         });
-        delete.setOnAction(event -> {
-            if (table2.getSelectionModel().getSelectedItem() != null) {   // A row must be selected for it to work
-                UserRecord user = (UserRecord) table2.getSelectionModel().getSelectedItem();   //   Getting the data
-                if (user != null) {   // Checking if it's something there
-                    sql.removeUser(Integer.parseInt(user.getUserID()));   // Delete from database part
-                    usersData.remove(table2.getSelectionModel().getSelectedItem());  // Remove from callsTable part
+
+        // event listener for Delete button
+        deleteButton.setOnAction(event -> {
+            if (usersTable.getSelectionModel().getSelectedItem() != null) {
+                UserRecord user = (UserRecord) usersTable.getSelectionModel().getSelectedItem();
+                if (user != null) {
+                    sql.removeUser(Integer.parseInt(user.getUserID()));
+                    usersData.remove(usersTable.getSelectionModel().getSelectedItem());
                     System.out.println("DELETE: users " + user.getUserID());
                 }
             }
         });
     }
-
-
 }

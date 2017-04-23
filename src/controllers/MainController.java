@@ -59,7 +59,6 @@ import java.util.List;
  * Created by AndreiM on 2/1/2017.
  * Controller for main window
  */
-
 public class MainController {
 
     //dynamic data storage:

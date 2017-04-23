@@ -6,7 +6,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0"
       prefWidth="417.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controllers.SignInController">
-    <Pane fx:id="SignUp" layoutY="-7.0" prefHeight="528.0" prefWidth="417.0" styleClass="custom_signUp"
+    <Pane fx:id="signUpPane" layoutY="-7.0" prefHeight="528.0" prefWidth="417.0" styleClass="custom_signUp"
           stylesheets="@../css/sign_window.css">
         <children>
             <Label layoutX="42.0" layoutY="87.0" prefHeight="34.0" prefWidth="267.0" text="Sign Up with your Account "
@@ -25,7 +25,7 @@
                     <Image url="@../res/images/password_label.png"/>
                 </image>
             </ImageView>
-            <PasswordField id="textfield" fx:id="pass" layoutX="95.0" layoutY="285.0" prefHeight="34.0"
+            <PasswordField id="textfield" fx:id="passwordField" layoutX="95.0" layoutY="285.0" prefHeight="34.0"
                            prefWidth="219.0" promptText="Password">
                 <font>
                     <Font name="Calibri Light" size="18.0"/>
@@ -40,7 +40,7 @@
                     <Tooltip text="Show hidden password"/>
                 </tooltip>
             </Button>
-            <TextField id="textfield" fx:id="email" layoutX="95.0" layoutY="242.0" prefHeight="36.0" prefWidth="219.0"
+            <TextField id="textfield" fx:id="emailField" layoutX="95.0" layoutY="242.0" prefHeight="36.0" prefWidth="219.0"
                        promptText="Email or ID">
                 <font>
                     <Font name="Calibri Light" size="18.0"/>
@@ -56,13 +56,13 @@
                     <Tooltip text="Create new account"/>
                 </tooltip>
             </Button>
-            <TextField id="textfield" fx:id="name" layoutX="95.0" layoutY="156.0" prefHeight="36.0" prefWidth="219.0"
+            <TextField id="textfield" fx:id="nameField" layoutX="95.0" layoutY="156.0" prefHeight="36.0" prefWidth="219.0"
                        promptText="First Name">
                 <font>
                     <Font name="Calibri Light" size="18.0"/>
                 </font>
             </TextField>
-            <TextField id="textfield" fx:id="surname" layoutX="95.0" layoutY="199.0" prefHeight="36.0" prefWidth="219.0"
+            <TextField id="textfield" fx:id="surnameField" layoutX="95.0" layoutY="199.0" prefHeight="36.0" prefWidth="219.0"
                        promptText="Last Name">
                 <font>
                     <Font name="Calibri Light" size="18.0"/>
@@ -78,7 +78,7 @@
                     <Image url="@../res/images/user_label.png"/>
                 </image>
             </ImageView>
-            <Label fx:id="ErrMessage" layoutX="43.0" layoutY="115.0" prefHeight="36.0" prefWidth="342.0" text=""
+            <Label fx:id="errorMessage2" layoutX="43.0" layoutY="115.0" prefHeight="36.0" prefWidth="342.0" text=""
                    textFill="RED" visible="false">
                 <font>
                     <Font name="Calibri" size="18.0"/>
@@ -86,7 +86,7 @@
             </Label>
         </children>
     </Pane>
-    <Pane fx:id="SignIn" layoutY="-7.0" prefHeight="528.0" prefWidth="417.0" styleClass="custom_signIn"
+    <Pane fx:id="signInPane" layoutY="-7.0" prefHeight="528.0" prefWidth="417.0" styleClass="custom_signIn"
           stylesheets="@../css/sign_window.css">
         <children>
             <Label layoutX="42.0" layoutY="87.0" prefHeight="34.0" prefWidth="267.0" text="Sign In with your Account "
@@ -105,7 +105,7 @@
                     <Image url="@../res/images/password_label.png"/>
                 </image>
             </ImageView>
-            <PasswordField id="textfield" fx:id="pw" layoutX="81.0" layoutY="200.0" prefHeight="34.0" prefWidth="219.0"
+            <PasswordField id="textfield" fx:id="passwordField2" layoutX="81.0" layoutY="200.0" prefHeight="34.0" prefWidth="219.0"
                            promptText="Password">
                 <font>
                     <Font name="Calibri Light" size="18.0"/>
@@ -120,13 +120,13 @@
                     <Tooltip text="Show the hidden password"/>
                 </tooltip>
             </Button>
-            <TextField id="textfield" fx:id="username" layoutX="81.0" layoutY="155.0" prefHeight="36.0"
+            <TextField id="textfield" fx:id="usernameField" layoutX="81.0" layoutY="155.0" prefHeight="36.0"
                        prefWidth="219.0" promptText="Email or ID">
                 <font>
                     <Font name="Calibri Light" size="18.0"/>
                 </font>
             </TextField>
-            <CheckBox fx:id="rember" layoutX="43.0" layoutY="265.0" mnemonicParsing="false" prefHeight="25.0"
+            <CheckBox fx:id="remember" layoutX="43.0" layoutY="265.0" mnemonicParsing="false" prefHeight="25.0"
                       prefWidth="202.0" text="Remeber user details" textFill="#726e6e">
                 <font>
                     <Font size="16.0"/>
@@ -151,7 +151,7 @@
                     <Tooltip text="Restore the password"/>
                 </tooltip>
             </Button>
-            <Label fx:id="ErrorMessage" layoutX="43.0" layoutY="115.0" prefHeight="36.0" prefWidth="342.0" text=""
+            <Label fx:id="errorMessage" layoutX="43.0" layoutY="115.0" prefHeight="36.0" prefWidth="342.0" text=""
                    textFill="RED" visible="false">
                 <font>
                     <Font name="Calibri" size="18.0"/>
@@ -159,7 +159,7 @@
             </Label>
         </children>
     </Pane>
-    <Pane fx:id="movingpart" layoutX="47.0" layoutY="46.0" prefHeight="4.0" prefWidth="49.0" styleClass="custom_moving"
+    <Pane fx:id="movingPart" layoutX="47.0" layoutY="46.0" prefHeight="4.0" prefWidth="49.0" styleClass="custom_moving"
           stylesheets="@../css/sign_window.css"/>
     <Button layoutX="46.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeToSignUp" prefHeight="25.0"
             prefWidth="49.0" styleClass="button_signin" stylesheets="@../css/sign_window.css">
