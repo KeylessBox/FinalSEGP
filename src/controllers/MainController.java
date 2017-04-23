@@ -1,13 +1,11 @@
 package controllers;
 
 import com.Ostermiller.util.CSVParser;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,7 +24,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import modules.factory.MainTableFactory;
 import modules.file_export.csvExport;
 import modules.file_export.pdfExport;
@@ -127,641 +124,56 @@ public class MainController {
     @FXML
     protected Label numOfRows;
 
+    // Load and Initialise Elements:
 
     /**
-     * Opens a window and prompts the user to choose the file whose data is to be imported
+     * Controller initialization method. The controller runs this method first.
      */
     @FXML
-    protected void importFile() {
-        // New window, where you choose what file to import
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
-        File importedFile = fileChooser.showOpenDialog(new Stage());
-        // If there is a file selected then the data from that file is transmitted to the database
-        if (importedFile != null) {
-            String filePath = importedFile.getPath();
-            filePath = filePath.replace("\\", "\\\\");
-            importFile(filePath);
-        }
-    }
+    public void initialize() {
 
-    /**
-     * Redirects to methods that support importing files with csv, xls or xlsx extension
-     *
-     * @param filePath full path of file
-     */
-    public void importFile(String filePath) {
-        if (filePath.endsWith("csv")) {
-            importCSV(filePath);
-            System.out.println("IMPORT FROM CSV");
-        } else {
-            importExcel(filePath);
-            System.out.println("IMPORT FROM EXCEL");
-        }
-    }
+        filtersSPane.setPannable(true);
+        notesSPane.setPannable(true);
+        filtersSPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        filtersSPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        notesSPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-    /**
-     * Imports data from csv file
-     * Takes headers from file and reorders them in the database order. Keeps only the wanted columns
-     * Takes the rest of data and puts it under their respective columns
-     * Sends it to database
-     * Works only with columns that are already in the database.
-     *
-     * @param filePath full path of file to be imported
-     */
-    public void importCSV(String filePath) {
-        InputStream is;
-        try {
-            is = new FileInputStream(filePath);
-            // Takes the csv file and deconstructs it
-            CSVParser shredderOfData = new CSVParser(is);
-            shredderOfData.setCommentStart("#;!");
-            shredderOfData.setEscapes("nrtf", "\n\r\t\f");
-
-            String currentString;          // currentString is going to hold every single value from file, one at a time
-            int[] tableHeader = new int[10];    // tableHeader will contain the order of callsTable columns that are in the csv file
-            int tableHeaderIndex = 0;
-            // used for the alias method
-            CallRecord cr = new CallRecord();
-            // databaseColumnIndex holds the index of column in the database
-            int databaseColumnIndex;
-            // If file contains a predetermined column, under which the time and date are both put,
-            // an exception to the normal flow is acknowledged
-            boolean dateColumnNameException = false;
-            // Takes the headers(from the first line of the file) and puts them into the correct order of the database into tableHeader.
-            // If there is an unidentified column, an alert pops out and asks the users about its importance,
-            // and have them select an existing column to put the information in. (Mismatched column names)
-            while ((currentString = shredderOfData.nextValue()) != null && shredderOfData.lastLineNumber() == 1) {
-                // If there is a match with a column in the database, input the new index
-                if ((databaseColumnIndex = cr.alias(currentString)) != -1) {
-                    tableHeader[tableHeaderIndex] = databaseColumnIndex;
-                    if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
-                        dateColumnNameException = true;
-                    }
-                } else {      //  else Alert pops out.
-                    tableHeader[tableHeaderIndex] = alert(currentString);
-                }
-                tableHeaderIndex++;
-            }
-            /*
-             * At this moment the columns are set in place.
-             * How? Check if a file column resembles a database column(using regex).
-             * The ones that are unrecognized are sent to the users for future actions
-             * During the checking, all file columns are put in the correct order (database order, or the order on which this method is made)
-             * The discarded columns, get -1 value.
-             * Next step is getting the data from the file
-             * length = the number of file columns
-             * dataCorrectOrder = data from file, put in the correct order
-             * The principle: Iterate thorough the rows of the file, take only the data under the approved columns, and put it in the database
-             */
-            ObservableList<CallRecord> dataToDatabase = FXCollections.observableArrayList();
-            int length = tableHeaderIndex + 1;
-            tableHeaderIndex = 0;
-            String[] dataCorrectOrder = new String[length];
-            while (tableHeader[tableHeaderIndex] == -1) {
-                tableHeaderIndex++;
-                currentString = shredderOfData.nextValue();
-            }
-            dataCorrectOrder[tableHeader[tableHeaderIndex]] = currentString;
-            tableHeaderIndex++;
-            while ((currentString = shredderOfData.nextValue()) != null) {       // As long as there is data left in the file
-                // If the current column is approved then the data goes into the correct place
-                if (tableHeader[tableHeaderIndex] != -1) {
-                    dataCorrectOrder[tableHeader[tableHeaderIndex]] = currentString;
-                }
-                tableHeaderIndex++;         // Go to the next column
-                // If the end of the row was reached, start next row and put the found data into dataToDatabase
-                if (tableHeaderIndex == length - 1) {
-                    tableHeaderIndex = 0;
-                    if (dateColumnNameException) {
-                        String[] dateTime = dataCorrectOrder[2].split("\\s");
-                        dateTime[0] = changeDateFormat(dateTime[0]);
-                        dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataCorrectOrder[0], dataCorrectOrder[1],
-                                dateTime[0], dateTime[1], dataCorrectOrder[4], dataCorrectOrder[5]));
-                    } else {
-                        dataCorrectOrder[2] = changeDateFormat(dataCorrectOrder[2]);
-                        dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataCorrectOrder[0], dataCorrectOrder[1],
-                                dataCorrectOrder[2], dataCorrectOrder[3], dataCorrectOrder[4], dataCorrectOrder[5]));
-                    }
-
-                }
-            }
-            sql.insertCalls(dataToDatabase);  // After getting all data from the file, send it to database
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Import data from excel file
-     * Takes headers from file and reorders them in the database order. Keeps only the wanted columns of information
-     * Takes the rest of data and puts it under their respective columns
-     * Sends it to database
-     * Works only with columns that are already in the database.
-     *
-     * @param filePath full path of file to be imported
-     */
-    public void importExcel(String filePath) {
-        try {
-            FileInputStream fileInputStream = new FileInputStream(new File(filePath)); // Prepares tools to take data from excel
-            Workbook excelWorkbook = getWorkbook(fileInputStream, filePath); // Different versions of Excel require different tools
-            Sheet datatypeSheet = excelWorkbook.getSheetAt(0);
-            Iterator<Row> rowIterator = datatypeSheet.iterator();
-            boolean dateColumnNameException = false;
-            int databaseColumnIndex;                       // checks if column is recognized by database
-            Cell currentCell;                       // cell with current information
-            int[] tableHeader = new int[10];           // will hold the preferred order of the recognized headers from file
-            int tableHeaderIndex = 0;               // index of tableHeader
-            CallRecord cr = new CallRecord();           // used to call the alias method to recognize headers
-            if (rowIterator.hasNext()) {               // If there is at least 1 row (header row)
-                Row currentRow = rowIterator.next();
-                // Makes an iterator for the row (so that you can iterate through it and take the cells)
-                Iterator<Cell> cellIterator = currentRow.cellIterator();
-                while (cellIterator.hasNext()) {        // As long as there are unverified elements in the row
-                    currentCell = cellIterator.next();          // Take cell value
-                    String currentString = String.valueOf(getCellValue(currentCell));
-                    if ((databaseColumnIndex = cr.alias(currentString)) != -1) {       // if name is recognized by database
-                        tableHeader[tableHeaderIndex] = databaseColumnIndex;               // remember order
-                        if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
-                            dateColumnNameException = true;
-                        }
-                    } else {      // else Alert pops out.
-                        tableHeader[tableHeaderIndex] = alert(String.valueOf(getCellValue(currentCell)));
-                    }
-                    tableHeaderIndex++;
-                }
-            }
-            // stores the data that will be sent to database
-            ObservableList<CallRecord> dataToDatabase = FXCollections.observableArrayList();
-            int length = tableHeaderIndex + 1;                      // number of recognized columns
-            tableHeaderIndex = 0;
-            String[] dataElement = new String[length];              // row that goes into data variable
-
-            while (rowIterator.hasNext()) {                        // As long as there are rows to check
-                Row currentRow = rowIterator.next();                       // Take every single row
-                Iterator<Cell> cellIterator = currentRow.cellIterator();        // Make an iterator for it
-                while (cellIterator.hasNext()) {        // Check for every value in the row
-                    currentCell = cellIterator.next();
-                    if (tableHeader[tableHeaderIndex] != -1) {      // If recognized column then store it into dataElement
-                        dataElement[tableHeader[tableHeaderIndex]] = String.valueOf(getCellValue(currentCell));
-                    }
-                    tableHeaderIndex++;
-                }
-                tableHeaderIndex = 0;           // Start next row
-                if (dateColumnNameException) {
-                    String[] dateTime = dataElement[2].split("\\s");
-                    dateTime[0] = changeDateFormat(dateTime[0]);
-                    dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
-                            dateTime[0], dateTime[1], dataElement[4], dataElement[5]));
-                } else {
-                    dataElement[2] = changeDateFormat(dataElement[2]);
-                    dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
-                            dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
-                }
-            }
-            sql.insertCalls(dataToDatabase);              // The essential information is sent to database
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Identifies the version of Microsoft Excel used for the file, or specifies that the file is not supported
-     *
-     * @return the tailored workbook for the file
-     */
-    private Workbook getWorkbook(FileInputStream inputStream, String filePath)
-            throws IOException {
-        Workbook excelWorkbook = null;
-        if (filePath.endsWith("xlsx")) {
-            excelWorkbook = new XSSFWorkbook(inputStream);
-        } else if (filePath.endsWith("xls")) {
-            excelWorkbook = new HSSFWorkbook(inputStream);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("File not recognized");
-            alert.setHeaderText("Unsupported file format");
-            alert.setContentText("The file you want to import is not supported by the application");
-            alert.showAndWait();
-        }
-        return excelWorkbook;
-    }
-
-
-    /**
-     * Loads the callsTable with data from database
-     *
-     * @param caseID the case id whose data is to be shown
-     */
-    public void loadTable(int caseID) {
-        databaseCallsData = sql.loadCalls(caseID);  // takes the data from the database and puts it into an observable list
-        filteredData = databaseCallsData;             // search data gets the default callsTable items from databaseCallsData (usefull for export CSV/PDF)
-        mainTableFactory.createOriginNameColumn(fromIDColumn); // builds the columns, without data
-        mainTableFactory.createOriginColumn(fromPhoneColumn);
-        mainTableFactory.createDestinationNameColumn(toIDColumn);
-        mainTableFactory.createDestinationColumn(toPhoneColumn);
-        mainTableFactory.createDateColumn(dateColumn);
-        mainTableFactory.createTimeColumn(timeColumn);
-        mainTableFactory.createCallTypeColumn(typeColumn);
-        mainTableFactory.createDurationColumn(durationColumn);
-        callsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        callsTable.setItems(databaseCallsData);  // adds the data into the callsTable
-        callsTable.setEditable(true);
-
-        //numOfRows label shows the size of the displayed callsTable
-        numOfRows.setText("Number of rows: " + callsTable.getItems().size());
-    }
-
-    public void createDeleteColumn(TableColumn deleteColumn) {
-
-        deleteColumn.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<CallRecord, Boolean>,
-                        ObservableValue<Boolean>>() {
-
-                    @Override
-                    public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<CallRecord, Boolean> p) {
-                        return new SimpleBooleanProperty(p.getValue() != null);
-                    }
-                });
-
-        deleteColumn.setCellFactory(
-                new Callback<TableColumn<CallRecord, Boolean>, TableCell<CallRecord, Boolean>>() {
-
-                    @Override
-                    public TableCell<CallRecord, Boolean> call(TableColumn<CallRecord, Boolean> p) {
-                        return new ButtonCell();
-                    }
-
-                });
-        deleteColumn.setSortable(false);
-
-    }
-
-    private class ButtonCell extends TableCell<CallRecord, Boolean> {
-        final Button cellButton = new Button("");
-
-        ButtonCell() {
-            cellButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    deleteCall();
-                }
-            });
-            cellButton.setId("delete-button");
-        }
-
-        //Display button if the row is not empty
-        @Override
-        protected void updateItem(Boolean t, boolean empty) {
-            super.updateItem(t, empty);
-            if (!empty) {
-                setGraphic(cellButton);
-            }
-        }
-    }
-
-    /**
-     * @return Retrieves the list of active filters
-     */
-    public static List<Object[]> getFilters() {
-        List<Object[]> people = new ArrayList<Object[]>();
-        for (int i = 0; i < filterConstraints.size(); i++) {
-            if (filterConstraints.get(i)[0] != null) {
-                if (filterConstraints.get(i)[0] instanceof Person) {
-                    Object[] temp = new Object[2];
-                    temp[0] = filterConstraints.get(i)[0];
-                    temp[1] = filterConstraints.get(i)[1];
-                    people.add(temp);
-                }
-            }
-        }
-        return people;
-    }
-
-    /**
-     * Brings the cases toggles into a group
-     */
-    private void toggleControl() {
-        allToggleBtn.setToggleGroup(casesToggleGroup);
-        newToggleBtn.setToggleGroup(casesToggleGroup);
-        doneToggleBtn.setToggleGroup(casesToggleGroup);
-    }
-
-    /**
-     * Filters the data from the table
-     * If there are only 2 filters applied, the table will show only data that contains both of those filters
-     * Else the table will display any kind of data that contains at least one of the filters, without duplicates
-     *
-     * @throws ParseException
-     */
-    @FXML
-    private void filter() {
-        try {
-            for (int i = 0; i < filterID; i++) {
-                System.out.println(filterConstraints.get(i)[0]);
-            }
-            if (filtersBox.getChildren().size() == 2) {
-                filteredData = filterSearch(filter(0));
+        // Drag and drop
+        root.setOnDragOver(event1 -> {
+            Dragboard db = event1.getDragboard();
+            if (db.hasFiles()) {
+                event1.acceptTransferModes(TransferMode.COPY);
             } else {
-                filteredData = filterSearch(filterPhone(filterDates(0)));
+                event1.consume();
             }
-            // Writes the number of occurrences for each filter
-//            Pane filterPane;
-//            for (int j = 0; j < filtersBox.getChildren().size(); j++) {
-//                filterPane = (Pane) filtersBox.getChildren().get(j);
-//                Pane temp = (Pane) filterPane.getChildren().get(0);
-//                Pane temp2 = (Pane) temp.getChildren().get(0);
-//                Label filterLabel = (Label) temp2.getChildren().get(2);
-//                TextField phoneField = (TextField) temp.getChildren().get(2);
-//                Label letter = (Label) temp2.getChildren().get(0);
-//
-//                // Identifies the filter used
-//                for (int i = 0; i < filterID; i++) {
-//                    Person person = (Person) filterConstraints.get(i)[0];
-//                    if (person.getId().equals(filterPane.getId()) && filterConstraints.get(i)[1].equals("yes")) {
-//                        // Puts the number into the designated place
-//                        filterLabel.setText(String.valueOf(filterConstraints.get(i)[1]));
-//                    }
-//                }
-//            }
+        });
 
-            // Puts info into the callsTable
-            callsTable.setItems(filteredData);
-
-            //numOfRows label shows the size of the displayed callsTable
-            numOfRows.setText("Number of rows: " + callsTable.getItems().size());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Filters the data by the date and filters
-     *
-     * @param i variable used recursively, default should be 0
-     * @return the filtered data
-     * @throws ParseException
-     */
-    private ObservableList<CallRecord> filter(int i) throws ParseException {
-        if (i < filterID) {
-            ObservableList<CallRecord> filteredData = filter(i + 1);
-            ObservableList<CallRecord> newData = FXCollections.observableArrayList();
-            boolean isDifferent = false;
-            if (filterConstraints.get(i)[0] instanceof Date) {
-                Date date = (Date) filterConstraints.get(i)[0];
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                isDifferent = true;
-                if (filterConstraints.get(i)[1].equals("start")) {
-                    for (CallRecord callRecord : filteredData) {
-                        Date callDate = sdf.parse(callRecord.getDate());
-                        if (callDate.compareTo(date) >= 0) {
-                            newData.add(callRecord);
-                        }
-                    }
-                } else {
-                    for (CallRecord callRecord : filteredData) {
-                        Date callDate = sdf.parse(callRecord.getDate());
-                        if (callDate.compareTo(date) <= 0) {
-                            newData.add(callRecord);
-                        }
-                    }
-                }
-            } else if (filterConstraints.get(i)[0] instanceof Person) {
-                ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
-                        fromPhoneColumn, toIDColumn, toPhoneColumn, dateColumn,
-                        timeColumn, typeColumn, durationColumn);
-                int sumOfCalls = 0;
-                isDifferent = true;
-                for (int k = 0; k < filteredData.size(); k++) {
-                    for (int j = 1; j < 4; j += 2) {
-                        TableColumn currentColumn = columns.get(j);
-                        String cellValue = currentColumn.getCellData(filteredData.get(k)).toString();
-                        cellValue = cellValue.toLowerCase();
-                        Person currentFilter = (Person) filterConstraints.get(i)[0];
-                        if (cellValue.contains(currentFilter.getPhone())) {
-                            CallRecord call = filteredData.get(k);
-                            if (j == 1) {
-                                call.setOriginName(currentFilter.getIdentifier());
-                            } else if (j == 3) {
-                                call.setDestinationName(currentFilter.getIdentifier());
-                            }
-                            newData.add(call);
-                            sumOfCalls++;
-                            break;
-                        }
-                    }
-                }
-                filterConstraints.get(i)[1] = sumOfCalls;
-            }
-            if (isDifferent) {
-                return newData;
-            } else {
-                return filteredData;
-            }
-
-        } else {
-            return databaseCallsData;
-        }
-    }
-
-    /**
-     * Recursive call for filtering the callsTable using the dates
-     *
-     * @param i index of constraint in the filterConstraint array
-     * @return filtered data
-     * @throws ParseException
-     */
-    private ObservableList<CallRecord> filterDates(int i) throws ParseException {
-        if (i < filterID) {
-            ObservableList<CallRecord> test = filterDates(i + 1);
-            ObservableList<CallRecord> test2 = FXCollections.observableArrayList();
-            boolean change = false;
-            if (filterConstraints.get(i)[0] instanceof Date) {
-                Date date = (Date) filterConstraints.get(i)[0];
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                change = true;
-                if (filterConstraints.get(i)[1].equals("start")) {
-                    for (CallRecord callRecord : test) {
-                        Date callDate = sdf.parse(callRecord.getDate());
-                        if (callDate.compareTo(date) >= 0) {
-                            test2.add(callRecord);
-                        }
-                    }
-                } else {
-                    for (CallRecord callRecord : test) {
-                        Date callDate = sdf.parse(callRecord.getDate());
-                        if (callDate.compareTo(date) <= 0) {
-                            test2.add(callRecord);
-                        }
+        // Dropping over surface
+        root.setOnDragDropped(event2 -> {
+            Dragboard db = event2.getDragboard();
+            boolean success = false;
+            if (db.hasFiles()) {
+                success = true;
+                String filePath = null;
+                for (File file : db.getFiles()) {
+                    filePath = file.getAbsolutePath();
+                    System.out.println(filePath);
+                    if (!filePath.equals("")) {
+                        filePath = filePath.replace("\\", "\\\\");
+                        importFile(filePath);
                     }
                 }
             }
+            event2.setDropCompleted(success);
+            event2.consume();
+            loadTable(caseID);
+            loadFiles(caseID);
+        });
 
-            if (change) {
-                return test2;
-            } else {
-                return test;
-            }
-        } else {
-            return databaseCallsData;
-        }
-    }
-
-    /**
-     * Filters the list, using constraints from the search bar
-     *
-     * @param filteredData data to be filtered
-     * @return new filtered data
-     */
-    public ObservableList<CallRecord> filterSearch(ObservableList<CallRecord> filteredData) {
-        ObservableList<CallRecord> currentFilteredData = FXCollections.observableArrayList();
-        boolean isDifferent = false;
-
-        for (int i = 0; i < filterID; i++) {
-            if (filterConstraints.get(i)[0] instanceof SearchField) {
-                ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
-                        fromPhoneColumn, toIDColumn, toPhoneColumn,
-                        dateColumn, timeColumn, typeColumn, durationColumn);
-                isDifferent = true;
-                for (int j = 0; j < filteredData.size(); j++) {
-                    for (int k = 0; k < 8; k++) {
-                        TableColumn currentColumn = columns.get(k);
-                        String cellValue = currentColumn.getCellData(filteredData.get(j)).toString();
-                        cellValue = cellValue.toLowerCase();
-
-                        if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
-                            currentFilteredData.add(filteredData.get(j));
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        // Duplicates Removal (I don't know why, search gives duplicates)
-        //TODO Find a way to make search unique. Only 1 entry in the filterConstraints
-        if (isDifferent) {
-            ObservableList<CallRecord> newFilteredData = FXCollections.observableArrayList();
-            HashSet<CallRecord> setOfCalls = new HashSet<>();
-            for (CallRecord currentCall : currentFilteredData) {
-                if (!setOfCalls.contains(currentCall)) {
-                    newFilteredData.add(currentCall);
-                    setOfCalls.add(currentCall);
-                }
-            }
-            return newFilteredData;
-        } else return filteredData;
-    }
-
-    /**
-     * Filters the list using the filter boxes
-     *
-     * @param filteredData data to filter
-     * @return the new filtered data
-     */
-    public ObservableList<CallRecord> filterPhone(ObservableList<CallRecord> filteredData) {
-        ObservableList<CallRecord> currentFilteredData = FXCollections.observableArrayList();
-        boolean isDifferent = false;
-
-        for (int i = 0; i < filterID; i++) {
-            if (filterConstraints.get(i)[0] instanceof Person) {
-                ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
-                        fromPhoneColumn, toIDColumn, toPhoneColumn, dateColumn,
-                        timeColumn, typeColumn, durationColumn);
-                isDifferent = true;
-                int sum = 0;
-                for (int k = 0; k < filteredData.size(); k++) {
-                    for (int j = 1; j < 4; j += 2) {
-                        TableColumn currentColumn = columns.get(j);
-                        String cellValue = currentColumn.getCellData(filteredData.get(k)).toString();
-                        cellValue = cellValue.toLowerCase();
-                        Person person = (Person) filterConstraints.get(i)[0];
-                        if (cellValue.contains(person.getPhone())) {
-                            CallRecord call = filteredData.get(k);
-                            if (j == 1) {
-                                call.setOriginName(person.getIdentifier());
-                            } else if (j == 3) {
-                                call.setDestinationName(person.getIdentifier());
-                            }
-                            currentFilteredData.add(call);
-                            sum++;
-                            break;
-                        }
-                    }
-                }
-                filterConstraints.get(i)[1] = sum;
-            }
-        }
-        if (isDifferent) {
-            ObservableList<CallRecord> result = FXCollections.observableArrayList();
-            HashSet<CallRecord> set = new HashSet<>();
-            for (CallRecord item : currentFilteredData) {
-                if (!set.contains(item)) {
-                    result.add(item);
-                    set.add(item);
-                }
-            }
-            return result;
-        } else return filteredData;
-    }
-
-    /**
-     * Retrieves the start date
-     *
-     * @throws ParseException
-     */
-    @FXML
-    private void getStartDate() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-        if (startDate.getValue() != null) {
-            date = sdf.parse(startDate.getValue().toString());
-        }
-        boolean isOn = false;
-        for (int i = 0; i < filterID; i++) {
-            if (filterConstraints.get(i)[1].equals("start")) {
-                filterConstraints.get(i)[0] = date;
-                isOn = true;
-            }
-        }
-        if (!isOn) {
-            Object[] temp = new Object[2];
-            temp[0] = date;
-            temp[1] = "start";
-            filterConstraints.add(temp);
-            filterID++;
-        }
-        filter();
-    }
-
-    /**
-     * Retrieves the end date
-     *
-     * @throws ParseException
-     */
-    @FXML
-    private void getEndDate() throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-        if (endDate.getValue() != null) {
-            date = sdf.parse(endDate.getValue().toString());
-        }
-        boolean isOn = false;
-        for (int i = 0; i < filterID; i++) {
-            if (filterConstraints.get(i)[1].equals("end")) {
-                filterConstraints.get(i)[0] = date;
-                isOn = true;
-            }
-        }
-        if (!isOn) {
-            Object[] temp = new Object[2];
-            temp[0] = date;
-            temp[1] = "end";
-            filterConstraints.add(temp);
-            filterID++;
-        }
-        filter();
+        // Initialize data to their designated place
+        loadCases();
+        loadTable(caseID);
+        loadFiles(caseID);
     }
 
     /**
@@ -816,9 +228,9 @@ public class MainController {
             HBox finalCaseObj = CaseObject;
             Pane caseIndicator = (Pane) CaseObject.getChildren().get(0);
             VBox caseDetails = (VBox) CaseObject.getChildren().get(1);
-            HBox temp2 = (HBox) caseDetails.getChildren().get(0);
-            Label caseStatus = (Label) temp2.getChildren().get(0);
-            Label caseName = (Label) temp2.getChildren().get(1);
+            HBox hBox = (HBox) caseDetails.getChildren().get(0);
+            Label caseStatus = (Label) hBox.getChildren().get(0);
+            Label caseName = (Label) hBox.getChildren().get(1);
             caseName.setText(caseEntry.getName());
             Label caseDate = (Label) caseDetails.getChildren().get(1);
             HBox caseActionBox = (HBox) CaseObject.getChildren().get(2);
@@ -937,78 +349,6 @@ public class MainController {
     }
 
     /**
-     * Shows UI Note
-     *
-     * @param noteID note to be shown is identified by an id
-     * @param parent The icon that is pressed to show the specific note
-     */
-    private void showNote(int noteID, NoteIcon parent) {
-        // note information taken from database
-        ObservableList<FileRecord> noteRecord = sql.loadNote(noteID);
-        // Preparing the note GUI structure
-        Pane notePane = null;
-        try {
-            notePane = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_pane.fxml")); // Case file template
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        notePane.setId(String.valueOf(noteID));
-        Pane note = notePane;
-        DragResizeMod.makeResizable(notePane, null);
-        notePane.setLayoutX(1530);
-        notePane.setLayoutY(60);
-        root.getChildren().add(notePane);
-
-        VBox tempObj = (VBox) notePane.getChildren().get(0);
-        HBox noteBar = (HBox) tempObj.getChildren().get(0);
-        Label noteName = (Label) noteBar.getChildren().get(0);
-        Button closeNoteBtn = (Button) noteBar.getChildren().get(3);
-        Button deleteNoteBtn = (Button) noteBar.getChildren().get(2);
-        TextArea noteData = (TextArea) tempObj.getChildren().get(1);
-
-        // puts the data into the components
-        noteData.setWrapText(true);
-        for (FileRecord fileRecord : noteRecord) {
-            noteName.setText(fileRecord.getName());
-            noteData.appendText(fileRecord.getData());
-        }
-        // surfaces the GUI note on top of everything
-        note.setOnMouseClicked(event -> {
-            note.toFront();
-        });
-        noteData.setOnMouseClicked(event -> {
-            note.toFront();
-        });
-        // Closes note
-        closeNoteBtn.setOnAction(event -> {
-            root.getChildren().remove(note);
-            sql.updateNote(noteData.getText(), note.getId());
-            parent.changeOpen(false);
-        });
-        // Deletes note
-        deleteNoteBtn.setOnAction(event -> {
-            Pane left = (Pane) root.getChildren().get(3);
-            VBox notesVBox = (VBox) left.getChildren().get(0);
-            ScrollPane notesScrollPAne = (ScrollPane) notesVBox.getChildren().get(0);
-            VBox notesBox = (VBox) notesScrollPAne.getContent();
-            int i = 0;
-            Pane noteIcon;
-            try {
-                while ((noteIcon = (Pane) notesBox.getChildren().get(i)) != null) {
-                    if (noteIcon.getId().equals(note.getId())) {
-                        this.notesBox.getChildren().remove(noteIcon);
-                        root.getChildren().remove(note);
-                        sql.removeNote(Integer.valueOf(note.getId()));
-                    }
-                    i++;
-                }
-            } catch (IndexOutOfBoundsException e) {
-                // DO Nothing. It works as intended
-            }
-        });
-    }
-
-    /**
      * Loads the Case Files (notes) of a specific case into the app
      *
      * @param caseID
@@ -1032,7 +372,7 @@ public class MainController {
                 CaseFile.setOnMouseClicked(event -> {
                     if (!noteIcon.isOpen()) {
                         int id = Integer.valueOf(element.getNoteID());
-                        showNote(id, noteIcon);
+                        openNote(id, noteIcon);
                         noteIcon.changeOpen(true);
                     }
                 });
@@ -1042,88 +382,192 @@ public class MainController {
     }
 
     /**
-     * Controller for "Delete call" button. Same as above, a user should not be able to delete a call because this data is the kind you usually let it be.
-     * Adding this functionality is just for availability, in the case such action is wanted.
-     * Deletes the call both from the callsTable and the database.
-     */
-    public void deleteCall() {
-        if (callsTable.getSelectionModel().getSelectedItem() != null) {   // A row must be selected for it to work
-            CallRecord record = (CallRecord) callsTable.getSelectionModel().getSelectedItem();   //   Getting the data
-            if (record != null) {   // Checks if it's something in there
-                sql.removeCall(Integer.parseInt(record.getCallID()));   // Deletes from database
-                databaseCallsData.remove(callsTable.getSelectionModel().getSelectedItem());  // Removes from callsTable
-                System.out.println("DELETE: call " + record.getCallID());
-            }
-        }
-    }
-
-    /**
-     * Search bar functionality
-     */
-    @FXML
-    private void search() {
-        if (!searchField.getText().equals(searchBar.textProperty().get())) {
-            searchField.setText(searchBar.textProperty().get());
-            if (searchField.getText().isEmpty()) {
-                for (int i = 0; i < filterID; i++) {
-                    if (filterConstraints.get(i)[0].equals(searchField)) {
-                        filterConstraints.remove(i);
-                        filterID--;
-                    }
-                }
-            } else {
-                boolean isOn = false;
-                for (int i = 0; i < filterID; i++) {
-                    if (filterConstraints.get(i)[0].equals(searchField)) {
-                        filterConstraints.get(i)[0] = searchField;
-                        isOn = true;
-                    }
-                }
-                if (!isOn) {
-                    Object[] temp = new Object[1];
-                    temp[0] = searchField;
-                    filterConstraints.add(temp);
-                    filterID++;
-                }
-            }
-            filter();
-        }
-    }
-
-    /**
-     * Filters by phone for victim/suspect
+     * Loads the callsTable with data from database
      *
-     * @param phoneField Phone area of the filter
-     * @param person     The filter itself
+     * @param caseID the case id whose data is to be shown
      */
-    private void checkPhone(TextField phoneField, Person person) {
-        if (phoneField.textProperty().get().isEmpty()) {
-            for (int i = 0; i < filterID; i++) {
-                if (filterConstraints.get(i)[0].equals(person)) {
-                    filterConstraints.remove(i);
-                    filterID--;
+    public void loadTable(int caseID) {
+        databaseCallsData = sql.loadCalls(caseID);  // takes the data from the database and puts it into an observable list
+        filteredData = databaseCallsData;             // search data gets the default callsTable items from databaseCallsData (usefull for export CSV/PDF)
+        mainTableFactory.createOriginNameColumn(fromIDColumn); // builds the columns, without data
+        mainTableFactory.createOriginColumn(fromPhoneColumn);
+        mainTableFactory.createDestinationNameColumn(toIDColumn);
+        mainTableFactory.createDestinationColumn(toPhoneColumn);
+        mainTableFactory.createDateColumn(dateColumn);
+        mainTableFactory.createTimeColumn(timeColumn);
+        mainTableFactory.createCallTypeColumn(typeColumn);
+        mainTableFactory.createDurationColumn(durationColumn);
+        callsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        callsTable.setItems(databaseCallsData);  // adds the data into the callsTable
+        callsTable.setEditable(true);
+
+        //numOfRows label shows the size of the displayed callsTable
+        numOfRows.setText("Number of rows: " + callsTable.getItems().size());
+    }
+
+    // Update Elements:
+
+    /**
+     * Checks if any changes has been made to the cases
+     *
+     * @return true if a change has been made, false otherwise
+     */
+    public boolean casesUpdate() {
+        ObservableList<CaseRecord> caseRecords = sql.loadCases();
+        boolean requireUpdate = false;
+        int i = 0;
+
+        try {
+            if (caseRecords.size() != databaseCasesData.size()) {
+                return true;
+            }
+            for (CaseRecord caseRecord : caseRecords) {
+
+                if (i <= (databaseCasesData.size() - 1)) {
+
+                    if (!caseRecord.getCaseID().equals(databaseCasesData.get(i).getCaseID())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getDate().equals(databaseCasesData.get(i).getDate())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getName().equals(databaseCasesData.get(i).getName())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getStatus().equals(databaseCasesData.get(i).getStatus())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getDetails().equals(databaseCasesData.get(i++).getDetails())) {
+                        requireUpdate = true;
+                    }
                 }
             }
-        } else {
-            boolean isOn = false;
-            for (int i = 0; i < filterID; i++) {
-                if (filterConstraints.get(i)[0].equals(person)) {
-                    person.setPhone(phoneField.getText());
-                    filterConstraints.get(i)[0] = person;
-                    filterConstraints.get(i)[1] = 0;
-                    isOn = true;
-                }
-            }
-            if (!isOn) {
-                person.setPhone(phoneField.getText());
-                Object[] temp = new Object[3];
-                temp[0] = person;
-                temp[2] = 0;
-                filterConstraints.add(temp);
-                filterID++;
-            }
+            return requireUpdate;
+        } catch (Exception e) {
+            return requireUpdate;
         }
     }
+
+    /**
+     * Checks if any changes has been made to the notes
+     *
+     * @return true if a change has been made, false otherwise
+     */
+    public boolean notesUpdate() {
+        ObservableList<FileRecord> fileRecords = sql.loadFiles(caseID);
+        boolean requireUpdate = false;
+        int i = 0;
+
+        try {
+
+            if (fileRecords.size() != databaseNotesData.size()) {
+                return true;
+            }
+
+            for (FileRecord fileRecord : fileRecords) {
+
+                if (i <= (databaseNotesData.size() - 1)) {
+
+                    if (!fileRecord.getCaseID().equals(databaseNotesData.get(i).getCaseID())) {
+                        requireUpdate = true;
+                    }
+                    if (!fileRecord.getDate().equals(databaseNotesData.get(i).getDate())) {
+                        requireUpdate = true;
+                    }
+                    if (!fileRecord.getNoteID().equals(databaseNotesData.get(i).getNoteID())) {
+                        requireUpdate = true;
+                    }
+                    if (!fileRecord.getName().equals(databaseNotesData.get(i).getName())) {
+                        requireUpdate = true;
+                    }
+                    if (!fileRecord.getData().equals(databaseNotesData.get(i).getData())) {
+                        requireUpdate = true;
+                    }
+                    if (!fileRecord.getUserID().equals(databaseNotesData.get(i++).getUserID())) {
+                        requireUpdate = true;
+                    }
+                }
+            }
+            return requireUpdate;
+
+        } catch (Exception e) {
+            return requireUpdate;
+        }
+    }
+
+    /**
+     * Checks if any changes has been made to the calls
+     *
+     * @return true if a change has been made, false otherwise
+     */
+    public boolean callsUpdate() {
+        ObservableList<CallRecord> callRecords = sql.loadCalls(caseID);
+        boolean requireUpdate = false;
+        int i = 0;
+
+        try {
+            if (callRecords.size() != databaseCallsData.size()) {
+                return true;
+            }
+
+            for (CallRecord caseRecord : callRecords) {
+
+                if (i <= (databaseCallsData.size() - 1)) {
+
+                    if (!caseRecord.getCallID().equals(databaseCallsData.get(i).getCallID())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getCaseID().equals(databaseCallsData.get(i).getCaseID())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getOrigin().equals(databaseCallsData.get(i).getOrigin())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getDestination().equals(databaseCallsData.get(i).getDestination())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getDate().equals(databaseCallsData.get(i).getDate())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getTime().equals(databaseCallsData.get(i).getTime())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getCallType().equals(databaseCallsData.get(i).getCallType())) {
+                        requireUpdate = true;
+                    }
+                    if (!caseRecord.getDuration().equals(databaseCallsData.get(i++).getDuration())) {
+                        requireUpdate = true;
+                    }
+                }
+            }
+            return requireUpdate;
+        } catch (Exception e) {
+            return requireUpdate;
+        }
+    }
+
+    /**
+     * Refresh button functionality
+     */
+    public void update() {
+        String updateMessage = "UPDATE IN (";
+        if (casesUpdate()) {
+            updateMessage += " CASES";
+            loadCases();
+        }
+        if (notesUpdate()) {
+            updateMessage += " NOTES";
+            loadFiles(caseID);
+        }
+        if (callsUpdate()) {
+            updateMessage += " CALLS";
+            loadTable(caseID);
+        }
+        updateMessage += " )";
+        System.out.println(updateMessage);
+    }
+
+    // Add Elements to Main Pane:
 
     /**
      * Adds a victim filter
@@ -1143,13 +587,13 @@ public class MainController {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            Pane temp = (Pane) victimNote.getChildren().get(0);
-            Pane temp2 = (Pane) temp.getChildren().get(0);
-            Label letter = (Label) temp2.getChildren().get(0);
-            Pane temp3 = (Pane) temp2.getChildren().get(4);
-            Button deleteBtn = (Button) temp3.getChildren().get(0);
-            TextField nameField = (TextField) temp.getChildren().get(1);
-            TextField phoneField = (TextField) temp.getChildren().get(2);
+            Pane pane1 = (Pane) victimNote.getChildren().get(0);
+            Pane pane2 = (Pane) pane1.getChildren().get(0);
+            Label letter = (Label) pane2.getChildren().get(0);
+            Pane pane3 = (Pane) pane2.getChildren().get(4);
+            Button deleteBtn = (Button) pane3.getChildren().get(0);
+            TextField nameField = (TextField) pane1.getChildren().get(1);
+            TextField phoneField = (TextField) pane1.getChildren().get(2);
 
 
             Victim victim = new Victim(String.valueOf(filterLetterID), victimNote.getId());
@@ -1216,18 +660,18 @@ public class MainController {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            Pane temp = (Pane) suspectNote.getChildren().get(0);
-            Pane temp2 = (Pane) temp.getChildren().get(0);
-            Label letter = (Label) temp2.getChildren().get(0);
-            Pane temp3 = (Pane) temp2.getChildren().get(4);
-            Button deleteBtn = (Button) temp3.getChildren().get(0);
-            TextField phoneField = (TextField) temp.getChildren().get(2);
-            TextField nameField = (TextField) temp.getChildren().get(1);
+            Pane pane1 = (Pane) suspectNote.getChildren().get(0);
+            Pane pane2 = (Pane) pane1.getChildren().get(0);
+            Label letter = (Label) pane2.getChildren().get(0);
+            Pane pane3 = (Pane) pane2.getChildren().get(4);
+            Button deleteBtn = (Button) pane3.getChildren().get(0);
+            TextField phoneField = (TextField) pane1.getChildren().get(2);
+            TextField nameField = (TextField) pane1.getChildren().get(1);
             Suspect suspect = new Suspect(String.valueOf(filterLetterID), suspectNote.getId());
 
             Pane finalVictimNote = suspectNote;
             // Delete Button
-            deleteBtn.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
+            deleteBtn.setOnAction(event -> {
                 filtersBox.getChildren().remove(finalVictimNote);
                 for (int i = 0; i < filterID; i++) {
                     if (filterConstraints.get(i)[0].equals(suspect)) {
@@ -1236,14 +680,14 @@ public class MainController {
                     }
                 }
                 ObservableList<CallRecord> test = FXCollections.observableArrayList();
-                for (CallRecord cr : filteredData) {
-                    if (cr.getOriginName().equals(suspect.getIdentifier())) {
-                        cr.setOriginName(" ");
+                for (CallRecord callRecord : filteredData) {
+                    if (callRecord.getOriginName().equals(suspect.getIdentifier())) {
+                        callRecord.setOriginName(" ");
                     }
-                    if (cr.getDestinationName().equals(suspect.getIdentifier())) {
-                        cr.setDestinationName(" ");
+                    if (callRecord.getDestinationName().equals(suspect.getIdentifier())) {
+                        callRecord.setDestinationName(" ");
                     }
-                    test.add(cr);
+                    test.add(callRecord);
                 }
                 filteredData = test;
                 filter();
@@ -1276,6 +720,7 @@ public class MainController {
      * The method changes the callsTable and the database at the same time.
      */
     public void addCall() {
+
         // Data manipulation part (the default data is ready to be used)
         CallRecord cr = new CallRecord(String.valueOf(sql.getMaxCallID() + 1), "\"" + caseID + "\"",
                 "1", "1", "1900/01/01", "00:00", "Standard", "00:00");
@@ -1302,320 +747,701 @@ public class MainController {
      * Add a note
      */
     public void addNote(ActionEvent actionEvent) {
+
         FileRecord nr = new FileRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + caseID + "",
                 "\"" + "Case file" + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
         sql.insertFile(nr);
         loadFiles(caseID);
     }
 
-    /**
-     * Finds the present time
-     *
-     * @return the present time
-     */
-    private String currentTime() {
-        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        return timeStamp;
-    }
+    // Open System Elements:
 
     /**
-     * Checks if any changes has been made to the cases
-     *
-     * @return true if a change has been made, false otherwise
-     */
-    public boolean casesUpdate() {
-        ObservableList<CaseRecord> temp2 = sql.loadCases();
-        boolean requireUpdate = false;
-        int i = 0;
-
-        try {
-            if (temp2.size() != databaseCasesData.size()) {
-                return true;
-            }
-            for (CaseRecord caseRecord : temp2) {
-
-                if (i <= (databaseCasesData.size() - 1)) {
-
-                    if (!caseRecord.getCaseID().equals(databaseCasesData.get(i).getCaseID())) {
-                        requireUpdate = true;
-                    }
-                    if (!caseRecord.getDate().equals(databaseCasesData.get(i).getDate())) {
-                        requireUpdate = true;
-                    }
-                    if (!caseRecord.getName().equals(databaseCasesData.get(i).getName())) {
-                        requireUpdate = true;
-                    }
-                    if (!caseRecord.getStatus().equals(databaseCasesData.get(i).getStatus())) {
-                        requireUpdate = true;
-                    }
-                    if (!caseRecord.getDetails().equals(databaseCasesData.get(i++).getDetails())) {
-                        requireUpdate = true;
-                    }
-                }
-            }
-            return requireUpdate;
-        } catch (Exception e) {
-            return requireUpdate;
-        }
-    }
-
-    /**
-     * Checks if any changes has been made to the notes
-     *
-     * @return true if a change has been made, false otherwise
-     */
-    public boolean notesUpdate() {
-        ObservableList<FileRecord> temp2 = sql.loadFiles(caseID);
-        boolean requireUpdate = false;
-        int i = 0;
-
-        try {
-
-            if (temp2.size() != databaseNotesData.size()) {
-                return true;
-            }
-
-            for (FileRecord fileRecord : temp2) {
-
-                if (i <= (databaseNotesData.size() - 1)) {
-
-                    if (!fileRecord.getCaseID().equals(databaseNotesData.get(i).getCaseID())) {
-                        requireUpdate = true;
-                    }
-                    if (!fileRecord.getDate().equals(databaseNotesData.get(i).getDate())) {
-                        requireUpdate = true;
-                    }
-                    if (!fileRecord.getNoteID().equals(databaseNotesData.get(i).getNoteID())) {
-                        requireUpdate = true;
-                    }
-                    if (!fileRecord.getName().equals(databaseNotesData.get(i).getName())) {
-                        requireUpdate = true;
-                    }
-                    if (!fileRecord.getData().equals(databaseNotesData.get(i).getData())) {
-                        requireUpdate = true;
-                    }
-                    if (!fileRecord.getUserID().equals(databaseNotesData.get(i++).getUserID())) {
-                        requireUpdate = true;
-                    }
-                }
-            }
-            return requireUpdate;
-
-        } catch (Exception e) {
-            return requireUpdate;
-        }
-    }
-
-    /**
-     * Checks if any changes has been made to the calls
-     *
-     * @return true if a change has been made, false otherwise
-     */
-    public boolean callsUpdate() {
-        ObservableList<CallRecord> temp2 = sql.loadCalls(caseID);
-        boolean requireUpdate = false;
-        int i = 0;
-
-        try {
-            if (temp2.size() != databaseCallsData.size()) {
-                return true;
-            }
-
-            for (CallRecord caseRecord : temp2) {
-
-                if (i <= (databaseCallsData.size() - 1)) {
-
-                    if (!caseRecord.getCallID().equals(databaseCallsData.get(i).getCallID())) {
-                        requireUpdate = true;
-                    }
-                    if (!caseRecord.getCaseID().equals(databaseCallsData.get(i).getCaseID())) {
-                        requireUpdate = true;
-                    }
-                    if (!caseRecord.getOrigin().equals(databaseCallsData.get(i).getOrigin())) {
-                        requireUpdate = true;
-                    }
-                    if (!caseRecord.getDestination().equals(databaseCallsData.get(i).getDestination())) {
-                        requireUpdate = true;
-                    }
-                    if (!caseRecord.getDate().equals(databaseCallsData.get(i).getDate())) {
-                        requireUpdate = true;
-                    }
-                    if (!caseRecord.getTime().equals(databaseCallsData.get(i).getTime())) {
-                        requireUpdate = true;
-                    }
-                    if (!caseRecord.getCallType().equals(databaseCallsData.get(i).getCallType())) {
-                        requireUpdate = true;
-                    }
-                    if (!caseRecord.getDuration().equals(databaseCallsData.get(i++).getDuration())) {
-                        requireUpdate = true;
-                    }
-                }
-            }
-            return requireUpdate;
-        } catch (Exception e) {
-            return requireUpdate;
-        }
-    }
-
-    /**
-     * Controller initialization method. The controller runs this method first.
+     * Used for opening the manual pdf that is located in the "Manual" folder
+     * It uses the default installed pdf reader program on the used computer
      */
     @FXML
-    public void initialize() {
-
-        filtersSPane.setPannable(true);
-        filtersSPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        filtersSPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        notesSPane.setPannable(true);
-        notesSPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        // Drag and drop
-        root.setOnDragOver(event1 -> {
-            Dragboard db = event1.getDragboard();
-            if (db.hasFiles()) {
-                event1.acceptTransferModes(TransferMode.COPY);
-            } else {
-                event1.consume();
+    public void openManual() {
+        String manualLocation = System.getProperty("user.dir") + "\\Manual\\Manual.pdf";
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File file = new File(manualLocation);
+                Desktop.getDesktop().open(file);
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-        });
-
-        // Dropping over surface
-        root.setOnDragDropped(event2 -> {
-            Dragboard db = event2.getDragboard();
-            boolean success = false;
-            if (db.hasFiles()) {
-                success = true;
-                String filePath = null;
-                for (File file : db.getFiles()) {
-                    filePath = file.getAbsolutePath();
-                    System.out.println(filePath);
-                    if (!filePath.equals("")) {
-                        filePath = filePath.replace("\\", "\\\\");
-                        importFile(filePath);
-                    }
-                }
-            }
-            event2.setDropCompleted(success);
-            event2.consume();
-            loadTable(caseID);
-            loadFiles(caseID);
-        });
-        // Initialization of data to their designated place
-        loadCases();
-        loadTable(caseID);
-        loadFiles(caseID);
+        }
     }
 
     /**
-     * Refresh button functionality
+     * Extra window
      */
-    public void update() {
-        String updateMessage = "UPDATE IN (";
-        if (casesUpdate()) {
-            updateMessage += " CASES";
-            loadCases();
-        }
-        if (notesUpdate()) {
-            updateMessage += " NOTES";
-            loadFiles(caseID);
-        }
-        if (callsUpdate()) {
-            updateMessage += " CALLS";
-            loadTable(caseID);
-        }
-        updateMessage += " )";
-        System.out.println(updateMessage);
-    }
-
-    /**
-     * Accessor for column names of the app table
-     *
-     * @return list of column names
-     */
-    public List<String> getColumnNames() {
-        List columnNames = new ArrayList(6);
-        columnNames.add(fromPhoneColumn.getText());
-        columnNames.add(toPhoneColumn.getText());
-        columnNames.add(dateColumn.getText());
-        columnNames.add(timeColumn.getText());
-        columnNames.add(typeColumn.getText());
-        columnNames.add(durationColumn.getText());
-
-        return columnNames;
-    }
-
-    /**
-     * Data format translator to appease database
-     *
-     * @param oldDate Date to be changed (dd/MM/yyyy supported only)
-     * @return Data in the new format (yyyy/MM/dd supported)
-     */
-    private String changeDateFormat(String oldDate) {
-        String oldFormat = "dd/MM/yyyy";
-        String newFormat = "yyyy/MM/dd";
+    @FXML
+    public void openExtra() {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat(oldFormat);
-            Date date = sdf.parse(oldDate);
-            sdf.applyPattern(newFormat);
-            return sdf.format(date);
+            Desktop.getDesktop().browse(new URI("http://www.bradford.ac.uk/business/"));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } catch (URISyntaxException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    /**
+     * Settings window
+     */
+    @FXML
+    public void openSettings() {
+
+        try {
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
+            Pane finalCaseObject = CaseObject;
+            System.out.println(finalCaseObject);
+            Pane pane = (Pane) CaseObject.getChildren().get(0);
+            Button btn = (Button) pane.getChildren().get(3);
+            btn.setOnAction(event -> {
+                root.getChildren().remove(finalCaseObject);
+            });
+            finalCaseObject.setLayoutX(250);
+            finalCaseObject.setLayoutY(100);
+            DragResizeMod.makeResizable(finalCaseObject, null);
+            root.getChildren().add(finalCaseObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Messages window
+     */
+    @FXML
+    public void openMessages() {
+
+        try {
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
+            Pane finalCaseObject = CaseObject;
+            System.out.println(finalCaseObject);
+            Pane pane = (Pane) CaseObject.getChildren().get(0);
+            Button btn = (Button) pane.getChildren().get(1);
+
+            btn.setOnAction(event -> {
+                root.getChildren().remove(finalCaseObject);
+            });
+
+            finalCaseObject.setLayoutX(250);
+            finalCaseObject.setLayoutY(100);
+            DragResizeMod.makeResizable(finalCaseObject, null);
+            root.getChildren().add(finalCaseObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Coming soon window
+     */
+    @FXML
+    public void openComingSoon() {
+
+        try {
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/comingsoon.fxml"));
+            Pane finalCaseObject = CaseObject;
+            System.out.println(finalCaseObject);
+            Pane pane = (Pane) CaseObject.getChildren().get(0);
+            Label label = (Label) pane.getChildren().get(1);
+            Button btn = (Button) pane.getChildren().get(0);
+            btn.setOnAction(event -> {
+                root.getChildren().remove(finalCaseObject);
+            });
+            label.setText("Coming Soon");
+            finalCaseObject.setLayoutX(250);
+            finalCaseObject.setLayoutY(100);
+            DragResizeMod.makeResizable(finalCaseObject, null);
+            root.getChildren().add(finalCaseObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Notes settings window
+     */
+    @FXML
+    public void openNotesSettings() {
+        try {
+            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_settings_pane.fxml"));
+            Pane finalCaseObject = CaseObject;
+            System.out.println(finalCaseObject);
+            Pane pane = (Pane) CaseObject.getChildren().get(0);
+            Button btn1 = (Button) pane.getChildren().get(0);
+            Button btn2 = (Button) pane.getChildren().get(1);
+            btn1.setOnAction(event -> {
+                root.getChildren().remove(finalCaseObject);
+            });
+            btn2.setOnAction(event -> {
+                notesBox.getChildren().clear();
+                sql.removeNotes(caseID);
+                root.getChildren().remove(finalCaseObject);
+            });
+            finalCaseObject.setLayoutX(1540);
+            finalCaseObject.setLayoutY(870);
+            DragResizeMod.makeResizable(finalCaseObject, null);
+            root.getChildren().add(finalCaseObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Shows UI Note
+     *
+     * @param noteID note to be shown is identified by an id
+     * @param parent The icon that is pressed to show the specific note
+     */
+    private void openNote(int noteID, NoteIcon parent) {
+
+        ObservableList<FileRecord> noteRecord = sql.loadNote(noteID);
+        // Preparing the note GUI structure
+        Pane notePane = null;
+        try {
+            notePane = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_pane.fxml")); // Case file template
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        notePane.setId(String.valueOf(noteID));
+        Pane note = notePane;
+        DragResizeMod.makeResizable(notePane, null);
+        notePane.setLayoutX(1530);
+        notePane.setLayoutY(60);
+        root.getChildren().add(notePane);
+
+        VBox tempObj = (VBox) notePane.getChildren().get(0);
+        HBox noteBar = (HBox) tempObj.getChildren().get(0);
+        Label noteName = (Label) noteBar.getChildren().get(0);
+        Button closeNoteBtn = (Button) noteBar.getChildren().get(3);
+        Button deleteNoteBtn = (Button) noteBar.getChildren().get(2);
+        TextArea noteData = (TextArea) tempObj.getChildren().get(1);
+
+        // puts the data into the components
+        noteData.setWrapText(true);
+        for (FileRecord fileRecord : noteRecord) {
+            noteName.setText(fileRecord.getName());
+            noteData.appendText(fileRecord.getData());
+        }
+        // surfaces the GUI note on top of everything
+        note.setOnMouseClicked(event -> {
+            note.toFront();
+        });
+        noteData.setOnMouseClicked(event -> {
+            note.toFront();
+        });
+        // Closes note
+        closeNoteBtn.setOnAction(event -> {
+            root.getChildren().remove(note);
+            sql.updateNote(noteData.getText(), note.getId());
+            parent.changeOpen(false);
+        });
+        // Deletes note
+        deleteNoteBtn.setOnAction(event -> {
+            Pane left = (Pane) root.getChildren().get(3);
+            VBox notesVBox = (VBox) left.getChildren().get(0);
+            ScrollPane notesScrollPAne = (ScrollPane) notesVBox.getChildren().get(0);
+            VBox notesBox = (VBox) notesScrollPAne.getContent();
+            int i = 0;
+            Pane noteIcon;
+            try {
+                while ((noteIcon = (Pane) notesBox.getChildren().get(i)) != null) {
+                    if (noteIcon.getId().equals(note.getId())) {
+                        this.notesBox.getChildren().remove(noteIcon);
+                        root.getChildren().remove(note);
+                        sql.removeNote(Integer.valueOf(note.getId()));
+                    }
+                    i++;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                // DO Nothing. It works as intended
+            }
+        });
+    }
+
+    // Filter and Search:
+
+    /**
+     * Filters the data from the table
+     * If there are only 2 filters applied, the table will show only data that contains both of those filters
+     * Else the table will display any kind of data that contains at least one of the filters, without duplicates
+     *
+     * @throws ParseException
+     */
+    @FXML
+    private void filter() {
+        try {
+            for (int i = 0; i < filterID; i++) {
+                System.out.println(filterConstraints.get(i)[0]);
+            }
+            if (filtersBox.getChildren().size() == 2) {
+                filteredData = filterSearch(filter(0));
+            } else {
+                filteredData = filterSearch(filterPhone(filterDates(0)));
+            }
+            // Writes the number of occurrences for each filter
+//            Pane filterPane;
+//            for (int j = 0; j < filtersBox.getChildren().size(); j++) {
+//                filterPane = (Pane) filtersBox.getChildren().get(j);
+//                Pane temp = (Pane) filterPane.getChildren().get(0);
+//                Pane temp2 = (Pane) temp.getChildren().get(0);
+//                Label filterLabel = (Label) temp2.getChildren().get(2);
+//                TextField phoneField = (TextField) temp.getChildren().get(2);
+//                Label letter = (Label) temp2.getChildren().get(0);
+//
+//                // Identifies the filter used
+//                for (int i = 0; i < filterID; i++) {
+//                    Person person = (Person) filterConstraints.get(i)[0];
+//                    if (person.getId().equals(filterPane.getId()) && filterConstraints.get(i)[1].equals("yes")) {
+//                        // Puts the number into the designated place
+//                        filterLabel.setText(String.valueOf(filterConstraints.get(i)[1]));
+//                    }
+//                }
+//            }
+
+            // Puts info into the callsTable
+            callsTable.setItems(filteredData);
+
+            //numOfRows label shows the size of the displayed callsTable
+            numOfRows.setText("Number of rows: " + callsTable.getItems().size());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     /**
-     * Cells are considered objects. To get the data from them use this
-     *
-     * @param cell Cell to take the value from
-     * @return The information contained in the cell
+     * Search bar functionality
      */
-    private Object getCellValue(Cell cell) {
-        if (cell.getCellTypeEnum() == CellType.STRING) {        // getCellTypeEnum is not deprecated in this version of Apache poi. It's just a bug
-            return cell.getStringCellValue();
-        } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
-            return cell.getNumericCellValue();
-        }
-        return null;
-    }
-
-    /**
-     * Alert box that asks the users for the importance of some unrecognized columns in the database
-     *
-     * @param fileString The unrecognized column
-     * @return If it returns a number the users decided to use it as an existing column in the database
-     */
-    public int alert(String fileString) {
-        CallRecord cr = new CallRecord();           // Alias method
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Unidentified Column");
-        alert.setHeaderText("Column \"" + fileString + "\" is an unidentified column!");
-        alert.setContentText("Do you need this column?");
-
-        ButtonType buttonTypeYes = new ButtonType("Yes");
-        ButtonType buttonTypeCancel = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeCancel);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeYes) {     // If users selects "Yes" button, a new pop-up asks him the correct column that should be used (if any)
-            List<String> choices = new ArrayList<>();
-            choices.addAll(getColumnNames());
-
-            ChoiceDialog<String> dialog = new ChoiceDialog<>(fromPhoneColumn.getText(), choices);
-            dialog.setTitle("Choose Column");
-            dialog.setHeaderText("Choose fr0m the following columns.");
-            dialog.setHeaderText("If the column is not there, contact University of Bradford");
-            dialog.setContentText("Choose the appropriate column:");
-
-            Optional<String> result2 = dialog.showAndWait();
-            result2.ifPresent(column -> {               // Choose and select a column
-                dialog.setSelectedItem(column);
-            });
-            if (cr.alias(dialog.getSelectedItem()) != -1) {
-                return cr.alias(dialog.getSelectedItem());
+    @FXML
+    private void search() {
+        if (!searchField.getText().equals(searchBar.textProperty().get())) {
+            searchField.setText(searchBar.textProperty().get());
+            if (searchField.getText().isEmpty()) {
+                for (int i = 0; i < filterID; i++) {
+                    if (filterConstraints.get(i)[0].equals(searchField)) {
+                        filterConstraints.remove(i);
+                        filterID--;
+                    }
+                }
             } else {
-                return -1;
+                boolean isOn = false;
+                for (int i = 0; i < filterID; i++) {
+                    if (filterConstraints.get(i)[0].equals(searchField)) {
+                        filterConstraints.get(i)[0] = searchField;
+                        isOn = true;
+                    }
+                }
+                if (!isOn) {
+                    Object[] temp = new Object[1];
+                    temp[0] = searchField;
+                    filterConstraints.add(temp);
+                    filterID++;
+                }
+            }
+            filter();
+        }
+    }
+
+    /**
+     * Filters the data by the date and filters
+     *
+     * @param i variable used recursively, default should be 0
+     * @return the filtered data
+     * @throws ParseException
+     */
+    private ObservableList<CallRecord> filter(int i) throws ParseException {
+        if (i < filterID) {
+            ObservableList<CallRecord> filteredData = filter(i + 1);
+            ObservableList<CallRecord> newData = FXCollections.observableArrayList();
+            boolean isDifferent = false;
+            if (filterConstraints.get(i)[0] instanceof Date) {
+                Date date = (Date) filterConstraints.get(i)[0];
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                isDifferent = true;
+                if (filterConstraints.get(i)[1].equals("start")) {
+                    for (CallRecord callRecord : filteredData) {
+                        Date callDate = sdf.parse(callRecord.getDate());
+                        if (callDate.compareTo(date) >= 0) {
+                            newData.add(callRecord);
+                        }
+                    }
+                } else {
+                    for (CallRecord callRecord : filteredData) {
+                        Date callDate = sdf.parse(callRecord.getDate());
+                        if (callDate.compareTo(date) <= 0) {
+                            newData.add(callRecord);
+                        }
+                    }
+                }
+            } else if (filterConstraints.get(i)[0] instanceof Person) {
+                ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
+                        fromPhoneColumn, toIDColumn, toPhoneColumn, dateColumn,
+                        timeColumn, typeColumn, durationColumn);
+                int sumOfCalls = 0;
+                isDifferent = true;
+                for (int k = 0; k < filteredData.size(); k++) {
+                    for (int j = 1; j < 4; j += 2) {
+                        TableColumn currentColumn = columns.get(j);
+                        String cellValue = currentColumn.getCellData(filteredData.get(k)).toString();
+                        cellValue = cellValue.toLowerCase();
+                        Person currentFilter = (Person) filterConstraints.get(i)[0];
+                        if (cellValue.contains(currentFilter.getPhone())) {
+                            CallRecord call = filteredData.get(k);
+                            if (j == 1) {
+                                call.setOriginName(currentFilter.getIdentifier());
+                            } else if (j == 3) {
+                                call.setDestinationName(currentFilter.getIdentifier());
+                            }
+                            newData.add(call);
+                            sumOfCalls++;
+                            break;
+                        }
+                    }
+                }
+                filterConstraints.get(i)[1] = sumOfCalls;
+            }
+            if (isDifferent) {
+                return newData;
+            } else {
+                return filteredData;
+            }
+
+        } else {
+            return databaseCallsData;
+        }
+    }
+
+    /**
+     * Recursive call for filtering the callsTable using the dates
+     *
+     * @param i index of constraint in the filterConstraint array
+     * @return filtered data
+     * @throws ParseException
+     */
+    private ObservableList<CallRecord> filterDates(int i) throws ParseException {
+        if (i < filterID) {
+            ObservableList<CallRecord> filteredData = filterDates(i + 1);
+            ObservableList<CallRecord> newData = FXCollections.observableArrayList();
+            boolean change = false;
+            if (filterConstraints.get(i)[0] instanceof Date) {
+                Date date = (Date) filterConstraints.get(i)[0];
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                change = true;
+                if (filterConstraints.get(i)[1].equals("start")) {
+                    for (CallRecord callRecord : filteredData) {
+                        Date callDate = sdf.parse(callRecord.getDate());
+                        if (callDate.compareTo(date) >= 0) {
+                            newData.add(callRecord);
+                        }
+                    }
+                } else {
+                    for (CallRecord callRecord : filteredData) {
+                        Date callDate = sdf.parse(callRecord.getDate());
+                        if (callDate.compareTo(date) <= 0) {
+                            newData.add(callRecord);
+                        }
+                    }
+                }
+            }
+
+            if (change) {
+                return newData;
+            } else {
+                return filteredData;
             }
         } else {
-            return -1;
+            return databaseCallsData;
+        }
+    }
+
+    /**
+     * Filters the list, using constraints from the search bar
+     *
+     * @param filteredData data to be filtered
+     * @return new filtered data
+     */
+    public ObservableList<CallRecord> filterSearch(ObservableList<CallRecord> filteredData) {
+        ObservableList<CallRecord> currentFilteredData = FXCollections.observableArrayList();
+        boolean isDifferent = false;
+
+        for (int i = 0; i < filterID; i++) {
+            if (filterConstraints.get(i)[0] instanceof SearchField) {
+                ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
+                        fromPhoneColumn, toIDColumn, toPhoneColumn,
+                        dateColumn, timeColumn, typeColumn, durationColumn);
+                isDifferent = true;
+                for (int j = 0; j < filteredData.size(); j++) {
+                    for (int k = 0; k < 8; k++) {
+                        TableColumn currentColumn = columns.get(k);
+                        String cellValue = currentColumn.getCellData(filteredData.get(j)).toString();
+                        cellValue = cellValue.toLowerCase();
+
+                        if (cellValue.contains(searchBar.textProperty().get().toLowerCase())) {
+                            currentFilteredData.add(filteredData.get(j));
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        // Duplicates Removal (I don't know why, search gives duplicates)
+        //TODO Find a way to make search unique. Only 1 entry in the filterConstraints
+        if (isDifferent) {
+            ObservableList<CallRecord> newFilteredData = FXCollections.observableArrayList();
+            HashSet<CallRecord> setOfCalls = new HashSet<>();
+            for (CallRecord currentCall : currentFilteredData) {
+                if (!setOfCalls.contains(currentCall)) {
+                    newFilteredData.add(currentCall);
+                    setOfCalls.add(currentCall);
+                }
+            }
+            return newFilteredData;
+        } else return filteredData;
+    }
+
+    /**
+     * Filters the list using the filter boxes
+     *
+     * @param filteredData data to filter
+     * @return the new filtered data
+     */
+    public ObservableList<CallRecord> filterPhone(ObservableList<CallRecord> filteredData) {
+        ObservableList<CallRecord> currentFilteredData = FXCollections.observableArrayList();
+        boolean isDifferent = false;
+
+        for (int i = 0; i < filterID; i++) {
+            if (filterConstraints.get(i)[0] instanceof Person) {
+                ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
+                        fromPhoneColumn, toIDColumn, toPhoneColumn, dateColumn,
+                        timeColumn, typeColumn, durationColumn);
+                isDifferent = true;
+                int sum = 0;
+                for (int k = 0; k < filteredData.size(); k++) {
+                    for (int j = 1; j < 4; j += 2) {
+                        TableColumn currentColumn = columns.get(j);
+                        String cellValue = currentColumn.getCellData(filteredData.get(k)).toString();
+                        cellValue = cellValue.toLowerCase();
+                        Person person = (Person) filterConstraints.get(i)[0];
+                        if (cellValue.contains(person.getPhone())) {
+                            CallRecord call = filteredData.get(k);
+                            if (j == 1) {
+                                call.setOriginName(person.getIdentifier());
+                            } else if (j == 3) {
+                                call.setDestinationName(person.getIdentifier());
+                            }
+                            currentFilteredData.add(call);
+                            sum++;
+                            break;
+                        }
+                    }
+                }
+                filterConstraints.get(i)[1] = sum;
+            }
+        }
+        if (isDifferent) {
+            ObservableList<CallRecord> result = FXCollections.observableArrayList();
+            HashSet<CallRecord> set = new HashSet<>();
+            for (CallRecord item : currentFilteredData) {
+                if (!set.contains(item)) {
+                    result.add(item);
+                    set.add(item);
+                }
+            }
+            return result;
+        } else return filteredData;
+    }
+
+    // Import and Export
+
+    /**
+     * Opens a window and prompts the user to choose the file whose data is to be imported
+     */
+    @FXML
+    protected void importFile() {
+        // New window to choose what file to import
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        File importedFile = fileChooser.showOpenDialog(new Stage());
+        // If there is a file selected then transmit data to the database
+        if (importedFile != null) {
+            String filePath = importedFile.getPath();
+            filePath = filePath.replace("\\", "\\\\");
+            importFile(filePath);
+        }
+    }
+
+    /**
+     * Redirects to methods that support importing files with csv, xls or xlsx extension
+     *
+     * @param filePath full path of file
+     */
+    public void importFile(String filePath) {
+        if (filePath.endsWith("csv")) {
+            importCSV(filePath);
+            System.out.println("IMPORT FROM CSV");
+        } else {
+            importExcel(filePath);
+            System.out.println("IMPORT FROM EXCEL");
+        }
+    }
+
+    /**
+     * Imports data from csv file
+     * Takes headers from file and reorders them in the database order. Keeps only the wanted columns
+     * Takes the rest of data and puts it under their respective columns
+     * Sends it to database
+     * Works only with columns that are already in the database.
+     *
+     * @param filePath full path of file to be imported
+     */
+    public void importCSV(String filePath) {
+        InputStream is;
+        try {
+            is = new FileInputStream(filePath);
+            // Take the csv file and deconstruct it
+            CSVParser shredderOfData = new CSVParser(is);
+            shredderOfData.setCommentStart("#;!");
+            shredderOfData.setEscapes("nrtf", "\n\r\t\f");
+
+            String currentString;
+            int[] tableHeader = new int[10];
+            int tableHeaderIndex = 0;
+            // used for the alias method
+            CallRecord cr = new CallRecord();
+            // databaseColumnIndex holds the index of column in the database
+            int databaseColumnIndex;
+            // If file contains a predetermined column, under which the time and date are both put,
+            // an exception to the normal flow is acknowledged
+            boolean dateColumnNameException = false;
+            // Takes the headers(from the first line of the file) and puts them into the correct order of the database into tableHeader.
+            // If there is an unidentified column, an alert pops out and asks the users about its importance,
+            // and have them select an existing column to put the information in. (Mismatched column names)
+            while ((currentString = shredderOfData.nextValue()) != null && shredderOfData.lastLineNumber() == 1) {
+                // If there is a match with a column in the database, input the new index
+                if ((databaseColumnIndex = cr.alias(currentString)) != -1) {
+                    tableHeader[tableHeaderIndex] = databaseColumnIndex;
+                    if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
+                        dateColumnNameException = true;
+                    }
+                } else {
+                    tableHeader[tableHeaderIndex] = alert(currentString);
+                }
+                tableHeaderIndex++;
+            }
+            ObservableList<CallRecord> dataToDatabase = FXCollections.observableArrayList();
+            int length = tableHeaderIndex + 1;
+            tableHeaderIndex = 0;
+            String[] dataCorrectOrder = new String[length];
+            while (tableHeader[tableHeaderIndex] == -1) {
+                tableHeaderIndex++;
+                currentString = shredderOfData.nextValue();
+            }
+            dataCorrectOrder[tableHeader[tableHeaderIndex]] = currentString;
+            tableHeaderIndex++;
+            while ((currentString = shredderOfData.nextValue()) != null) {
+                if (tableHeader[tableHeaderIndex] != -1) {
+                    dataCorrectOrder[tableHeader[tableHeaderIndex]] = currentString;
+                }
+                tableHeaderIndex++;
+                // If the end of the row was reached, start next row and put the found data into dataToDatabase
+                if (tableHeaderIndex == length - 1) {
+                    tableHeaderIndex = 0;
+                    if (dateColumnNameException) {
+                        String[] dateTime = dataCorrectOrder[2].split("\\s");
+                        dateTime[0] = changeDateFormat(dateTime[0]);
+                        dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataCorrectOrder[0], dataCorrectOrder[1],
+                                dateTime[0], dateTime[1], dataCorrectOrder[4], dataCorrectOrder[5]));
+                    } else {
+                        dataCorrectOrder[2] = changeDateFormat(dataCorrectOrder[2]);
+                        dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataCorrectOrder[0], dataCorrectOrder[1],
+                                dataCorrectOrder[2], dataCorrectOrder[3], dataCorrectOrder[4], dataCorrectOrder[5]));
+                    }
+
+                }
+            }
+            sql.insertCalls(dataToDatabase);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Import data from excel file
+     * Takes headers from file and reorders them in the database order. Keeps only the wanted columns of information
+     * Takes the rest of data and puts it under their respective columns
+     * Sends it to database
+     * Works only with columns that are already in the database.
+     *
+     * @param filePath full path of file to be imported
+     */
+    public void importExcel(String filePath) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream(new File(filePath));
+            Workbook excelWorkbook = getWorkbook(fileInputStream, filePath);
+            Sheet datatypeSheet = excelWorkbook.getSheetAt(0);
+            Iterator<Row> rowIterator = datatypeSheet.iterator();
+            boolean dateColumnNameException = false;
+            int databaseColumnIndex;
+            Cell currentCell;
+            int[] tableHeader = new int[10];
+            int tableHeaderIndex = 0;
+            CallRecord cr = new CallRecord();
+            if (rowIterator.hasNext()) {
+                Row currentRow = rowIterator.next();
+
+                Iterator<Cell> cellIterator = currentRow.cellIterator();
+                while (cellIterator.hasNext()) {
+                    currentCell = cellIterator.next();
+                    String currentString = String.valueOf(getCellValue(currentCell));
+                    if ((databaseColumnIndex = cr.alias(currentString)) != -1) {
+                        tableHeader[tableHeaderIndex] = databaseColumnIndex;
+                        if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
+                            dateColumnNameException = true;
+                        }
+                    } else {
+                        tableHeader[tableHeaderIndex] = alert(String.valueOf(getCellValue(currentCell)));
+                    }
+                    tableHeaderIndex++;
+                }
+            }
+            // Store the data that will be sent to database
+            ObservableList<CallRecord> dataToDatabase = FXCollections.observableArrayList();
+            int length = tableHeaderIndex + 1;
+            tableHeaderIndex = 0;
+            String[] dataElement = new String[length];
+
+            while (rowIterator.hasNext()) {
+                Row currentRow = rowIterator.next();
+                Iterator<Cell> cellIterator = currentRow.cellIterator();
+                while (cellIterator.hasNext()) {
+                    currentCell = cellIterator.next();
+                    if (tableHeader[tableHeaderIndex] != -1) {
+                        dataElement[tableHeader[tableHeaderIndex]] = String.valueOf(getCellValue(currentCell));
+                    }
+                    tableHeaderIndex++;
+                }
+                tableHeaderIndex = 0;
+                if (dateColumnNameException) {
+                    String[] dateTime = dataElement[2].split("\\s");
+                    dateTime[0] = changeDateFormat(dateTime[0]);
+                    dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
+                            dateTime[0], dateTime[1], dataElement[4], dataElement[5]));
+                } else {
+                    dataElement[2] = changeDateFormat(dataElement[2]);
+                    dataToDatabase.add(new CallRecord(String.valueOf(caseID), dataElement[0], dataElement[1],
+                            dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
+                }
+            }
+            sql.insertCalls(dataToDatabase);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -1664,141 +1490,204 @@ public class MainController {
         }
     }
 
+    // Extra Helper Functions:
+
     /**
-     * Coming soon window
+     * Accessor for column names of the app table
+     *
+     * @return list of column names
      */
-    @FXML
-    public void openComingSoon() {
-        try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/comingsoon.fxml"));
-            Pane finalCaseObject = CaseObject;
-            System.out.println(finalCaseObject);
-            Pane pane = (Pane) CaseObject.getChildren().get(0);
-            Label label = (Label) pane.getChildren().get(1);
-            Button btn = (Button) pane.getChildren().get(0);
-            btn.setOnAction(event -> {
-                root.getChildren().remove(finalCaseObject);
-            });
-            label.setText("Coming Soon");
-            finalCaseObject.setLayoutX(250);
-            finalCaseObject.setLayoutY(100);
-            DragResizeMod.makeResizable(finalCaseObject, null);
-            root.getChildren().add(finalCaseObject);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public List<String> getColumnNames() {
+        List columnNames = new ArrayList(6);
+        columnNames.add(fromPhoneColumn.getText());
+        columnNames.add(toPhoneColumn.getText());
+        columnNames.add(dateColumn.getText());
+        columnNames.add(timeColumn.getText());
+        columnNames.add(typeColumn.getText());
+        columnNames.add(durationColumn.getText());
+        return columnNames;
     }
 
     /**
-     * Used for opening the manual pdf that is located in the "Manual" folder
-     * It uses the default installed pdf reader program on the used computer
+     * Cells are considered objects. To get the data from them use this
+     *
+     * @param cell Cell to take the value from
+     * @return The information contained in the cell
      */
-    @FXML
-    public void openManual() {
-        String manualLocation = System.getProperty("user.dir") + "\\Manual\\Manual.pdf";
-        if (Desktop.isDesktopSupported()) {
-            try {
-                File myFile = new File(manualLocation);
-                Desktop.getDesktop().open(myFile);
-            } catch (IOException ex) {
-                ex.printStackTrace();
+    private Object getCellValue(Cell cell) {
+        if (cell.getCellTypeEnum() == CellType.STRING) {        // getCellTypeEnum is not deprecated in this version of Apache poi. It's just a bug
+            return cell.getStringCellValue();
+        } else if (cell.getCellTypeEnum() == CellType.NUMERIC) {
+            return cell.getNumericCellValue();
+        }
+        return null;
+    }
+
+    /**
+     * @return Retrieves the list of active filters
+     */
+    public static List<Object[]> getFilters() {
+        List<Object[]> people = new ArrayList<Object[]>();
+        for (int i = 0; i < filterConstraints.size(); i++) {
+            if (filterConstraints.get(i)[0] != null) {
+                if (filterConstraints.get(i)[0] instanceof Person) {
+                    Object[] temp = new Object[2];
+                    temp[0] = filterConstraints.get(i)[0];
+                    temp[1] = filterConstraints.get(i)[1];
+                    people.add(temp);
+                }
             }
         }
+        return people;
     }
 
     /**
-     * Extra window
+     * Identifies the version of Microsoft Excel used for the file, or specifies that the file is not supported
+     *
+     * @return the tailored workbook for the file
      */
-    @FXML
-    public void openExtra() {
-        try {
-            Desktop.getDesktop().browse(new URI("http://www.bradford.ac.uk/business/"));
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        } catch (URISyntaxException e1) {
-            e1.printStackTrace();
+    private Workbook getWorkbook(FileInputStream inputStream, String filePath) throws IOException {
+        Workbook excelWorkbook = null;
+        if (filePath.endsWith("xlsx")) {
+            excelWorkbook = new XSSFWorkbook(inputStream);
+        } else if (filePath.endsWith("xls")) {
+            excelWorkbook = new HSSFWorkbook(inputStream);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("File not recognized");
+            alert.setHeaderText("Unsupported file format");
+            alert.setContentText("The file you want to import is not supported by the application");
+            alert.showAndWait();
         }
+        return excelWorkbook;
     }
 
     /**
-     * Settings window
+     * Retrieves the start date
+     *
+     * @throws ParseException
      */
     @FXML
-    public void openSettings() {
+    private void getStartDate() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        if (startDate.getValue() != null) {
+            date = sdf.parse(startDate.getValue().toString());
+        }
+        boolean isOn = false;
+        for (int i = 0; i < filterID; i++) {
+            if (filterConstraints.get(i)[1].equals("start")) {
+                filterConstraints.get(i)[0] = date;
+                isOn = true;
+            }
+        }
+        if (!isOn) {
+            Object[] temp = new Object[2];
+            temp[0] = date;
+            temp[1] = "start";
+            filterConstraints.add(temp);
+            filterID++;
+        }
+        filter();
+    }
+
+    /**
+     * Retrieves the end date
+     *
+     * @throws ParseException
+     */
+    @FXML
+    private void getEndDate() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        if (endDate.getValue() != null) {
+            date = sdf.parse(endDate.getValue().toString());
+        }
+        boolean isOn = false;
+        for (int i = 0; i < filterID; i++) {
+            if (filterConstraints.get(i)[1].equals("end")) {
+                filterConstraints.get(i)[0] = date;
+                isOn = true;
+            }
+        }
+        if (!isOn) {
+            Object[] temp = new Object[2];
+            temp[0] = date;
+            temp[1] = "end";
+            filterConstraints.add(temp);
+            filterID++;
+        }
+        filter();
+    }
+
+    /**
+     * Finds the present time
+     *
+     * @return the present time
+     */
+    private String currentTime() {
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        return timeStamp;
+    }
+
+    /**
+     * Data format translator to appease database
+     *
+     * @param oldDate Date to be changed (dd/MM/yyyy supported only)
+     * @return Data in the new format (yyyy/MM/dd supported)
+     */
+    private String changeDateFormat(String oldDate) {
+        String oldFormat = "dd/MM/yyyy";
+        String newFormat = "yyyy/MM/dd";
         try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
-            Pane finalCaseObject = CaseObject;
-            System.out.println(finalCaseObject);
-            Pane pane = (Pane) CaseObject.getChildren().get(0);
-            Button btn = (Button) pane.getChildren().get(3);
-            btn.setOnAction(event -> {
-                root.getChildren().remove(finalCaseObject);
-            });
-            finalCaseObject.setLayoutX(250);
-            finalCaseObject.setLayoutY(100);
-            DragResizeMod.makeResizable(finalCaseObject, null);
-            root.getChildren().add(finalCaseObject);
-        } catch (IOException e) {
+            SimpleDateFormat sdf = new SimpleDateFormat(oldFormat);
+            Date date = sdf.parse(oldDate);
+            sdf.applyPattern(newFormat);
+            return sdf.format(date);
+        } catch (ParseException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     /**
-     * Messages window
+     * Alert box that asks the users for the importance of some unrecognized columns in the database
+     *
+     * @param fileString The unrecognized column
+     * @return If it returns a number the users decided to use it as an existing column in the database
      */
-    @FXML
-    public void openMessages() {
+    public int alert(String fileString) {
+        CallRecord callRecord = new CallRecord();           // Alias method
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Unidentified Column");
+        alert.setHeaderText("Column \"" + fileString + "\" is an unidentified column!");
+        alert.setContentText("Do you need this column?");
 
-        try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
-            Pane finalCaseObject = CaseObject;
-            System.out.println(finalCaseObject);
-            Pane pane = (Pane) CaseObject.getChildren().get(0);
-            Button btn = (Button) pane.getChildren().get(1);
+        ButtonType buttonTypeYes = new ButtonType("Yes");
+        ButtonType buttonTypeCancel = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeCancel);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == buttonTypeYes) {     // If users selects "Yes" button, a new pop-up asks him the correct column that should be used (if any)
+            List<String> choices = new ArrayList<>();
+            choices.addAll(getColumnNames());
 
-            btn.setOnAction(event -> {
-                root.getChildren().remove(finalCaseObject);
+            ChoiceDialog<String> dialog = new ChoiceDialog<>(fromPhoneColumn.getText(), choices);
+            dialog.setTitle("Choose Column");
+            dialog.setHeaderText("Choose fr0m the following columns.");
+            dialog.setHeaderText("If the column is not there, contact University of Bradford");
+            dialog.setContentText("Choose the appropriate column:");
+
+            Optional<String> result2 = dialog.showAndWait();
+            result2.ifPresent(column -> {               // Choose and select a column
+                dialog.setSelectedItem(column);
             });
-
-            finalCaseObject.setLayoutX(250);
-            finalCaseObject.setLayoutY(100);
-            DragResizeMod.makeResizable(finalCaseObject, null);
-            root.getChildren().add(finalCaseObject);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    /**
-     * Notes settings window
-     */
-    @FXML
-    public void notes_settings() {
-        try {
-
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_settings_pane.fxml"));
-            Pane finalCaseObject = CaseObject;
-            System.out.println(finalCaseObject);
-            Pane pane = (Pane) CaseObject.getChildren().get(0);
-            Button btn = (Button) pane.getChildren().get(0);
-            Button btn2 = (Button) pane.getChildren().get(1);
-            btn.setOnAction(event -> {
-                root.getChildren().remove(finalCaseObject);
-            });
-            btn2.setOnAction(event -> {
-                notesBox.getChildren().clear();
-                sql.removeNotes(caseID);
-                root.getChildren().remove(finalCaseObject);
-            });
-            finalCaseObject.setLayoutX(1540);
-
-            finalCaseObject.setLayoutY(870);
-            DragResizeMod.makeResizable(finalCaseObject, null);
-            root.getChildren().add(finalCaseObject);
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (callRecord.alias(dialog.getSelectedItem()) != -1) {
+                return callRecord.alias(dialog.getSelectedItem());
+            } else {
+                return -1;
+            }
+        } else {
+            return -1;
         }
     }
 
@@ -1808,7 +1697,7 @@ public class MainController {
      * @param event
      */
     @FXML
-    public void Logoff(ActionEvent event) {
+    public void logoff(ActionEvent event) {
         Stage stage = (Stage) root.getScene().getWindow();
         stage.setResizable(false);
         stage.setWidth(417);
@@ -1825,6 +1714,11 @@ public class MainController {
         stage.show();
     }
 
+    /**
+     * Change the background of application Main Pane
+     *
+     * @param event
+     */
     @FXML
     public void changeBG(ActionEvent event) {
 
@@ -1864,6 +1758,66 @@ public class MainController {
         }
 
         root.setStyle("-fx-background-image: url('" + image + "');");
+    }
+
+    /**
+     * Filters by phone for victim/suspect
+     *
+     * @param phoneField Phone area of the filter
+     * @param person     The filter itself
+     */
+    private void checkPhone(TextField phoneField, Person person) {
+        if (phoneField.textProperty().get().isEmpty()) {
+            for (int i = 0; i < filterID; i++) {
+                if (filterConstraints.get(i)[0].equals(person)) {
+                    filterConstraints.remove(i);
+                    filterID--;
+                }
+            }
+        } else {
+            boolean isOn = false;
+            for (int i = 0; i < filterID; i++) {
+                if (filterConstraints.get(i)[0].equals(person)) {
+                    person.setPhone(phoneField.getText());
+                    filterConstraints.get(i)[0] = person;
+                    filterConstraints.get(i)[1] = 0;
+                    isOn = true;
+                }
+            }
+            if (!isOn) {
+                person.setPhone(phoneField.getText());
+                Object[] temp = new Object[3];
+                temp[0] = person;
+                temp[2] = 0;
+                filterConstraints.add(temp);
+                filterID++;
+            }
+        }
+    }
+
+    /**
+     * Controller for "Delete call" button. Same as above, a user should not be able to delete a call because this data is the kind you usually let it be.
+     * Adding this functionality is just for availability, in the case such action is wanted.
+     * Deletes the call both from the callsTable and the database.
+     */
+    public void deleteCall() {
+        if (callsTable.getSelectionModel().getSelectedItem() != null) {   // A row must be selected for it to work
+            CallRecord record = (CallRecord) callsTable.getSelectionModel().getSelectedItem();   //   Getting the data
+            if (record != null) {   // Checks if it's something in there
+                sql.removeCall(Integer.parseInt(record.getCallID()));   // Deletes from database
+                databaseCallsData.remove(callsTable.getSelectionModel().getSelectedItem());  // Removes from callsTable
+                System.out.println("DELETE: call " + record.getCallID());
+            }
+        }
+    }
+
+    /**
+     * Brings the cases toggles into a group
+     */
+    private void toggleControl() {
+        allToggleBtn.setToggleGroup(casesToggleGroup);
+        newToggleBtn.setToggleGroup(casesToggleGroup);
+        doneToggleBtn.setToggleGroup(casesToggleGroup);
     }
 
 }
