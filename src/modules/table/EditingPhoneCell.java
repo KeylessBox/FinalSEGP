@@ -62,7 +62,7 @@ public class EditingPhoneCell extends TableCell<CallRecord, String> {
             setStyle("");
         } else {
             // Get filters from app
-            List<Object[]> people = MainController.getPeople();
+            List<Object[]> people = MainController.getFilters();
             boolean isFilter = false;
             // Iterates through filters and based on the nature of the object, it colours the cell in a specific colour
             for (Object[] person : people) {
