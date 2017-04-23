@@ -66,32 +66,30 @@ public class EditingPhoneCell extends TableCell<CallRecord, String> {
             boolean isFilter = false;
             // Iterates through filters and based on the nature of the object, it colours the cell in a specific colour
             for (Object[] person : people) {
-                if (person[1].equals("yes")) {
-                    if (person[0] instanceof Suspect) {
-                        Suspect suspect = (Suspect) person[0];
-                        if (item.contains(suspect.getPhone())) {
-                            String hex = Integer.toHexString(suspect.getColor().getRGB());
-                            // Reduced to RGB: hex -> "#ff0000"
-                            hex = "#" + hex.substring(2, hex.length());
-                            setStyle("-fx-background-color: " + hex + ";" +
-                                    "-fx-border-width: 0 1 1 0;" +
-                                    " -fx-background-insets: 0;" +
-                                    "-fx-border-color: black");
-                            isFilter = true;
-                        }
+                if (person[0] instanceof Suspect) {
+                    Suspect suspect = (Suspect) person[0];
+                    if (item.contains(suspect.getPhone())) {
+                        String hex = Integer.toHexString(suspect.getColor().getRGB());
+                        // Reduced to RGB: hex -> "#ff0000"
+                        hex = "#" + hex.substring(2, hex.length());
+                        setStyle("-fx-background-color: " + hex + ";" +
+                                "-fx-border-width: 0 1 1 0;" +
+                                " -fx-background-insets: 0;" +
+                                "-fx-border-color: black");
+                        isFilter = true;
                     }
-                    if (person[0] instanceof Victim) {
-                        Victim victim = (Victim) person[0];
-                        if (item.contains(victim.getPhone())) {
-                            String hex = Integer.toHexString(victim.getColor().getRGB());
-                            // Reduced to RGB: hex -> "#ff0000"
-                            hex = "#" + hex.substring(2, hex.length());
-                            setStyle("-fx-background-color: " + hex + ";" +
-                                    "-fx-border-width: 0 1 1 0;" +
-                                    "-fx-border-color: black;" +
-                                    " -fx-background-insets: 0;");
-                            isFilter = true;
-                        }
+                }
+                if (person[0] instanceof Victim) {
+                    Victim victim = (Victim) person[0];
+                    if (item.contains(victim.getPhone())) {
+                        String hex = Integer.toHexString(victim.getColor().getRGB());
+                        // Reduced to RGB: hex -> "#ff0000"
+                        hex = "#" + hex.substring(2, hex.length());
+                        setStyle("-fx-background-color: " + hex + ";" +
+                                "-fx-border-width: 0 1 1 0;" +
+                                "-fx-border-color: black;" +
+                                " -fx-background-insets: 0;");
+                        isFilter = true;
                     }
                 }
             }

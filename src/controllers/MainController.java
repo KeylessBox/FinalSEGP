@@ -429,7 +429,7 @@ public class MainController {
         List<Object[]> people = new ArrayList<Object[]>();
         for (int i = 0; i < filterConstraints.size(); i++) {
             if (filterConstraints.get(i)[0] != null) {
-                if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
+                if (filterConstraints.get(i)[0] instanceof Person) {
                     Object[] temp = new Object[2];
                     temp[0] = filterConstraints.get(i)[0];
                     temp[1] = filterConstraints.get(i)[1];
@@ -459,34 +459,34 @@ public class MainController {
     @FXML
     private void filter() {
         try {
+            for (int i = 0; i < filterID; i++) {
+                System.out.println(filterConstraints.get(i)[0]);
+            }
             if (filtersBox.getChildren().size() == 2) {
                 filteredData = filterSearch(filter(0));
             } else {
                 filteredData = filterSearch(filterPhone(filterDates(0)));
             }
             // Writes the number of occurrences for each filter
-            Pane filterPane;
-            for (int j = 0; j < filtersBox.getChildren().size(); j++) {
-                filterPane = (Pane) filtersBox.getChildren().get(j);
-                Pane temp = (Pane) filterPane.getChildren().get(0);
-                Pane temp2 = (Pane) temp.getChildren().get(0);
-                Label filterLabel = (Label) temp2.getChildren().get(2);
-                TextField phoneField = (TextField) temp.getChildren().get(2);
-                Label letter = (Label) temp2.getChildren().get(0);
+//            Pane filterPane;
+//            for (int j = 0; j < filtersBox.getChildren().size(); j++) {
+//                filterPane = (Pane) filtersBox.getChildren().get(j);
+//                Pane temp = (Pane) filterPane.getChildren().get(0);
+//                Pane temp2 = (Pane) temp.getChildren().get(0);
+//                Label filterLabel = (Label) temp2.getChildren().get(2);
+//                TextField phoneField = (TextField) temp.getChildren().get(2);
+//                Label letter = (Label) temp2.getChildren().get(0);
+//
+//                // Identifies the filter used
+//                for (int i = 0; i < filterID; i++) {
+//                    Person person = (Person) filterConstraints.get(i)[0];
+//                    if (person.getId().equals(filterPane.getId()) && filterConstraints.get(i)[1].equals("yes")) {
+//                        // Puts the number into the designated place
+//                        filterLabel.setText(String.valueOf(filterConstraints.get(i)[1]));
+//                    }
+//                }
+//            }
 
-                // Identifies the filter used
-                for (int i = 0; i < filterID; i++) {
-                    Person person = (Person) filterConstraints.get(i)[0];
-                    if (person.getId().equals(filterPane.getId()) && filterConstraints.get(i)[1].equals("yes") &&
-                            person.getIdentifier().equals(letter.getText())) {
-                        // Puts the number into the designated place
-                        filterLabel.setText(String.valueOf(filterConstraints.get(i)[2]));
-                    }
-                }
-            }
-            for (int i = 0; i < filterID; i++) {
-                System.out.println(filterConstraints.get(i)[0]);
-            }
             // Puts info into the callsTable
             callsTable.setItems(filteredData);
 
@@ -509,9 +509,6 @@ public class MainController {
             ObservableList<CallRecord> filteredData = filter(i + 1);
             ObservableList<CallRecord> newData = FXCollections.observableArrayList();
             boolean isDifferent = false;
-            if (filterConstraints.get(i)[1].equals("no")) {
-                return filter(i + 1);
-            }
             if (filterConstraints.get(i)[0] instanceof Date) {
                 Date date = (Date) filterConstraints.get(i)[0];
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -531,7 +528,7 @@ public class MainController {
                         }
                     }
                 }
-            } else if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
+            } else if (filterConstraints.get(i)[0] instanceof Person) {
                 ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
                         fromPhoneColumn, toIDColumn, toPhoneColumn, dateColumn,
                         timeColumn, typeColumn, durationColumn);
@@ -556,7 +553,7 @@ public class MainController {
                         }
                     }
                 }
-                filterConstraints.get(i)[2] = sumOfCalls;
+                filterConstraints.get(i)[1] = sumOfCalls;
             }
             if (isDifferent) {
                 return newData;
@@ -581,9 +578,6 @@ public class MainController {
             ObservableList<CallRecord> test = filterDates(i + 1);
             ObservableList<CallRecord> test2 = FXCollections.observableArrayList();
             boolean change = false;
-            if (filterConstraints.get(i)[1].equals("no")) {
-                return filterDates(i + 1);
-            }
             if (filterConstraints.get(i)[0] instanceof Date) {
                 Date date = (Date) filterConstraints.get(i)[0];
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -626,7 +620,7 @@ public class MainController {
         boolean isDifferent = false;
 
         for (int i = 0; i < filterID; i++) {
-            if (filterConstraints.get(i)[0] instanceof SearchField && filterConstraints.get(i)[1].equals("yes")) {
+            if (filterConstraints.get(i)[0] instanceof SearchField) {
                 ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
                         fromPhoneColumn, toIDColumn, toPhoneColumn,
                         dateColumn, timeColumn, typeColumn, durationColumn);
@@ -671,7 +665,7 @@ public class MainController {
         boolean isDifferent = false;
 
         for (int i = 0; i < filterID; i++) {
-            if (filterConstraints.get(i)[0] instanceof Person && filterConstraints.get(i)[1].equals("yes")) {
+            if (filterConstraints.get(i)[0] instanceof Person) {
                 ObservableList<TableColumn<CallRecord, ?>> columns = FXCollections.observableArrayList(fromIDColumn,
                         fromPhoneColumn, toIDColumn, toPhoneColumn, dateColumn,
                         timeColumn, typeColumn, durationColumn);
@@ -696,7 +690,7 @@ public class MainController {
                         }
                     }
                 }
-                filterConstraints.get(i)[2] = sum;
+                filterConstraints.get(i)[1] = sum;
             }
         }
         if (isDifferent) {
@@ -1073,8 +1067,8 @@ public class MainController {
             if (searchField.getText().isEmpty()) {
                 for (int i = 0; i < filterID; i++) {
                     if (filterConstraints.get(i)[0].equals(searchField)) {
-                        System.out.println("Case 1");
-                        filterConstraints.get(i)[1] = "no";
+                        filterConstraints.remove(i);
+                        filterID--;
                     }
                 }
             } else {
@@ -1082,15 +1076,12 @@ public class MainController {
                 for (int i = 0; i < filterID; i++) {
                     if (filterConstraints.get(i)[0].equals(searchField)) {
                         filterConstraints.get(i)[0] = searchField;
-                        filterConstraints.get(i)[1] = "yes";
                         isOn = true;
                     }
                 }
                 if (!isOn) {
-                    System.out.println("Case 3");
-                    Object[] temp = new Object[2];
+                    Object[] temp = new Object[1];
                     temp[0] = searchField;
-                    temp[1] = "yes";
                     filterConstraints.add(temp);
                     filterID++;
                 }
@@ -1109,8 +1100,8 @@ public class MainController {
         if (phoneField.textProperty().get().isEmpty()) {
             for (int i = 0; i < filterID; i++) {
                 if (filterConstraints.get(i)[0].equals(person)) {
-                    filterConstraints.get(i)[0] = null;
-                    filterConstraints.get(i)[1] = "no";
+                    filterConstraints.remove(i);
+                    filterID--;
                 }
             }
         } else {
@@ -1119,8 +1110,7 @@ public class MainController {
                 if (filterConstraints.get(i)[0].equals(person)) {
                     person.setPhone(phoneField.getText());
                     filterConstraints.get(i)[0] = person;
-                    filterConstraints.get(i)[1] = "yes";
-                    filterConstraints.get(i)[2] = 0;
+                    filterConstraints.get(i)[1] = 0;
                     isOn = true;
                 }
             }
@@ -1128,7 +1118,6 @@ public class MainController {
                 person.setPhone(phoneField.getText());
                 Object[] temp = new Object[3];
                 temp[0] = person;
-                temp[1] = "yes";
                 temp[2] = 0;
                 filterConstraints.add(temp);
                 filterID++;
@@ -1171,7 +1160,8 @@ public class MainController {
                 filtersBox.getChildren().remove(finalVictimNote);
                 for (int i = 0; i < filterID; i++) {
                     if (filterConstraints.get(i)[0].equals(victim)) {
-                        filterConstraints.get(i)[1] = "no";
+                        filterConstraints.remove(i);
+                        filterID--;
                     }
                 }
                 ObservableList<CallRecord> test = FXCollections.observableArrayList();
@@ -1241,7 +1231,8 @@ public class MainController {
                 filtersBox.getChildren().remove(finalVictimNote);
                 for (int i = 0; i < filterID; i++) {
                     if (filterConstraints.get(i)[0].equals(suspect)) {
-                        filterConstraints.get(i)[1] = "no";
+                        filterConstraints.remove(i);
+                        filterID--;
                     }
                 }
                 ObservableList<CallRecord> test = FXCollections.observableArrayList();
