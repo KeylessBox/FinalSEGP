@@ -228,9 +228,9 @@ public class MainController {
             HBox finalCaseObj = CaseObject;
             Pane caseIndicator = (Pane) CaseObject.getChildren().get(0);
             VBox caseDetails = (VBox) CaseObject.getChildren().get(1);
-            HBox temp2 = (HBox) caseDetails.getChildren().get(0);
-            Label caseStatus = (Label) temp2.getChildren().get(0);
-            Label caseName = (Label) temp2.getChildren().get(1);
+            HBox hBox = (HBox) caseDetails.getChildren().get(0);
+            Label caseStatus = (Label) hBox.getChildren().get(0);
+            Label caseName = (Label) hBox.getChildren().get(1);
             caseName.setText(caseEntry.getName());
             Label caseDate = (Label) caseDetails.getChildren().get(1);
             HBox caseActionBox = (HBox) CaseObject.getChildren().get(2);
@@ -413,15 +413,15 @@ public class MainController {
      * @return true if a change has been made, false otherwise
      */
     public boolean casesUpdate() {
-        ObservableList<CaseRecord> temp2 = sql.loadCases();
+        ObservableList<CaseRecord> caseRecords = sql.loadCases();
         boolean requireUpdate = false;
         int i = 0;
 
         try {
-            if (temp2.size() != databaseCasesData.size()) {
+            if (caseRecords.size() != databaseCasesData.size()) {
                 return true;
             }
-            for (CaseRecord caseRecord : temp2) {
+            for (CaseRecord caseRecord : caseRecords) {
 
                 if (i <= (databaseCasesData.size() - 1)) {
 
@@ -454,17 +454,17 @@ public class MainController {
      * @return true if a change has been made, false otherwise
      */
     public boolean notesUpdate() {
-        ObservableList<FileRecord> temp2 = sql.loadFiles(caseID);
+        ObservableList<FileRecord> fileRecords = sql.loadFiles(caseID);
         boolean requireUpdate = false;
         int i = 0;
 
         try {
 
-            if (temp2.size() != databaseNotesData.size()) {
+            if (fileRecords.size() != databaseNotesData.size()) {
                 return true;
             }
 
-            for (FileRecord fileRecord : temp2) {
+            for (FileRecord fileRecord : fileRecords) {
 
                 if (i <= (databaseNotesData.size() - 1)) {
 
@@ -501,16 +501,16 @@ public class MainController {
      * @return true if a change has been made, false otherwise
      */
     public boolean callsUpdate() {
-        ObservableList<CallRecord> temp2 = sql.loadCalls(caseID);
+        ObservableList<CallRecord> callRecords = sql.loadCalls(caseID);
         boolean requireUpdate = false;
         int i = 0;
 
         try {
-            if (temp2.size() != databaseCallsData.size()) {
+            if (callRecords.size() != databaseCallsData.size()) {
                 return true;
             }
 
-            for (CallRecord caseRecord : temp2) {
+            for (CallRecord caseRecord : callRecords) {
 
                 if (i <= (databaseCallsData.size() - 1)) {
 
@@ -566,7 +566,7 @@ public class MainController {
         updateMessage += " )";
         System.out.println(updateMessage);
     }
-    
+
     // Add Elements to Main Pane:
 
     /**
@@ -587,13 +587,13 @@ public class MainController {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            Pane temp = (Pane) victimNote.getChildren().get(0);
-            Pane temp2 = (Pane) temp.getChildren().get(0);
-            Label letter = (Label) temp2.getChildren().get(0);
-            Pane temp3 = (Pane) temp2.getChildren().get(4);
-            Button deleteBtn = (Button) temp3.getChildren().get(0);
-            TextField nameField = (TextField) temp.getChildren().get(1);
-            TextField phoneField = (TextField) temp.getChildren().get(2);
+            Pane pane1 = (Pane) victimNote.getChildren().get(0);
+            Pane pane2 = (Pane) pane1.getChildren().get(0);
+            Label letter = (Label) pane2.getChildren().get(0);
+            Pane pane3 = (Pane) pane2.getChildren().get(4);
+            Button deleteBtn = (Button) pane3.getChildren().get(0);
+            TextField nameField = (TextField) pane1.getChildren().get(1);
+            TextField phoneField = (TextField) pane1.getChildren().get(2);
 
 
             Victim victim = new Victim(String.valueOf(filterLetterID), victimNote.getId());
@@ -660,18 +660,18 @@ public class MainController {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            Pane temp = (Pane) suspectNote.getChildren().get(0);
-            Pane temp2 = (Pane) temp.getChildren().get(0);
-            Label letter = (Label) temp2.getChildren().get(0);
-            Pane temp3 = (Pane) temp2.getChildren().get(4);
-            Button deleteBtn = (Button) temp3.getChildren().get(0);
-            TextField phoneField = (TextField) temp.getChildren().get(2);
-            TextField nameField = (TextField) temp.getChildren().get(1);
+            Pane pane1 = (Pane) suspectNote.getChildren().get(0);
+            Pane pane2 = (Pane) pane1.getChildren().get(0);
+            Label letter = (Label) pane2.getChildren().get(0);
+            Pane pane3 = (Pane) pane2.getChildren().get(4);
+            Button deleteBtn = (Button) pane3.getChildren().get(0);
+            TextField phoneField = (TextField) pane1.getChildren().get(2);
+            TextField nameField = (TextField) pane1.getChildren().get(1);
             Suspect suspect = new Suspect(String.valueOf(filterLetterID), suspectNote.getId());
 
             Pane finalVictimNote = suspectNote;
             // Delete Button
-            deleteBtn.setOnAction(event -> {       // Makes different modifications on the template. This one is to delete the container
+            deleteBtn.setOnAction(event -> {
                 filtersBox.getChildren().remove(finalVictimNote);
                 for (int i = 0; i < filterID; i++) {
                     if (filterConstraints.get(i)[0].equals(suspect)) {
@@ -680,14 +680,14 @@ public class MainController {
                     }
                 }
                 ObservableList<CallRecord> test = FXCollections.observableArrayList();
-                for (CallRecord cr : filteredData) {
-                    if (cr.getOriginName().equals(suspect.getIdentifier())) {
-                        cr.setOriginName(" ");
+                for (CallRecord callRecord : filteredData) {
+                    if (callRecord.getOriginName().equals(suspect.getIdentifier())) {
+                        callRecord.setOriginName(" ");
                     }
-                    if (cr.getDestinationName().equals(suspect.getIdentifier())) {
-                        cr.setDestinationName(" ");
+                    if (callRecord.getDestinationName().equals(suspect.getIdentifier())) {
+                        callRecord.setDestinationName(" ");
                     }
-                    test.add(cr);
+                    test.add(callRecord);
                 }
                 filteredData = test;
                 filter();
@@ -720,6 +720,7 @@ public class MainController {
      * The method changes the callsTable and the database at the same time.
      */
     public void addCall() {
+
         // Data manipulation part (the default data is ready to be used)
         CallRecord cr = new CallRecord(String.valueOf(sql.getMaxCallID() + 1), "\"" + caseID + "\"",
                 "1", "1", "1900/01/01", "00:00", "Standard", "00:00");
@@ -746,12 +747,13 @@ public class MainController {
      * Add a note
      */
     public void addNote(ActionEvent actionEvent) {
+
         FileRecord nr = new FileRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + caseID + "",
                 "\"" + "Case file" + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
         sql.insertFile(nr);
         loadFiles(caseID);
     }
-    
+
     // Open System Elements:
 
     /**
@@ -763,8 +765,8 @@ public class MainController {
         String manualLocation = System.getProperty("user.dir") + "\\Manual\\Manual.pdf";
         if (Desktop.isDesktopSupported()) {
             try {
-                File myFile = new File(manualLocation);
-                Desktop.getDesktop().open(myFile);
+                File file = new File(manualLocation);
+                Desktop.getDesktop().open(file);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -790,6 +792,7 @@ public class MainController {
      */
     @FXML
     public void openSettings() {
+
         try {
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/settings.fxml"));
             Pane finalCaseObject = CaseObject;
@@ -832,8 +835,6 @@ public class MainController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     /**
@@ -841,6 +842,7 @@ public class MainController {
      */
     @FXML
     public void openComingSoon() {
+
         try {
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/comingsoon.fxml"));
             Pane finalCaseObject = CaseObject;
@@ -867,14 +869,13 @@ public class MainController {
     @FXML
     public void openNotesSettings() {
         try {
-
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_settings_pane.fxml"));
             Pane finalCaseObject = CaseObject;
             System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
-            Button btn = (Button) pane.getChildren().get(0);
+            Button btn1 = (Button) pane.getChildren().get(0);
             Button btn2 = (Button) pane.getChildren().get(1);
-            btn.setOnAction(event -> {
+            btn1.setOnAction(event -> {
                 root.getChildren().remove(finalCaseObject);
             });
             btn2.setOnAction(event -> {
@@ -883,7 +884,6 @@ public class MainController {
                 root.getChildren().remove(finalCaseObject);
             });
             finalCaseObject.setLayoutX(1540);
-
             finalCaseObject.setLayoutY(870);
             DragResizeMod.makeResizable(finalCaseObject, null);
             root.getChildren().add(finalCaseObject);
@@ -899,7 +899,7 @@ public class MainController {
      * @param parent The icon that is pressed to show the specific note
      */
     private void openNote(int noteID, NoteIcon parent) {
-        // note information taken from database
+
         ObservableList<FileRecord> noteRecord = sql.loadNote(noteID);
         // Preparing the note GUI structure
         Pane notePane = null;
@@ -1125,34 +1125,34 @@ public class MainController {
      */
     private ObservableList<CallRecord> filterDates(int i) throws ParseException {
         if (i < filterID) {
-            ObservableList<CallRecord> test = filterDates(i + 1);
-            ObservableList<CallRecord> test2 = FXCollections.observableArrayList();
+            ObservableList<CallRecord> filteredData = filterDates(i + 1);
+            ObservableList<CallRecord> newData = FXCollections.observableArrayList();
             boolean change = false;
             if (filterConstraints.get(i)[0] instanceof Date) {
                 Date date = (Date) filterConstraints.get(i)[0];
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 change = true;
                 if (filterConstraints.get(i)[1].equals("start")) {
-                    for (CallRecord callRecord : test) {
+                    for (CallRecord callRecord : filteredData) {
                         Date callDate = sdf.parse(callRecord.getDate());
                         if (callDate.compareTo(date) >= 0) {
-                            test2.add(callRecord);
+                            newData.add(callRecord);
                         }
                     }
                 } else {
-                    for (CallRecord callRecord : test) {
+                    for (CallRecord callRecord : filteredData) {
                         Date callDate = sdf.parse(callRecord.getDate());
                         if (callDate.compareTo(date) <= 0) {
-                            test2.add(callRecord);
+                            newData.add(callRecord);
                         }
                     }
                 }
             }
 
             if (change) {
-                return test2;
+                return newData;
             } else {
-                return test;
+                return filteredData;
             }
         } else {
             return databaseCallsData;
@@ -1263,11 +1263,11 @@ public class MainController {
      */
     @FXML
     protected void importFile() {
-        // New window, where you choose what file to import
+        // New window to choose what file to import
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File importedFile = fileChooser.showOpenDialog(new Stage());
-        // If there is a file selected then the data from that file is transmitted to the database
+        // If there is a file selected then transmit data to the database
         if (importedFile != null) {
             String filePath = importedFile.getPath();
             filePath = filePath.replace("\\", "\\\\");
@@ -1303,13 +1303,13 @@ public class MainController {
         InputStream is;
         try {
             is = new FileInputStream(filePath);
-            // Takes the csv file and deconstructs it
+            // Take the csv file and deconstruct it
             CSVParser shredderOfData = new CSVParser(is);
             shredderOfData.setCommentStart("#;!");
             shredderOfData.setEscapes("nrtf", "\n\r\t\f");
 
-            String currentString;          // currentString is going to hold every single value from file, one at a time
-            int[] tableHeader = new int[10];    // tableHeader will contain the order of callsTable columns that are in the csv file
+            String currentString;
+            int[] tableHeader = new int[10];
             int tableHeaderIndex = 0;
             // used for the alias method
             CallRecord cr = new CallRecord();
@@ -1328,22 +1328,11 @@ public class MainController {
                     if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
                         dateColumnNameException = true;
                     }
-                } else {      //  else Alert pops out.
+                } else {
                     tableHeader[tableHeaderIndex] = alert(currentString);
                 }
                 tableHeaderIndex++;
             }
-            /*
-             * At this moment the columns are set in place.
-             * How? Check if a file column resembles a database column(using regex).
-             * The ones that are unrecognized are sent to the users for future actions
-             * During the checking, all file columns are put in the correct order (database order, or the order on which this method is made)
-             * The discarded columns, get -1 value.
-             * Next step is getting the data from the file
-             * length = the number of file columns
-             * dataCorrectOrder = data from file, put in the correct order
-             * The principle: Iterate thorough the rows of the file, take only the data under the approved columns, and put it in the database
-             */
             ObservableList<CallRecord> dataToDatabase = FXCollections.observableArrayList();
             int length = tableHeaderIndex + 1;
             tableHeaderIndex = 0;
@@ -1354,12 +1343,11 @@ public class MainController {
             }
             dataCorrectOrder[tableHeader[tableHeaderIndex]] = currentString;
             tableHeaderIndex++;
-            while ((currentString = shredderOfData.nextValue()) != null) {       // As long as there is data left in the file
-                // If the current column is approved then the data goes into the correct place
+            while ((currentString = shredderOfData.nextValue()) != null) {
                 if (tableHeader[tableHeaderIndex] != -1) {
                     dataCorrectOrder[tableHeader[tableHeaderIndex]] = currentString;
                 }
-                tableHeaderIndex++;         // Go to the next column
+                tableHeaderIndex++;
                 // If the end of the row was reached, start next row and put the found data into dataToDatabase
                 if (tableHeaderIndex == length - 1) {
                     tableHeaderIndex = 0;
@@ -1376,7 +1364,7 @@ public class MainController {
 
                 }
             }
-            sql.insertCalls(dataToDatabase);  // After getting all data from the file, send it to database
+            sql.insertCalls(dataToDatabase);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1393,51 +1381,51 @@ public class MainController {
      */
     public void importExcel(String filePath) {
         try {
-            FileInputStream fileInputStream = new FileInputStream(new File(filePath)); // Prepares tools to take data from excel
-            Workbook excelWorkbook = getWorkbook(fileInputStream, filePath); // Different versions of Excel require different tools
+            FileInputStream fileInputStream = new FileInputStream(new File(filePath));
+            Workbook excelWorkbook = getWorkbook(fileInputStream, filePath);
             Sheet datatypeSheet = excelWorkbook.getSheetAt(0);
             Iterator<Row> rowIterator = datatypeSheet.iterator();
             boolean dateColumnNameException = false;
-            int databaseColumnIndex;                       // checks if column is recognized by database
-            Cell currentCell;                       // cell with current information
-            int[] tableHeader = new int[10];           // will hold the preferred order of the recognized headers from file
-            int tableHeaderIndex = 0;               // index of tableHeader
-            CallRecord cr = new CallRecord();           // used to call the alias method to recognize headers
-            if (rowIterator.hasNext()) {               // If there is at least 1 row (header row)
+            int databaseColumnIndex;
+            Cell currentCell;
+            int[] tableHeader = new int[10];
+            int tableHeaderIndex = 0;
+            CallRecord cr = new CallRecord();
+            if (rowIterator.hasNext()) {
                 Row currentRow = rowIterator.next();
-                // Makes an iterator for the row (so that you can iterate through it and take the cells)
+
                 Iterator<Cell> cellIterator = currentRow.cellIterator();
-                while (cellIterator.hasNext()) {        // As long as there are unverified elements in the row
-                    currentCell = cellIterator.next();          // Take cell value
+                while (cellIterator.hasNext()) {
+                    currentCell = cellIterator.next();
                     String currentString = String.valueOf(getCellValue(currentCell));
-                    if ((databaseColumnIndex = cr.alias(currentString)) != -1) {       // if name is recognized by database
-                        tableHeader[tableHeaderIndex] = databaseColumnIndex;               // remember order
+                    if ((databaseColumnIndex = cr.alias(currentString)) != -1) {
+                        tableHeader[tableHeaderIndex] = databaseColumnIndex;
                         if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
                             dateColumnNameException = true;
                         }
-                    } else {      // else Alert pops out.
+                    } else {
                         tableHeader[tableHeaderIndex] = alert(String.valueOf(getCellValue(currentCell)));
                     }
                     tableHeaderIndex++;
                 }
             }
-            // stores the data that will be sent to database
+            // Store the data that will be sent to database
             ObservableList<CallRecord> dataToDatabase = FXCollections.observableArrayList();
-            int length = tableHeaderIndex + 1;                      // number of recognized columns
+            int length = tableHeaderIndex + 1;
             tableHeaderIndex = 0;
-            String[] dataElement = new String[length];              // row that goes into data variable
+            String[] dataElement = new String[length];
 
-            while (rowIterator.hasNext()) {                        // As long as there are rows to check
-                Row currentRow = rowIterator.next();                       // Take every single row
-                Iterator<Cell> cellIterator = currentRow.cellIterator();        // Make an iterator for it
-                while (cellIterator.hasNext()) {        // Check for every value in the row
+            while (rowIterator.hasNext()) {
+                Row currentRow = rowIterator.next();
+                Iterator<Cell> cellIterator = currentRow.cellIterator();
+                while (cellIterator.hasNext()) {
                     currentCell = cellIterator.next();
-                    if (tableHeader[tableHeaderIndex] != -1) {      // If recognized column then store it into dataElement
+                    if (tableHeader[tableHeaderIndex] != -1) {
                         dataElement[tableHeader[tableHeaderIndex]] = String.valueOf(getCellValue(currentCell));
                     }
                     tableHeaderIndex++;
                 }
-                tableHeaderIndex = 0;           // Start next row
+                tableHeaderIndex = 0;
                 if (dateColumnNameException) {
                     String[] dateTime = dataElement[2].split("\\s");
                     dateTime[0] = changeDateFormat(dateTime[0]);
@@ -1449,7 +1437,7 @@ public class MainController {
                             dataElement[2], dataElement[3], dataElement[4], dataElement[5]));
                 }
             }
-            sql.insertCalls(dataToDatabase);              // The essential information is sent to database
+            sql.insertCalls(dataToDatabase);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -1517,7 +1505,6 @@ public class MainController {
         columnNames.add(timeColumn.getText());
         columnNames.add(typeColumn.getText());
         columnNames.add(durationColumn.getText());
-
         return columnNames;
     }
 
@@ -1556,6 +1543,7 @@ public class MainController {
 
     /**
      * Identifies the version of Microsoft Excel used for the file, or specifies that the file is not supported
+     *
      * @return the tailored workbook for the file
      */
     private Workbook getWorkbook(FileInputStream inputStream, String filePath) throws IOException {
@@ -1669,7 +1657,7 @@ public class MainController {
      * @return If it returns a number the users decided to use it as an existing column in the database
      */
     public int alert(String fileString) {
-        CallRecord cr = new CallRecord();           // Alias method
+        CallRecord callRecord = new CallRecord();           // Alias method
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Unidentified Column");
         alert.setHeaderText("Column \"" + fileString + "\" is an unidentified column!");
@@ -1693,8 +1681,8 @@ public class MainController {
             result2.ifPresent(column -> {               // Choose and select a column
                 dialog.setSelectedItem(column);
             });
-            if (cr.alias(dialog.getSelectedItem()) != -1) {
-                return cr.alias(dialog.getSelectedItem());
+            if (callRecord.alias(dialog.getSelectedItem()) != -1) {
+                return callRecord.alias(dialog.getSelectedItem());
             } else {
                 return -1;
             }
@@ -1705,6 +1693,7 @@ public class MainController {
 
     /**
      * Log off functionality
+     *
      * @param event
      */
     @FXML
@@ -1727,6 +1716,7 @@ public class MainController {
 
     /**
      * Change the background of application Main Pane
+     *
      * @param event
      */
     @FXML
