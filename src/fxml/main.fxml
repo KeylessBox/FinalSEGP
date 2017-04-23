@@ -173,7 +173,7 @@
                                                 </ImageView>
                                             </graphic>
                                         </MenuItem>
-                                        <MenuItem mnemonicParsing="false" onAction="#Logoff">
+                                        <MenuItem mnemonicParsing="false" onAction="#logoff">
                                             <graphic>
                                                 <ImageView>
                                                     <image>
@@ -472,7 +472,7 @@
                                         <Tooltip text="Add a note" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="notes_bar_settings_btn" blendMode="SCREEN" mnemonicParsing="false" onAction="#notes_settings">
+                                <Button fx:id="notes_bar_settings_btn" blendMode="SCREEN" mnemonicParsing="false" onAction="#openNotesSettings">
                                     <HBox.margin>
                                         <Insets bottom="2.0" left="6.0" />
                                     </HBox.margin>
