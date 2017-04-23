@@ -329,6 +329,7 @@ public class MainController {
 
     /**
      * Identifies the version of Microsoft Excel used for the file, or specifies that the file is not supported
+     *
      * @return the tailored workbook for the file
      */
     private Workbook getWorkbook(FileInputStream inputStream, String filePath)
@@ -498,6 +499,7 @@ public class MainController {
 
     /**
      * Filters the data by the date and filters
+     *
      * @param i variable used recursively, default should be 0
      * @return the filtered data
      * @throws ParseException
@@ -615,6 +617,7 @@ public class MainController {
 
     /**
      * Filters the list, using constraints from the search bar
+     *
      * @param filteredData data to be filtered
      * @return new filtered data
      */
@@ -659,6 +662,7 @@ public class MainController {
 
     /**
      * Filters the list using the filter boxes
+     *
      * @param filteredData data to filter
      * @return the new filtered data
      */
@@ -797,6 +801,7 @@ public class MainController {
 
     /**
      * Loads the cases based on the open toggle, in the left side of the app
+     *
      * @param status Status of the case
      */
     private void loadCases(String status) {
@@ -804,7 +809,7 @@ public class MainController {
         int i = 0;
         for (CaseRecord caseEntry : databaseCasesData) {
             // First case will be shown as default
-            if (i== 0) {
+            if (i == 0) {
                 caseID = Integer.parseInt(caseEntry.getCaseID());
             }
             i++;
@@ -939,6 +944,7 @@ public class MainController {
 
     /**
      * Shows UI Note
+     *
      * @param noteID note to be shown is identified by an id
      * @param parent The icon that is pressed to show the specific note
      */
@@ -1097,7 +1103,7 @@ public class MainController {
      * Filters by phone for victim/suspect
      *
      * @param phoneField Phone area of the filter
-     * @param person The filter itself
+     * @param person     The filter itself
      */
     private void checkPhone(TextField phoneField, Person person) {
         if (phoneField.textProperty().get().isEmpty()) {
@@ -1134,8 +1140,6 @@ public class MainController {
      * Adds a victim filter
      */
     public void addVictim() {
-
-        //TODO add counting A B C D for filters and callsTable view when searching
 
         if (filtersBox.getChildren().size() == 0) {
             filterLetterID = 'A';
@@ -1315,6 +1319,7 @@ public class MainController {
 
     /**
      * Finds the present time
+     *
      * @return the present time
      */
     private String currentTime() {
@@ -1324,6 +1329,7 @@ public class MainController {
 
     /**
      * Checks if any changes has been made to the cases
+     *
      * @return true if a change has been made, false otherwise
      */
     public boolean casesUpdate() {
@@ -1364,6 +1370,7 @@ public class MainController {
 
     /**
      * Checks if any changes has been made to the notes
+     *
      * @return true if a change has been made, false otherwise
      */
     public boolean notesUpdate() {
@@ -1410,6 +1417,7 @@ public class MainController {
 
     /**
      * Checks if any changes has been made to the calls
+     *
      * @return true if a change has been made, false otherwise
      */
     public boolean callsUpdate() {
@@ -1546,6 +1554,7 @@ public class MainController {
 
     /**
      * Data format translator to appease database
+     *
      * @param oldDate Date to be changed (dd/MM/yyyy supported only)
      * @return Data in the new format (yyyy/MM/dd supported)
      */
@@ -1654,7 +1663,7 @@ public class MainController {
             if (filePath.endsWith(".csv")) {
 
                 csvExp.csvOut(filePath, filteredData);
-            //otherwise it checks if the selected extension is pdf, if it is, calls pdfOut method from pdfExport class
+                //otherwise it checks if the selected extension is pdf, if it is, calls pdfOut method from pdfExport class
             } else if (filePath.endsWith(".pdf")) {
 
                 pdfExp.pdfOut(filePath, caseTitle.getText().toString(), filteredData);
@@ -1804,6 +1813,7 @@ public class MainController {
 
     /**
      * Log off functionality
+     *
      * @param event
      */
     @FXML
@@ -1825,64 +1835,45 @@ public class MainController {
     }
 
     @FXML
-    public void a() {
-        String image = MainController.class.getResource("../res/images/background1.jpg").toExternalForm();
-        root.setStyle("-fx-background-image: url('" + image + "');");
+    public void changeBG(ActionEvent event) {
 
-    }
+        String image = "";
 
-    @FXML
-    public void b() {
-        String image = MainController.class.getResource("../res/images/background2.jpg").toExternalForm();
-        root.setStyle("-fx-background-image: url('" + image + "');");
-    }
+        switch (((Control) event.getSource()).getId()) {
+            case "bgA":
+                image = MainController.class.getResource("../res/images/background1.jpg").toExternalForm();
+                break;
+            case "bgB":
+                image = MainController.class.getResource("../res/images/background2.jpg").toExternalForm();
+                break;
+            case "bgC":
+                image = MainController.class.getResource("../res/images/background3.jpg").toExternalForm();
+                break;
+            case "bgD":
+                image = MainController.class.getResource("../res/images/background4.jpg").toExternalForm();
+                break;
+            case "bgE":
+                image = MainController.class.getResource("../res/images/background5.jpg").toExternalForm();
+                break;
+            case "bgF":
+                image = MainController.class.getResource("../res/images/background6.jpg").toExternalForm();
+                break;
+            case "bgG":
+                image = MainController.class.getResource("../res/images/background7.jpg").toExternalForm();
+                break;
+            case "bgH":
+                image = MainController.class.getResource("../res/images/background8.jpg").toExternalForm();
+                break;
+            case "bgJ":
+                image = MainController.class.getResource("../res/images/background9.jpg").toExternalForm();
+                break;
+            case "bgK":
+                image = MainController.class.getResource("../res/images/background10.png").toExternalForm();
+                break;
+        }
 
-    @FXML
-    public void c() {
-        String image = MainController.class.getResource("../res/images/background3.jpg").toExternalForm();
-        root.setStyle("-fx-background-image: url('" + image + "');");
-    }
-
-    @FXML
-    public void d() {
-        String image = MainController.class.getResource("../res/images/background4.jpg").toExternalForm();
-        root.setStyle("-fx-background-image: url('" + image + "');");
-    }
-
-    @FXML
-    public void e() {
-        String image = MainController.class.getResource("../res/images/background5.jpg").toExternalForm();
-        root.setStyle("-fx-background-image: url('" + image + "');");
-    }
-
-    @FXML
-    public void f() {
-        String image = MainController.class.getResource("../res/images/background6.jpg").toExternalForm();
-        root.setStyle("-fx-background-image: url('" + image + "');");
-    }
-
-    @FXML
-    public void g() {
-        String image = MainController.class.getResource("../res/images/background7.jpg").toExternalForm();
         root.setStyle("-fx-background-image: url('" + image + "');");
     }
 
-    @FXML
-    public void h() {
-        String image = MainController.class.getResource("../res/images/background8.jpg").toExternalForm();
-        root.setStyle("-fx-background-image: url('" + image + "');");
-    }
-
-    @FXML
-    public void i() {
-        String image = MainController.class.getResource("../res/images/background9.jpg").toExternalForm();
-        root.setStyle("-fx-background-image: url('" + image + "');");
-    }
-
-    @FXML
-    public void j() {
-        String image = MainController.class.getResource("../res/images/background10.png").toExternalForm();
-        root.setStyle("-fx-background-image: url('" + image + "');");
-    }
 }
 
