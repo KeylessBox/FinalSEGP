@@ -302,7 +302,7 @@ public class MainController {
             ToggleButton editCaseStatus = (ToggleButton) tempPane.getChildren().get(0);
             Button saveBtn = (Button) tempPane.getChildren().get(3);
 
-            // Edit case button
+            // Edit case buttons
             editBtn.setOnAction(event -> {
                 finalCaseEditObject.setLayoutX(260);
                 finalCaseEditObject.setLayoutY(110);
