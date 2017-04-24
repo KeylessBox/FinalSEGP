@@ -115,7 +115,7 @@ public class SignInController {
     void signUp(ActionEvent event) throws IOException {
 
         // Validations
-        if (nameField.getText().length() < 6) {
+        if (nameField.getText().length() < 2) {
 
             if (nameField.getText().length() == 0) {
                 showErrorMessage2("First Name field is empty");
@@ -123,7 +123,7 @@ public class SignInController {
                 showErrorMessage2("First Name is too short");
             }
 
-        } else if (surnameField.getText().length() < 6) {
+        } else if (surnameField.getText().length() < 2) {
 
             if (surnameField.getText().length() == 0) {
                 showErrorMessage2("Last Name field is empty");
@@ -173,7 +173,7 @@ public class SignInController {
     void signIn(ActionEvent event) throws IOException {
 
         // validations for signIn
-        if (usernameField.getText().length() < 6) {
+        if (usernameField.getText().length() < 2) {
 
             if (usernameField.getText().length() == 0) {
                 showErrorMessage("Username field is empty");
@@ -228,7 +228,6 @@ public class SignInController {
                     else write.write("user");
 
                     write.close();
-
 
                     /**
                      * The connection to the main app

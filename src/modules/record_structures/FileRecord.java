@@ -59,7 +59,6 @@ public class FileRecord {
         return data.get();
     }
 
-
     //Setters:
     public void setNoteID(String noteID) {
         caseID.set(noteID);

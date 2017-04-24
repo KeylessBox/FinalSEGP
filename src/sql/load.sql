@@ -22,10 +22,6 @@ CREATE TABLE IF NOT EXISTS calls(id INT PRIMARY KEY AUTO_INCREMENT,
     caseId INT, origin VARCHAR(18), destination VARCHAR(18), date DATE, time TIME, callType VARCHAR(10), duration TIME,
     FOREIGN KEY(caseId) REFERENCES cases(id) ON DELETE CASCADE) ENGINE= InnoDB;
 
-INSERT INTO `accounts`(`name`, `surname`, `email`, `password`, `privileges`) VALUES
-('Angel', 'Juarez', 'a.juarez@wypd.co.uk', 'password', 'user'),
-('', '', '', '', 'user');
-
 INSERT INTO cases(name, details, status, date) VALUES
     ('Cheeky Scar', 'A mass murderer in Essex terrorizes peaceful people','New','2017-02-14 17:52:20'),
     ('Little Rabbit', 'A girl found dead with her rabbit close by', 'New','2017-02-14 17:52:20'),
