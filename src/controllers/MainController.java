@@ -72,7 +72,6 @@ public class MainController {
     private SearchField searchField = new SearchField("");
     private MainTableFactory mainTableFactory = new MainTableFactory();
     private SQL sql = new SQL();
-    private ToggleGroup filterToggleGroup = new ToggleGroup();
     private ToggleSwitch toggleSwitch= new ToggleSwitch();
 
     //fxml elements:
@@ -1356,8 +1355,6 @@ public class MainController {
                     if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
                         dateColumnNameException = true;
                     }
-                } else {
-                    tableHeader[tableHeaderIndex] = alert(currentString);
                 }
                 tableHeaderIndex++;
             }
@@ -1431,8 +1428,6 @@ public class MainController {
                         if (currentString.equals("Start date/time") || currentString.equals("UTC Start Time")) {
                             dateColumnNameException = true;
                         }
-                    } else {
-                        tableHeader[tableHeaderIndex] = alert(String.valueOf(getCellValue(currentCell)));
                     }
                     tableHeaderIndex++;
                 }
@@ -1690,47 +1685,6 @@ public class MainController {
     }
 
     /**
-     * Alert box that asks the users for the importance of some unrecognized columns in the database
-     *
-     * @param fileString The unrecognized column
-     * @return If it returns a number the users decided to use it as an existing column in the database
-     */
-    public int alert(String fileString) {
-        CallRecord callRecord = new CallRecord();           // Alias method
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Unidentified Column");
-        alert.setHeaderText("Column \"" + fileString + "\" is an unidentified column!");
-        alert.setContentText("Do you need this column?");
-
-        ButtonType buttonTypeYes = new ButtonType("Yes");
-        ButtonType buttonTypeCancel = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeCancel);
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == buttonTypeYes) {     // If users selects "Yes" button, a new pop-up asks him the correct column that should be used (if any)
-            List<String> choices = new ArrayList<>();
-            choices.addAll(getColumnNames());
-
-            ChoiceDialog<String> dialog = new ChoiceDialog<>(fromPhoneColumn.getText(), choices);
-            dialog.setTitle("Choose Column");
-            dialog.setHeaderText("Choose fr0m the following columns.");
-            dialog.setHeaderText("If the column is not there, contact University of Bradford");
-            dialog.setContentText("Choose the appropriate column:");
-
-            Optional<String> result2 = dialog.showAndWait();
-            result2.ifPresent(column -> {               // Choose and select a column
-                dialog.setSelectedItem(column);
-            });
-            if (callRecord.alias(dialog.getSelectedItem()) != -1) {
-                return callRecord.alias(dialog.getSelectedItem());
-            } else {
-                return -1;
-            }
-        } else {
-            return -1;
-        }
-    }
-
-    /**
      * Log off functionality
      *
      * @param event
@@ -1858,11 +1812,5 @@ public class MainController {
         newToggleBtn.setToggleGroup(casesToggleGroup);
         doneToggleBtn.setToggleGroup(casesToggleGroup);
     }
-
-    private void setFilterToggleGroup() {
-        unionFilter.setToggleGroup(filterToggleGroup);
-        intersectFilter.setToggleGroup(filterToggleGroup);
-    }
-
 }
 

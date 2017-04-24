@@ -160,8 +160,8 @@ public class SQL {
         Connection connection = dbConnection.connect();
 
         try {
-            String query = "INSERT INTO notes(accountID, caseID, title, date, data) VALUES(" +
-                    noteRecord.getUserID() + "," + noteRecord.getCaseID() + "," + noteRecord.getName() + "," +
+            String query = "INSERT INTO notes(caseID, title, date, data) VALUES(" +
+                    noteRecord.getCaseID() + "," + noteRecord.getName() + "," +
                     noteRecord.getDate() + "," + noteRecord.getData() + ");";
             connection.createStatement().executeUpdate(query);
             connection.close();
