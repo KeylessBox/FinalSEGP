@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -27,10 +28,7 @@ import javafx.stage.Stage;
 import modules.factory.MainTableFactory;
 import modules.file_export.csvExport;
 import modules.file_export.pdfExport;
-import modules.filter.Person;
-import modules.filter.SearchField;
-import modules.filter.Suspect;
-import modules.filter.Victim;
+import modules.filter.*;
 import modules.note.DragResizeMod;
 import modules.note.NoteIcon;
 import modules.record_structures.CallRecord;
@@ -75,6 +73,8 @@ public class MainController {
     private SearchField searchField = new SearchField("");
     private MainTableFactory mainTableFactory = new MainTableFactory();
     private SQL sql = new SQL();
+    private ToggleGroup filterToggleGroup = new ToggleGroup();
+    private ToggleSwitch toggleSwitch= new ToggleSwitch();
 
     //fxml elements:
     @FXML
@@ -85,6 +85,8 @@ public class MainController {
     protected VBox casesBox;
     @FXML
     protected HBox filtersBox;
+    @FXML
+    protected HBox filters_bar;
     @FXML
     protected ScrollPane notesSPane;
     @FXML
@@ -123,7 +125,10 @@ public class MainController {
     protected Label caseTitle;
     @FXML
     protected Label numOfRows;
-
+    @FXML
+    protected ToggleButton intersectFilter;
+    @FXML
+    protected ToggleButton unionFilter;
     // Load and Initialise Elements:
 
     /**
@@ -174,6 +179,9 @@ public class MainController {
         loadCases();
         loadTable(caseID);
         loadFiles(caseID);
+
+        Pane toggleSwitchPane = (Pane)filters_bar.getChildren().get(2);
+        toggleSwitchPane.getChildren().add(toggleSwitch);
     }
 
     /**
@@ -217,6 +225,7 @@ public class MainController {
             // First case will be shown as default
             if (i == 0) {
                 caseID = Integer.parseInt(caseEntry.getCaseID());
+                caseTitle.setText(caseEntry.getName());
             }
             i++;
             try {
@@ -293,7 +302,7 @@ public class MainController {
             ToggleButton editCaseStatus = (ToggleButton) tempPane.getChildren().get(0);
             Button saveBtn = (Button) tempPane.getChildren().get(3);
 
-            // Edit case button
+            // Edit case buttons
             editBtn.setOnAction(event -> {
                 finalCaseEditObject.setLayoutX(260);
                 finalCaseEditObject.setLayoutY(110);
@@ -629,9 +638,9 @@ public class MainController {
             nameField.textProperty().addListener((observable, oldValue, newValue) -> {
                 for (int i = 0; i < filterID; i++) {
                     if (filterConstraints.get(i)[0].equals(victim)) {
-                        Suspect newSuspect = (Suspect) filterConstraints.get(i)[0];
-                        newSuspect.setIdentifier(nameField.getText());
-                        filterConstraints.get(i)[0] = newSuspect;
+                        Victim newVictim = (Victim) filterConstraints.get(i)[0];
+                        newVictim.setIdentifier(nameField.getText());
+                        filterConstraints.get(i)[0] = newVictim;
                     }
                 }
             });
@@ -979,7 +988,7 @@ public class MainController {
             for (int i = 0; i < filterID; i++) {
                 System.out.println(filterConstraints.get(i)[0]);
             }
-            if (filtersBox.getChildren().size() == 2) {
+            if (toggleSwitch.switchedOnProperty().getValue()) {
                 filteredData = filterSearch(filter(0));
             } else {
                 filteredData = filterSearch(filterPhone(filterDates(0)));
@@ -1818,6 +1827,11 @@ public class MainController {
         allToggleBtn.setToggleGroup(casesToggleGroup);
         newToggleBtn.setToggleGroup(casesToggleGroup);
         doneToggleBtn.setToggleGroup(casesToggleGroup);
+    }
+
+    private void setFilterToggleGroup() {
+        unionFilter.setToggleGroup(filterToggleGroup);
+        intersectFilter.setToggleGroup(filterToggleGroup);
     }
 
 }
