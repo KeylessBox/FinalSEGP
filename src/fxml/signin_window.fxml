@@ -139,7 +139,7 @@
             <Tooltip text="Go to the Create Account menu"/>
         </tooltip>
     </Button>
-    <Button layoutX="143.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeToSignIn" prefHeight="25.0"
+    <Button fx:id="createAccBtn" layoutX="143.0" layoutY="17.0" mnemonicParsing="false" onAction="#changeToSignIn" prefHeight="25.0"
             prefWidth="142.0" styleClass="button_createAccount" stylesheets="@../css/sign_window.css">
         <tooltip>
             <Tooltip text="Go to the Sign In Account menu"/>

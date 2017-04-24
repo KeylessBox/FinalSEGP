@@ -1,5 +1,6 @@
 package controllers;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,8 +10,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import modules.record_structures.UserRecord;
 import sql.Account;
 import sql.LoginDB;
+import sql.SQL;
 
 import java.io.*;
 import java.util.Timer;
@@ -22,6 +25,7 @@ import java.util.TimerTask;
  */
 public class SignInController {
 
+    SQL sql = new SQL();
     //fxml elements:
     @FXML
     private Pane signUpPane;
@@ -46,6 +50,8 @@ public class SignInController {
     @FXML
     private TextField usernameField;
     @FXML
+    private Button createAccBtn;
+    @FXML
     private Button signUp;
     @FXML
     private CheckBox remember;
@@ -57,6 +63,11 @@ public class SignInController {
      */
     @FXML
     public void initialize() {
+
+        ObservableList<UserRecord> userRecords = sql.loadUsers();
+        if (userRecords.size() > 1) {
+            createAccBtn.setVisible(false);
+        }
         try (FileReader fileReader = new FileReader(new File("res/users/Account.dat"));
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String user = bufferedReader.readLine();
