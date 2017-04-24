@@ -40,7 +40,7 @@
                     <children>
                         <MenuBar depthTest="DISABLE" layoutX="-2.0" layoutY="1.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="42.0" prefWidth="135.0">
                             <menus>
-                                <Menu fx:id="settings_btn" mnemonicParsing="false">
+                                <Menu fx:id="settings_btn" mnemonicParsing="false" visible="false">
                                     <graphic>
                                         <ImageView fx:id="settings_view" fitHeight="15.0" fitWidth="15.0" layoutX="1710.0" layoutY="8.0">
                                             <image>
@@ -88,7 +88,7 @@
                                         </ImageView>
                                     </graphic>
                                     <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#openComingSoon">
+                                        <MenuItem mnemonicParsing="false" onAction="#openComingSoon" visible="false">
                                             <graphic>
                                                 <ImageView>
                                                     <image>
@@ -106,7 +106,7 @@
                                                 </ImageView>
                                             </graphic>
                                         </MenuItem>
-                                        <MenuItem mnemonicParsing="false" onAction="#openExtra">
+                                        <MenuItem mnemonicParsing="false" onAction="#openExtra" visible="false">
                                             <graphic>
                                                 <ImageView>
                                                     <image>
@@ -117,7 +117,7 @@
                                         </MenuItem>
                                     </items>
                                 </Menu>
-                                <Menu fx:id="search_btn" mnemonicParsing="false">
+                                <Menu fx:id="search_btn" mnemonicParsing="false" visible="false">
                                     <graphic>
                                         <ImageView fx:id="search_view" fitHeight="15.0" fitWidth="15.0">
                                             <image>
@@ -155,7 +155,7 @@
                                         </ImageView>
                                     </graphic>
                                     <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#openSettings">
+                                        <MenuItem mnemonicParsing="false" onAction="#openSettings" visible="false">
                                             <graphic>
                                                 <ImageView>
                                                     <image>

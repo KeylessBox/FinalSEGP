@@ -109,7 +109,7 @@
                 </font>
             </TextField>
             <CheckBox fx:id="remember" layoutX="43.0" layoutY="265.0" mnemonicParsing="false" prefHeight="25.0"
-                      prefWidth="202.0" text="Remeber user details" textFill="#726e6e">
+                      prefWidth="202.0" text="Remember user details" textFill="#726e6e">
                 <font>
                     <Font size="16.0"/>
                 </font>
