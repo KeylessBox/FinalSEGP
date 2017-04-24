@@ -151,7 +151,7 @@ public class SignInController {
             /**
              * Only if all data input is correct create a new account
              */
-            Account.createAccount(nameField.getText(), surnameField.getText(), emailField.getText(), passwordField.getText(), "administrator");
+            Account.createAccount(nameField.getText(), surnameField.getText(), emailField.getText(), passwordField.getText(), "admin");
             usernameField.setText(emailField.getText());
             passwordField2.setText("");
             remember.setSelected(false);
