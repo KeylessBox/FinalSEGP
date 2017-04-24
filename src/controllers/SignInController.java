@@ -59,7 +59,7 @@ public class SignInController {
     public String user = "";
 
     /**
-     * Intilialize the SignIn controller
+     * Initialize the SignIn controller
      */
     @FXML
     public void initialize() {
