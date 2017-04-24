@@ -1,3 +1,6 @@
+CREATE DATABASE investigationsdb;
+USE investigationsdb;
+
 DROP TABLE IF EXISTS notes, calls, phoneNumbers, cases, users, accounts;
 
 CREATE TABLE `accounts` (id INT PRIMARY KEY AUTO_INCREMENT,
