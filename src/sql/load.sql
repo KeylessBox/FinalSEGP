@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS notes, calls, phoneNumbers, emailAddresses, houseAddresses, people, cases, users, accounts;
+DROP TABLE IF EXISTS notes, calls, phoneNumbers, cases, users, accounts;
 
 CREATE TABLE `accounts` (id INT PRIMARY KEY AUTO_INCREMENT,
   `name` tinytext,
@@ -9,27 +9,14 @@ CREATE TABLE `accounts` (id INT PRIMARY KEY AUTO_INCREMENT,
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS cases(id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(35),
-    details VARCHAR(255), status ENUM ('New','Done'), date DATETIME DEFAULT NULL ) ENGINE= InnoDB;
+    name VARCHAR(35), details VARCHAR(255), status ENUM ('New','Done'), date DATETIME DEFAULT NULL ) ENGINE= InnoDB;
 
 CREATE TABLE IF NOT EXISTS notes(id INT PRIMARY KEY AUTO_INCREMENT,
     caseID INT, title VARCHAR(100), date DATE, data VARCHAR(255),
     FOREIGN KEY(caseID) REFERENCES cases(id) ON DELETE CASCADE) ENGINE= InnoDB;
 
-CREATE TABLE IF NOT EXISTS people(Id INT PRIMARY KEY AUTO_INCREMENT,
-    firstName VARCHAR(35) DEFAULT NULL, lastName VARCHAR(35) DEFAULT NULL, gender ENUM ('m','f'), dayOfBirth TINYINT DEFAULT NULL,
-    monthOfBirth TINYINT DEFAULT NULL, yearOfBirth SMALLINT DEFAULT NULL, dateOfBirth DATE DEFAULT NULL) ENGINE= InnoDB;
-
-CREATE TABLE IF NOT EXISTS houseAddresses(Id INT PRIMARY KEY AUTO_INCREMENT,
-    personID INT, houseNumber VARCHAR(5), streetName VARCHAR(35), town VARCHAR(35), county VARCHAR(35), postCode VARCHAR(8), country VARCHAR(20),
-    FOREIGN KEY(personID) REFERENCES people(id) ON DELETE CASCADE) ENGINE= InnoDB;
-
 CREATE TABLE IF NOT EXISTS phoneNumbers(id INT PRIMARY KEY AUTO_INCREMENT,
     personName VARCHAR(80), phoneNumber VARCHAR(18)) ENGINE= InnoDB;
-
-CREATE TABLE IF NOT EXISTS emailAddresses(id INT PRIMARY KEY AUTO_INCREMENT,
-    personID INT, emailAddress VARCHAR(78),
-    FOREIGN KEY(personID) REFERENCES people(id) ON DELETE CASCADE) ENGINE= InnoDB;
 
 CREATE TABLE IF NOT EXISTS calls(id INT PRIMARY KEY AUTO_INCREMENT,
     caseId INT, origin VARCHAR(18), destination VARCHAR(18), date DATE, time TIME, callType VARCHAR(10), duration TIME,
@@ -48,26 +35,6 @@ INSERT INTO cases(name, details, status, date) VALUES
     ('Forest trail', 'Description', 'Done','2017-02-14 17:52:20'),
     ('Donuts of skin', 'Description', 'Done','2017-02-14 17:52:20'),
     ('Python in the house', 'Description', 'Done','2017-02-14 17:52:20');
-
-
-INSERT INTO people(firstName, lastName, gender, dayOfBirth, monthOfBirth, yearOfBirth, dateOfBirth) VALUES
-    ('Spencer','Blackburn','M','10','12','1936', '1936/12/10'),
-    ('Jack','Sullivan','M','02','08','1949', '1949/08/02'),
-    ('Cameron','Cole','M','17','01','1973', '1973/01/17'),
-    ('Elizabeth','Powell','F','19','10','1995', '1995/10/19'),
-    ('Mason','Berry','M','08','01','1993', '1993/01/08'),
-    ('Ben','Clark','M','18','01','1983', '1983/01/18');
-
-
-
-INSERT INTO houseAddresses(personId, houseNumber, streetName, town, county, postCode, country) VALUES
-    (1,'16','Kendell Street','SHEFFORD WOODLANDS','West Berkshire','RG17 1XY', 'England'),
-    (2,'36','Broad Street','LOWER GODNEY','Somerset','BA5 0QP', 'England'),
-    (3,'62','Town Lane','SOUGHTON','Clwyd','CH7 5LL', 'Wales'),
-    (4,'45','Mill Lane','CORNTOWN','South Glamorgan','CF35 0FY', 'Wales'),
-    (5,'89','Gloucester Road','CLASHBAN','Scotland','CF35 0FY', 'Scotland'),
-    (6,'38','Fraserburgh Rd','LICKEY END','Worcestershire','B60 3XH', 'England');
-
 
 INSERT INTO phoneNumbers (personName, phoneNumber) VALUES
     ('Spencer Blackburn','078 0680 1334'),
