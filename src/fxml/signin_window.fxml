@@ -31,15 +31,6 @@
                     <Font name="Calibri Light" size="18.0"/>
                 </font>
             </PasswordField>
-            <Button layoutX="314.0" layoutY="290.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0"
-                    styleClass="button_sign" text="SHOW" textFill="WHITE">
-                <font>
-                    <Font name="Calibri" size="12.0"/>
-                </font>
-                <tooltip>
-                    <Tooltip text="Show hidden password"/>
-                </tooltip>
-            </Button>
             <TextField id="textfield" fx:id="emailField" layoutX="95.0" layoutY="242.0" prefHeight="36.0" prefWidth="219.0"
                        promptText="Email or ID">
                 <font>
