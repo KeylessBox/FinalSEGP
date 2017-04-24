@@ -111,15 +111,6 @@
                     <Font name="Calibri Light" size="18.0"/>
                 </font>
             </PasswordField>
-            <Button layoutX="314.0" layoutY="204.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0"
-                    styleClass="button_sign" text="SHOW" textFill="WHITE">
-                <font>
-                    <Font name="Calibri" size="12.0"/>
-                </font>
-                <tooltip>
-                    <Tooltip text="Show the hidden password"/>
-                </tooltip>
-            </Button>
             <TextField id="textfield" fx:id="usernameField" layoutX="81.0" layoutY="155.0" prefHeight="36.0"
                        prefWidth="219.0" promptText="Email or ID">
                 <font>
@@ -139,16 +130,6 @@
                 </font>
                 <tooltip>
                     <Tooltip text="Sign In into account"/>
-                </tooltip>
-            </Button>
-            <Button alignment="BOTTOM_LEFT" layoutX="29.0" layoutY="362.0" mnemonicParsing="false" onAction="#forget"
-                    prefHeight="25.0" prefWidth="202.0" styleClass="button_forget" text="Forget your password?"
-                    textFill="#616161">
-                <font>
-                    <Font name="Calibri Bold" size="18.0"/>
-                </font>
-                <tooltip>
-                    <Tooltip text="Restore the password"/>
                 </tooltip>
             </Button>
             <Label fx:id="errorMessage" layoutX="43.0" layoutY="115.0" prefHeight="36.0" prefWidth="342.0" text=""

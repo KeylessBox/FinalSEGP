@@ -155,14 +155,6 @@ public class SignInController {
     }
 
     /**
-     * Forget the user details
-     */
-    @FXML
-    void forget() {
-        showErrorMessage("Your users details send to emailField");
-    }
-
-    /**
      * Sign In controller
      * Includes input validations
      * Saving user option

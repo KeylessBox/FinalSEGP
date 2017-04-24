@@ -1,8 +1,5 @@
 package sql;
 
-/**
- * Created by AndreiM on 2/3/2017.
- */
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,14 +17,14 @@ import java.util.Date;
 
 
 /**
- * Created by Aleksandr on 24-Oct-16.
+ * MySql queries
  */
 public class SQL {
 
-    int maxIDCall = 1;
-    int maxIDNote = 1;
-    int maxIDCase = 1;
-    int maxUserID = 1;
+    private int maxIDCall = 1;
+    private int maxIDNote = 1;
+    private int maxIDCase = 1;
+    private int maxUserID = 1;
 
     /**
      * Connection with MYSQL database
@@ -35,17 +32,15 @@ public class SQL {
     private DBConnection dbConnection = new DBConnection();
 
     /**
-     * Load students records from database
+     * Loads call records from database
      *
-     * @return ObservableList<StudentRecord>
+     * @return List with calls
      */
     public ObservableList<CallRecord> loadCalls(int caseID) {
 
         Connection connection = dbConnection.connect();
         ObservableList<CallRecord> data = FXCollections.observableArrayList();
-
         try {
-
             //execute query and store result in a result SET:
             ResultSet callsRS = connection.createStatement().executeQuery("SELECT * FROM calls WHERE caseId = " + caseID);
 
@@ -89,6 +84,11 @@ public class SQL {
         return data;
     }
 
+    /**
+     * Loads case records from database
+     *
+     * @return List with cases
+     */
     public ObservableList<CaseRecord> loadCases() {
         maxIDCase = 1;
         Connection connection = dbConnection.connect();
@@ -116,74 +116,17 @@ public class SQL {
         return data;
     }
 
-    public void addCase(CaseRecord cr) {
+    /**
+     * Query to add a case to database
+     * @param caseRecord
+     */
+    public void addCase(CaseRecord caseRecord) {
 
         Connection connection = dbConnection.connect();
-
         try {
-
-            String s = "INSERT INTO cases(name, details, status, date)" +
-                    " VALUES( '" + cr.getName() + "','" + cr.getDetails() + "','" +
-                    cr.getStatus() + "','" + cr.getDate() + "');";
-            System.out.println(s);
-            connection.createStatement().executeUpdate(s);
-            connection.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    public int getMaxCaseId(String s) {
-        Connection connection = dbConnection.connect();
-        int caseId = -1;
-
-        try {
-            //execute query and store result in a result SET:
-            ResultSet caseRS = connection.createStatement().executeQuery("SELECT id FROM cases WHERE date =\"" + s + "\"");
-            if (caseRS.next()) {
-                caseId = (caseRS.getInt(1));
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-
-        }
-        return caseId;
-    }
-
-    public int getUserID(String s) {
-        Connection connection = dbConnection.connect();
-        int userId = -1;
-
-        try {
-            //execute query and store result in a result SET:
-            ResultSet caseRS = connection.createStatement().executeQuery("SELECT id FROM accounts WHERE name ='" + s + "'");
-            System.out.println("SELECT id FROM Users Where Name ='" + s + "'");
-            if (caseRS.next()) {
-                userId = (caseRS.getInt(0));
-                System.out.println("UserID inside getUserID sql" + userId);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-
-        }
-        return userId;
-    }
-
-    public void updateNote(String data, String noteId) {
-        Connection connection = dbConnection.connect();
-
-        try {
-            String query = ("UPDATE notes SET data ='" + data +
-                    "' WHERE id='" + noteId + "';");
-            System.out.println(query);
+            String query = "INSERT INTO cases(name, details, status, date)" +
+                    " VALUES( '" + caseRecord.getName() + "','" + caseRecord.getDetails() + "','" +
+                    caseRecord.getStatus() + "','" + caseRecord.getDate() + "');";
             connection.createStatement().executeUpdate(query);
             connection.close();
         } catch (SQLException ex) {
@@ -191,14 +134,35 @@ public class SQL {
         }
     }
 
-    public void insertFile(FileRecord nr) {
+    /**
+     * Updates a note from the database
+     * @param data New body data to replace the old data
+     * @param noteId note that is changed
+     */
+    public void updateNote(String data, String noteId) {
+        Connection connection = dbConnection.connect();
+
+        try {
+            String query = ("UPDATE notes SET data ='" + data +
+                    "' WHERE id='" + noteId + "';");
+            connection.createStatement().executeUpdate(query);
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Add note to database
+     * @param noteRecord
+     */
+    public void addNote(FileRecord noteRecord) {
         Connection connection = dbConnection.connect();
 
         try {
             String query = "INSERT INTO notes(accountID, caseID, title, date, data) VALUES(" +
-                    nr.getUserID() + "," + nr.getCaseID() + "," + nr.getName() + "," +
-                    nr.getDate() + "," + nr.getData() + ");";
-            System.out.println(query);
+                    noteRecord.getUserID() + "," + noteRecord.getCaseID() + "," + noteRecord.getName() + "," +
+                    noteRecord.getDate() + "," + noteRecord.getData() + ");";
             connection.createStatement().executeUpdate(query);
             connection.close();
         } catch (SQLException ex) {
@@ -239,7 +203,7 @@ public class SQL {
     }
 
     /**
-     * Loads the note record from the database
+     * Loads a specifc note from the database
      *
      * @param noteID
      * @return
@@ -273,7 +237,7 @@ public class SQL {
     /**
      * Removes a note from the database with the given ID
      *
-     * @param idNote
+     * @param idNote the id of the note to be removed
      */
     public void removeNote(int idNote) {
         Connection connection = dbConnection.connect();
@@ -304,24 +268,7 @@ public class SQL {
     }
 
     /**
-     * Check if String is an integer
-     *
-     * @param data
-     * @return
-     */
-    public static boolean isInteger(String data) {
-        try {
-            Integer.parseInt(data);
-        } catch (NumberFormatException e) {
-            return false;
-        } catch (NullPointerException e) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Insert lots of calls from file probably
+     * Adds calls to database
      *
      * @param data
      */
@@ -331,6 +278,11 @@ public class SQL {
         }
     }
 
+    /**
+     * Translates the mysql format to dd/MM/yyyy format
+     * @param oldDate date whose format is changed
+     * @return date with the new format
+     */
     private String changeDateFormat(String oldDate) {
         String oldFormat = "yyyy-MM-dd";
         String newFormat = "dd/MM/yyyy";
@@ -348,20 +300,16 @@ public class SQL {
     /**
      * Inserts default call to database
      */
-    public void addCall(CallRecord cr) {
-
+    public void addCall(CallRecord callRecord) {
         Connection connection = dbConnection.connect();
-
         try {
             connection.createStatement().executeUpdate("INSERT INTO calls(caseId, origin, destination, date, time, callType, duration)\n" +
-                    "VALUES(" + cr.getCaseID() + ",'" + cr.getOrigin() + "','" + cr.getDestination() + "','" +
-                    cr.getDate() + "','" + cr.getTime() + "','" + cr.getCallType() + "','" + cr.getDuration() + "');");
+                    "VALUES(" + callRecord.getCaseID() + ",'" + callRecord.getOrigin() + "','" + callRecord.getDestination() + "','" +
+                    callRecord.getDate() + "','" + callRecord.getTime() + "','" + callRecord.getCallType() + "','" + callRecord.getDuration() + "');");
             connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
-                    "(' ','" + cr.getOrigin() + "');");
+                    "(' ','" + callRecord.getOrigin() + "');");
             connection.createStatement().executeUpdate("INSERT INTO phoneNumbers(personName, phoneNumber) VALUES" +
-                    "(' ','" + cr.getDestination() + "');");
-//            connection.createStatement().executeUpdate("DELETE n1 FROM phoneNumbers n1, phoneNumbers n2 " +
-//                    "WHERE n1.id > n2.id AND n1.phoneNumber = n2.phoneNumber");
+                    "(' ','" + callRecord.getDestination() + "');");
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -371,14 +319,13 @@ public class SQL {
     /**
      * Removes a specific call from the database
      *
-     * @param id
+     * @param callId
      */
-    public void removeCall(int id) {
+    public void removeCall(int callId) {
 
         Connection connection = dbConnection.connect();
-
         try {
-            connection.createStatement().executeUpdate("DELETE FROM `calls` WHERE id = " + id);
+            connection.createStatement().executeUpdate("DELETE FROM `calls` WHERE id = " + callId);
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -386,7 +333,7 @@ public class SQL {
     }
 
     /**
-     * remove the Case selected
+     * Eemoves the Case selected
      *
      * @param caseID
      */
@@ -401,7 +348,7 @@ public class SQL {
     }
 
     /**
-     * Edits the database when the users edits a cell in the callsTable
+     * Edits the database when the users edit a cell in the callsTable
      *
      * @param id         CallID (unique paramater of the calls) so that there aren't any duplicates
      * @param columnName Where in the specific row the change is made
@@ -417,6 +364,11 @@ public class SQL {
         }
     }
 
+    /**
+     * Edits the database when users
+     * @param oldValue
+     * @param newValue
+     */
     public void editCellNumber(String oldValue, String newValue) {
         Connection connection = dbConnection.connect();
         try {
@@ -438,7 +390,11 @@ public class SQL {
         }
     }
 
-
+    /**
+     * Updates case name
+     * @param caseId
+     * @param change
+     */
     public void updateCaseName(int caseId, String change) {
         Connection connection = dbConnection.connect();
 
@@ -450,6 +406,11 @@ public class SQL {
         }
     }
 
+    /**
+     * Updates case status
+     * @param caseId
+     * @param change
+     */
     public void updateCaseStatus(int caseId, String change) {
         Connection connection = dbConnection.connect();
         try {
@@ -460,17 +421,11 @@ public class SQL {
         }
     }
 
-    public void updateCaseFile(int id, String change) {
-        Connection connection = dbConnection.connect();
-
-        try {
-            connection.createStatement().executeUpdate("UPDATE notes SET title= '" + change + "' WHERE id =" + id);
-            connection.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-
+    /**
+     * Updates the last accessed date of a case
+     * @param id
+     * @param change
+     */
     public void updateDate(int id, String change) {
         Connection connection = dbConnection.connect();
 
@@ -482,6 +437,10 @@ public class SQL {
         }
     }
 
+    /**
+     * Removes all notes from a case
+     * @param caseID
+     */
     public void removeNotes(int caseID) {
         Connection connection = dbConnection.connect();
 
@@ -493,6 +452,10 @@ public class SQL {
         }
     }
 
+    /**
+     * Loads all users from database
+     * @return list of users
+     */
     public ObservableList<UserRecord> loadUsers() {
         Connection connection = dbConnection.connect();
         ObservableList<UserRecord> data = FXCollections.observableArrayList();
@@ -520,6 +483,12 @@ public class SQL {
         return data;
     }
 
+    /**
+     * Edits user related information
+     * @param id
+     * @param columnName
+     * @param change
+     */
     public void editUserCell(int id, String columnName, String change) {
         Connection connection = dbConnection.connect();
         try {
@@ -530,17 +499,25 @@ public class SQL {
         }
     }
 
-    public void removeUser(int id) {
+    /**
+     * Deletes a user from database
+     * @param userId
+     */
+    public void removeUser(int userId) {
         Connection connection = dbConnection.connect();
 
         try {
-            connection.createStatement().executeUpdate("DELETE FROM `accounts` WHERE id = " + id);
+            connection.createStatement().executeUpdate("DELETE FROM `accounts` WHERE id = " + userId);
             connection.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
 
+    /**
+     * Adds a user to database
+     * @param cr
+     */
     public void addUser(UserRecord cr) {
         Connection connection = dbConnection.connect();
 

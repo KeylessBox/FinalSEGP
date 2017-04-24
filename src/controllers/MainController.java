@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -64,7 +63,7 @@ public class MainController {
     private static List<Object[]> filterConstraints = new ArrayList<>();
 
     //counters:
-    private int caseID = 1;
+    private int caseID;
     private char filterLetterID = 'A';
     private static int filterID = 0;
 
@@ -177,9 +176,13 @@ public class MainController {
 
         // Initialize data to their designated place
         loadCases();
+        if (databaseCasesData.get(0) != null) {
+            CaseRecord caseEntry = databaseCasesData.get(0);
+            caseID = Integer.parseInt(caseEntry.getCaseID());
+            caseTitle.setText(caseEntry.getName());
+        }
         loadTable(caseID);
         loadFiles(caseID);
-
         Pane toggleSwitchPane = (Pane)filters_bar.getChildren().get(2);
         toggleSwitchPane.getChildren().add(toggleSwitch);
     }
@@ -220,14 +223,8 @@ public class MainController {
      */
     private void loadCases(String status) {
         HBox CaseObject = null;
-        int i = 0;
         for (CaseRecord caseEntry : databaseCasesData) {
             // First case will be shown as default
-            if (i == 0) {
-                caseID = Integer.parseInt(caseEntry.getCaseID());
-                caseTitle.setText(caseEntry.getName());
-            }
-            i++;
             try {
                 CaseObject = (HBox) FXMLLoader.load(getClass().getResource("/fxml/case.fxml")); // Case object loads the fxml, with its nodes
             } catch (IOException e1) {
@@ -261,7 +258,9 @@ public class MainController {
                 String date = currentTime();
                 int id = Integer.valueOf(finalCaseObj.getId());
                 caseTitle.setText(caseEntry.getName());
+                System.out.println("Id " + id + " caseID " + caseID);
                 caseID = id;
+                System.out.println("Id " + id + " caseID " + caseID);
                 loadTable(caseID);
                 loadFiles(caseID);
                 sql.updateDate(caseID, date);
@@ -415,7 +414,6 @@ public class MainController {
     }
 
     // Update Elements:
-
     /**
      * Checks if any changes has been made to the cases
      *
@@ -559,7 +557,7 @@ public class MainController {
      * Refresh button functionality
      */
     public void update() {
-        String updateMessage = "UPDATE IN (";
+        String updateMessage = "UPDATE IN ( ";
         if (casesUpdate()) {
             updateMessage += " CASES";
             loadCases();
@@ -759,7 +757,7 @@ public class MainController {
 
         FileRecord nr = new FileRecord("\"" + (sql.getMaxIDNote()) + "\"", "" + 1 + "", "" + caseID + "",
                 "\"" + "Case file" + "\"", "\"" + LocalDate.now() + "\"", "\" \"");
-        sql.insertFile(nr);
+        sql.addNote(nr);
         loadFiles(caseID);
     }
 
