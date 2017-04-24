@@ -37,12 +37,16 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import sql.DBConnection;
 import sql.SQL;
 
 import java.awt.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -326,10 +330,21 @@ public class MainController {
 
             // delete Case button
             deleteCaseBtn.setOnAction(event -> {
-                sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
-                casesBox.getChildren().remove(finalCaseObj);
-                loadCases();
-            });
+                
+                // Prompts a confirmation window so the user can not delete a case by a missclick
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText("Confirm Delete Action");
+                alert.setContentText("Are you sure you want to delete \"" + caseName.getText() + "\" case?");
+
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    sql.removeCase(Integer.valueOf(finalCaseObj.getId()));
+                    casesBox.getChildren().remove(finalCaseObj);
+                    loadCases();
+
+
+            }});
             if (caseEntry.getStatus().equals("New")) {
                 caseStatus.setText("New");
             } else {
