@@ -30,15 +30,15 @@ public class ToggleSwitch extends Parent {
     }
 
     public ToggleSwitch() {
-        Rectangle background = new Rectangle(56, 28);
-        background.setArcWidth(28);
-        background.setArcHeight(28);
+        Rectangle background = new Rectangle(40, 20);
+        background.setArcWidth(20);
+        background.setArcHeight(20);
         background.setFill(Color.WHITE);
         background.setStroke(Color.LIGHTGRAY);
 
-        Circle trigger = new Circle(14);
-        trigger.setCenterX(14);
-        trigger.setCenterY(14);
+        Circle trigger = new Circle(10);
+        trigger.setCenterX(10);
+        trigger.setCenterY(10);
         trigger.setFill(Color.WHITE);
         trigger.setStroke(Color.LIGHTGRAY);
 
@@ -53,7 +53,7 @@ public class ToggleSwitch extends Parent {
 
         switchedOn.addListener((obs, oldState, newState) -> {
             boolean isOn = newState.booleanValue();
-            translateAnimation.setToX(isOn ? 56 - 28 : 0);
+            translateAnimation.setToX(isOn ? 40 - 20 : 0);
             fillAnimation.setFromValue(isOn ? Color.WHITE : Color.LIGHTGREEN);
             fillAnimation.setToValue(isOn ? Color.LIGHTGREEN : Color.WHITE);
 

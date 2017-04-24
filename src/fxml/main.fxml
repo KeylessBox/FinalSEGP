@@ -293,9 +293,9 @@
                                             <children>
                                                 <Pane minHeight="27.0" minWidth="80.0" prefHeight="27.0" prefWidth="76.0" />
                                                 <Region prefHeight="28.0" prefWidth="1226.0" />
-                                                <Pane prefHeight="28.0" prefWidth="46.0">
+                                                <Pane prefHeight="13.0" prefWidth="40.0">
                                        <HBox.margin>
-                                          <Insets right="10.0" />
+                                          <Insets right="10.0" top="5.0" />
                                        </HBox.margin>
                                        <padding>
                                           <Insets right="5.0" />
