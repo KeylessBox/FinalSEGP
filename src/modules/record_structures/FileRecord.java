@@ -25,6 +25,15 @@ public class FileRecord {
         this.data = new SimpleStringProperty(data);
     }
 
+    public FileRecord(String noteID, String caseID, String title, String date, String data) {
+        this.noteID = new SimpleStringProperty(noteID);
+        this.userID = null;
+        this.caseID = new SimpleStringProperty(caseID);
+        this.title = new SimpleStringProperty(title);
+        this.date = new SimpleStringProperty(date);
+        this.data = new SimpleStringProperty(data);
+    }
+
     //Getters:
     public String getNoteID() {
         return noteID.get();

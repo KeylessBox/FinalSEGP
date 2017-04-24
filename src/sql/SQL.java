@@ -188,7 +188,7 @@ public class SQL {
                 if (Integer.parseInt(caseRS.getString(1)) > maxIDNote) {
                     maxIDNote = Integer.parseInt(caseRS.getString(1));
                 }
-                data.add(new FileRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4), caseRS.getString(5), caseRS.getString(6)));
+                data.add(new FileRecord(caseRS.getString(1), caseRS.getString(2), caseRS.getString(3), caseRS.getString(4), caseRS.getString(5)));
             }
             maxIDNote = 1;
         } catch (Exception ex) {
@@ -220,7 +220,7 @@ public class SQL {
                 if (Integer.parseInt(noteRS.getString(1)) > maxIDNote) {
                     maxIDNote = Integer.parseInt(noteRS.getString(1));
                 }
-                data.add(new FileRecord(noteRS.getString(1), noteRS.getString(2), noteRS.getString(3), noteRS.getString(4), noteRS.getString(5), noteRS.getString(6)));
+                data.add(new FileRecord(noteRS.getString(1), noteRS.getString(2), noteRS.getString(3), noteRS.getString(4), noteRS.getString(5)));
             }
             maxIDNote = 1;
         } catch (Exception ex) {
@@ -467,7 +467,6 @@ public class SQL {
             while (usersRS.next()) {
                 if (Integer.parseInt(usersRS.getString(1)) > maxUserID) {
                     maxUserID = Integer.parseInt(usersRS.getString(1));
-                    System.out.println(maxUserID);
                 }
                 data.add(new UserRecord(usersRS.getString(1), usersRS.getString(2),
                         usersRS.getString(3),

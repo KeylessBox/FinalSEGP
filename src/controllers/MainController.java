@@ -127,10 +127,7 @@ public class MainController {
     protected Label caseTitle;
     @FXML
     protected Label numOfRows;
-    @FXML
-    protected ToggleButton intersectFilter;
-    @FXML
-    protected ToggleButton unionFilter;
+
     // Load and Initialise Elements:
 
     /**
