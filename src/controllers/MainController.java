@@ -257,9 +257,7 @@ public class MainController {
                 String date = currentTime();
                 int id = Integer.valueOf(finalCaseObj.getId());
                 caseTitle.setText(caseEntry.getName());
-                System.out.println("Id " + id + " caseID " + caseID);
                 caseID = id;
-                System.out.println("Id " + id + " caseID " + caseID);
                 loadTable(caseID);
                 loadFiles(caseID);
                 sql.updateDate(caseID, date);
@@ -840,7 +838,7 @@ public class MainController {
 
                 Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
                 Pane finalCaseObject = CaseObject;
-                System.out.println(finalCaseObject);
+
                 Pane pane = (Pane) CaseObject.getChildren().get(0);
                 Button btn = (Button) pane.getChildren().get(1);
 
@@ -873,7 +871,6 @@ public class MainController {
         try {
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/comingsoon.fxml"));
             Pane finalCaseObject = CaseObject;
-            System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
             Label label = (Label) pane.getChildren().get(1);
             Button btn = (Button) pane.getChildren().get(0);
@@ -898,7 +895,6 @@ public class MainController {
         try {
             Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/note_settings_pane.fxml"));
             Pane finalCaseObject = CaseObject;
-            System.out.println(finalCaseObject);
             Pane pane = (Pane) CaseObject.getChildren().get(0);
             Button btn1 = (Button) pane.getChildren().get(0);
             Button btn2 = (Button) pane.getChildren().get(1);
@@ -1003,34 +999,11 @@ public class MainController {
     @FXML
     private void filter() {
         try {
-            for (int i = 0; i < filterID; i++) {
-                System.out.println(filterConstraints.get(i)[0]);
-            }
             if (toggleSwitch.switchedOnProperty().getValue()) {
                 filteredData = filterSearch(filter(0));
             } else {
                 filteredData = filterSearch(filterPhone(filterDates(0)));
             }
-            // Writes the number of occurrences for each filter
-//            Pane filterPane;
-//            for (int j = 0; j < filtersBox.getChildren().size(); j++) {
-//                filterPane = (Pane) filtersBox.getChildren().get(j);
-//                Pane temp = (Pane) filterPane.getChildren().get(0);
-//                Pane temp2 = (Pane) temp.getChildren().get(0);
-//                Label filterLabel = (Label) temp2.getChildren().get(2);
-//                TextField phoneField = (TextField) temp.getChildren().get(2);
-//                Label letter = (Label) temp2.getChildren().get(0);
-//
-//                // Identifies the filter used
-//                for (int i = 0; i < filterID; i++) {
-//                    Person person = (Person) filterConstraints.get(i)[0];
-//                    if (person.getId().equals(filterPane.getId()) && filterConstraints.get(i)[1].equals("yes")) {
-//                        // Puts the number into the designated place
-//                        filterLabel.setText(String.valueOf(filterConstraints.get(i)[1]));
-//                    }
-//                }
-//            }
-
             // Puts info into the callsTable
             callsTable.setItems(filteredData);
 
