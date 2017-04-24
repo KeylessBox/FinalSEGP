@@ -71,14 +71,11 @@ public class SignInController {
         try (FileReader fileReader = new FileReader(new File("res/users/Account.dat"));
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             String user = bufferedReader.readLine();
-            String password = bufferedReader.readLine();
             if (user != null && !user.equals("")) {
                 usernameField.setText(user);
-            }
-            if (password != null && !password.equals("")) {
-                passwordField2.setText(password);
                 remember.setSelected(true);
             }
+
         } catch (IOException e) {
             System.out.println("Problem with signin initialize");
         }
@@ -154,7 +151,7 @@ public class SignInController {
             /**
              * Only if all data input is correct create a new account
              */
-            Account.createAccount(nameField.getText(), surnameField.getText(), emailField.getText(), passwordField.getText(), "users");
+            Account.createAccount(nameField.getText(), surnameField.getText(), emailField.getText(), passwordField.getText(), "administrator");
             usernameField.setText(emailField.getText());
             passwordField2.setText("");
             remember.setSelected(false);
@@ -214,9 +211,9 @@ public class SignInController {
                         directory.mkdirs();
                     }
                     PrintWriter writer = new PrintWriter(new File("res/users/Account.dat"));
-                    writer.write(user);
+
                     if (remember.isSelected()) {
-                        writer.write("\n" + passwordField2.getText());
+                        writer.write(user);
                     }
                     writer.close();
 
