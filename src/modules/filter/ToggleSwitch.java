@@ -6,6 +6,7 @@ import javafx.animation.TranslateTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Parent;
+import javafx.scene.control.Tooltip;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -13,9 +14,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 /**
- * Created by AndreiM on 4/24/2017.
+ * Taken from https://github.com/AlmasB/FXTutorials/blob/master/src/com/almasb/ios/IOSApp.java
+ * ToggleSwitch Template
  */
-
 public class ToggleSwitch extends Parent {
 
     private BooleanProperty switchedOn = new SimpleBooleanProperty(false);
@@ -36,6 +37,8 @@ public class ToggleSwitch extends Parent {
         background.setFill(Color.WHITE);
         background.setStroke(Color.LIGHTGRAY);
 
+
+
         Circle trigger = new Circle(10);
         trigger.setCenterX(10);
         trigger.setCenterY(10);
@@ -53,13 +56,15 @@ public class ToggleSwitch extends Parent {
 
         switchedOn.addListener((obs, oldState, newState) -> {
             boolean isOn = newState.booleanValue();
+            String message = isOn ? "Intersection" : "Union";
+            Tooltip tp = new Tooltip(message);
+            Tooltip.install(this, tp);
             translateAnimation.setToX(isOn ? 40 - 20 : 0);
             fillAnimation.setFromValue(isOn ? Color.WHITE : Color.LIGHTGREEN);
             fillAnimation.setToValue(isOn ? Color.LIGHTGREEN : Color.WHITE);
 
             animation.play();
         });
-
         setOnMouseClicked(event -> {
             switchedOn.set(!switchedOn.get());
         });
