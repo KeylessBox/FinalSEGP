@@ -826,23 +826,44 @@ public class MainController {
     @FXML
     public void openMessages() {
 
-        try {
-            Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
-            Pane finalCaseObject = CaseObject;
-            System.out.println(finalCaseObject);
-            Pane pane = (Pane) CaseObject.getChildren().get(0);
-            Button btn = (Button) pane.getChildren().get(1);
+        File checkPriv = new File(System.getProperty("user.dir"), "./res/tmp/sf1332f1ewf");
+        String privilege = null;
+        if (checkPriv.exists())
+            try{
 
-            btn.setOnAction(event -> {
-                root.getChildren().remove(finalCaseObject);
-            });
+            BufferedReader read = new BufferedReader(new FileReader(checkPriv));
+            privilege = read.readLine();
+            read.close();
+        }catch(Exception e){
 
-            finalCaseObject.setLayoutX(250);
-            finalCaseObject.setLayoutY(100);
-            DragResizeMod.makeResizable(finalCaseObject, null);
-            root.getChildren().add(finalCaseObject);
-        } catch (IOException e) {
-            e.printStackTrace();
+            }
+        if (privilege.contains("admin")) {
+
+            try {
+
+                Pane CaseObject = (Pane) FXMLLoader.load(getClass().getResource("/fxml/adminpane.fxml"));
+                Pane finalCaseObject = CaseObject;
+                System.out.println(finalCaseObject);
+                Pane pane = (Pane) CaseObject.getChildren().get(0);
+                Button btn = (Button) pane.getChildren().get(1);
+
+                btn.setOnAction(event -> {
+                    root.getChildren().remove(finalCaseObject);
+                });
+
+                finalCaseObject.setLayoutX(250);
+                finalCaseObject.setLayoutY(100);
+                DragResizeMod.makeResizable(finalCaseObject, null);
+                root.getChildren().add(finalCaseObject);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Forbidden Access");
+            alert.setHeaderText("You do not have Administrator Privileges");
+            alert.setContentText("Please contact the Administrator, if you are the administrator, please restart the application");
+            alert.showAndWait();
         }
     }
 
@@ -1646,6 +1667,7 @@ public class MainController {
      * @return Data in the new format (yyyy/MM/dd supported)
      */
     private String changeDateFormat(String oldDate) {
+      
         String oldFormat = "dd/MM/yyyy";
         String newFormat = "yyyy/MM/dd";
         try {
@@ -1658,6 +1680,7 @@ public class MainController {
         }
         return null;
     }
+
 
     /**
      * Alert box that asks the users for the importance of some unrecognized columns in the database

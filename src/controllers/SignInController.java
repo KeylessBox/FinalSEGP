@@ -216,6 +216,20 @@ public class SignInController {
                         writer.write("\n" + passwordField2.getText());
                     }
                     writer.close();
+
+                    File priv = new File(System.getProperty("user.dir"), "./res/tmp");
+                    if (!priv.exists()) {
+                        priv.mkdirs();
+                    }
+
+                    PrintWriter write = new PrintWriter(new File ("res/tmp/sf1332f1ewf"));
+                    if (LoginDB.checkPrivilege(user))
+                        write.write("admin");
+                    else write.write("user");
+
+                    write.close();
+
+
                     /**
                      * The connection to the main app
                      */
