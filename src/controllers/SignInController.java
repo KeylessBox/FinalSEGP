@@ -65,7 +65,7 @@ public class SignInController {
     public void initialize() {
 
         ObservableList<UserRecord> userRecords = sql.loadUsers();
-        if (userRecords.size() > 1) {
+        if (userRecords.size() > 0) {
             createAccBtn.setVisible(false);
         }
         try (FileReader fileReader = new FileReader(new File("res/users/Account.dat"));

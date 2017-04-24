@@ -1665,20 +1665,29 @@ public class MainController {
      * @return Data in the new format (yyyy/MM/dd supported)
      */
     private String changeDateFormat(String oldDate) {
-      
-        String oldFormat = "dd/MM/yyyy";
+
+        String[] date_formats = {
+                "y-M-d",
+                "d/M/y",
+                "d-M-y",
+                "y M d",
+                "y d M",
+                "d M y",
+                "d M",
+                "M d",
+                "d M y"};
         String newFormat = "yyyy/MM/dd";
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat(oldFormat);
-            Date date = sdf.parse(oldDate);
-            sdf.applyPattern(newFormat);
-            return sdf.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        for (String formatString : date_formats) {
+            SimpleDateFormat sdf = new SimpleDateFormat(formatString);
+            try {
+                Date date = sdf.parse(oldDate);
+                sdf.applyPattern(newFormat);
+                return sdf.format(date);
+            } catch (ParseException e) {
+            }
         }
         return null;
     }
-
 
     /**
      * Alert box that asks the users for the importance of some unrecognized columns in the database
